@@ -1,0 +1,12 @@
+@charset "utf-8";
+/* import */
+@import url(../css/dialog.css);
+@import url(../css/reset.css?ver=0.205);
+@import url(../css/global.css?ver=0.205);
+@import url(../css/page.css?ver=0.205);
+@import url(../css/style.css?ver=0.205);
+
+/*@import url(../css/jejugothic.css);*/
+
+@import url(https://fonts.googleapis.com/earlyaccess/jejugothic.css);
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic');
