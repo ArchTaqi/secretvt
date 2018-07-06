@@ -238,7 +238,7 @@
 
     <section class="ad">
         <h4>ad</h4>
-        <?php echo banner("board_banner_1") ?>
+        <?php echo banner("board_rolling_banner_1") ?>
     </section>
 
     <section class="store_list02">
@@ -332,7 +332,7 @@
     <!-- 광고 배너 영역 -->
         <section class="ad" style="margin-bottom: 0;">
             <h4>ad</h4>
-            <?php echo banner("board_banner_2") ?>
+            <?php echo banner("board_default_banner_1") ?>
         </section>
     <!-- ===== -->
 </div>

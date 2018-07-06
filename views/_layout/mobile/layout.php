@@ -15,7 +15,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/reset.css?'.$this->cbconfig->item('browser_cache_version'))?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/global.css?'.$this->cbconfig->item('browser_cache_version'))?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/page.css?'.$this->cbconfig->item('browser_cache_version'))?>" />
-<!-- <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/style.css?'.$this->cbconfig->item('browser_cache_version'))?>" /> -->
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/style.css?'.$this->cbconfig->item('browser_cache_version'))?>" />
 
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/earlyaccess/nanumgothic.css" />
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/earlyaccess/jejugothic.css" />
