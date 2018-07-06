@@ -22,7 +22,7 @@ class Post_model extends CB_Model
      */
     public $primary_key = 'post_id'; // 사용되는 테이블의 프라이머리키
 
-    public $allow_order = array('post_num, post_reply', 'post_datetime desc', 'post_datetime asc', 'post_hit desc', 'post_hit asc', 'post_comment_count desc', 'post_comment_count asc', 'post_comment_updated_datetime desc', 'post_comment_updated_datetime asc', 'post_like desc', 'post_like asc', 'post_id desc');
+    public $allow_order = array('post_num, post_reply', 'post_datetime desc', 'post_datetime asc', 'post_hit desc', 'post_hit asc', 'post_comment_count desc', 'post_comment_count asc', 'post_comment_updated_datetime desc', 'post_comment_updated_datetime asc', 'post_like desc', 'post_like asc', 'post_id desc','(case when post_order=0 then 999 else post_order end),post_num, post_reply');
 
     function __construct()
     {
@@ -40,9 +40,11 @@ class Post_model extends CB_Model
     /**
      * List 페이지 커스테마이징 함수
      */
-    public function get_post_list($limit = '', $offset = '', $where = '', $category_id = '', $orderby = '', $sfield = '', $skeyword = '', $sop = 'OR')
+    public function get_post_list($limit = '', $offset = '', $where = '', $category_id = '', $orderby = '', $sfield = '', $skeyword = '', $sop = 'OR',$where_in='')
     {
-        if ( ! in_array(strtolower($orderby), $this->allow_order)) {
+
+        if ( !$orderby) {
+
             $orderby = 'post_num, post_reply';
         }
 
@@ -103,6 +105,10 @@ class Post_model extends CB_Model
         if ($where) {
             $this->db->where($where);
         }
+
+        if ($where_in) {
+            $this->db->where_in(key($where_in),$where_in[key($where_in)]);
+        }
         if ($search_where) {
             $this->db->where($search_where);
         }
@@ -134,6 +140,8 @@ class Post_model extends CB_Model
         }
 
         $this->db->order_by($orderby);
+
+
         if ($limit) {
             $this->db->limit($limit, $offset);
         }
@@ -145,6 +153,9 @@ class Post_model extends CB_Model
         $this->db->join('member', 'post.mem_id = member.mem_id', 'left');
         if ($where) {
             $this->db->where($where);
+        }
+        if ($where_in) {
+            $this->db->where_in(key($where_in),$where_in[key($where_in)]);
         }
         if ($search_where) {
             $this->db->where($search_where);
@@ -281,7 +292,7 @@ class Post_model extends CB_Model
     /**
      * List 페이지 커스테마이징 함수
      */
-    public function get_prev_next_post($post_id = 0, $post_num = 0, $type = '', $where = '', $sfield = '', $skeyword = '', $sop = 'OR')
+    public function get_prev_next_post($post_id = 0, $post_num = 0, $type = '', $where = '', $sfield = '', $skeyword = '', $sop = 'OR', $where_in='')
     {
         $post_id = (int) $post_id;
         if (empty($post_id) OR $post_id < 1) {
@@ -350,6 +361,9 @@ class Post_model extends CB_Model
 
         if ($where) {
             $this->db->where($where);
+        }
+        if ($where_in) {
+            $this->db->where_in(key($where_in),$where_in[key($where_in)]);
         }
         if ($search_where) {
             $this->db->where($search_where);
@@ -543,7 +557,7 @@ class Post_model extends CB_Model
             $this->db->where($where);
         }
         if ($where_in) {
-            $this->db->where_in('brd_id', $where_in);
+            $this->db->where_in(key($where_in),$where_in[key($where_in)]);
         }
         $this->db->order_by('post_num, post_reply');
         if ($limit) {
@@ -579,5 +593,32 @@ class Post_model extends CB_Model
         $row['post_num'] = (isset($row['post_num'])) ? $row['post_num'] : 0;
         $post_num = $row['post_num'] - 1;
         return $post_num;
+    }
+
+    public function max_post_order($brd_id,$type='')
+    {   
+        $this->db->where('post_del <>',2);
+        $this->db->where('post_secret',0);
+        $this->db->where('post_notice',0);
+        $this->db->where('brd_id',$brd_id);
+        if(!empty($type)) $this->db->where('post_main_4',1);
+        else $this->db->where('post_main_4',0);
+        $result = $this->db->count_all_results($this->_table);
+        
+        $max_post_order = $result + 1;
+        return $max_post_order;
+    }
+
+    public function current_post_order($post)
+    {   
+        $this->db->where('post_del <>',2);
+        $this->db->where('post_secret',0);
+        $this->db->where('post_notice',0);
+        $this->db->where('brd_id',element('brd_id',$post));
+        $this->db->where('post_id >=',element('post_id',$post));
+        $this->db->where('post_main_4',element('post_main_4',$post));
+        $current_post_order = $this->db->count_all_results($this->_table);
+
+        return $current_post_order;
     }
 }

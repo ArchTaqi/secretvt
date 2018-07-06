@@ -1,16 +1,17 @@
 <?php
     //구글지도
-    $lat = '37.566535';
-    $lng = '126.977969';
+    $lat = '21.028275';
+    $lng = '105.838706';
     $zoom = 14;
     $map_width = '100%';
     $map_height = '425px';
 ?>
+
 <style type="text/css">
 div#map { position: relative; overflow:hidden; }
 div#crosshair {position: absolute;top: 214px;height: 22px;width: 22px;left: 50%;margin-left: -10px;display: block;background-image: url('../img/crosshair.gif');background-position: center center;background-repeat: no-repeat;}
 </style>
-<script src="http://maps.google.com/maps/api/js?v=3.3&sensor=true&language=ko"></script>
+<script src="https://maps.google.com/maps/api/js?v=3.3&key=AIzaSyC5C3WnSgg9h4otykkgKNuBI49zUsOBe9U&sensor=true&language=ko"></script>
 <script type="text/javascript">
 var map;
 var geocoder;
@@ -94,10 +95,12 @@ function getCenterLatLngText() {
 function centerChanged() {
     centerChangedLast = new Date();
     var latlng = getCenterLatLngText();
-    var loc = latlng.split(',');
+    var loc = latlng.split(',');    
     geocoder.geocode({latLng:map.getCenter()},reverseGeocodeResult);
+
     document.getElementById('lat').innerHTML = loc[0];
     document.getElementById('lng').innerHTML = loc[1];
+    return;
     document.getElementById('formatedAddress').innerHTML = '';
     currentReverseGeocodeResponse = null;
 }
@@ -122,6 +125,11 @@ function reverseGeocodeResult(results, status) {
 
 function geocode() {
     var address = document.getElementById('address').value;
+
+    if(address=="") {
+        alert('검색할 도시 및 주소를 입력하세요');
+        return;
+    }
     geocoder.geocode({
         'address': address,
         'partialmatch': true}, geocodeResult);
@@ -147,19 +155,19 @@ function geocodeResult(results, status) {
                     </colgroup>
                     <tbody>
                         <tr>
-                            <th>검색</th>
+                            <th style="width:60px">검색</th>
                             <td>
                                 <input type="text" id="address" class="form-control" onKeyDown="if (event.keyCode ==13) {geocode();}" />
                                 <input type="hidden" id="map_lat" value="<?php echo $lat; ?>" />
                                 <input type="hidden" id="map_lng" value="<?php echo $lng; ?>" />
                                 <input type="hidden" id="map_zoom" value="<?php echo $zoom;?>" />
                             </td>
-                            <td><button type="button" class="btn btn-success" onclick="geocode()">찾기</button></td>
+                            <td style="width:100px"><button type="button" class="btn btn-success" onclick="geocode()">찾기</button></td>
                         </tr>
                         <tr>
                             <th>위치</th>
                             <td>
-                                <span id="formatedAddress"></span>
+                                <span id="formatedAddress"></span><br>
                                 (<span id="lat"></span>, <span id="lng"></span>, <span id="zoom_level"><?php echo $zoom; ?>)
                             </td>
                             <td></td>
@@ -172,9 +180,8 @@ function geocodeResult(results, status) {
                             <td></td>
                         </tr>
                         <tr>
-                            <th>코드</th>
-                            <td><textarea id="map_code" name="map_code" class="form-control" placeholder="생성된 지도코드를 복사하여 붙여넣어 주세요"></textarea></td>
-                            <td><button type="button" class="btn btn-primary" onclick="geocode_submit()">생성</button></td>
+                            <td colspan=3 style="text-align:center"><button type="button" class="btn btn-primary" onclick="geocode_submit()">등록</button> <button type="button" class="btn btn-danger" onclick="self.close()">닫기</button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -201,7 +208,7 @@ function geocode_submit() {
 
     var map_code = "{지도:" + code_geo + code_marker + "}";
 
-    document.getElementById('map_code').value = map_code;
+    opener.document.getElementById('google_map').value = code_lat + "," + code_lng + "," + code_zoom;
 }
 
 addLoadEvent(function() {

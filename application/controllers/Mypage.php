@@ -159,7 +159,12 @@ class Mypage extends CB_Controller
         if (element('list', $result)) {
             foreach (element('list', $result) as $key => $val) {
                 $brd_key = $this->board->item_id('brd_key', element('brd_id', $val));
-                $result['list'][$key]['post_url'] = post_url($brd_key, element('post_id', $val));
+                if($brd_key==='vtn_discount' || $brd_key=== 'vtn_safevisa' || $brd_key==='vtn_renta' || $brd_key==='vtn_tour')
+                    $result['list'][$key]['post_url'] = write_url($brd_key).'?post_num='.element('post_num', $val);
+                else 
+                    $result['list'][$key]['post_url'] = post_url($brd_key, element('post_id', $val));
+
+                
                 $result['list'][$key]['num'] = $list_num--;
                 if (element('post_image', $val)) {
                     $filewhere = array(

@@ -1,5 +1,5 @@
 /**
-	board skin css
+    board skin css
 */
 
 .board .table{border-top: 2px solid #000;border-bottom: 1px solid #ccc;}
@@ -63,6 +63,7 @@
 .board .sr-only {position: absolute;width: 1px;height: 1px;margin: -1px;padding: 0;overflow: hidden;clip: rect(0,0,0,0);border: 0;}
 .board .poll-result { padding-bottom: 10px; }
 
+
 .writeform li {display: block;margin: 0px; clear: both; margin-bottom: 15px;}
 .writeform li>span {float: left;width: 10%;padding-right: 20px;margin-top: 5px;color: #000;font-weight: bold;}
 
@@ -98,7 +99,7 @@ textarea.post_content  {width:90%;height:350px;margin:0 20px;}
 
 #comment_write_box li {display: block;margin: 0px; clear: both; margin-bottom: 15px;}
 #comment_write_box  li>span {float: left;
-	width: 25%;text-align: right;padding-right: 20px;margin-top: 5px;color: #000;font-weight: bold;}
+    width: 25%;text-align: right;padding-right: 20px;margin-top: 5px;color: #000;font-weight: bold;}
 .comment_write_button_area {margin-top:20px;overflow:hidden;}
 
 .board .url-qrcode {position:relative;cursor:pointer;}

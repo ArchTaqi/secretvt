@@ -32,7 +32,7 @@ class Board_write extends CB_Controller
         /**
          * 라이브러리를 로딩합니다
          */
-        $this->load->library(array('querystring', 'accesslevel', 'email', 'notelib', 'point', 'imagelib'));
+        $this->load->library(array('querystring', 'accesslevel', 'email', 'notelib', 'point', 'imagelib','pagination'));
     }
 
 
@@ -48,6 +48,8 @@ class Board_write extends CB_Controller
         // 이벤트가 존재하면 실행합니다
         Events::trigger('before', $eventname);
 
+        
+        
         if (empty($brd_key)) {
             show_404();
         }
@@ -57,12 +59,6 @@ class Board_write extends CB_Controller
             show_404();
         }
         $board = $this->board->item_all($board_id);
-        
-        $board['is_use_captcha'] = false;
-
-        if( check_use_captcha($this->member, $board) ){
-            $board['is_use_captcha'] = true;
-        }
 
         $alertmessage = $this->member->is_member()
             ? '회원님은 글을 작성할 수 있는 권한이 없습니다'
@@ -72,6 +68,9 @@ class Board_write extends CB_Controller
             'group_id' => element('bgr_id', $board),
             'board_id' => element('brd_id', $board),
         );
+
+
+
         $this->accesslevel->check(
             element('access_write', $board),
             element('access_write_level', $board),
@@ -79,7 +78,6 @@ class Board_write extends CB_Controller
             $alertmessage,
             $check
         );
-        $this->accesslevel->selfcertcheck('write', element('access_write_selfcert', $board));
 
         // 이벤트가 존재하면 실행합니다
         Events::trigger('after', $eventname);
@@ -134,7 +132,6 @@ class Board_write extends CB_Controller
             $alertmessage,
             $check
         );
-        $this->accesslevel->selfcertcheck('write', element('access_write_selfcert', $board));
 
         if (element('post_del', $origin)) {
             alert('삭제된 글에는 답변을 입력하실 수 없습니다');
@@ -195,6 +192,8 @@ class Board_write extends CB_Controller
      */
     public function _write_common($board, $origin = '', $reply = '')
     {
+
+        
         // 이벤트 라이브러리를 로딩합니다
         $eventname = 'event_board_write_write_common';
         $this->load->event($eventname);
@@ -204,10 +203,19 @@ class Board_write extends CB_Controller
         $view = array();
         $view['view'] = array();
 
+        if(!empty($origin) && $reply) {
+            $view['view']['origin'] = $origin;
+            $view['view']['reply'] = $reply;
+
+        }
         // 이벤트가 존재하면 실행합니다
         $view['view']['event']['before'] = Events::trigger('common_before', $eventname);
 
         $view['view']['post'] = array();
+
+        if (element('bgr_id', $board)==='11')
+            $view['view']['list'] = $list = $this->_get_list(element('brd_key', $board), 1);
+        
 
         $view['view']['board'] = $board;
         $view['view']['board_key'] = element('brd_key', $board);
@@ -221,6 +229,26 @@ class Board_write extends CB_Controller
                 'group_id' => element('bgr_id', $board),
             )
         );
+
+        $where = array(
+            'bgr_id' => element('bgr_id', $board)
+        );
+        $board_id = $this->Board_model->get_board_list($where);
+        
+        $board_list = array();
+        if ($board_id && is_array($board_id)) {
+            foreach ($board_id as $key => $val) {
+                $board_list[] = $this->board->item_all(element('brd_id', $val));
+            }
+        }
+
+        $view['view']['board_list'] = $board_list;
+
+        if(empty(get_cookie('region'))) $view['view']['region']=0;
+        else $view['view']['region'] = get_cookie('region');
+
+        
+        
 
         // 글 한개만 작성 가능
         if (element('use_only_one_post', $board) && $is_admin === false) {
@@ -281,15 +309,22 @@ class Board_write extends CB_Controller
         $view['view']['post']['post_secret'] = element('use_post_secret_selected', $board) ? '1' : '';
         $view['view']['post']['can_post_receive_email'] = $can_post_receive_email
             = element('use_post_receive_email', $board) ? true : false;
+        $view['view']['post']['post_parent'] = $this->input->get('post_parent',null,0);
+
+        $view['view']['post']['max_post_main_order'] = $this->Post_model->max_post_order(element('brd_id', $board),'main');
+        $view['view']['post']['max_post_order'] = $this->Post_model->max_post_order(element('brd_id', $board));
+        $view['view']['post']['post_order'] = $this->Post_model->max_post_order(element('brd_id', $board));
+
+        if(strpos(element('brd_key', $board),'_review' )!==false){
+
+           $post_parent=$this->Post_model->get_one($this->input->get('post_parent', null, 0));
+           $board_parent = $this->board->item_all(element('brd_id', $post_parent));
+           $view['view']['board_key_parent']=element('brd_key', $board_parent);
+        }
+
 
         $extravars = element('extravars', $board);
         $form = json_decode($extravars, true);
-        $use_subj_style = ($this->cbconfig->get_device_view_type() === 'mobile')
-            ? element('use_mobile_subject_style', $board)
-            : element('use_subject_style', $board);
-        $use_poll = ($this->cbconfig->get_device_view_type() === 'mobile')
-            ? element('use_mobile_poll', $board)
-            : element('use_poll', $board);
 
         /**
          * Validation 라이브러리를 가져옵니다
@@ -357,39 +392,20 @@ class Board_write extends CB_Controller
                 'label' => '패스워드',
                 'rules' => 'trim|required|min_length[' . $password_length . ']|callback__mem_password_check',
             );
-        }
 
-        if ( check_use_captcha($this->member, $board) ) {
-            if ($this->cbconfig->item('use_recaptcha')) {
-                $config[] = array(
-                    'field' => 'g-recaptcha-response',
-                    'label' => '자동등록방지문자',
-                    'rules' => 'trim|required|callback__check_recaptcha',
-                );
-            } else {
-                $config[] = array(
-                    'field' => 'captcha_key',
-                    'label' => '자동등록방지문자',
-                    'rules' => 'trim|required|callback__check_captcha',
-                );
-            }
-        }
-        if ($use_subj_style) {
-            $config[] = array(
-                'field' => 'post_title_color',
-                'label' => '제목색상',
-                'rules' => 'trim|exact_length[7]',
-            );
-            $config[] = array(
-                'field' => 'post_title_font',
-                'label' => '제목폰트',
-                'rules' => 'trim',
-            );
-            $config[] = array(
-                'field' => 'post_title_bold',
-                'label' => '제목볼드',
-                'rules' => 'trim|exact_length[1]',
-            );
+            // if ($this->cbconfig->item('use_recaptcha')) {
+            //     $config[] = array(
+            //         'field' => 'g-recaptcha-response',
+            //         'label' => '자동등록방지문자',
+            //         'rules' => 'trim|required|callback__check_recaptcha',
+            //     );
+            // } else {
+            //     $config[] = array(
+            //         'field' => 'captcha_key',
+            //         'label' => '자동등록방지문자',
+            //         'rules' => 'trim|required|callback__check_captcha',
+            //     );
+            // }
         }
         if (element('use_category', $board) && $is_admin === false) {
             $config[] = array(
@@ -444,67 +460,11 @@ class Board_write extends CB_Controller
             $use_dhtml = false;
         }
         $view['view']['board']['use_dhtml'] = $use_dhtml;
-        if ($use_subj_style) {
-            $check = array(
-                'group_id' => element('bgr_id', $board),
-                'board_id' => element('brd_id', $board),
-            );
-            $use_subject_style = $this->accesslevel->is_accessable(
-                element('access_subject_style', $board),
-                element('access_subject_style_level', $board),
-                element('access_subject_style_group', $board),
-                $check
-            );
-        } else {
-            $use_subject_style = false;
-        }
-        $view['view']['board']['use_subject_style'] = $use_subject_style;
-        if ($use_poll) {
-            $check = array(
-                'group_id' => element('bgr_id', $board),
-                'board_id' => element('brd_id', $board),
-            );
-            $can_poll_write = $this->accesslevel->is_accessable(
-                element('access_poll_write', $board),
-                element('access_poll_write_level', $board),
-                element('access_poll_write_group', $board),
-                $check
-            );
-        } else {
-            $can_poll_write = false;
-        }
-        $view['view']['board']['can_poll_write'] = $can_poll_write;
-
-        if (element('use_post_tag', $board)) {
-            $check = array(
-                'group_id' => element('bgr_id', $board),
-                'board_id' => element('brd_id', $board),
-            );
-            $can_tag_write = $this->accesslevel->is_accessable(
-                element('access_tag_write', $board),
-                element('access_tag_write_level', $board),
-                element('access_tag_write_group', $board),
-                $check
-            );
-        } else {
-            $can_tag_write = false;
-        }
-        $view['view']['board']['can_tag_write'] = $can_tag_write;
 
         $view['view']['board']['link_count']
             = ($this->cbconfig->get_device_view_type() === 'mobile')
             ? element('mobile_link_num', $board)
             : element('link_num', $board);
-
-        $view['view']['board']['use_emoticon']
-            = ($this->cbconfig->get_device_view_type() === 'mobile')
-            ? element('use_mobile_post_emoticon', $board)
-            : element('use_post_emoticon', $board);
-
-        $view['view']['board']['use_specialchars']
-            = ($this->cbconfig->get_device_view_type() === 'mobile')
-            ? element('use_mobile_post_specialchars', $board)
-            : element('use_post_specialchars', $board);
 
         $view['view']['board']['headercontent']
             = ($this->cbconfig->get_device_view_type() === 'mobile')
@@ -526,33 +486,37 @@ class Board_write extends CB_Controller
             if (isset($_FILES) && isset($_FILES['post_file']) && isset($_FILES['post_file']['name']) && is_array($_FILES['post_file']['name'])) {
                 $filecount = count($_FILES['post_file']['name']);
                 $upload_path = config_item('uploads_dir') . '/post/';
-                if (is_dir($upload_path) === false) {
-                    mkdir($upload_path, 0707);
-                    $file = $upload_path . 'index.php';
-                    $f = @fopen($file, 'w');
-                    @fwrite($f, '');
-                    @fclose($f);
-                    @chmod($file, 0644);
+                if(config_item('use_file_storage')=='S3'){
+                    $upload_path .= cdate('Y') . '/';
+                    $upload_path .= cdate('m') . '/';
+                } else {
+                    if (is_dir($upload_path) === false) {
+                        mkdir($upload_path, 0707);
+                        $file = $upload_path . 'index.php';
+                        $f = @fopen($file, 'w');
+                        @fwrite($f, '');
+                        @fclose($f);
+                        @chmod($file, 0644);
+                    }
+                    $upload_path .= cdate('Y') . '/';
+                    if (is_dir($upload_path) === false) {
+                        mkdir($upload_path, 0707);
+                        $file = $upload_path . 'index.php';
+                        $f = @fopen($file, 'w');
+                        @fwrite($f, '');
+                        @fclose($f);
+                        @chmod($file, 0644);
+                    }
+                    $upload_path .= cdate('m') . '/';
+                    if (is_dir($upload_path) === false) {
+                        mkdir($upload_path, 0707);
+                        $file = $upload_path . 'index.php';
+                        $f = @fopen($file, 'w');
+                        @fwrite($f, '');
+                        @fclose($f);
+                        @chmod($file, 0644);
+                    }
                 }
-                $upload_path .= cdate('Y') . '/';
-                if (is_dir($upload_path) === false) {
-                    mkdir($upload_path, 0707);
-                    $file = $upload_path . 'index.php';
-                    $f = @fopen($file, 'w');
-                    @fwrite($f, '');
-                    @fclose($f);
-                    @chmod($file, 0644);
-                }
-                $upload_path .= cdate('m') . '/';
-                if (is_dir($upload_path) === false) {
-                    mkdir($upload_path, 0707);
-                    $file = $upload_path . 'index.php';
-                    $f = @fopen($file, 'w');
-                    @fwrite($f, '');
-                    @fclose($f);
-                    @chmod($file, 0644);
-                }
-
                 foreach ($_FILES['post_file']['name'] as $i => $value) {
                     if ($value) {
                         $uploadconfig = '';
@@ -633,10 +597,10 @@ class Board_write extends CB_Controller
                         } elseif (element('field_type', $value) === 'phone') {
                             $extra_content[$k]['input'] .= '<input type="text" id="' . element('field_name', $value) . '" name="' . element('field_name', $value) . '" class="form-control input validphone" value="' . set_value(element('field_name', $value)) . '" ' . $required . ' />';
                         } else {
-                            $extra_content[$k]['input'] .= '<input type="' . element('field_type', $value) . '" id="' . element('field_name', $value) . '" name="' . element('field_name', $value) . '" class="form-control input" value="' . set_value(element('field_name', $value)) . '" ' . $required . '/>';
+                            $extra_content[$k]['input'] .= '<input type="' . element('field_type', $value) . '" id="' . element('field_name', $value) . '" name="' . element('field_name', $value) . '" class="form-control input per75" value="' . set_value(element('field_name', $value)) . '" ' . $required . '/>';
                         }
                     } elseif (element('field_type', $value) === 'textarea') {
-                            $extra_content[$k]['input'] .= '<textarea id="' . element('field_name', $value) . '" name="' . element('field_name', $value) . '" class="form-control input" ' . $required . '>' . set_value(element('field_name', $value)) . '</textarea>';
+                            $extra_content[$k]['input'] .= '<textarea id="' . element('field_name', $value) . '" name="' . element('field_name', $value) . '" class="form-control input per75" ' . $required . '>' . set_value(element('field_name', $value)) . '</textarea>';
                     } elseif (element('field_type', $value) === 'radio') {
                         $extra_content[$k]['input'] .= '<div class="checkbox">';
                         $options = explode("\n", element('options', $value));
@@ -704,6 +668,7 @@ class Board_write extends CB_Controller
             // 이벤트가 존재하면 실행합니다
             $view['view']['event']['before_layout'] = Events::trigger('common_before_layout', $eventname);
 
+
             /**
              * 레이아웃을 정의합니다
              */
@@ -729,6 +694,7 @@ class Board_write extends CB_Controller
             $page_name = str_replace($searchconfig, $replaceconfig, $page_name);
 
             $layout_dir = element('board_layout', $board) ? element('board_layout', $board) : $this->cbconfig->item('layout_board');
+            
             $mobile_layout_dir = element('board_mobile_layout', $board) ? element('board_mobile_layout', $board) : $this->cbconfig->item('mobile_layout_board');
             $use_sidebar = element('board_sidebar', $board) ? element('board_sidebar', $board) : $this->cbconfig->item('sidebar_board');
             $use_mobile_sidebar = element('board_mobile_sidebar', $board) ? element('board_mobile_sidebar', $board) : $this->cbconfig->item('mobile_sidebar_board');
@@ -753,7 +719,26 @@ class Board_write extends CB_Controller
             $view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
             $this->data = $view;
             $this->layout = element('layout_skin_file', element('layout', $view));
-            $this->view = element('view_skin_file', element('layout', $view));
+
+            if (element('bgr_id', $board)==='11'){
+                $list_skin_file = element('use_gallery_list', $board) ? 'gallerylist' : 'list';
+                $listskindir = ($this->cbconfig->get_device_view_type() === 'mobile')
+                    ? $mobile_skin_dir : $skin_dir;
+                if (empty($listskindir)) {
+                    $listskindir
+                        = ($this->cbconfig->get_device_view_type() === 'mobile')
+                        ? $this->cbconfig->item('mobile_skin_default')
+                        : $this->cbconfig->item('skin_default');
+                }
+                $this->view = array(
+                    element('view_skin_file', element('layout', $view)),
+                    'board/' . $listskindir . '/' . $list_skin_file,
+                );
+            } else {
+                $this->view = element('view_skin_file', element('layout', $view));
+            }
+
+            
 
         } else {
 
@@ -782,6 +767,39 @@ class Board_write extends CB_Controller
                 $post_content = $this->imagelib->replace_external_image($post_content);
             }
 
+            
+
+            $spam_word = explode(',', trim($this->cbconfig->item('spam_word')));
+            if ($spam_word) {
+                for ($i = 0; $i < count($spam_word); $i++) {
+                    $str = trim($spam_word[$i]);
+                    if ($post_title) {
+                        $pos = stripos($post_title, $str);
+                        if ($pos !== false) {
+                            $ment='';
+                            for($len=0;$len <mb_strlen($str, 'utf-8');$len++){
+                                $ment.='*';
+                            }
+
+                            $post_title = str_replace($str,$ment, $post_title);
+                            // break;
+                        }
+                    }
+                    if ($post_content) {
+                        $pos = stripos($post_content, $str);
+                        if ($pos !== false) {
+                            $ment='';
+                            for($len=0;$len <mb_strlen($str, 'utf-8');$len++){
+                                $ment.='*';
+                            }
+
+                            $post_content = str_replace($str,$ment, $post_content);
+                            //break;
+                        }
+                    }
+                }
+            }
+
             $updatedata = array(
                 'post_num' => $post_num,
                 'post_reply' => $post_reply,
@@ -792,6 +810,10 @@ class Board_write extends CB_Controller
                 'post_updated_datetime' => cdate('Y-m-d H:i:s'),
                 'post_ip' => $this->input->ip_address(),
                 'brd_id' => element('brd_id', $board),
+                'post_parent' => $this->input->get('post_parent',null,0),
+                'region_category' => $this->input->post('region_category',null,1),
+                'post_main_4' => $this->input->post('post_main_4',null,0),
+                'post_order' => $this->input->post('post_order',null,0),
             );
 
             if ($mem_id) {
@@ -836,11 +858,6 @@ class Board_write extends CB_Controller
             }
             if ($can_post_receive_email) {
                 $updatedata['post_receive_email'] = $this->input->post('post_receive_email') ? 1 : 0;
-            }
-            if ($use_subject_style) {
-                $metadata['post_title_color'] = $this->input->post('post_title_color', null, '');
-                $metadata['post_title_font'] = $this->input->post('post_title_font', null, '');
-                $metadata['post_title_bold'] = $this->input->post('post_title_bold', null, '');
             }
             if (element('use_category', $board)) {
                 $updatedata['post_category'] = $this->input->post('post_category', null, '');
@@ -903,20 +920,6 @@ class Board_write extends CB_Controller
                     ->save($post_id, element('brd_id', $board), $metadata);
             }
 
-            if (element('use_posthistory', $board)) {
-                $this->load->model('Post_history_model');
-                $historydata = array(
-                    'post_id' => $post_id,
-                    'brd_id' => element('brd_id', $board),
-                    'mem_id' => $mem_id,
-                    'phi_title' => $post_title,
-                    'phi_content' => $post_content,
-                    'phi_content_html_type' => $content_type,
-                    'phi_ip' => $this->input->ip_address(),
-                    'phi_datetime' => cdate('Y-m-d H:i:s'),
-                );
-                $this->Post_history_model->insert($historydata);
-            }
             $post_link = $this->input->post('post_link');
             if ($post_link && is_array($post_link) && count($post_link) > 0) {
                 foreach ($post_link as $pkey => $pval) {
@@ -933,55 +936,6 @@ class Board_write extends CB_Controller
                     'post_link_count' => count($post_link),
                  );
                 $this->Post_model->update($post_id, $postupdate);
-            }
-            if ($can_poll_write) {
-                $this->load->model(array('Post_poll_model', 'Post_poll_item_model', 'Post_poll_item_poll_model'));
-                $post_poll_item = $this->input->post('poll_item');
-                $has_poll_item = false;
-                foreach ($post_poll_item as $pkey => $pval) {
-                    if ($pval) {
-                        $has_poll_item = true;
-                    }
-                }
-                if ($post_poll_item && $has_poll_item) {
-                    $start_time = sprintf("%02d", $this->input->post('ppo_start_time'));
-                    $start_datetime = $this->input->post('ppo_start_date')
-                        ? $this->input->post('ppo_start_date') . ' ' . $start_time . ':00:00' : '';
-                    $end_time = sprintf("%02d", $this->input->post('ppo_end_time'));
-                    $end_datetime = $this->input->post('ppo_end_date')
-                        ? $this->input->post('ppo_end_date') . ' ' . $end_time . ':00:00' : '';
-                    $ppo_choose_count = $this->input->post('ppo_choose_count') ? $this->input->post('ppo_choose_count') : 0;
-                    $ppo_after_comment = $this->input->post('ppo_after_comment') ? $this->input->post('ppo_after_comment') : 0;
-                    $polldata = array(
-                        'post_id' => $post_id,
-                        'brd_id' => element('brd_id', $board),
-                        'ppo_start_datetime' => $start_datetime,
-                        'ppo_end_datetime' => $end_datetime,
-                        'ppo_title' => $this->input->post('ppo_title', null, ''),
-                        'ppo_choose_count' => $ppo_choose_count,
-                        'ppo_after_comment' => $ppo_after_comment,
-                        'ppo_datetime' => cdate('Y-m-d H:i:s'),
-                        'ppo_ip' => $this->input->ip_address(),
-                        'mem_id' => $mem_id,
-                    );
-                    if ($is_admin !== false) {
-                        $polldata['ppo_point'] = $this->input->post('ppo_point') ? $this->input->post('ppo_point') : 0;
-                    }
-                    $ppo_id = $this->Post_poll_model->insert($polldata);
-                    foreach ($post_poll_item as $pkey => $pval) {
-                        if ($pval) {
-                            $itemdata = array(
-                                'ppo_id' => $ppo_id,
-                                'ppi_item' => $pval,
-                            );
-                            $this->Post_poll_item_model->insert($itemdata);
-                        }
-                    }
-                    $postupdate = array(
-                        'ppo_id' => $ppo_id,
-                    );
-                    $this->Post_model->update($post_id, $postupdate);
-                }
             }
 
             if ($this->member->is_member() && element('use_tempsave', $board)) {
@@ -1011,6 +965,8 @@ class Board_write extends CB_Controller
                             'pfi_is_image' => element('is_image', $pval),
                             'pfi_datetime' => cdate('Y-m-d H:i:s'),
                             'pfi_ip' => $this->input->ip_address(),
+                            'file_storage' => config_item('use_file_storage'),
+
                         );
                         $file_id = $this->Post_file_model->insert($fileupdate);
                         if ( ! element('is_image', $pval)) {
@@ -1042,53 +998,24 @@ class Board_write extends CB_Controller
                 $this->Post_model->update($post_id, $postupdatedata);
             }
 
-            if (element('use_post_tag', $board) && $can_tag_write) {
-                $this->load->model('Post_tag_model');
-                $deletewhere = array(
-                    'post_id' => $post_id,
-                );
-                $this->Post_tag_model->delete_where($deletewhere);
-                if ($this->input->post('post_tag')) {
-                    $tags = explode(',', $this->input->post('post_tag'));
-                    if ($tags && is_array($tags)) {
-                        foreach ($tags as $key => $value) {
-                            $value = trim($value);
-                            if ($value) {
-                                $tagdata = array(
-                                    'post_id' => $post_id,
-                                    'brd_id' => element('brd_id', $board),
-                                    'pta_tag' => $value,
-                                );
-                                $this->Post_tag_model->insert($tagdata);
-                            }
-                        }
-                    }
-                }
-            }
-
             $emailsendlistadmin = array();
             $notesendlistadmin = array();
-            $smssendlistadmin = array();
             $emailsendlistpostwriter = array();
             $notesendlistpostwriter = array();
-            $smssendlistpostwriter = array();
 
             if (element('send_email_post_super_admin', $board)
-                OR element('send_note_post_super_admin', $board)
-                OR element('send_sms_post_super_admin', $board)) {
+                OR element('send_note_post_super_admin', $board)) {
                 $mselect = 'mem_id, mem_email, mem_nickname, mem_phone';
                 $superadminlist = $this->Member_model->get_superadmin_list($mselect);
             }
             if (element('send_email_post_group_admin', $board)
-                OR element('send_note_post_group_admin', $board)
-                OR element('send_sms_post_group_admin', $board)) {
+                OR element('send_note_post_group_admin', $board)) {
                 $this->load->model('Board_group_admin_model');
                 $groupadminlist = $this->Board_group_admin_model
                     ->get_board_group_admin_member(element('bgr_id', $board));
             }
             if (element('send_email_post_board_admin', $board)
-                OR element('send_note_post_board_admin', $board)
-                OR element('send_sms_post_board_admin', $board)) {
+                OR element('send_note_post_board_admin', $board)) {
                 $this->load->model('Board_admin_model');
                 $boardadminlist = $this->Board_admin_model
                     ->get_board_admin_member(element('brd_id', $board));
@@ -1130,28 +1057,6 @@ class Board_write extends CB_Controller
             }
             if (element('send_note_post_writer', $board) && $this->member->item('mem_use_note')) {
                 $notesendlistpostwriter['mem_id'] = $mem_id;
-            }
-            if (element('send_sms_post_super_admin', $board) && $superadminlist) {
-                foreach ($superadminlist as $key => $value) {
-                    $smssendlistadmin[$value['mem_id']] = $value;
-                }
-            }
-            if (element('send_sms_post_group_admin', $board) && $groupadminlist) {
-                foreach ($groupadminlist as $key => $value) {
-                    $smssendlistadmin[$value['mem_id']] = $value;
-                }
-            }
-            if (element('send_sms_post_board_admin', $board) && $boardadminlist) {
-                foreach ($boardadminlist as $key => $value) {
-                    $smssendlistadmin[$value['mem_id']] = $value;
-                }
-            }
-            if (element('send_sms_post_writer', $board)
-                && $this->member->item('mem_phone')
-                && $this->member->item('mem_receive_sms')) {
-                $smssendlistpostwriter['mem_id'] = $mem_id;
-                $smssendlistpostwriter['mem_nickname'] = $this->member->item('mem_nickname');
-                $smssendlistpostwriter['mem_phone'] = $this->member->item('mem_phone');
             }
 
             $searchconfig = array(
@@ -1273,50 +1178,10 @@ class Board_write extends CB_Controller
                     1
                 );
             }
-            if ($smssendlistadmin) {
-                $content = str_replace(
-                    $searchconfig,
-                    $replaceconfig,
-                    $this->cbconfig->item('send_sms_post_admin_content')
-                );
-                $sender = array(
-                    'phone' => $this->cbconfig->item('sms_admin_phone'),
-                );
-                $receiver = array();
-                foreach ($smssendlistadmin as $akey => $aval) {
-                    $receiver[] = array(
-                        'mem_id' => element('mem_id', $aval),
-                        'name' => element('mem_nickname', $aval),
-                        'phone' => element('mem_phone', $aval),
-                    );
-                }
-                $this->load->library('smslib');
-                $smsresult = $this->smslib->send($receiver, $sender, $content, $date = '', '게시글 작성 알림');
-            }
-            if ($smssendlistpostwriter) {
-                $content = str_replace(
-                    $searchconfig,
-                    $replaceconfig,
-                    $this->cbconfig->item('send_sms_post_writer_content')
-                );
-                $sender = array(
-                    'phone' => $this->cbconfig->item('sms_admin_phone'),
-                );
-                $receiver = array();
-                $receiver[] = $smssendlistpostwriter;
-                $this->load->library('smslib');
-                $smsresult = $this->smslib->send($receiver, $sender, $content, $date = '', '게시글 작성 알림');
-            }
 
+            // 네이버 신디케이션 보내기
             if ( ! element('post_secret', $updatedata)) {
-                // 네이버 신디케이션 보내기
                 $this->_naver_syndi($post_id, $board, '입력');
-                
-                // 네이버 블로그 자동글쓰기
-                if ($is_admin !== false && $this->cbconfig->item('use_naver_blog_post') && element('use_naver_blog_post', $board)) {
-                    $this->load->helper('naver_blog_post');
-                    naver_blog_post($post_title, display_html_content($post_content, $content_type, element('post_image_width', $board), $autolink, $popup), $board);
-                }
             }
 
             $this->session->set_flashdata(
@@ -1334,7 +1199,10 @@ class Board_write extends CB_Controller
             /**
              * 게시물의 신규입력 또는 수정작업이 끝난 후 뷰 페이지로 이동합니다
              */
-            $redirecturl = post_url(element('brd_key', $board), $post_id);
+            if (element('bgr_id', $board)==='11')
+                $redirecturl = write_url(element('brd_key', $board), $post_id). '?' . $param->output();
+            else 
+                $redirecturl = post_url(element('brd_key', $board), $post_id). '?' . $param->output();
             redirect($redirecturl);
         }
     }
@@ -1353,6 +1221,8 @@ class Board_write extends CB_Controller
 
         // 이벤트가 존재하면 실행합니다
         $view['view']['event']['before'] = Events::trigger('before', $eventname);
+
+        
 
         /**
          * 프라이머리키에 숫자형이 입력되지 않으면 에러처리합니다
@@ -1383,8 +1253,19 @@ class Board_write extends CB_Controller
             show_404();
         }
 
+        if (element('bgr_id', $board)==='11')
+            $view['view']['list'] = $list = $this->_get_list(element('brd_key', $board), 1);
+        
+        
         $view['view']['board'] = $board;
         $view['view']['board_key'] = element('brd_key', $board);
+
+        if(strpos(element('brd_key', $board),'_review' )!==false){
+
+           $post_parent=$this->Post_model->get_one($this->input->get('post_parent', null, 0));
+           $board_parent = $this->board->item_all(element('brd_id', $post_parent));
+           $view['view']['board_key_parent']=element('brd_key', $board_parent);
+        }
 
         $mem_id = (int) $this->member->item('mem_id');
 
@@ -1420,6 +1301,16 @@ class Board_write extends CB_Controller
         if (element('protect_comment_num', $board) > 0 && $is_admin === false) {
             if (element('protect_comment_num', $board) <= element('post_comment_count', $post)) {
                 alert(element('protect_comment_num', $board) . '개 이상의 댓글이 달린 게시글은 수정할 수 없습니다');
+                return false;
+            }
+        }
+
+
+        $post_reply = $this->Post_model->get('','',array('post_num'=>element('post_num', $post),'post_reply'=>element('post_reply', $post).'A'));
+        
+        if ($is_admin === false) {
+            if (count($post_reply)) {
+                alert('답글이 달린 게시글은 수정할 수 없습니다');
                 return false;
             }
         }
@@ -1526,87 +1417,11 @@ class Board_write extends CB_Controller
             $use_dhtml = false;
         }
         $view['view']['board']['use_dhtml'] = $use_dhtml;
-        $use_subj_style = ($this->cbconfig->get_device_view_type() === 'mobile')
-            ? element('use_mobile_subject_style', $board)
-            : element('use_subject_style', $board);
-
-        $use_poll = ($this->cbconfig->get_device_view_type() === 'mobile')
-            ? element('use_mobile_poll', $board)
-            : element('use_poll', $board);
-
-        if ($use_subj_style) {
-            $check = array(
-                'group_id' => element('bgr_id', $board),
-                'board_id' => element('brd_id', $board),
-            );
-            $use_subject_style = $this->accesslevel->is_accessable(
-                element('access_subject_style', $board),
-                element('access_subject_style_level', $board),
-                element('access_subject_style_group', $board),
-                $check
-            );
-        } else {
-            $use_subject_style = false;
-        }
-        $view['view']['board']['use_subject_style'] = $use_subject_style;
-        if ($use_poll) {
-            $this->load->model(array('Post_poll_model', 'Post_poll_item_model', 'Post_poll_item_poll_model'));
-            $postwhere = array(
-                'post_id' => $post_id,
-            );
-            $view['view']['poll'] = $poll
-                = $this->Post_poll_model->get_one('', '', $postwhere);
-            $view['view']['poll_item'] = $poll_item = '';
-            if (element('ppo_id', $poll)) {
-                $itemwhere = array(
-                    'ppo_id' => element('ppo_id', $poll),
-                );
-                $view['view']['poll_item'] = $poll_item
-                    = $this->Post_poll_item_model->get('', '', $itemwhere, '', '', 'ppi_id', 'ASC');
-            }
-            $check = array(
-                'group_id' => element('bgr_id', $board),
-                'board_id' => element('brd_id', $board),
-            );
-            $can_poll_write = $this->accesslevel->is_accessable(
-                element('access_poll_write', $board),
-                element('access_poll_write_level', $board),
-                element('access_poll_write_group', $board),
-                $check
-            );
-        } else {
-            $can_poll_write = false;
-        }
-        $view['view']['board']['can_poll_write'] = $can_poll_write;
-
-        if (element('use_post_tag', $board)) {
-            $check = array(
-                'group_id' => element('bgr_id', $board),
-                'board_id' => element('brd_id', $board),
-            );
-            $can_tag_write = $this->accesslevel->is_accessable(
-                element('access_tag_write', $board),
-                element('access_tag_write_level', $board),
-                element('access_tag_write_group', $board),
-                $check
-            );
-        } else {
-            $can_tag_write = false;
-        }
-        $view['view']['board']['can_tag_write'] = $can_tag_write;
 
         $view['view']['board']['link_count']
             = ($this->cbconfig->get_device_view_type() === 'mobile')
             ? element('mobile_link_num', $board)
             : element('link_num', $board);
-        $view['view']['board']['use_emoticon']
-            = ($this->cbconfig->get_device_view_type() === 'mobile')
-            ? element('use_mobile_post_emoticon', $board)
-            : element('use_post_emoticon', $board);
-        $view['view']['board']['use_specialchars']
-            = ($this->cbconfig->get_device_view_type() === 'mobile')
-            ? element('use_mobile_post_specialchars', $board)
-            : element('use_post_specialchars', $board);
 
         $extravars = element('extravars', $board);
         $form = json_decode($extravars, true);
@@ -1621,17 +1436,22 @@ class Board_write extends CB_Controller
             : element('footer_content', $board);
 
         $view['view']['post']['is_post_name'] = $is_post_name
-            = ($this->member->is_member() === false OR ($is_admin !== false && $mem_id !== abs(element('mem_id', $post)))) ? true : false;
+            = ($this->member->is_member() === false OR ($is_admin !== false && $mem_id !== (int) element('mem_id', $post))) ? true : false;
         $view['view']['post']['can_post_notice'] = $can_post_notice = ($is_admin !== false) ? true : false;
         $view['view']['post']['can_post_secret'] = $can_post_secret
             = element('use_post_secret', $board) === '1' ? true : false;
         $view['view']['post']['can_post_receive_email'] = $can_post_receive_email = element('use_post_receive_email', $board) ? true : false;
+        $view['view']['post']['max_post_main_order'] = $this->Post_model->max_post_order(element('brd_id', $board),'main');
+        $view['view']['post']['max_post_order'] = $this->Post_model->max_post_order(element('brd_id', $board));
+
+        if(empty(element('post_order', $post))) $view['view']['post']['post_order'] = $this->Post_model->current_post_order($post);
 
         $primary_key = $this->Post_model->primary_key;
 
         // 이벤트가 존재하면 실행합니다
         $view['view']['event']['step1'] = Events::trigger('step1', $eventname);
 
+        
         /**
          * Validation 라이브러리를 가져옵니다
          */
@@ -1704,36 +1524,19 @@ class Board_write extends CB_Controller
                 'label' => '패스워드',
                 'rules' => 'trim|required|min_length[' . $password_length . ']|callback__mem_password_check',
             );
-            if ($this->cbconfig->item('use_recaptcha')) {
-                $config[] = array(
-                    'field' => 'g-recaptcha-response',
-                    'label' => '자동등록방지문자',
-                    'rules' => 'trim|required|callback__check_recaptcha',
-                );
-            } else {
-                $config[] = array(
-                    'field' => 'captcha_key',
-                    'label' => '자동등록방지문자',
-                    'rules' => 'trim|required|callback__check_captcha',
-                );
-            }
-        }
-        if ($use_subject_style) {
-            $config[] = array(
-                'field' => 'post_title_color',
-                'label' => '제목색상',
-                'rules' => 'trim|exact_length[7]',
-            );
-            $config[] = array(
-                'field' => 'post_title_font',
-                'label' => '제목폰트',
-                'rules' => 'trim',
-            );
-            $config[] = array(
-                'field' => 'post_title_bold',
-                'label' => '제목볼드',
-                'rules' => 'trim|exact_length[1]',
-            );
+            // if ($this->cbconfig->item('use_recaptcha')) {
+            //     $config[] = array(
+            //         'field' => 'g-recaptcha-response',
+            //         'label' => '자동등록방지문자',
+            //         'rules' => 'trim|required|callback__check_recaptcha',
+            //     );
+            // } else {
+            //     $config[] = array(
+            //         'field' => 'captcha_key',
+            //         'label' => '자동등록방지문자',
+            //         'rules' => 'trim|required|callback__check_captcha',
+            //     );
+            // }
         }
         if (element('use_category', $board) && $is_admin === false) {
             $config[] = array(
@@ -1750,124 +1553,219 @@ class Board_write extends CB_Controller
         $uploadfiledata2 = '';
         if ($use_upload === true && $form_validation && element('use_upload_file', $board)) {
             $this->load->library('upload');
-            if (isset($_FILES) && isset($_FILES['post_file']) && isset($_FILES['post_file']['name']) && is_array($_FILES['post_file']['name'])) {
-                $filecount = count($_FILES['post_file']['name']);
-                $upload_path = config_item('uploads_dir') . '/post/';
-                if (is_dir($upload_path) === false) {
-                    mkdir($upload_path, 0707);
-                    $file = $upload_path . 'index.php';
-                    $f = @fopen($file, 'w');
-                    @fwrite($f, '');
-                    @fclose($f);
-                    @chmod($file, 0644);
-                }
-                $upload_path .= cdate('Y') . '/';
-                if (is_dir($upload_path) === false) {
-                    mkdir($upload_path, 0707);
-                    $file = $upload_path . 'index.php';
-                    $f = @fopen($file, 'w');
-                    @fwrite($f, '');
-                    @fclose($f);
-                    @chmod($file, 0644);
-                }
-                $upload_path .= cdate('m') . '/';
-                if (is_dir($upload_path) === false) {
-                    mkdir($upload_path, 0707);
-                    $file = $upload_path . 'index.php';
-                    $f = @fopen($file, 'w');
-                    @fwrite($f, '');
-                    @fclose($f);
-                    @chmod($file, 0644);
-                }
+            if(config_item('use_file_storage')=='S3'){
 
-                foreach ($_FILES['post_file']['name'] as $i => $value) {
-                    if ($value) {
-                        $uploadconfig = '';
-                        $uploadconfig['upload_path'] = $upload_path;
-                        $uploadconfig['allowed_types'] = element('upload_file_extension', $board)
-                            ? element('upload_file_extension', $board) : '*';
-                        $uploadconfig['max_size'] = element('upload_file_max_size', $board) * 1024;
-                        $uploadconfig['encrypt_name'] = true;
+                if (isset($_FILES) && isset($_FILES['post_file']) && isset($_FILES['post_file']['name']) && is_array($_FILES['post_file']['name'])) {
+                    $filecount = count($_FILES['post_file']['name']);
+                    $upload_path = config_item('uploads_dir') . '/post/';
+                    $upload_path .= cdate('Y') . '/';
+                    $upload_path .= cdate('m') . '/';
 
-                        $this->upload->initialize($uploadconfig);
-                        $_FILES['userfile']['name'] = $_FILES['post_file']['name'][$i];
-                        $_FILES['userfile']['type'] = $_FILES['post_file']['type'][$i];
-                        $_FILES['userfile']['tmp_name'] = $_FILES['post_file']['tmp_name'][$i];
-                        $_FILES['userfile']['error'] = $_FILES['post_file']['error'][$i];
-                        $_FILES['userfile']['size'] = $_FILES['post_file']['size'][$i];
-                        if ($this->upload->do_upload()) {
-                            $filedata = $this->upload->data();
+                    foreach ($_FILES['post_file']['name'] as $i => $value) {
+                        if ($value) {
+                            $uploadconfig = '';
+                            $uploadconfig['upload_path'] = $upload_path;
+                            $uploadconfig['allowed_types'] = element('upload_file_extension', $board)
+                                ? element('upload_file_extension', $board) : '*';
+                            $uploadconfig['max_size'] = element('upload_file_max_size', $board) * 1024;
+                            $uploadconfig['encrypt_name'] = true;
 
-                            $uploadfiledata[$i]['pfi_filename'] = cdate('Y') . '/' . cdate('m') . '/' . element('file_name', $filedata);
-                            $uploadfiledata[$i]['pfi_originname'] = element('orig_name', $filedata);
-                            $uploadfiledata[$i]['pfi_filesize'] = intval(element('file_size', $filedata) * 1024);
-                            $uploadfiledata[$i]['pfi_width'] = element('image_width', $filedata) ? element('image_width', $filedata) : 0;
-                            $uploadfiledata[$i]['pfi_height'] = element('image_height', $filedata) ? element('image_height', $filedata) : 0;
-                            $uploadfiledata[$i]['pfi_type'] = str_replace('.', '', element('file_ext', $filedata));
-                            $uploadfiledata[$i]['is_image'] = element('is_image', $filedata) ? element('is_image', $filedata) : 0;
-                        } else {
-                            $file_error = $this->upload->display_errors();
-                            break;
+                            $this->upload->initialize($uploadconfig);
+                            $_FILES['userfile']['name'] = $_FILES['post_file']['name'][$i];
+                            $_FILES['userfile']['type'] = $_FILES['post_file']['type'][$i];
+                            $_FILES['userfile']['tmp_name'] = $_FILES['post_file']['tmp_name'][$i];
+                            $_FILES['userfile']['error'] = $_FILES['post_file']['error'][$i];
+                            $_FILES['userfile']['size'] = $_FILES['post_file']['size'][$i];
+                            if ($this->upload->do_upload()) {
+                                $filedata = $this->upload->data();
+
+                                $uploadfiledata[$i]['pfi_filename'] = cdate('Y') . '/' . cdate('m') . '/' . element('file_name', $filedata);
+                                $uploadfiledata[$i]['pfi_originname'] = element('orig_name', $filedata);
+                                $uploadfiledata[$i]['pfi_filesize'] = intval(element('file_size', $filedata) * 1024);
+                                $uploadfiledata[$i]['pfi_width'] = element('image_width', $filedata) ? element('image_width', $filedata) : 0;
+                                $uploadfiledata[$i]['pfi_height'] = element('image_height', $filedata) ? element('image_height', $filedata) : 0;
+                                $uploadfiledata[$i]['pfi_type'] = str_replace('.', '', element('file_ext', $filedata));
+                                $uploadfiledata[$i]['is_image'] = element('is_image', $filedata) ? element('is_image', $filedata) : 0;
+                            } else {
+                                $file_error = $this->upload->display_errors();
+                                break;
+                            }
                         }
                     }
                 }
-            }
-            if (isset($_FILES) && isset($_FILES['post_file_update'])
-                && isset($_FILES['post_file_update']['name'])
-                && is_array($_FILES['post_file_update']['name'])
-                && $file_error === '') {
-                $filecount = count($_FILES['post_file_update']['name']);
-                $upload_path = config_item('uploads_dir') . '/post/';
-                if (is_dir($upload_path) === false) {
-                    mkdir($upload_path, 0707);
-                    $file = $upload_path . 'index.php';
-                    $f = @fopen($file, 'w');
-                    @fwrite($f, '');
-                    @fclose($f);
-                    @chmod($file, 0644);
-                }
-                $upload_path .= cdate('Y') . '/';
-                if (is_dir($upload_path) === false) {
-                    mkdir($upload_path, 0707);
-                    $file = $upload_path . 'index.php';
-                    $f = @fopen($file, 'w');
-                    @fwrite($f, '');
-                    @fclose($f);
-                    @chmod($file, 0644);
-                }
-                $upload_path .= cdate('m') . '/';
-                if (is_dir($upload_path) === false) {
-                    mkdir($upload_path, 0707);
-                    $file = $upload_path . 'index.php';
-                    $f = @fopen($file, 'w');
-                    @fwrite($f, '');
-                    @fclose($f);
-                    @chmod($file, 0644);
-                }
+                if (isset($_FILES) && isset($_FILES['post_file_update'])
+                    && isset($_FILES['post_file_update']['name'])
+                    && is_array($_FILES['post_file_update']['name'])
+                    && $file_error === '') {
+                    $filecount = count($_FILES['post_file_update']['name']);
+                    $upload_path = config_item('uploads_dir') . '/post/';
+                    $upload_path .= cdate('Y') . '/';                    
+                    $upload_path .= cdate('m') . '/';
 
-                foreach ($_FILES['post_file_update']['name'] as $i => $value) {
-                    if ($value) {
-                        $uploadconfig = '';
-                        $uploadconfig['upload_path'] = $upload_path;
-                        $uploadconfig['allowed_types'] = element('upload_file_extension', $board)
-                            ? element('upload_file_extension', $board) : '*';
-                        $uploadconfig['max_size'] = element('upload_file_max_size', $board) * 1024;
-                        $uploadconfig['encrypt_name'] = true;
-                        $this->upload->initialize($uploadconfig);
-                        $_FILES['userfile']['name'] = $_FILES['post_file_update']['name'][$i];
-                        $_FILES['userfile']['type'] = $_FILES['post_file_update']['type'][$i];
-                        $_FILES['userfile']['tmp_name'] = $_FILES['post_file_update']['tmp_name'][$i];
-                        $_FILES['userfile']['error'] = $_FILES['post_file_update']['error'][$i];
-                        $_FILES['userfile']['size'] = $_FILES['post_file_update']['size'][$i];
-                        if ($this->upload->do_upload()) {
-                            $filedata = $this->upload->data();
+                    foreach ($_FILES['post_file_update']['name'] as $i => $value) {
+                        if ($value) {
+                            $uploadconfig = '';
+                            $uploadconfig['upload_path'] = $upload_path;
+                            $uploadconfig['allowed_types'] = element('upload_file_extension', $board)
+                                ? element('upload_file_extension', $board) : '*';
+                            $uploadconfig['max_size'] = element('upload_file_max_size', $board) * 1024;
+                            $uploadconfig['encrypt_name'] = true;
+                            $this->upload->initialize($uploadconfig);
+                            $_FILES['userfile']['name'] = $_FILES['post_file_update']['name'][$i];
+                            $_FILES['userfile']['type'] = $_FILES['post_file_update']['type'][$i];
+                            $_FILES['userfile']['tmp_name'] = $_FILES['post_file_update']['tmp_name'][$i];
+                            $_FILES['userfile']['error'] = $_FILES['post_file_update']['error'][$i];
+                            $_FILES['userfile']['size'] = $_FILES['post_file_update']['size'][$i];
+                            if ($this->upload->do_upload()) {
+                                $filedata = $this->upload->data();
+
+                                $oldpostfile = $this->Post_file_model->get_one($i);
+                                if ((int) element('post_id', $oldpostfile) !== (int) element('post_id', $post)) {
+                                    alert('잘못된 접근입니다');
+                                }
+
+                                $this->aws->deleteObject(config_item('uploads_dir') . '/post/'.$oldpostfile['pfi_filename']);                                
+
+                                $uploadfiledata2[$i]['pfi_id'] = $i;
+                                $uploadfiledata2[$i]['pfi_filename'] = cdate('Y') . '/' . cdate('m') . '/' . element('file_name', $filedata);
+                                $uploadfiledata2[$i]['pfi_originname'] = element('orig_name', $filedata);
+                                $uploadfiledata2[$i]['pfi_filesize'] = intval(element('file_size', $filedata) * 1024);
+                                $uploadfiledata2[$i]['pfi_width'] = element('image_width', $filedata)
+                                    ? element('image_width', $filedata) : 0;
+                                $uploadfiledata2[$i]['pfi_height'] = element('image_height', $filedata)
+                                    ? element('image_height', $filedata) : 0;
+                                $uploadfiledata2[$i]['pfi_type'] = str_replace('.', '', element('file_ext', $filedata));
+                                $uploadfiledata2[$i]['is_image'] = element('is_image', $filedata)
+                                    ? element('is_image', $filedata) : 0;
+                            } else {
+                                $file_error = $this->upload->display_errors();
+                                break;
+                            }
+                        }
+                    }
+                }
+            } else {
+                if (isset($_FILES) && isset($_FILES['post_file']) && isset($_FILES['post_file']['name']) && is_array($_FILES['post_file']['name'])) {
+                    $filecount = count($_FILES['post_file']['name']);
+                    $upload_path = config_item('uploads_dir') . '/post/';
+                    if (is_dir($upload_path) === false) {
+                        mkdir($upload_path, 0707);
+                        $file = $upload_path . 'index.php';
+                        $f = @fopen($file, 'w');
+                        @fwrite($f, '');
+                        @fclose($f);
+                        @chmod($file, 0644);
+                    }
+                    $upload_path .= cdate('Y') . '/';
+                    if (is_dir($upload_path) === false) {
+                        mkdir($upload_path, 0707);
+                        $file = $upload_path . 'index.php';
+                        $f = @fopen($file, 'w');
+                        @fwrite($f, '');
+                        @fclose($f);
+                        @chmod($file, 0644);
+                    }
+                    $upload_path .= cdate('m') . '/';
+                    if (is_dir($upload_path) === false) {
+                        mkdir($upload_path, 0707);
+                        $file = $upload_path . 'index.php';
+                        $f = @fopen($file, 'w');
+                        @fwrite($f, '');
+                        @fclose($f);
+                        @chmod($file, 0644);
+                    }
+
+                    foreach ($_FILES['post_file']['name'] as $i => $value) {
+                        if ($value) {
+                            $uploadconfig = '';
+                            $uploadconfig['upload_path'] = $upload_path;
+                            $uploadconfig['allowed_types'] = element('upload_file_extension', $board)
+                                ? element('upload_file_extension', $board) : '*';
+                            $uploadconfig['max_size'] = element('upload_file_max_size', $board) * 1024;
+                            $uploadconfig['encrypt_name'] = true;
+
+                            $this->upload->initialize($uploadconfig);
+                            $_FILES['userfile']['name'] = $_FILES['post_file']['name'][$i];
+                            $_FILES['userfile']['type'] = $_FILES['post_file']['type'][$i];
+                            $_FILES['userfile']['tmp_name'] = $_FILES['post_file']['tmp_name'][$i];
+                            $_FILES['userfile']['error'] = $_FILES['post_file']['error'][$i];
+                            $_FILES['userfile']['size'] = $_FILES['post_file']['size'][$i];
+                            if ($this->upload->do_upload()) {
+                                $filedata = $this->upload->data();
+
+                                $uploadfiledata[$i]['pfi_filename'] = cdate('Y') . '/' . cdate('m') . '/' . element('file_name', $filedata);
+                                $uploadfiledata[$i]['pfi_originname'] = element('orig_name', $filedata);
+                                $uploadfiledata[$i]['pfi_filesize'] = intval(element('file_size', $filedata) * 1024);
+                                $uploadfiledata[$i]['pfi_width'] = element('image_width', $filedata) ? element('image_width', $filedata) : 0;
+                                $uploadfiledata[$i]['pfi_height'] = element('image_height', $filedata) ? element('image_height', $filedata) : 0;
+                                $uploadfiledata[$i]['pfi_type'] = str_replace('.', '', element('file_ext', $filedata));
+                                $uploadfiledata[$i]['is_image'] = element('is_image', $filedata) ? element('is_image', $filedata) : 0;
+                            } else {
+                                $file_error = $this->upload->display_errors();
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (isset($_FILES) && isset($_FILES['post_file_update'])
+                    && isset($_FILES['post_file_update']['name'])
+                    && is_array($_FILES['post_file_update']['name'])
+                    && $file_error === '') {
+                    $filecount = count($_FILES['post_file_update']['name']);
+                    $upload_path = config_item('uploads_dir') . '/post/';
+                    if (is_dir($upload_path) === false) {
+                        mkdir($upload_path, 0707);
+                        $file = $upload_path . 'index.php';
+                        $f = @fopen($file, 'w');
+                        @fwrite($f, '');
+                        @fclose($f);
+                        @chmod($file, 0644);
+                    }
+                    $upload_path .= cdate('Y') . '/';
+                    if (is_dir($upload_path) === false) {
+                        mkdir($upload_path, 0707);
+                        $file = $upload_path . 'index.php';
+                        $f = @fopen($file, 'w');
+                        @fwrite($f, '');
+                        @fclose($f);
+                        @chmod($file, 0644);
+                    }
+                    $upload_path .= cdate('m') . '/';
+                    if (is_dir($upload_path) === false) {
+                        mkdir($upload_path, 0707);
+                        $file = $upload_path . 'index.php';
+                        $f = @fopen($file, 'w');
+                        @fwrite($f, '');
+                        @fclose($f);
+                        @chmod($file, 0644);
+                    }
+
+                    foreach ($_FILES['post_file_update']['name'] as $i => $value) {
+                        if ($value) {
+                            $uploadconfig = '';
+                            $uploadconfig['upload_path'] = $upload_path;
+                            $uploadconfig['allowed_types'] = element('upload_file_extension', $board)
+                                ? element('upload_file_extension', $board) : '*';
+                            $uploadconfig['max_size'] = element('upload_file_max_size', $board) * 1024;
+                            $uploadconfig['encrypt_name'] = true;
+                            $this->upload->initialize($uploadconfig);
+                            $_FILES['userfile']['name'] = $_FILES['post_file_update']['name'][$i];
+                            $_FILES['userfile']['type'] = $_FILES['post_file_update']['type'][$i];
+                            $_FILES['userfile']['tmp_name'] = $_FILES['post_file_update']['tmp_name'][$i];
+                            $_FILES['userfile']['error'] = $_FILES['post_file_update']['error'][$i];
+                            $_FILES['userfile']['size'] = $_FILES['post_file_update']['size'][$i];
+                            if ($this->upload->do_upload()) {
+                                $filedata = $this->upload->data();
 
                             $oldpostfile = $this->Post_file_model->get_one($i);
                             if ((int) element('post_id', $oldpostfile) !== (int) element('post_id', $post)) {
                                 alert('잘못된 접근입니다');
                             }
-                            @unlink(config_item('uploads_dir') .  '/post/' . element('pfi_filename', $oldpostfile));
 
+                            if(element('file_storage',$oldpostfile)=="S3")
+                            $this->aws->deleteObject(config_item('uploads_dir') . '/post/'.$oldpostfile['pfi_filename']);
+                            else @unlink(config_item('uploads_dir') .  '/post/' . element('pfi_filename', $oldpostfile));
+                            
                             $uploadfiledata2[$i]['pfi_id'] = $i;
                             $uploadfiledata2[$i]['pfi_filename'] = cdate('Y') . '/' . cdate('m') . '/' . element('file_name', $filedata);
                             $uploadfiledata2[$i]['pfi_originname'] = element('orig_name', $filedata);
@@ -1885,6 +1783,7 @@ class Board_write extends CB_Controller
                         }
                     }
                 }
+            }
             }
         }
 
@@ -1905,22 +1804,6 @@ class Board_write extends CB_Controller
 
             if ($file_error) {
                 $view['view']['message'] = $file_error;
-            }
-
-            if (element('use_post_tag', $board) && $can_tag_write) {
-                $this->load->model('Post_tag_model');
-                $view['view']['post']['post_tag'] = '';
-                $postwhere = array(
-                    'post_id' => $post_id,
-                );
-                $tag = $this->Post_tag_model->get('', '', $postwhere, '', '', 'pta_id', 'ASC');
-                if ($tag && is_array($tag)) {
-                    foreach ($tag as $key => $value) {
-                        if (element('pta_tag', $value)) {
-                            $view['view']['post']['post_tag'] .= trim(element('pta_tag', $value)) . ',';
-                        }
-                    }
-                }
             }
 
             $extra_content = '';
@@ -2060,7 +1943,24 @@ class Board_write extends CB_Controller
             $view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
             $this->data = $view;
             $this->layout = element('layout_skin_file', element('layout', $view));
-            $this->view = element('view_skin_file', element('layout', $view));
+            if (element('bgr_id', $board)==='11'){
+                $list_skin_file = element('use_gallery_list', $board) ? 'gallerylist' : 'list';
+                $listskindir = ($this->cbconfig->get_device_view_type() === 'mobile')
+                    ? $mobile_skin_dir : $skin_dir;
+                if (empty($listskindir)) {
+                    $listskindir
+                        = ($this->cbconfig->get_device_view_type() === 'mobile')
+                        ? $this->cbconfig->item('mobile_skin_default')
+                        : $this->cbconfig->item('skin_default');
+                }
+                $this->view = array(
+                    element('view_skin_file', element('layout', $view)),
+                    'board/' . $listskindir . '/' . $list_skin_file,
+                );
+            } else {
+                $this->view = element('view_skin_file', element('layout', $view));
+            }
+            
 
         } else {
 
@@ -2068,10 +1968,6 @@ class Board_write extends CB_Controller
              * 유효성 검사를 통과한 경우입니다.
              * 즉 데이터의 insert 나 update 의 process 처리가 필요한 상황입니다
              */
-
-            if( $this->input->post($primary_key) != $post_id ){
-                // $_POST['post_id'] 값과 $_GET['post_id'] 값이 틀린 경우입니다.
-            }
 
             // 이벤트가 존재하면 실행합니다
             $view['view']['event']['formruntrue'] = Events::trigger('formruntrue', $eventname);
@@ -2084,6 +1980,37 @@ class Board_write extends CB_Controller
                 $post_content = $this->imagelib->replace_external_image($post_content);
             }
 
+            $spam_word = explode(',', trim($this->cbconfig->item('spam_word')));
+            if ($spam_word) {
+                for ($i = 0; $i < count($spam_word); $i++) {
+                    $str = trim($spam_word[$i]);
+                    if ($post_title) {
+                        $pos = stripos($post_title, $str);
+                        if ($pos !== false) {
+                            $ment='';
+                            for($len=0;$len <mb_strlen($str, 'utf-8');$len++){
+                                $ment.='*';
+                            }
+
+                            $post_title = str_replace($str,$ment, $post_title);
+                            // break;
+                        }
+                    }
+                    if ($post_content) {
+                        $pos = stripos($post_content, $str);
+                        if ($pos !== false) {
+                            $ment='';
+                            for($len=0;$len <mb_strlen($str, 'utf-8');$len++){
+                                $ment.='*';
+                            }
+
+                            $post_content = str_replace($str,$ment, $post_content);
+                            //break;
+                        }
+                    }
+                }
+            }
+
             $metadata = array();
             $updatedata = array(
                 'post_title' => $post_title,
@@ -2091,6 +2018,9 @@ class Board_write extends CB_Controller
                 'post_html' => $content_type,
                 'post_updated_datetime' => cdate('Y-m-d H:i:s'),
                 'post_update_mem_id' => $mem_id,
+                'region_category' => $this->input->post('region_category',null,1),
+                'post_main_4' => $this->input->post('post_main_4',null,0),
+                'post_order' => $this->input->post('post_order',null,0),
             );
 
             if ($is_post_name) {
@@ -2118,11 +2048,6 @@ class Board_write extends CB_Controller
             if ($can_post_receive_email) {
                 $updatedata['post_receive_email'] = $this->input->post('post_receive_email') ? 1 : 0;
             }
-            if ($use_subject_style) {
-                $metadata['post_title_color'] = $this->input->post('post_title_color', null, '');
-                $metadata['post_title_font'] = $this->input->post('post_title_font', null, '');
-                $metadata['post_title_bold'] = $this->input->post('post_title_bold', null, '');
-            }
             if (element('use_category', $board)) {
                 $updatedata['post_category'] = $this->input->post('post_category', null, '');
             }
@@ -2146,20 +2071,6 @@ class Board_write extends CB_Controller
                     ->save($post_id, element('brd_id', $board), $metadata);
             }
 
-            if (element('use_posthistory', $board)) {
-                $this->load->model('Post_history_model');
-                $historydata = array(
-                    'post_id' => $post_id,
-                    'brd_id' => element('brd_id', $board),
-                    'mem_id' => $mem_id,
-                    'phi_title' => $post_title,
-                    'phi_content' => $post_content,
-                    'phi_content_html_type' => $content_type,
-                    'phi_ip' => $this->input->ip_address(),
-                    'phi_datetime' => cdate('Y-m-d H:i:s'),
-                );
-                $this->Post_history_model->insert($historydata);
-            }
             $post_link_update = $this->input->post('post_link_update');
             $link_count = 0;
             if ($post_link_update && is_array($post_link_update) && count($post_link_update) > 0) {
@@ -2191,134 +2102,6 @@ class Board_write extends CB_Controller
             }
             $updatedata['post_link_count'] = $link_count;
 
-            if ($can_poll_write) {
-                if ($ppo_id = (int) $this->input->post('ppo_id')) {
-                    $post_poll_data = $this->Post_poll_model->get_one($ppo_id);
-                    if (element('post_id', $post_poll_data) === $post_id) {
-                        $post_poll_item = $this->input->post('poll_item');
-                        $post_poll_item_update = $this->input->post('poll_item_update');
-                        if ($post_poll_item OR $post_poll_item_update) {
-                            $start_time = sprintf("%02d", $this->input->post('ppo_start_time'));
-                            $start_datetime = $this->input->post('ppo_start_date')
-                                ? $this->input->post('ppo_start_date') . ' ' . $start_time . ':00:00' : '';
-                            $end_time = sprintf("%02d", $this->input->post('ppo_end_time'));
-                            $end_datetime = $this->input->post('ppo_end_date')
-                                ? $this->input->post('ppo_end_date') . ' ' . $end_time . ':00:00' : '';
-                            $ppo_choose_count = $this->input->post('ppo_choose_count') ? $this->input->post('ppo_choose_count') : 0;
-                            $ppo_after_comment = $this->input->post('ppo_after_comment') ? $this->input->post('ppo_after_comment') : 0;
-                            $polldata = array(
-                                'ppo_start_datetime' => $start_datetime,
-                                'ppo_end_datetime' => $end_datetime,
-                                'ppo_title' => $this->input->post('ppo_title', null, ''),
-                                'ppo_choose_count' => $ppo_choose_count,
-                                'ppo_after_comment' => $ppo_after_comment,
-                            );
-                            if ($is_admin !== false) {
-                                $polldata['ppo_point'] = $this->input->post('ppo_point') ? $this->input->post('ppo_point') : 0;
-                            }
-                            $this->Post_poll_model->update(element('ppo_id', $post_poll_data), $polldata);
-                            if ($post_poll_item_update) {
-                                foreach ($post_poll_item_update as $pkey => $pval) {
-                                    $item = $this->Post_poll_item_model->get_one($pkey);
-                                    if (element('ppi_id', $item) && element('ppi_id', $item) === $pkey) {
-                                        if (element('ppo_id', $item) === element('ppo_id', $post_poll_data)) {
-                                            if ($pval) {
-                                                $itemdata = array(
-                                                    'ppi_item' => $pval,
-                                                );
-                                                $this->Post_poll_item_model->update($pkey, $itemdata);
-                                            } else {
-                                                $this->Post_poll_item_model->delete($pkey);
-                                                $pipwhere = array(
-                                                    'ppi_id' => $pkey,
-                                                );
-                                                $this->Post_poll_item_poll_model->delete_where($pipwhere);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            if ($post_poll_item) {
-                                foreach ($post_poll_item as $pkey => $pval) {
-                                    if ($pval) {
-                                        $itemdata = array(
-                                            'ppo_id' => element('ppo_id', $post_poll_data),
-                                            'ppi_item' => $pval,
-                                        );
-                                        $this->Post_poll_item_model->insert($itemdata);
-                                    }
-                                }
-                            }
-                        } else {
-                            $pwhere = array(
-                                'ppo_id' => element('ppo_id', $post_poll_data),
-                            );
-                            $this->Post_poll_model->delete(element('ppo_id', $post_poll_data));
-                            $this->Post_poll_item_model->delete_where($pwhere);
-                            $this->Post_poll_item_poll_model->delete_where($pwhere);
-                            $updatedata['ppo_id'] = '';
-                        }
-                    }
-
-                    $pwhere = array(
-                        'ppo_id' => $ppo_id,
-                    );
-                    $cnt = $this->Post_poll_item_model->count_by($pwhere);
-                    if ($cnt === 0) {
-                        $this->Post_poll_model->delete($ppo_id);
-                        $this->Post_poll_item_model->delete_where($pwhere);
-                        $this->Post_poll_item_poll_model->delete_where($pwhere);
-                        $updatedata['ppo_id'] = '';
-                    }
-
-                } else {
-                    $post_poll_item = $this->input->post('poll_item');
-                    $has_poll_item = false;
-                    foreach ($post_poll_item as $pkey => $pval) {
-                        if ($pval) {
-                            $has_poll_item = true;
-                        }
-                    }
-                    if ($post_poll_item && $has_poll_item) {
-                        $start_time = sprintf("%02d", $this->input->post('ppo_start_time'));
-                        $start_datetime = $this->input->post('ppo_start_date')
-                            ? $this->input->post('ppo_start_date') . ' ' . $start_time . ':00:00' : '';
-                        $end_time = sprintf("%02d", $this->input->post('ppo_end_time'));
-                        $end_datetime = $this->input->post('ppo_end_date')
-                            ? $this->input->post('ppo_end_date') . ' ' . $end_time . ':00:00' : '';
-                        $ppo_choose_count = $this->input->post('ppo_choose_count') ? $this->input->post('ppo_choose_count') : 0;
-                        $ppo_after_comment = $this->input->post('ppo_after_comment') ? $this->input->post('ppo_after_comment') : 0;
-
-                        $polldata = array(
-                            'post_id' => $post_id,
-                            'brd_id' => element('brd_id', $board),
-                            'ppo_start_datetime' => $start_datetime,
-                            'ppo_end_datetime' => $end_datetime,
-                            'ppo_title' => $this->input->post('ppo_title', null, ''),
-                            'ppo_choose_count' => $ppo_choose_count,
-                            'ppo_after_comment' => $ppo_after_comment,
-                            'ppo_datetime' => cdate('Y-m-d H:i:s'),
-                            'ppo_ip' => $this->input->ip_address(),
-                            'mem_id' => $mem_id,
-                        );
-                        if ($is_admin !== false) {
-                            $polldata['ppo_point'] = $this->input->post('ppo_point') ? $this->input->post('ppo_point') : 0;
-                        }
-                        $ppo_id = $this->Post_poll_model->insert($polldata);
-                        foreach ($post_poll_item as $pkey => $pval) {
-                            if ($pval) {
-                                $itemdata = array(
-                                    'ppo_id' => $ppo_id,
-                                    'ppi_item' => $pval,
-                                );
-                                $this->Post_poll_item_model->insert($itemdata);
-                            }
-                        }
-                        $updatedata['ppo_id'] = $ppo_id;
-                    }
-                }
-            }
-
             $file_updated = false;
             $file_changed = false;
             if ($use_upload
@@ -2340,6 +2123,7 @@ class Board_write extends CB_Controller
                             'pfi_is_image' => element('is_image', $pval),
                             'pfi_datetime' => cdate('Y-m-d H:i:s'),
                             'pfi_ip' => $this->input->ip_address(),
+                            'file_storage' => config_item('use_file_storage'),
                         );
                         $file_id = $this->Post_file_model->insert($fileupdate);
                         if ( ! element('is_image', $pval)) {
@@ -2376,6 +2160,7 @@ class Board_write extends CB_Controller
                             'pfi_is_image' => element('is_image', $pval),
                             'pfi_datetime' => cdate('Y-m-d H:i:s'),
                             'pfi_ip' => $this->input->ip_address(),
+                            'file_storage' => config_item('use_file_storage'),
                         );
                         $this->Post_file_model->update($pkey, $fileupdate);
                         if ( ! element('is_image', $pval)) {
@@ -2408,7 +2193,10 @@ class Board_write extends CB_Controller
                         if ( ! element('post_id', $oldpostfile) OR (int) element('post_id', $oldpostfile) !== (int) element('post_id', $post)) {
                             alert('잘못된 접근입니다.');
                         }
-                        @unlink(config_item('uploads_dir') .  '/post/' . element('pfi_filename', $oldpostfile));
+                        if(element('file_storage',$oldpostfile)=="S3")
+                            $this->aws->deleteObject(config_item('uploads_dir') . '/post/'.$oldpostfile['pfi_filename']);
+                        else @unlink(config_item('uploads_dir') .  '/post/' . element('pfi_filename', $oldpostfile));
+                        
                         $this->Post_file_model->delete($key);
                         $this->point->delete_point(
                             $mem_id,
@@ -2437,35 +2225,25 @@ class Board_write extends CB_Controller
                 }
             }
 
-            if (element('use_post_tag', $board) && $can_tag_write) {
-                $this->load->model('Post_tag_model');
-                $deletewhere = array(
-                    'post_id' => $post_id,
-                );
-                $this->Post_tag_model->delete_where($deletewhere);
-                if ($this->input->post('post_tag')) {
-                    $tags = explode(',', $this->input->post('post_tag'));
-                    if ($tags && is_array($tags)) {
-                        foreach ($tags as $key => $value) {
-                            $value = trim($value);
-                            if ($value) {
-                                $tagdata = array(
-                                    'post_id' => $post_id,
-                                    'brd_id' => element('brd_id', $board),
-                                    'pta_tag' => $value,
-                                );
-                                $this->Post_tag_model->insert($tagdata);
-                            }
-                        }
-                    }
-                }
-            }
-
             // 이벤트가 존재하면 실행합니다
             Events::trigger('before_post_update', $eventname);
 
-            $this->Post_model->update($post_id, $updatedata);
+            $this->Post_model->update($this->input->post($primary_key), $updatedata);
 
+            
+            if($this->input->post('post_order',null,0) > 0){
+                $field='post_order';
+                $post_order_update[$field.'<']=element('post_order', $post);
+                $post_order_update[$field.'!=']=0;
+                $post_order_update['post_id !=']=$post_id;
+                $post_order_update['brd_id']=element('brd_id', $post);
+                if(!empty($this->input->post('post_main_4',null,0))) $post_order_update['post_main_4']=1;
+
+                $this->Post_model->db->set($field, $field . '+' . 1, false);
+                $this->Post_model->db->where($post_order_update);
+                $this->Post_model->db->update($this->Post_model->_table);
+            } 
+            
             // 네이버 신디케이션 보내기
             if ( ! element('post_secret', $updatedata)) {
                 $this->_naver_syndi($post_id, $board, '수정');
@@ -2484,9 +2262,13 @@ class Board_write extends CB_Controller
              * 게시물의 신규입력 또는 수정작업이 끝난 후 뷰 페이지로 이동합니다
              */
             $param =& $this->querystring;
-            $redirecturl = post_url(element('brd_key', $board), $post_id) . '?' . $param->output();
 
-            redirect($redirecturl);
+            if (element('bgr_id', $board)==='11')
+                $redirecturl = write_url(element('brd_key', $board), $post_id). '?' . $param->output();
+            else 
+                $redirecturl = post_url(element('brd_key', $board), $post_id). '?' . $param->output();
+
+           redirect($redirecturl);
         }
     }
 
@@ -2537,7 +2319,7 @@ class Board_write extends CB_Controller
 
 
     /**
-     * 게시물 작성시 비회원이 작성한 경우 또는 게시판에서 캡챠를 사용시 captcha체크합니다
+     * 게시물 작성시 비회원이 작성한 경우 captcha체크합니다
      */
     public function _check_captcha($str)
     {
@@ -2675,24 +2457,605 @@ class Board_write extends CB_Controller
         $exec = curl_exec($ch);
         curl_close($ch);
 
-        if ($this->cbconfig->item('use_naver_syndi_log')) {
-            $this->load->library('simplexml');
-            //use the method to parse the data from xml
-            $xmlData = $this->simplexml->xml_parse($exec);
-
-            $mem_id = (int) $this->member->item('mem_id');
-            $logdata = array(
-                'post_id' => $post_id,
-                'mem_id' => $mem_id,
-                'pns_status' => $status,
-                'pns_return_code' => element('error_code', $xmlData, ''),
-                'pns_return_message' => element('message', $xmlData, ''),
-                'pns_receipt_number' => element('receipt_number', $xmlData, ''),
-                'pns_datetime' => cdate('Y-m-d H:i:s'),
-            );
-            $this->load->model('Post_naver_syndi_log_model');
-            $this->Post_naver_syndi_log_model->insert($logdata);
-        }
         return $exec;
+    }
+
+    /**
+     * 게시판 목록페이지입니다.
+     */
+    public function _get_list($brd_key, $from_view = '')
+    {
+
+        // 이벤트 라이브러리를 로딩합니다
+        $eventname = 'event_board_post_get_list';
+        $this->load->event($eventname);
+
+        $view = array();
+        $view['view'] = array();
+
+        // 이벤트가 존재하면 실행합니다
+        $view['view']['event']['before'] = Events::trigger('list_before', $eventname);
+
+        $return = array();
+        $board = $this->_get_board($brd_key);
+        $mem_id = (int) $this->member->item('mem_id');
+
+        $alertmessage = $this->member->is_member()
+            ? '회원님은 이 게시판 목록을 볼 수 있는 권한이 없습니다'
+            : '비회원은 이 게시판에 접근할 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오';
+
+        $check = array(
+            'group_id' => element('bgr_id', $board),
+            'board_id' => element('brd_id', $board),
+        );
+        
+        $this->accesslevel->check(
+            element('access_list', $board),
+            element('access_list_level', $board),
+            element('access_list_group', $board),
+            $alertmessage,
+            $check
+        );
+
+        if (element('use_personal', $board) && $this->member->is_member() === false) {
+            alert('이 게시판은 1:1 게시판입니다. 비회원은 접근할 수 없습니다');
+            return false;
+        }
+        $skindir = ($this->cbconfig->get_device_view_type() === 'mobile')
+            ? (element('board_mobile_skin', $board) ? element('board_mobile_skin', $board)
+            : element('board_skin', $board)) : element('board_skin', $board);
+
+        $skinurl = base_url( VIEW_DIR . 'board/' . $skindir);
+
+        $view['view']['is_admin'] = $is_admin = $this->member->is_admin(
+            array(
+                'board_id' => element('brd_id', $board),
+                'group_id' => element('bgr_id', $board)
+            )
+        );
+
+        /**
+         * 페이지에 숫자가 아닌 문자가 입력되거나 1보다 작은 숫자가 입력되면 에러 페이지를 보여줍니다.
+         */
+        $param =& $this->querystring;
+        $page = (((int) $this->input->get('page')) > 0) ? ((int) $this->input->get('page')) : 1;
+
+        if(empty($mem_id))
+            $order_by_field = '(CASE WHEN post_order=0 THEN 999 ELSE post_order END),post_num, post_reply';
+        else
+            $order_by_field = '(CASE WHEN post_order=0 THEN 999 ELSE post_order END),(cb_post.mem_id ='.$mem_id.') desc,post_num, post_reply';
+
+        $findex = $this->input->get('findex', null, $order_by_field);
+
+        $sfield = $sfieldchk = $this->input->get('sfield', null, '');
+        if ($sfield === 'post_both') {
+            $sfield = array('post_title', 'post_content');
+        }
+        $skeyword = $this->input->get('skeyword', null, '');
+        if ($this->cbconfig->get_device_view_type() === 'mobile') {
+            $per_page = element('mobile_list_count', $board)
+                ? (int) element('mobile_list_count', $board) : 10;
+        } else {
+            $per_page = element('list_count', $board)
+                ? (int) element('list_count', $board) : 20;
+        }
+        $offset = ($page - 1) * $per_page;
+
+        $this->Post_model->allow_search_field = array('post_id', 'post_title', 'post_content', 'post_both', 'post_category', 'post_userid', 'post_nickname','post_parent'); // 검색이 가능한 필드
+        $this->Post_model->search_field_equal = array('post_id', 'post_userid', 'post_nickname'); // 검색중 like 가 아닌 = 검색을 하는 필드
+
+        // 이벤트가 존재하면 실행합니다
+        $view['view']['event']['step1'] = Events::trigger('list_step1', $eventname);
+
+        /**
+         * 상단에 공지사항 부분에 필요한 정보를 가져옵니다.
+         */
+
+        $except_all_notice= false;
+        if (element('except_all_notice', $board)
+            && $this->cbconfig->get_device_view_type() !== 'mobile') {
+            $except_all_notice = true;
+        }
+        if (element('mobile_except_all_notice', $board)
+            && $this->cbconfig->get_device_view_type() === 'mobile') {
+            $except_all_notice = true;
+        }
+        $use_sideview = ($this->cbconfig->get_device_view_type() === 'mobile')
+            ? element('use_mobile_sideview', $board)
+            : element('use_sideview', $board);
+        $use_sideview_icon = ($this->cbconfig->get_device_view_type() === 'mobile')
+            ? element('use_mobile_sideview_icon', $board)
+            : element('use_sideview_icon', $board);
+        $list_date_style = ($this->cbconfig->get_device_view_type() === 'mobile')
+            ? element('mobile_list_date_style', $board)
+            : element('list_date_style', $board);
+        $list_date_style_manual = ($this->cbconfig->get_device_view_type() === 'mobile')
+            ? element('mobile_list_date_style_manual', $board)
+            : element('list_date_style_manual', $board);
+
+        if (element('use_gallery_list', $board)) {
+            $this->load->model('Post_file_model');
+
+            $board['gallery_cols'] = $gallery_cols
+                = ($this->cbconfig->get_device_view_type() === 'mobile')
+                ? element('mobile_gallery_cols', $board)
+                : element('gallery_cols', $board);
+
+            $board['gallery_image_width'] = $gallery_image_width
+                = ($this->cbconfig->get_device_view_type() === 'mobile')
+                ? element('mobile_gallery_image_width', $board)
+                : element('gallery_image_width', $board);
+
+            $board['gallery_image_height'] = $gallery_image_height
+                = ($this->cbconfig->get_device_view_type() === 'mobile')
+                ? element('mobile_gallery_image_height', $board)
+                : element('gallery_image_height', $board);
+
+            $board['gallery_percent'] = floor( 102 / $board['gallery_cols']) - 2;
+        }
+
+        if (element('use_category', $board)) {
+            $this->load->model('Board_category_model');
+            $board['category'] = $this->Board_category_model
+                ->get_all_category(element('brd_id', $board));
+        }
+
+        
+        /**
+         * 게시판 목록에 필요한 정보를 가져옵니다.
+         */
+        $where_in=array();
+        $where=array();
+
+        // if(empty(get_cookie('region')) || get_cookie('region')===0){
+        // //if(strpos($brd_key,'_0' )!==false){
+        //     $this->load->model('Board_model');
+
+        //     $brdidwhere = array(
+        //             'bgr_id' => element('bgr_id', $board),
+        //         );
+
+        //     $brdidarr = $this->Board_model
+        //             ->get('', 'brd_id', $brdidwhere, '', '', 'brd_id', 'ASC');
+
+        //     foreach ($brdidarr as $value) {
+        //         $brd_id_arr[] = $value['brd_id'];
+               
+        //     }
+            
+        //     $where_in=array(
+        //         'brd_id' => $brd_id_arr,
+        //     );
+
+        // } else {
+        //     $where = array(
+        //         'brd_id' => $this->board->item_key('brd_id', $brd_key),
+        //     );
+        // }
+
+        $where = array(
+            'brd_id' => $this->board->item_key('brd_id', $brd_key),
+        );
+        
+        if(strpos($brd_key,'_review' )!==false){
+            $where = array(
+                'post_parent' => $this->input->get('post_parent', null, 0)
+            );   
+        }
+
+        if(!empty(get_cookie('region')) && element('bgr_id', $board)!=='8' && element('bgr_id', $board)!=='11') {
+            $where['region_category'] = get_cookie('region');
+        }
+
+        
+
+        $where['post_del <>'] = 2;
+        if (element('except_notice', $board)
+            && $this->cbconfig->get_device_view_type() !== 'mobile') {
+            $where['post_notice'] = 0;
+        }
+        if (element('mobile_except_notice', $board)
+            && $this->cbconfig->get_device_view_type() === 'mobile') {
+            $where['post_notice'] = 0;
+        }
+        if (element('use_personal', $board) && $is_admin === false) {
+            $where['post.mem_id'] = $mem_id;
+        }
+
+
+        
+        
+
+        $category_id = (int) $this->input->get('category_id');
+        if (empty($category_id) OR $category_id < 1) {
+            $category_id = '';
+        }
+        
+        if(!empty($this->input->get('post_num'))) $where['post_num'] = $this->input->get('post_num');
+        $where['post_main_4'] = 0;
+        $where['post_reply'] ='';
+        $result = $this->Post_model
+            ->get_post_list($per_page, $offset, $where, $category_id, $findex, $sfield, $skeyword,'',$where_in);
+        $list_num = $result['total_rows'] - ($page - 1) * $per_page;
+
+        if (element('list', $result)) {
+            foreach (element('list', $result) as $key => $val) {
+
+               
+                $result['list'][$key]['post_url'] = post_url(element('brd_key', $board), element('post_id', $val));
+
+                $result['list'][$key]['meta'] = $meta
+                    = $this->Post_meta_model
+                    ->get_all_meta(element('post_id', $val));
+
+                $result['list'][$key]['extravars'] = $this->Post_extra_vars_model->get_all_meta(element('post_id', $val));
+
+                if ($this->cbconfig->get_device_view_type() === 'mobile') {
+                    $result['list'][$key]['title'] = element('mobile_subject_length', $board)
+                        ? cut_str(element('post_title', $val), element('mobile_subject_length', $board))
+                        : element('post_title', $val);
+                } else {
+                    $result['list'][$key]['title'] = element('subject_length', $board)
+                        ? cut_str(element('post_title', $val), element('subject_length', $board))
+                        : element('post_title', $val);
+                }
+                if (element('post_del', $val)) {
+                    $result['list'][$key]['title'] = '게시물이 삭제 되었습니다';
+                }
+                $is_blind = (element('blame_blind_count', $board) > 0 && element('post_blame', $val) >= element('blame_blind_count', $board)) ? true : false;
+                if ($is_blind) {
+                    $result['list'][$key]['title'] = '신고가 접수된 게시글입니다.';
+                }
+
+                if (element('mem_id', $val) >= 0) {
+                    $result['list'][$key]['display_name'] = display_username(
+                        element('post_userid', $val),
+                        element('post_nickname', $val),
+                        ($use_sideview_icon ? element('mem_icon', $val) : ''),
+                        ($use_sideview ? 'Y' : 'N')
+                    );
+                } else {
+                    $result['list'][$key]['display_name'] = '익명사용자';
+                }
+
+                $result['list'][$key]['display_datetime'] = display_datetime(
+                    element('post_datetime', $val),
+                    $list_date_style,
+                    $list_date_style_manual
+                );
+                $result['list'][$key]['category'] = '';
+                if (element('use_category', $board) && element('post_category', $val)) {
+                    $result['list'][$key]['category']
+                        = $this->Board_category_model
+                        ->get_category_info(element('brd_id', $val), element('post_category', $val));
+                }
+                if ($param->output()) {
+                    $result['list'][$key]['post_url'] .= '?' . $param->output();
+                }
+                $result['list'][$key]['num'] = $list_num--;
+                $result['list'][$key]['is_hot'] = false;
+
+                $hot_icon_day = ($this->cbconfig->get_device_view_type() === 'mobile')
+                    ? element('mobile_hot_icon_day', $board)
+                    : element('hot_icon_day', $board);
+
+                $hot_icon_hit = ($this->cbconfig->get_device_view_type() === 'mobile')
+                    ? element('mobile_hot_icon_hit', $board)
+                    : element('hot_icon_hit', $board);
+
+                if ($hot_icon_day && ( ctimestamp() - strtotime(element('post_datetime', $val)) <= $hot_icon_day * 86400)) {
+                    if ($hot_icon_hit && $hot_icon_hit <= element('post_hit', $val)) {
+                        $result['list'][$key]['is_hot'] = true;
+                    }
+                }
+                $result['list'][$key]['is_new'] = false;
+                $new_icon_hour = ($this->cbconfig->get_device_view_type() === 'mobile')
+                    ? element('mobile_new_icon_hour', $board)
+                    : element('new_icon_hour', $board);
+
+                if ($new_icon_hour && ( ctimestamp() - strtotime(element('post_datetime', $val)) <= $new_icon_hour * 3600)) {
+                    $result['list'][$key]['is_new'] = true;
+                }
+
+                $result['list'][$key]['is_mobile'] = (element('post_device', $val) === 'mobile') ? true : false;
+
+                $can_modify = (empty(element('mem_id', $val)) || $mem_id === abs(element('mem_id', $val))) ? true : false;
+                $can_delete = ($is_admin !== false 
+                    OR empty(element('mem_id', $val)) || $mem_id === abs(element('mem_id', $val))) ? true : false;
+
+                $can_reply = $this->accesslevel->is_accessable(
+                    element('access_reply', $board),
+                    element('access_reply_level', $board),
+                    element('access_reply_group', $board),
+                    $check
+                );
+
+                $result['list'][$key]['modify_url'] = ($can_modify && ! element('post_del', $val))
+                    ? modify_url(element('post_id', $val) . '?' . $param->output()) : '';
+                $result['list'][$key]['delete_url'] = ($can_delete && ! element('post_del', $val))
+                    ? site_url('postact/delete/' . element('post_id', $val) . '?' . $param->output()) : '';
+                $result['list'][$key]['reply_url'] = ($can_reply === true && ! element('post_del', $val))
+                    ? reply_url(element('post_id', $val)) : '';
+
+                // 세션 생성
+                if ( ! $this->session->userdata('post_id_' . element('post_id', $val))) {
+                    $this->session->set_userdata(
+                        'post_id_' . element('post_id', $val),
+                        '1'
+                    );
+                }
+
+                $result['list'][$key]['thumb_url'] = '';
+                $result['list'][$key]['origin_image_url'] = '';
+
+                if (element('use_gallery_list', $board)) {
+                    if(config_item('use_file_storage') == "S3"){
+                        if (element('post_image', $val)) {
+                            $filewhere = array(
+                                'post_id' => element('post_id', $val),
+                                'pfi_is_image' => 1,
+                            );
+                            $file = $this->Post_file_model
+                                ->get_one('', '', $filewhere, '', '', 'pfi_id', 'ASC');
+                            $result['list'][$key]['thumb_url'] = $this->config->config['s3_url'] .config_item('uploads_dir'). '/post/' . element('pfi_filename', $file); 
+                        } else {
+                            $thumb_url = get_post_image_url(element('post_content', $val), $gallery_image_width, $gallery_image_height);
+                            $result['list'][$key]['thumb_url'] = $thumb_url
+                                ? $thumb_url
+                                : thumb_url('', '', $gallery_image_width, $gallery_image_height);
+                                
+                        }
+                    } else {
+                        if (element('post_image', $val)) {
+                            $filewhere = array(
+                                'post_id' => element('post_id', $val),
+                                'pfi_is_image' => 1,
+                            );
+                            $file = $this->Post_file_model
+                                ->get_one('', '', $filewhere, '', '', 'pfi_id', 'ASC');
+                            $result['list'][$key]['thumb_url'] = thumb_url('post', element('pfi_filename', $file), $gallery_image_width, $gallery_image_height);
+                            $result['list'][$key]['origin_image_url'] = thumb_url('post', element('pfi_filename', $file));
+                        } else {
+                            $thumb_url = get_post_image_url(element('post_content', $val), $gallery_image_width, $gallery_image_height);
+                            $result['list'][$key]['thumb_url'] = $thumb_url
+                                ? $thumb_url
+                                : thumb_url('', '', $gallery_image_width, $gallery_image_height);
+
+                            $result['list'][$key]['origin_image_url'] = $thumb_url;
+                        }
+                    }
+                    
+                }
+            }
+        }
+
+        
+
+        $where['post_reply'] ='A';
+        $reply_result=array();
+        $post_reply_result = $this->Post_model
+            ->get_post_list('', '', $where, $category_id, $findex, $sfield, $skeyword,'',$where_in);
+        
+
+        if (element('list', $post_reply_result)) {
+            foreach (element('list', $post_reply_result) as  $val) {
+                
+                $reply_result['reply_content'][abs(element('post_num',$val))] = element('post_content', $val);
+
+                $can_modify = (! element('mem_id', $val)
+                    OR (element('mem_id', $val) && $mem_id === abs(element('mem_id', $val)))) ? true : false;
+                $can_delete = ($is_admin !== false OR ! element('mem_id', $val)
+                    OR (element('mem_id', $val) && $mem_id === abs(element('mem_id', $val)))) ? true : false;
+
+                
+
+                $reply_result['modify_url'][abs(element('post_num',$val))] = ($can_modify && ! element('post_del', $val))
+                    ? modify_url(element('post_id', $val) . '?' . $param->output()) : '';
+                $reply_result['delete_url'][abs(element('post_num',$val))] = ($can_delete && ! element('post_del', $val))
+                    ? site_url('postact/delete/' . element('post_id', $val) . '?' . $param->output()) : '';
+                
+
+                // 세션 생성
+                if ( ! $this->session->userdata('post_id_' . element('post_id', $val))) {
+                    $this->session->set_userdata(
+                        'post_id_' . element('post_id', $val),
+                        '1'
+                    );
+                }
+            }
+        }
+
+ 
+
+        
+        $return['data'] = $result;
+        $return['reply_data'] = $reply_result;
+        
+        if (empty($from_view)) {
+            $board['headercontent'] = ($this->cbconfig->get_device_view_type() === 'mobile')
+                ? element('mobile_header_content', $board)
+                : element('header_content', $board);
+        }
+        $board['footercontent'] = ($this->cbconfig->get_device_view_type() === 'mobile')
+            ? element('mobile_footer_content', $board)
+            : element('footer_content', $board);
+
+        $board['cat_display_style'] = ($this->cbconfig->get_device_view_type() === 'mobile')
+            ? element('mobile_category_display_style', $board)
+            : element('category_display_style', $board);
+
+        $return['board'] = $board;
+
+        $return['point_info'] = '';
+        if ($this->cbconfig->item('use_point')
+            && element('use_point', $board)
+            && element('use_point_info', $board)) {
+
+            $point_info = '';
+            if (element('point_write', $board)) {
+                $point_info .= '원글작성 : ' . element('point_write', $board) . '<br />';
+            }
+            if (element('point_comment', $board)) {
+                $point_info .= '댓글작성 : ' . element('point_comment', $board) . '<br />';
+            }
+            if (element('point_fileupload', $board)) {
+                $point_info .= '파일업로드 : ' . element('point_fileupload', $board) . '<br />';
+            }
+            if (element('point_filedownload', $board)) {
+                $point_info .= '파일다운로드 : ' . element('point_filedownload', $board) . '<br />';
+            }
+            if (element('point_filedownload_uploader', $board)) {
+                $point_info .= '파일다운로드시업로더에게 : ' . element('point_filedownload_uploader', $board) . '<br />';
+            }
+            if (element('point_read', $board)) {
+                $point_info .= '게시글조회 : ' . element('point_read', $board) . '<br />';
+            }
+            if (element('point_post_like', $board)) {
+                $point_info .= '원글추천함 : ' . element('point_post_like', $board) . '<br />';
+            }
+            if (element('point_post_dislike', $board)) {
+                $point_info .= '원글비추천함 : ' . element('point_post_dislike', $board) . '<br />';
+            }
+            if (element('point_post_liked', $board)) {
+                $point_info .= '원글추천받음 : ' . element('point_post_liked', $board) . '<br />';
+            }
+            if (element('point_post_disliked', $board)) {
+                $point_info .= '원글비추천받음 : ' . element('point_post_disliked', $board) . '<br />';
+            }
+            if (element('point_comment_like', $board)) {
+                $point_info .= '댓글추천함 : ' . element('point_comment_like', $board) . '<br />';
+            }
+            if (element('point_comment_dislike', $board)) {
+                $point_info .= '댓글비추천함 : ' . element('point_comment_dislike', $board) . '<br />';
+            }
+            if (element('point_comment_liked', $board)) {
+                $point_info .= '댓글추천받음 : ' . element('point_comment_liked', $board) . '<br />';
+            }
+            if (element('point_comment_disliked', $board)) {
+                $point_info .= '댓글비추천받음 : ' . element('point_comment_disliked', $board) . '<br />';
+            }
+
+            $return['point_info'] = $point_info;
+        }
+
+        // 이벤트가 존재하면 실행합니다
+        $view['view']['event']['step2'] = Events::trigger('list_step2', $eventname);
+
+
+        /**
+         * primary key 정보를 저장합니다
+         */
+        $return['primary_key'] = $this->Post_model->primary_key;
+
+        $highlight_keyword = '';
+        if ($skeyword) {
+            if ( ! $this->session->userdata('skeyword_' . $skeyword)) {
+                $sfieldarray = array(
+                    'post_title',
+                    'post_content',
+                    'post_both',
+                );
+                if (in_array($sfieldchk, $sfieldarray)) {
+                    $this->load->model('Search_keyword_model');
+                    $searchinsert = array(
+                        'sek_keyword' => $skeyword,
+                        'sek_datetime' => cdate('Y-m-d H:i:s'),
+                        'sek_ip' => $this->input->ip_address(),
+                        'mem_id' => $mem_id,
+                    );
+                    $this->Search_keyword_model->insert($searchinsert);
+                    $this->session->set_userdata(
+                        'skeyword_' . $skeyword,
+                        1
+                    );
+                }
+            }
+            $key_explode = explode(' ', $skeyword);
+            if ($key_explode) {
+                foreach ($key_explode as $seval) {
+                    if ($highlight_keyword) {
+                        $highlight_keyword .= ',';
+                    }
+                    $highlight_keyword .= '\'' . html_escape($seval) . '\'';
+                }
+            }
+        }
+        $return['highlight_keyword'] = $highlight_keyword;
+
+        /**
+         * 페이지네이션을 생성합니다
+         */
+
+        $config['base_url'] = write_url($brd_key) . '?' . $param->replace('page');
+        
+        
+        $config['total_rows'] = $result['total_rows'];
+        $config['per_page'] = $per_page;
+        if ($this->cbconfig->get_device_view_type() === 'mobile') {
+            $config['num_links'] = element('mobile_page_count', $board)
+                ? element('mobile_page_count', $board) : 3;
+        } else {
+            $config['num_links'] = element('page_count', $board)
+                ? element('page_count', $board) : 5;
+        }
+        $this->pagination->initialize($config);
+        $return['paging'] = $this->pagination->create_links();
+        $return['page'] = $page;
+
+        /**
+         * 쓰기 주소, 삭제 주소등 필요한 주소를 구합니다
+         */
+        $search_option = array(
+            'post_title' => '제목',
+            'post_content' => '내용'
+        );
+        $return['search_option'] = search_option($search_option, $sfield);
+        if ($skeyword) {
+            $return['list_url'] = write_url(element('brd_key', $board));
+            $return['search_list_url'] = write_url(element('brd_key', $board));
+        } else {
+            $return['list_url'] = write_url(element('brd_key', $board) . '?' . $param->output());
+            $return['search_list_url'] = '';
+        }
+
+        $check = array(
+            'group_id' => element('bgr_id', $board),
+            'board_id' => element('brd_id', $board),
+        );
+        $can_write = $this->accesslevel->is_accessable(
+            element('access_write', $board),
+            element('access_write_level', $board),
+            element('access_write_group', $board),
+            $check
+        );
+
+        $return['write_url'] = '';
+        if ($can_write === true) {
+            $return['write_url'] = write_url($brd_key);
+            if(strpos($brd_key,'_review' )!==false){
+                $return['write_url'] .='?' . $param->output();
+            }
+        } elseif ($this->cbconfig->get_device_view_type() !== 'mobile' && element('always_show_write_button', $board)) {
+            $return['write_url'] = 'javascript:alert(\'비회원은 글쓰기 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.\');';
+        } elseif ($this->cbconfig->get_device_view_type() === 'mobile' && element('mobile_always_show_write_button', $board)) {
+            $return['write_url'] = 'javascript:alert(\'비회원은 글쓰기 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.\');';
+        }
+
+        $return['list_delete_url'] = site_url('postact/listdelete/' . $brd_key . '?' . $param->output());
+
+        return $return;
+    }
+
+    /**
+     * board, board_meta 정보를 얻습니다
+     */
+    public function _get_board($brd_key)
+    {
+        $board_id = $this->board->item_key('brd_id', $brd_key);
+        if (empty($board_id)) {
+            show_404();
+        }
+        $board = $this->board->item_all($board_id);
+        return $board;
     }
 }
