@@ -50,18 +50,22 @@
 
    
     <section class="cont_tab">
-        <div role="group" aria-label="...">
-            <?php if ($this->member->is_admin() === 'super') { ?>
-                <a href="<?php echo admin_url('page/event/write/' . element('eve_id', element('data', $view))); ?>" class="btn btn-default btn-sm" target="_blank">수 정</a>
-            <?php } ?>
-                <a href="<?php echo element('list_url', $view); ?>" class="btn-sm">목 록</a>
+        <div class="btn-group pull-left" role="group" aria-label="...">
+            
+            <a href="<?php echo element('list_url', $view); ?>" class="btn btn-info btn-sm">목 록</a>
             <?php if (element('prev_post', $view)) { ?>
-                <a href="<?php echo element('url', element('prev_post', $view)); ?>" class="btn-sm">◀이전 글</a>
+                <a href="<?php echo element('url', element('prev_post', $view)); ?>" class="btn btn-default btn-sm">◀이전 글</a>
             <?php } ?>
             <?php if (element('next_post', $view)) { ?>
-                <a href="<?php echo element('url', element('next_post', $view)); ?>" class="btn-sm">다음 글▶</a>
+                <a href="<?php echo element('url', element('next_post', $view)); ?>" class="btn btn-default btn-sm">다음 글▶</a>
             <?php } ?>
         </div>
+
+        <?php if ($this->member->is_admin() === 'super') { ?>
+            <div class="pull-right">
+                <a href="<?php echo admin_url('page/event/write/' . element('eve_id', element('data', $view))); ?>" class="btn btn-success btn-sm" target="_blank">수 정</a>
+            </div>
+            <?php } ?>
     </div>
 
      <?php

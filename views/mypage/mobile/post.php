@@ -23,12 +23,12 @@
             <p>하사 <?php //echo html_escape($this->member->item('mem_level')); ?></p>
         </div>
 
-        <button>
+        <button id="opener">
                 등급혜택 보기 
         </button>
 
         <div id="dialog"  style="display:none">
-            <img src="<?php echo base_url('assets/images/temp/benefit.png') ?>" alt="benefit" style="width:100%" >
+            <img src="<?php echo base_url('assets/images/temp/info_img/info_dia.png') ?>" alt="benefit" style="width:100%" >
         </div>
     </section>
 
@@ -80,7 +80,7 @@
                 <tr>
                     <td><?php echo element('num', $result); ?></td>
                     <!-- <td style="padding:0px"><?php if (element('thumb_url', $result)) { ?><img class="media-object" src="<?php echo element('thumb_url', $result); ?>" alt="<?php echo html_escape(element('post_title', $result)); ?>" title="<?php echo html_escape(element('post_title', $result)); ?>" style="width:50px;height:40px;" /><?php } ?></td> -->
-                    <td style="word-break:break-all;width:60%;"><a href="<?php echo element('post_url', $result); ?>" target="new" title="<?php echo html_escape(element('post_title', $result)); ?>"><?php echo html_escape(element('post_title', $result)); ?></a>
+                    <td style="word-break:break-all;width:60%;text-align: left;padding-left:10px;"><a href="<?php echo element('post_url', $result); ?>" target="new" title="<?php echo html_escape(element('post_title', $result)); ?>"><?php echo html_escape(element('post_title', $result)); ?></a>
         
                     </td>
                     <td><?php echo display_datetime(element('post_datetime', $result)); ?></td>

@@ -127,13 +127,8 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
 
    
     <section class="cont_tab">
-        <div role="group" aria-label="...">
-            <?php if (element('modify_url', $view)) { ?>
-                <a href="<?php echo element('modify_url', $view); ?>" class="btn btn-success btn-sm">수정</a>
-            <?php } ?>
-            <?php    if (element('delete_url', $view)) { ?>
-                <a href="<?php echo element('delete_url', $view); ?>" class="btn btn-danger btn-sm btn-one-delete">삭제</a>
-            <?php } ?>
+        <div class="btn-group pull-left" role="group" aria-label="...">
+            
                 <a href="<?php echo element('list_url', $view); ?>" class="btn btn-info btn-sm">목 록</a>
             <?php if (element('search_list_url', $view)) { ?>
                     <a href="<?php echo element('search_list_url', $view); ?>" class="btn btn-info btn-sm">검색목록</a>
@@ -146,7 +141,13 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
             <?php } ?>
         </div>
         <?php if (element('write_url', $view)) { ?>
-            <div class="pull-left">
+            <div class="pull-right">
+                <?php if (element('modify_url', $view)) { ?>
+                <a href="<?php echo element('modify_url', $view); ?>" class="btn btn-success btn-sm">수정</a>
+            <?php } ?>
+            <?php    if (element('delete_url', $view)) { ?>
+                <a href="<?php echo element('delete_url', $view); ?>" class="btn btn-danger btn-sm btn-one-delete">삭제</a>
+            <?php } ?>
                 <a href="<?php echo element('write_url', $view); ?>" class="btn btn-success btn-sm">글쓰기</a>
             </div>
         <?php } ?>
