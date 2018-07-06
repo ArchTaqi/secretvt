@@ -20,7 +20,7 @@
             <a class="good" href="javascript:;" onClick="add_follow('<?php echo element('mem_userid', element('member', $view)); ?>', 'followed_number');" title="<?php echo html_escape(element('mem_nickname', element('member', $view))); ?> 님을 친구추가하기"><i class="fa fa-thumbs-o-up fa-lg"></i> <span class="followed_number"><?php echo number_format(element('mem_followed', element('member', $view))); ?></span></a>
         </li>
     </ul>
-    <table class="table table-striped mt3per">
+    <table class="table table-striped mt20">
         <tbody>
             <tr>
                 <th>포인트</th>

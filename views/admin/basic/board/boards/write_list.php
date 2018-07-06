@@ -46,8 +46,7 @@
                         <label class="col-sm-2 control-label">정렬방법</label>
                         <div class="col-sm-8 form-inline">
                             <select name="order_by_field" class="form-control" >
-                                <option value="(CASE WHEN post_order=0 THEN 999 ELSE post_order END),post_num, post_reply" <?php echo set_select('order_by_field', 'post_num, post_reply', (element('order_by_field', element('data', $view)) === '(CASE WHEN post_order=0 THEN 999 ELSE post_order END),post_num, post_reply' ? true : false)); ?>>기본정렬</option>
-                                <option value="post_main_4 desc" <?php echo set_select('order_by_field', 'post_main_4 desc', (element('order_by_field', element('data', $view)) === 'post_main_4 desc' ? true : false)); ?>>메인 4슬론우선</option>
+                                <option value="post_num, post_reply" <?php echo set_select('order_by_field', 'post_num, post_reply', (element('order_by_field', element('data', $view)) === 'post_num, post_reply' ? true : false)); ?>>기본정렬</option>
                                 <option value="post_datetime desc" <?php echo set_select('order_by_field', 'post_datetime desc', (element('order_by_field', element('data', $view)) === 'post_datetime desc' ? true : false)); ?>>날짜순(최근날짜우선)</option>
                                 <option value="post_datetime asc" <?php echo set_select('order_by_field', 'post_datetime asc', (element('order_by_field', element('data', $view)) === 'post_datetime asc' ? true : false)); ?>>날짜순(오래된날짜우선)</option>
                                 <option value="post_hit desc" <?php echo set_select('order_by_field', 'post_hit desc', (element('order_by_field', element('data', $view)) === 'post_hit desc' ? true : false)); ?>>조회수(높은것우선)</option>

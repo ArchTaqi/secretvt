@@ -1,6 +1,6 @@
 <?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
 
-<div class="wrap mypage">
+<div class="wrap05 mypage">
 
      <section class="title02">
         <h2>회원 비밀번호 변경</h2>

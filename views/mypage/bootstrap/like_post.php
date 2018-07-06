@@ -17,7 +17,7 @@
     <div class="page-header">
         <h4>추천 (원글)</h4>
     </div>
-    <div class="btn-group btn-group-justified mb3per" role="group" aria-label="...">
+    <div class="btn-group btn-group-justified mb20" role="group" aria-label="...">
         <div class="btn-group" role="group"><a href="<?php echo site_url('mypage/like_post'); ?>" class="btn btn-warning btn-sm" title="원글">원글</a></div>
         <div class="btn-group" role="group"><a href="<?php echo site_url('mypage/like_comment'); ?>" class="btn btn-success btn-sm" title="댓글">댓글</a></div>
     </div>

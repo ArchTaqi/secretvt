@@ -11,10 +11,21 @@
         <li><a href="<?php echo site_url('note/write'); ?>" class="btn btn-default">쪽지 쓰기</a></li>
     </ul>
 
-    <div class="note-view mt3per">
+    <div class="note-view mt20">
         <div class="note-view-title">
             <?php echo html_escape(element('nte_title', element('data', $view))); ?> <small><?php echo element('display_name', element('data', $view)); ?>, <?php echo display_datetime(element('nte_datetime', element('data', $view)), 'full'); ?> </small>
         </div>
+        <?php if (element('nte_originname', element('data', $view))) { ?>
+            <div class="table-box">
+                <table class="table-body">
+                    <tbody>
+                        <tr>
+                            <td><i class="fa fa-download"></i> <a href="<?php echo element('download_link', element('data', $view)); ?>"><?php echo html_escape(element('nte_originname', element('data', $view))); ?></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        <?php } ?>
         <div class="note-contents">
             <?php echo element('content', element('data', $view)); ?>
         </div>

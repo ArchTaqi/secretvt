@@ -121,7 +121,7 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
                 </button>
                 <a href="<?php echo site_url(); ?>" class="navbar-brand" title="<?php echo html_escape($this->cbconfig->item('site_title'));?>"><?php echo $this->cbconfig->item('site_logo'); ?></a>
             </div>
-            
+
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="topmenu-navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -192,22 +192,6 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
                         //]]>
                         </script>
                     </li>
-                    <li>
-                        <span>
-                          <label for="select">지역선택하기</label>
-                          <select id="region">
-                        <?php
-                        if (element('board_list', $view)) {
-                          foreach (element('board_list', $view) as $key => $board) {
-
-                              if(false) echo '<option value='.board_url(element('brd_key', $board)).' selected>'.$board['brd_name'].'</option>';
-                              else echo '<option value='.board_url(element('brd_key', $board)).'>'.$board['brd_name'].'</option>';
-                          }
-                        }
-                        ?>
-                          </select>
-                        </span>
-                    </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div>
@@ -220,7 +204,7 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
             <div class="row">
 
                 <?php if (element('use_sidebar', $layout)) {?>
-                    <div class="col-md-9 col-sm-8 col-xs-12 mb3per">
+                    <div class="col-md-9 col-sm-8 col-xs-12 mb20">
                 <?php } ?>
 
                 <!-- 본문 시작 -->
@@ -250,6 +234,9 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
                     <li><a href="<?php echo document_url('aboutus'); ?>" title="회사소개">회사소개</a></li>
                     <li><a href="<?php echo document_url('provision'); ?>" title="이용약관">이용약관</a></li>
                     <li><a href="<?php echo document_url('privacy'); ?>" title="개인정보 취급방침">개인정보 취급방침</a></li>
+                    <li><a href="<?php echo site_url('pointranking'); ?>" title="포인트 전체랭킹">포인트 전체랭킹</a></li>
+                    <li><a href="<?php echo site_url('pointranking/month'); ?>" title="포인트 월별랭킹">포인트 월별랭킹</a></li>
+                    <li><a href="<?php echo site_url('levelup'); ?>" title="레벨업">레벨업</a></li>
                 </ul>
             </div>
             <div class="copyright">
@@ -337,7 +324,7 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
                                     if (element('men_target', $mval)) {
                                         $menuhtml .= ' target="' . element('men_target', $mval) . '"';
                                     }
-                                    $menuhtml .= ' title="' . html_escape(element('men_name', $mval)) . '">' . html_escape(element('men_name', $mval)) . '</a><a href="#" style="width:25px;float:right;" class="subopen" data-menu-order="' . $mkey . '"><i class="fa fa-caret-down"></i></a>
+                                    $menuhtml .= ' class="text_link" title="' . html_escape(element('men_name', $mval)) . '">' . html_escape(element('men_name', $mval)) . '</a><a href="#" style="width:25px;float:right;" class="subopen" data-menu-order="' . $mkey . '"><i class="fa fa-caret-down"></i></a>
                                     <ul class="dropdown-custom-menu drop-downorder-' . $mkey . '">';
 
                                     foreach (element(element('men_id', $mval), $menu) as $skey => $sval) {
@@ -350,7 +337,7 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
                                     $menuhtml .= '</ul></li>';
 
                                 } else {
-                                    $menuhtml .= '<li><a href="' . element('men_link', $mval) . '" ' . element('men_custom', $mval);
+                                    $menuhtml .= '<li><a class="text_link" href="' . element('men_link', $mval) . '" ' . element('men_custom', $mval);
                                     if (element('men_target', $mval)) {
                                         $menuhtml .= ' target="' . element('men_target', $mval) . '"';
                                     }
@@ -380,41 +367,6 @@ $(document).on('click', '.viewpcversion', function(){
 });
 $(document).on('click', '.viewmobileversion', function(){
     Cookies.set('device_view_type', 'mobile', { expires: 1 });
-});
-
-$(document).ready(function(){
-
-    //지역선택하기 
-    var select = $("#region");
-    select.change(function(){
-        // var select_name = $(this).children("option:selected").text();
-        // $(this).siblings("label").text(select_name);
-        // $("label").css("color" , "#231b26");
-
-
-    Cookies.set('region',$(this).children('option:selected').index(), { expires: 1 },cb_cookie_domain);
-        //set_cookie("region", '11', 0, cb_cookie_domain);        
-       location.href=$(this).val();
-    });
-
-    // // 메인메뉴 의 높이가 자동 설정
-    // var hei = $('.wrap > header .mainmenu ul').height() - 2;
-
-    // $('.wrap > header .mainmenu ul ').css('height' , hei);
-
-    //선택된 메인메뉴 설정 
-
-  //  $('.wrap > header .mainmenu div').css('left' , '11.5%');
-
-//     //로딩후 서브메뉴의 선택 설정 
-//     $('.submenu li:nth-child(1)').css('background-color' , '#efd0de');
-
-// //서브메뉴 클릭시 색상 변경
-//     $('.submenu li').click(function(){
-//         $('.submenu li').css('background-color' , '#fff');
-//         $(this).css('background-color' , '#efd0de');
-//     });
-
 });
 </script>
 <?php echo element('popup', $layout); ?>

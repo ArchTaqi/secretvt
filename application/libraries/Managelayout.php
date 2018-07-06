@@ -20,7 +20,7 @@ class Managelayout extends CI_Controller
 
     function __construct()
     {
-        
+
     }
 
 
@@ -61,32 +61,6 @@ class Managelayout extends CI_Controller
         $data['view_skin_file'] .= $skin_file;
 
         $data['favicon'] = $CI->cbconfig->item('site_favicon') ? site_url(config_item('uploads_dir') . '/favicon/' . $CI->cbconfig->item('site_favicon')) : '';
-
-        $cachename = 'latest_version_from_ciboard_api';
-        $cachetime = 43200;
-        if ( ! $result = $CI->cache->get($cachename)) {
-            try {
-                $CI->load->library('Requests');
-                $requests = new Requests();
-                $requests->register_autoloader();
-                $headers = array('Accept' => 'application/json');
-                $postdata = array('requesturl' => current_full_url(), 'package' => CB_PACKAGE, 'version' => CB_VERSION);
-                $request = $requests->post(config_item('ciboard_check_latest_version'), $headers, $postdata);
-                $result['latest_versions'] = json_decode($request->body, true);
-                if (strtolower(CB_PACKAGE) === 'premium') {
-                    $result['latest_version_name'] = $result['latest_versions']['premium_version'];
-                    $result['latest_download_url'] = $result['latest_versions']['premium_downloadurl'];
-                } else {
-                    $result['latest_version_name'] = $result['latest_versions']['basic_version'];
-                    $result['latest_download_url'] = $result['latest_versions']['basic_downloadurl'];
-                }
-            } catch (Exception $e) {
-                $result['latest_version_name'] = CB_VERSION;
-                log_message('error', 'Caught exception: '.$e->getMessage());
-            }
-            $CI->cache->save($cachename, $result, $cachetime);
-        }
-        $data['version_latest'] = $result;
 
         return $data;
     }
@@ -187,33 +161,6 @@ class Managelayout extends CI_Controller
 
         $data['favicon'] = $CI->cbconfig->item('site_favicon') ? site_url(config_item('uploads_dir') . '/favicon/' . $CI->cbconfig->item('site_favicon')) : '';
 
-        $cachename = 'latest_version_from_ciboard_api';
-        $cachetime = 43200;
-        if ( ! $result = $CI->cache->get($cachename)) {
-            try {
-                $CI->load->library('Requests');
-                $requests = new Requests();
-                $requests->register_autoloader();
-                $headers = array('Accept' => 'application/json');
-                $postdata = array('requesturl' => current_full_url(), 'package' => CB_PACKAGE, 'version' => CB_VERSION);
-                $request = $requests->post(config_item('ciboard_check_latest_version'), $headers, $postdata);
-                $result['latest_versions'] = json_decode($request->body, true);
-                if (strtolower(CB_PACKAGE) === 'premium') {
-                    $result['latest_version_name'] = $result['latest_versions']['premium_version'];
-                    $result['latest_download_url'] = $result['latest_versions']['premium_downloadurl'];
-                } else {
-                    $result['latest_version_name'] = $result['latest_versions']['basic_version'];
-                    $result['latest_download_url'] = $result['latest_versions']['basic_downloadurl'];
-                }
-            } catch (Exception $e) {
-                $result['latest_version_name'] = CB_VERSION;
-                log_message('error', 'Caught exception: '.$e->getMessage());
-            }
-            $CI->cache->save($cachename, $result, $cachetime);
-
-        }
-        $data['version_latest'] = $result;
-
         $mem_id = (int) $CI->member->item('mem_id');
 
         if ($CI->input->is_ajax_request() === false) {
@@ -247,19 +194,52 @@ class Managelayout extends CI_Controller
 
             // 메뉴관리
             $CI->load->model('Menu_model');
-
-
             $data['menu'] = $CI->Menu_model->get_all_menu($device_view_type);
 
+            if ($data['menu']) {
+                $menu = $data['menu'];
+
+                $menu_keys=array_keys(element(0, $menu));
+
+                if (element(0, $menu)) {
+                    foreach (element(0, $menu) as $mkey => $mval) {
+                        if (element(element('men_id', $mval), $menu)) {
+                            foreach (element(element('men_id', $mval), $menu) as $skey => $sval) {
+
+                                if(str_replace("/","",element('men_link', $sval)) === str_replace("/","",element('page_url', $config))) 
+                                    $data['menu']['active']= array(element('men_id', $mval),element('men_id', $sval));
+                            }
+                            
+
+                        } else {
+
+                            if(str_replace("/","",element('men_link', $mval)) === str_replace("/","",element('page_url', $config))) $data['menu']['active']= array(element('men_id', $mval));
+                            
+                        }
+                    }
+                }
+                if(!empty($data['menu']['active'][0])){
+                    $m = array_search($data['menu']['active'][0], $menu_keys);
+                    
+                    if($m===0)
+                        $prev_key = array_pop($menu_keys);
+                    else 
+                        $prev_key = $menu_keys[$m - 1];
+
+                    if($m+1 === count($menu_keys))
+                        $next_key = array_shift($menu_keys);
+                    else 
+                        $next_key = $menu_keys[$m+1];
+
+                    $data['prev_men_link'] = element('men_link',element($prev_key,element(0, $menu)));
+                    $data['next_men_link'] = element('men_link',element($next_key,element(0, $menu)));
+                }
+            }
+            
             //팝업관리
             $CI->load->library('popuplib');
             $data['popup'] = $CI->popuplib->display_popup();
 
-        } else {
-            $CI->load->model('Menu_model');
-
-            
-            $data['menu'] = $CI->Menu_model->get_all_menu($device_view_type);
         }
 
         return $data;

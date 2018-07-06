@@ -47,16 +47,20 @@
 
         <ul class="login_sign">
             <li>
-                아직도 SecretPhilippines<br>회원이 아니세요 ?
                 <a href="<?php echo site_url('register'); ?>"  title="회원가입">
+                아직도 SecretPhilippines<br>회원이 아니세요 ?
+                    <span>
                     회원가입
+                    </span>
                 </a>
             </li>
 
             <li style="border-right:0;">
-                아이디&amp;패스워드를<br>잊어버리셨나요?
                 <a href="<?php echo site_url('findaccount'); ?>" title="아이디 패스워드 찾기">
+                아이디&amp;패스워드를<br>잊어버리셨나요?
+                    <span>
                     ID/PW 찾기
+                    </span>
                 </a>
             </li>
         </ul>

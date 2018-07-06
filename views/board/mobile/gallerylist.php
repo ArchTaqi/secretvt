@@ -1,14 +1,44 @@
 <?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
 
+
+
+
+
 <?php echo element('headercontent', element('board', element('list', $view))); ?>
 
-<div class="board">
-    <h3><?php echo html_escape(element('board_name', element('board', element('list', $view)))); ?></h3>
+<div class="wrap">
+
+    <section class="title">
+        <h4>title</h4>
+        <div></div>
+        <h2><?php echo html_escape(element('board_name', element('board', element('list', $view)))); ?></h2>
+        <?php
+            if (element('use_category', element('board', element('list', $view))) && element('cat_display_style', element('board', element('list', $view))) === 'tab') {
+                $category = element('category', element('board', element('list', $view)));
+                ?>
+                <table class="table01">
+                    <tr>
+                        <td role="presentation" <?php if ( ! $this->input->get('category_id')) { ?>class="active" <?php } ?>><a href="<?php echo board_url(element('brd_key', element('board', element('list', $view)))); ?>?findex=<?php echo html_escape($this->input->get('findex')); ?>&category_id="><img src="<?php echo base_url('assets/images/temp/sub_img/sub_all.png'); ?>" alt="sub01">전체</a></td>
+                        <?php
+                        if (element(0, $category)) {
+                            foreach (element(0, $category) as $ckey => $cval) {
+                                ?>
+                                <td role="presentation" <?php if ($this->input->get('category_id') === element('bca_key', $cval)) { ?>class="active" <?php } ?>><a href="<?php echo board_url(element('brd_key', element('board', element('list', $view)))); ?>?findex=<?php echo html_escape($this->input->get('findex')); ?>&category_id=<?php echo element('bca_key', $cval); ?>"><img src="<?php echo base_url('assets/images/temp/sub_img/kara_0'.($ckey+1).'.png'); ?>" alt="sub01"><?php echo html_escape(element('bca_value', $cval)); ?></a></td>
+                                <?php
+                            }
+                        }
+                        ?>
+                    </tr>
+                </table>
+        <?php } ?>
+    </section>
+
+
     <div class="table-top">
         <?php if ( ! element('access_list', element('board', element('list', $view))) && element('use_rss_feed', element('board', element('list', $view)))) { ?>
             <a href="<?php echo rss_url(element('brd_key', element('board', element('list', $view)))); ?>" class="btn btn-default btn-sm" title="<?php echo html_escape(element('board_name', element('board', element('list', $view)))); ?> RSS 보기"><i class="fa fa-rss"></i></a>
         <?php } ?>
-        <select class="input" onchange="location.href='<?php echo board_url(element('brd_key', element('board', element('list', $view)))); ?>?category_id=<?php echo html_escape($this->input->get('categroy_id')); ?>&amp;findex=' + this.value;">
+        <!-- <select class="input" onchange="location.href='<?php echo board_url(element('brd_key', element('board', element('list', $view)))); ?>?category_id=<?php echo html_escape($this->input->get('categroy_id')); ?>&amp;findex=' + this.value;">
             <option value="">정렬하기</option>
             <option value="post_datetime desc" <?php echo $this->input->get('findex') === 'post_datetime desc' ? 'selected="selected"' : '';?>>날짜순</option>
             <option value="post_hit desc" <?php echo $this->input->get('findex') === 'post_hit desc' ? 'selected="selected"' : '';?>>조회수</option>
@@ -16,7 +46,7 @@
             <?php if (element('use_post_like', element('board', element('list', $view)))) { ?>
                 <option value="post_like desc" <?php echo $this->input->get('findex') === 'post_like desc' ? 'selected="selected"' : '';?>>추천순</option>
             <?php } ?>
-        </select>
+        </select> -->
         <?php if (element('use_category', element('board', element('list', $view))) && ! element('cat_display_style', element('board', element('list', $view)))) { ?>
             <select class="input" onchange="location.href='<?php echo board_url(element('brd_key', element('board', element('list', $view)))); ?>?findex=<?php echo html_escape($this->input->get('findex')); ?>&category_id=' + this.value;">
                 <option value="">카테고리선택</option>
@@ -46,7 +76,7 @@
                 ?>
             </select>
         <?php } ?>
-        <div class="col-md-6">
+        <!-- <div class="col-md-6">
             <div class=" searchbox">
                 <form class="navbar-form navbar-right pull-right" action="<?php echo board_url(element('brd_key', element('board', element('list', $view)))); ?>" onSubmit="return postSearch(this);">
                     <input type="hidden" name="findex" value="<?php echo html_escape($this->input->get('findex')); ?>" />
@@ -73,7 +103,7 @@
                     <div class="point-info-content alert alert-warning"><strong>포인트안내</strong><br /><?php echo element('point_info', element('list', $view)); ?></div>
                 </div>
             <?php } ?>
-        </div>
+        </div> -->
         <script type="text/javascript">
         //<![CDATA[
         function postSearch(f) {
@@ -102,35 +132,17 @@
     </div>
 
     <?php
-    if (element('use_category', element('board', element('list', $view))) && element('cat_display_style', element('board', element('list', $view))) === 'tab') {
-        $category = element('category', element('board', element('list', $view)));
-    ?>
-        <ul class="nav nav-tabs clearfix">
-            <li role="presentation" <?php if ( ! $this->input->get('category_id')) { ?>class="active" <?php } ?>><a href="<?php echo board_url(element('brd_key', element('board', element('list', $view)))); ?>?findex=<?php echo html_escape($this->input->get('findex')); ?>&category_id=">전체</a></li>
-            <?php
-            if (element(0, $category)) {
-                foreach (element(0, $category) as $ckey => $cval) {
-            ?>
-                <li role="presentation" <?php if ($this->input->get('category_id') === element('bca_key', $cval)) { ?>class="active" <?php } ?>><a href="<?php echo board_url(element('brd_key', element('board', element('list', $view)))); ?>?findex=<?php echo html_escape($this->input->get('findex')); ?>&category_id=<?php echo element('bca_key', $cval); ?>"><?php echo html_escape(element('bca_value', $cval)); ?></a></li>
-            <?php
-                }
-            }
-            ?>
-        </ul>
-    <?php } ?>
-
-    <?php
     $attributes = array('name' => 'fboardlist', 'id' => 'fboardlist');
     echo form_open('', $attributes);
     ?>
 
     <?php if (element('is_admin', $view)) { ?>
-        <div><label for="all_boardlist_check"><input id="all_boardlist_check" onclick="if (this.checked) all_boardlist_checked(true); else all_boardlist_checked(false);" type="checkbox" /> 전체선택</label></div>
+        <div><label for="all_boardlist_check" class='label'><input id="all_boardlist_check" onclick="if (this.checked) all_boardlist_checked(true); else all_boardlist_checked(false);" type="checkbox" /> 전체선택</label></div>
     <?php } ?>
 
     <?php
-    if (element('notice_list', element('list', $view))) {
-    ?>
+        if (element('notice_list', element('list', $view))) {
+        ?>
         <table class="table">
             <tbody>
             <?php
@@ -161,77 +173,135 @@
             ?>
             </tbody>
         </table>
-    <?php
-    }
-    ?>
+    <?php } ?>
+  
+    <section class="title02">
+        <h2>업소정보 - <span><?php echo html_escape(element(element('region', $view),config_item('region_category')));?></span></h2>
+        <p>총 <span><?php echo (element('total_rows', element('main_data', element('list', $view)))+element('total_rows', element('data', element('list', $view)))) ?>개</span>의 업소가 있습니다.</p>
+    </section>
 
-    <div class="table-image">
-    <?php
-    $i = 0;
-    $open = false;
-    $cols = element('gallery_cols', element('board', element('list', $view)));
-    if (element('list', element('data', element('list', $view)))) {
-        foreach (element('list', element('data', element('list', $view))) as $result) {
-            if ($cols && $i % $cols === 0) {
-                echo '<ul class="mt3per">';
-                $open = true;
-            }
-            $marginright = (($i+1)% $cols === 0) ? 0 : 2;
-    ?>
-        <li class="gallery-box" style="width:<?php echo element('gallery_percent', element('board', element('list', $view))); ?>%;margin-right:<?php echo $marginright;?>%;">
-            <?php if (element('is_admin', $view)) { ?><input type="checkbox" name="chk_post_id[]" value="<?php echo element('post_id', $result); ?>" /><?php } ?>
-            <span class="label label-default"><?php echo element('num', $result); ?></span>
-            <?php if (element('is_mobile', $result)) { ?><span class="fa fa-wifi"></span><?php } ?>
-            <?php if (element('category', $result)) { ?><a href="<?php echo board_url(element('brd_key', element('board', element('list', $view)))); ?>?category_id=<?php echo html_escape(element('bca_key', element('category', $result))); ?>"><span class="label label-default"><?php echo html_escape(element('bca_value', element('category', $result))); ?></span></a><?php } ?>
-            <div>
-                <a href="<?php echo element('post_url', $result); ?>" title="<?php echo html_escape(element('title', $result)); ?>"><img src="<?php echo element('thumb_url', $result); ?>" alt="<?php echo html_escape(element('title', $result)); ?>" title="<?php echo html_escape(element('title', $result)); ?>" class="thumbnail img-responsive" style="width:<?php echo element('gallery_image_width', element('board', element('list', $view))); ?>px;height:<?php echo element('gallery_image_height', element('board', element('list', $view))); ?>px;" /></a>
-            </div>
-            <p>
-                <?php if (element('post_reply', $result)) { ?><span class="label label-primary">Re</span><?php } ?>
-                    <a href="<?php echo element('post_url', $result); ?>" style="
-                        <?php
-                        if (element('post_id', element('post', $view)) === element('post_id', $result)) {
-                            echo 'font-weight:bold;';
-                        }
-                        ?>
-                    " title="<?php echo html_escape(element('title', $result)); ?>"><?php echo html_escape(element('title', $result)); ?></a>
-                </p>
-                <p>
-                    <?php echo element('display_name', $result); ?>
-                    <?php //echo element('display_datetime', $result); ?>
-                    <?php if (element('is_hot', $result)) { ?><span class="label label-danger">Hot</span><?php } ?>
-                    <?php if (element('is_new', $result)) { ?><span class="label label-warning">New</span><?php } ?>
-                    <?php if (element('post_secret', $result)) { ?><span class="fa fa-lock"></span><?php } ?>
-                    <?php if (element('post_comment_count', $result)) { ?><span class="comment-count"><i class="fa fa-comments"></i><?php echo element('post_comment_count', $result); ?></span><?php } ?>
-                    <span class="hit-count"><i class="fa fa-eye"></i> <?php echo number_format(element('post_hit', $result)); ?></span>
-                </p>
-            </li>
+
+    <section class="store_list">
         <?php
-                $i++;
-                if ($cols && $i > 0 && $i % $cols === 0 && $open) {
+            $i = 0;
+            $open = false;
+            $cols = 2;
+
+            if (element('list', element('main_data', element('list', $view)))) {
+                foreach (element('list', element('main_data', element('list', $view))) as $result) {
+
+                    if ($cols && $i % $cols === 0) {
+                        echo '<ul>';
+                        $open = true;
+                    }
+                    $marginright = (($i+1)% $cols === 0) ? 0 : 2;
+                    ?>
+                    <li>
+                        <?php if (element('is_admin', $view)) { ?><input type="checkbox" name="chk_post_id[]" value="<?php echo element('post_id', $result); ?>" /><?php } ?>
+                        <a href="<?php echo element('post_url', $result); ?>" title="<?php echo html_escape(element('title', $result)); ?>">
+                            <figure>
+                                <img src="<?php echo element('thumb_url', $result); ?>" alt="<?php echo html_escape(element('title', $result)); ?>" title="<?php echo html_escape(element('title', $result)); ?>"/>
+
+                                <figcaption>
+                                    <h2 class="info_subject">[<?php echo html_escape(element('bca_value',element('category', $result))); ?>]<?php echo html_escape(element('title', $result)); ?></h2>
+
+                                    <p class="sub_subject"><?php if(element('sub_subject',element('extravars', $result))) echo element('sub_subject',element('extravars', $result)); ?>
+
+                                    </p>
+                                    <span>
+                                        <?php if (element('open_time',element('extravars', $result))) { 
+                                         echo  element('open_time',element('extravars', $result));
+                                     }
+                                     ?>
+                                 </span>
+                             </figcaption>
+                         </figure>
+
+
+                     </a>
+                 </li>
+                 <?php
+                 $i++;
+                 if ($cols && $i > 0 && $i % $cols === 0 && $open) {
                     echo '</ul>';
                     $open = false;
                 }
             }
+            } else {
+                echo '<div class="table-answer nopost">내용이 없습니다</div>';
+            }
+            if ($open) {
+                echo '</ul>';
+                $open = false;
+        }?>
+    </section>
+
+    <section class="ad">
+        <h4>ad</h4>
+        <?php echo banner("board_banner_1") ?>
+    </section>
+
+    <section class="store_list02">
+        <?php
+        $i = 0;
+        $open = false;
+        $cols = element('gallery_cols', element('board', element('list', $view)));
+        
+        if (element('list', element('data', element('list', $view)))) {
+            foreach (element('list', element('data', element('list', $view))) as $result) {
+                if ($cols && $i % $cols === 0) {
+                    echo '<ul>';
+                    $open = true;
+                }
+                $marginright = (($i+1)% $cols === 0) ? 0 : 2;
+        ?>
+            <li style="margin-right:<?php echo $marginright;?>%;background: url('<?php echo element('thumb_url', $result)?>') no-repeat left top;background-size: 38.5%;" onClick="location.href='<?php echo element('post_url', $result); ?>'">
+                <?php if (element('is_admin', $view)) { ?><input type="checkbox" name="chk_post_id[]" value="<?php echo element('post_id', $result); ?>" /><?php } ?>
+
+                <a>
+                    <h2 >[<?php echo html_escape(element('bca_value',element('category', $result))); ?>]<?php echo html_escape(element('title', $result)); ?></h2>
+                    
+                    <p class="sub_subject"><?php if(element('sub_subject',element('extravars', $result))) echo element('sub_subject',element('extravars', $result)); ?>
+                    </p>
+
+                    <span>
+                        <?php if (element('open_time',element('extravars', $result))) { 
+                           echo  element('open_time',element('extravars', $result));
+                        }
+                        ?>
+                    </span>
+                </a>
+            </li>
+
+            <?php
+            $i++;
+        if ($cols && $i > 0 && $i % $cols === 0 && $open) {
+                echo '</ul>';
+                $open = false;
+            }
+        }
+        } else {
+            echo '<div class="table-answer nopost">내용이 없습니다</div>';     
         }
         if ($open) {
             echo '</ul>';
             $open = false;
-        }
-        ?>
-        </div>
+        }?>
+    </section>
+    
     <?php echo form_close(); ?>
-
     <div class="border_button">
         <div class="pull-left mr10">
-            <a href="<?php echo element('list_url', element('list', $view)); ?>" class="btn btn-default btn-sm">목록</a>
+            <!-- <a href="<?php echo element('list_url', element('list', $view)); ?>" class="btn btn-default btn-sm">목록</a> -->
             <?php if (element('search_list_url', element('list', $view))) { ?>
                 <a href="<?php echo element('search_list_url', element('list', $view)); ?>" class="btn btn-default btn-sm">검색목록</a>
             <?php } ?>
         </div>
         <?php if (element('is_admin', $view)) { ?>
-            <div class="pull-left">
-                <button type="button" class="btn btn-default btn-sm admin-manage-list"><i class="fa fa-cog big-fa"></i>관리</button>
+            <div class="pull-right mb10">
+                <a onClick="post_multi_action('multi_delete', '0', '선택하신 글들을 완전삭제하시겠습니까?');" class="btn btn-default btn-sm">선택삭제</a>
+
+                <!-- <button type="button" class="btn btn-default btn-sm admin-manage-list"><i class="fa fa-cog big-fa"></i>관리</button>
                 <div class="btn-admin-manage-layer admin-manage-layer-list">
                     <?php if (element('is_admin', $view) === 'super') { ?>
                         <div class="item" onClick="document.location.href='<?php echo admin_url('board/boards/write/' . element('brd_id', element('board', element('list', $view)))); ?>';"><i class="fa fa-cog"></i> 게시판설정</div>
@@ -247,16 +317,24 @@
                     <div class="item" onClick="post_multi_action('post_multi_blame_blind', '0', '선택하신 글들을 블라인드 해제 하시겠습니까?');"><i class="fa fa-exclamation-circle"></i> 블라인드해제</div>
                     <div class="item" onClick="post_multi_action('post_multi_blame_blind', '1', '선택하신 글들을 블라인드 처리 하시겠습니까?');"><i class="fa fa-exclamation-circle"></i> 블라인드처리</div>
                     <div class="item" onClick="post_multi_action('post_multi_trash', '', '선택하신 글들을 휴지통으로 이동하시겠습니까?');"><i class="fa fa-trash"></i> 휴지통으로</div>
-                </div>
+                </div> -->
             </div>
         <?php } ?>
         <?php if (element('write_url', element('list', $view))) { ?>
-            <div class="pull-right">
-                <a href="<?php echo element('write_url', element('list', $view)); ?>" class="btn btn-success btn-sm">글쓰기</a>
+            <div class="pull-left">
+                <a href="<?php echo element('write_url', element('list', $view)); ?>" class="btn btn-default btn-sm">글쓰기</a>
             </div>
         <?php } ?>
     </div>
+
     <nav><?php echo element('paging', element('list', $view)); ?></nav>
+
+    <!-- 광고 배너 영역 -->
+        <section class="ad" style="margin-bottom: 0;">
+            <h4>ad</h4>
+            <?php echo banner("board_banner_2") ?>
+        </section>
+    <!-- ===== -->
 </div>
 
 <?php echo element('footercontent', element('board', element('list', $view))); ?>

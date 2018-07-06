@@ -143,12 +143,12 @@ class Notice extends CB_Controller
 
         // 이벤트가 존재하면 실행합니다
         $view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
-        $view['view']['document_board_url'] = document_board_url('event');
+        $view['view']['document_board_url'] = base_url('/event/lists');
         /**
          * 어드민 레이아웃을 정의합니다
          */
-        $layout_dir = 'mobile_index';
-        $mobile_layout_dir = 'mobile_index';
+        $layout_dir = 'mobile';
+        $mobile_layout_dir = 'mobile';
         $use_sidebar = $this->cbconfig->item('sidebar_board');
         $use_mobile_sidebar = $this->cbconfig->item('mobile_sidebar_board');
         $skin_dir = $this->cbconfig->item('skin_board');
@@ -242,7 +242,7 @@ class Notice extends CB_Controller
             // 이벤트가 존재하면 실행합니다
             $view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
 
-            $view['view']['list_url'] = document_board_url('notice');
+            $view['view']['list_url'] = base_url('/notice/lists');
             $view['view']['display_datetime'] = display_datetime(
                     element('noti_datetime', $getdata)
                 );
@@ -255,7 +255,7 @@ class Notice extends CB_Controller
                         element('noti_content_html_type', $getdata)
                     );
 
-            $view['view']['document_board_url'] = document_board_url('event');
+            $view['view']['document_board_url'] = base_url('/event/lists');
             
             $view['view']['next_post'] = '';
             $view['view']['prev_post'] = '';
@@ -301,8 +301,8 @@ class Notice extends CB_Controller
              * 어드민 레이아웃을 정의합니다
              */
             
-            $layout_dir = 'mobile_index';
-            $mobile_layout_dir = 'mobile_index';
+            $layout_dir = 'mobile';
+            $mobile_layout_dir = 'mobile';
             $use_sidebar = $this->cbconfig->item('sidebar_board');
             $use_mobile_sidebar = $this->cbconfig->item('mobile_sidebar_board');
             $skin_dir = $this->cbconfig->item('skin_board');

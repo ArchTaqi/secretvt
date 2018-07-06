@@ -109,12 +109,7 @@ class CB_Input extends CI_Input
 		{
 			return $default_value;
 		}
-		if($index==='curentContents'){
 
-			echo $default_value;
-
-			//exit;
-		}
 		return ($xss_clean === TRUE)
 			? $this->security->xss_clean($value)
 			: $value;

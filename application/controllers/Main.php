@@ -18,7 +18,7 @@ class Main extends CB_Controller
     /**
      * 모델을 로딩합니다
      */
-    protected $models = array('Board');
+    protected $models = array('Board','Event','Notice');
 
     /**
      * 헬퍼를 로딩합니다
@@ -51,26 +51,43 @@ class Main extends CB_Controller
         // 이벤트가 존재하면 실행합니다
         $view['view']['event']['before'] = Events::trigger('before', $eventname);
 
-        $where = array(
-            'brd_search' => 1
-        );
-        $board_id = $this->Board_model->get_board_list($where);
-        $board_list = array();
-        if ($board_id && is_array($board_id)) {
-            foreach ($board_id as $key => $val) {
-                $board_list[] = $this->board->item_all(element('brd_id', $val));
-            }
-        }
-        $view['view']['board_list'] = $board_list;
+        
         $view['view']['canonical'] = site_url();
 
         if(empty(get_cookie('region'))) $view['view']['region']=0;
-        else $view['view']['region'] = get_cookie('region');
+        else $view['view']['region'] = 0;
 
         // 이벤트가 존재하면 실행합니다
         $view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
 
+        $notiwhere = array(
+                'noti_activated' => 1,
+            );
+
+        $notice_result = $this->Notice_model
+            ->get('', '', $notiwhere, 1, 0, 'noti_id', 'desc');
         
+        $view['view']['notice_result'] = $notice_result;
+        
+
+        if (( ctimestamp() - strtotime(element('noti_datetime', element(0,$notice_result))) <= 3 * 3600)) {
+
+                    $view['view']['notice']['is_new'] = true;
+                }
+
+        $evewhere = array(
+                'eve_activated' => 1,
+            );
+
+        $event_result = $this->Event_model
+            ->get('', '', $evewhere, 1, 0, 'eve_id', 'desc');
+
+        $view['view']['event_result'] = $event_result;
+        
+        if (( ctimestamp() - strtotime(element('eve_datetime', element(0,$event_result))) <= 3 * 3600)) {
+            
+                    $view['view']['event']['is_new'] = true;
+                }
         /**
          * 레이아웃을 정의합니다
          */
@@ -96,8 +113,6 @@ class Main extends CB_Controller
             'meta_author' => $meta_author,
             'page_name' => $page_name,
         );
-
-        
         $view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
         $this->data = $view;
         $this->layout = element('layout_skin_file', element('layout', $view));

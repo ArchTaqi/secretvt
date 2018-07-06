@@ -23,7 +23,7 @@
     echo show_alert_message(element('message', $view), '<div class="alert alert-auto-close alert-dismissible alert-info"><button type="button" class="close alertclose" >&times;</button>', '</div>');
     ?>
 
-    <div class="form-horizontal mt3per">
+    <div class="form-horizontal mt20">
         <?php
         $attributes = array('class' => 'form-horizontal', 'name' => 'fconfirmpassword', 'id' => 'fconfirmpassword');
         echo form_open(current_url(), $attributes);

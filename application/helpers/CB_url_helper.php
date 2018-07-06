@@ -171,19 +171,6 @@ if ( ! function_exists('document_url')) {
 }
 
 
-
-/**
- * 일반 게시판 목록 주소를 return 합니다
- */
-if ( ! function_exists('document_board_url')) {
-    function document_board_url($key = '')
-    {
-        $key = trim($key, '/');
-        return site_url($key . '/lists/');
-    }
-}
-
-
 if ( ! function_exists('document_post_url')) {
     function document_post_url($key = '', $post_id = '')
     {
@@ -197,4 +184,3 @@ if ( ! function_exists('document_post_url')) {
         return $post_url;
     }
 }
-

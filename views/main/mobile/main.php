@@ -1,293 +1,260 @@
-<?php $this->managelayout->add_js(base_url('assets/js/jssor.slider-22.1.8.mini.js')); ?>
+<?php $this->managelayout->add_js(base_url('assets/js/bxslider/jquery.bxslider.min.js')); ?>
+<?php $this->managelayout->add_js(base_url('assets/js/bxslider/plugins/jquery.fitvids.js')); ?>
 <script type="text/javascript">
-
-var curentContents=<?php echo empty($this->input->get('curentContents')) ? 0:$this->input->get('curentContents')  ;?>;
-var curnetIndex="";
-var flag = [true,true,true,true,true,true,true,true];
-var pageing=<?php echo $this->input->get('page', null, 1)?>;
-
-$(document).ready(function() { 
-    var jssor_1_options = {
-      $AutoPlay: false,
-      $StartIndex:curentContents,
-        $ThumbnailNavigatorOptions: {
-        $Class: $JssorThumbnailNavigator$,              
-        $Cols: 5,
-        $Align: 0,
-        $NoDrag: true
-      }
-    };
-
-    var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
-            
-        
-
-        
-    swipedetect(document.getElementById('jssor_1'));
-
-        
-        //console.log(          jssor_1_slider.$CurrentIndex());
-    
-
-    
-        /*responsive code begin*/
-        /*you can remove responsive code if you don't want the slider scales while window resizing*/
-
-
-
-    function OnSlidePark(slideIndex, fromIndex) {
-
-        console.log(slideIndex+"//"+fromIndex);
-        
-        if(slideIndex == fromIndex) return ; 
-
-        if(!fromIndex && !slideIndex) return ;
-
-
-        if(curentContents) {
-            slideIndex=curentContents;
-            curentContents='';
-        }
-
-        curnetIndex=slideIndex;
-        $('html, body').animate({scrollTop : 0});
-        $("#mainmenu ul li:nth-child("+(fromIndex+1)+")").removeClass('active');
-        
-        if(flag[slideIndex]){
-            flag[slideIndex]=false;
-            
-            $.ajax({
-                type: "GET", 
-                async: true,
-                data: {mem_link:js_mem_link[slideIndex],page:pageing},
-                url: js_mem_link[slideIndex], 
-                cache: false,
-                beforeSend: function () {
-                    $("#div_ajax_load_image").show();
-                         
-                },
-                complete: function () {
-                            
-                    $("#div_ajax_load_image").fadeOut();
-                },
-                success: function(data) 
-                {                     
-                 // createFile(data.tag,value+'.php');
-
-                    
-                    $("#"+js_swipe_contents[slideIndex]).html(data).promise().done(function(){
-                      $("#div_ajax_load_image").fadeOut();
-                      $("#mainmenu ul li:nth-child("+(slideIndex+1)+")").addClass('active');
-                      
-                      if(slideIndex == 0 || slideIndex == 5){
-                      var position = $("header nav ul li:nth-child("+(slideIndex+1)+")").offset(); // 위치값을 변수로 설정
-                      $('header nav').animate({scrollLeft : position.left});
-                    }
-                      $('html , body').scrollTop('top' , '0');
-                    });
-
-                    setTimeout( "reload_rg('"+js_swipe_contents[slideIndex]+"')", 500);
-                },
-                error: function(xhr, status, error) { ; } 
-            });
-
-            
-      //  shopAjax.forEach(ShowShop);
-                
-            
-            
-        } else {
-
-            $("#mainmenu ul li:nth-child("+(slideIndex+1)+")").addClass('active');
-            if(slideIndex == 0 || slideIndex == 5){
-            var position = $("header nav ul li:nth-child("+(slideIndex+1)+")").offset(); // 위치값을 변수로 설정
-            $('header nav').animate({scrollLeft : position.left});
-          }
-            $('html , body').scrollTop('top' , '0');
-            setTimeout( "reload_rg('"+js_swipe_contents[slideIndex]+"')", 500);
-        }
-
-
-    }
-
-//    $(window).bind("load", OnSlidePark);
- //   $(window).bind("resize", OnSlidePark);
-
-
-
-    
-    jssor_1_slider.$On($JssorSlider$.$EVT_PARK, OnSlidePark);
-    $("#div_ajax_load_image").fadeOut('slow');
-
-
-});
-
-
-
-function swipedisable_rg(){
-    //swipedisable(document.getElementById('bxslider'));
-    // swipedisable(document.getElementById('banner_01'));
-    // swipedisable(document.getElementById('banner_02'));
-    // swipedisable(document.getElementById('banner_03'));
-}
-
-function swipedetect(el, callback){
-
-   var touchsurface = el,
-   swipedir,
-   startX,
-   startY,
-   distX,
-   distY,
-   threshold = 70, //required min distance traveled to be considered swipe
-   restraint = 50, // maximum distance allowed at the same time in perpendicular direction
-   allowedTime = 500, // maximum time allowed to travel that distance
-   elapsedTime,
-   startTime,
-   handleswipe = callback || function(swipedir){}
-
-   touchsurface.addEventListener('touchstart', function(e){
-    reload_rg(js_swipe_contents[curnetIndex]);
-    var touchobj = e.changedTouches[0]
-    swipedir = 'none'
-    dist = 0
-    startX = touchobj.pageX
-    startY = touchobj.pageY
-    startTime = new Date().getTime() // record time when finger first makes contact with surface
-  //  e.preventDefault()
-
-   }, false)
-
-   touchsurface.addEventListener('touchmove', function(e){
-
-        var touchobj = e.changedTouches[0]
-    distX = touchobj.pageX - startX // get horizontal dist traveled by finger while in contact with surface
-    distY = touchobj.pageY - startY // get vertical dist traveled by finger while in contact with surface
-    elapsedTime = new Date().getTime() - startTime // get time elapsed
-    if (elapsedTime <= allowedTime){ // first condition for awipe met
-
-     if (Math.abs(distX) >= threshold && Math.abs(distY) <= restraint){ // 2nd condition for horizontal swipe met
-      swipedir = (distX < 0)? 'left' : 'right' // if dist traveled is negative, it indicates left swipe
-     }
-     else if (Math.abs(distY) >= threshold && Math.abs(distX) <= restraint){ // 2nd condition for vertical swipe met
-      swipedir = (distY < 0)? 'up' : 'down' // if dist traveled is negative, it indicates up swipe
-     }
-    }
-
-
-  if(swipedir=='up' || swipedir=='down' || swipedir=='none' ){
-          e.stopPropagation();
-  }
-   
-
-
-  //  e.preventDefault() // prevent scrolling when inside DIV
-   }, false)
-
-   touchsurface.addEventListener('touchend', function(e){
-    if(pageing) pageing=1;
-    var touchobj = e.changedTouches[0]
-    distX = touchobj.pageX - startX // get horizontal dist traveled by finger while in contact with surface
-    distY = touchobj.pageY - startY // get vertical dist traveled by finger while in contact with surface
-    elapsedTime = new Date().getTime() - startTime // get time elapsed
-    if (elapsedTime <= allowedTime){ // first condition for awipe met
-     if (Math.abs(distX) >= threshold && Math.abs(distY) <= restraint){ // 2nd condition for horizontal swipe met
-      swipedir = (distX < 0)? 'left' : 'right' // if dist traveled is negative, it indicates left swipe
-     }
-     else if (Math.abs(distY) >= threshold && Math.abs(distX) <= restraint){ // 2nd condition for vertical swipe met
-      swipedir = (distY < 0)? 'up' : 'down' // if dist traveled is negative, it indicates up swipe
-     }
-    }
-
-
-  //  handleswipe(swipedir)
-  //  e.preventDefault()
-   }, false)
-
-      return touchsurface;
-}
-
-
-
-
-
-
-function swipedisable(el, callback){
-
-  var touchsurface = el,
-  handleswipe = callback || function(swipedir){}
-
-  touchsurface.addEventListener('touchstart', function(e){
-
-  //e.preventDefault();
-    e.stopPropagation();
-  }, false)
-
-  touchsurface.addEventListener('touchmove', function(e){
-  //e.preventDefault();
-  e.stopPropagation();
-  }, false)
-
-  touchsurface.addEventListener('touchend', function(e){
-  //e.preventDefault(); 
-  e.stopPropagation();
-
-  }, false)
-
-  return touchsurface;
-}
+        $(document).ready(function () {
+            var swiper_sub = new Swiper('.swiper-container-sub', {
+                autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: false,
+                  },
+                  
+            });           
+        });
 </script>
 
-<div  id="div_ajax_load_image" style="position:fixed;display:block;top:0px;left:0px;width:100%;height:100%;z-index:9999;text-align:center;line-height:500px;"><img src="<?php echo base_url('assets/images/ajax-loader.gif') ?>" style="vertical-align:cmiddle;">  </div>
-<div id="jssor_1" style="height:2000px;">
-
-  <div data-u="slides">
-<?php
-
-//광고영역
-
-
-
-
-
-
-if (element('menu', $layout)) {
-    $menu = element('menu', $layout);
-    if (element(0, $menu)) {
-        foreach (element(0, $menu) as $mkey => $mval) {
-
-
-          echo '
-          <div class="backPannel">
-            <div style="position:absolute;top:0px;left:0px; z-index:0;width:100%">
-              <div style="overflow: hidden; ">
-                <div  id="contents_'.$mkey.'">
-                </div>          
-              </div>
+<div class="wrap06">
+        <section class="slide" >
+            <div class="swiper-container-sub">
+                <div class="swiper-wrapper">
+                <?php echo banner('index_bxslider','order',3,'<div class="swiper-slide per100">','</div>'); ?>
+                </div>
+                
             </div>
-            <div data-u="thumb"><!--'.html_escape(element('men_name', $mval)).'--></div>
-          </div>
-          ';
-        }
-    }
-}
-?>
-</div>
+            <p>
+                  A resort for you only ! You can get all the information<br>
+                  you need in one trip to Vietnam  
+                </p>
+        </section>
+
+       <!--  <section class="ad" style="margin-bottom:4%;">
+            <h4>
+                ad01
+            </h4>
+            <a href="<?php echo base_url('write/vtn_discount') ?>">
+                <img src="<?php echo base_url('assets/images/temp/middle_btn.png') ?>">
+            </a>
+        </section> -->
+
+        <section class="main_list">
+            <h4>main_list</h4>
+            <ul>
+                <li>
+                    <a href="<?php echo site_url('/board/vtn_karaoke') ?>">
+                        <figure>
+                            <img src="<?php echo base_url('assets/images/temp/main_menu/menu_01.png'); ?>" alt="main_01">
+                            <figcaption>
+                                <h2>가라오케</h2>
+                                <p>맛좋은 술과 노래를 즐길 수 있는 곳</p>
+                            </figcaption>
+                        </figure>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="<?php echo site_url('/board/vtn_club') ?>">
+                        <figure>
+                            <img src="<?php echo base_url('assets/images/temp/main_menu/menu_02.png'); ?>" alt="main_02">
+                            <figcaption>
+                                <h2>클 럽</h2>
+                                <p>베트남 여성들과 다양하고 즐거운 만남</p>
+                            </figcaption>
+                        </figure>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="<?php echo site_url('/board/vtn_msg') ?>">
+                        <figure>
+                            <img src="<?php echo base_url('assets/images/temp/main_menu/menu_03.png'); ?>" alt="main_03">
+                            <figcaption>
+                                <h2>마사지&이발소</h2>
+                                <p>내 몸 관리와 함께 특별한 서비스</p>
+                            </figcaption>
+                        </figure>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="<?php echo site_url('/board/vtn_hotel') ?>">
+                        <figure>
+                            <img src="<?php echo base_url('assets/images/temp/main_menu/menu_04.png'); ?>" alt="main_04">
+                            <figcaption>
+                                <h2>호 텔</h2>
+                                <p>체계적인 서비스와 깜끔한 시설 관리</p>
+                            </figcaption>
+                        </figure>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="<?php echo site_url('/board/vtn_golf') ?>">
+                        <figure>
+                            <img src="<?php echo base_url('assets/images/temp/main_menu/menu_05.png'); ?>" alt="main_05">
+                            <figcaption>
+                                <h2>골 프</h2>
+                                <p>높은 퀄리티와 서비스,<br>넓은 페어웨이 </p>
+                            </figcaption>
+                        </figure>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="<?php echo site_url('/board/vtn_food')?>">
+                        <figure>
+                            <img src="<?php echo base_url('assets/images/temp/main_menu/menu_06.png'); ?>" alt="main_06">
+                            <figcaption>
+                                <h2>맛 집</h2>
+                                <p>베트남 로컬 맛집 부터<br> 퓨전 맛집까지</p>
+                            </figcaption>
+                        </figure>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="<?php echo site_url('/board/vtn_travel') ?>">
+                        <figure>
+                            <img src="<?php echo base_url('assets/images/temp/main_menu/menu_07.png'); ?>" alt="main_07">
+                            <figcaption>
+                                <h2>여행정보</h2>
+                                <p>여행기사부터 코스정보<br>까지 한곳에</p>
+                            </figcaption>
+                        </figure>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="<?php echo site_url('/board/vtn_info')?>">
+                        <figure>
+                            <img src="<?php echo base_url('assets/images/temp/main_menu/menu_08.png'); ?>" alt="main_0">
+                            <figcaption>
+                                <h2>베남 정보</h2>
+                                <p>다양한 정보를 현지에서<br> 전달</p>
+                            </figcaption>
+                        </figure>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="<?php echo site_url('/board/vtn_free')?>">
+                        <figure>
+                            <img src="<?php echo base_url('assets/images/temp/main_menu/menu_09.png'); ?>" alt="main_0">
+                            <figcaption>
+                                <h2>자유 게시판</h2>
+                                <p>베트남의 경험담을<br> 자유롭게 작성</p>
+                            </figcaption>
+                        </figure>
+                    </a>
+                </li>
 
 
+            </ul>
+        </section>
 
-    <!-- Thumbnail Navigator -->
-  <div data-u="thumbnavigator" class="jssort12" style="width:0px;height:0px"> 
-    <!-- Thumbnail Item Skin Begin -->
-    <div data-u="slides" style="cursor: default; top: 0px; left: 0px; border-left: 1px solid gray;">
-      <div data-u="prototype" class="p">
-        <div class="w">
-          <div data-u="thumbnailtemplate" class="c">
-           
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Thumbnail Item Skin End --> 
-  </div>
+    <!-- main 하단 배너 영역 -->
+        <section class="secret_bn">
+            <a href="<?php echo base_url('write/vtn_tour') ?>">
+                <h4>ad02</h4>
+                <figure>
+                    <img src="<?php echo base_url('assets/images/temp/main_bot/bottom_bn01.png?ver=1.0') ?>" alt="bottom_vtn_tour">
+                    <figcaption style="right: 8%;">
+                        <h2>시크릿 투어</h2>
+                     
+                        <p>
+                            호텔예약,골프부킹 가이드 요청<br>
+                            예약서비스 입니다.
+                        </p>
+                     
+                         <button>
+                             바 로 가 기
+                         </button>
+                    </figcaption>
+                </figure>
+            </a>
+        </section>
+
+        <!-- <section class="secret_bn">
+            <a href="<?php echo base_url('write/vtn_safevisa') ?>">
+                <h4>ad02</h4>
+                <figure>
+                    <img src="<?php echo base_url('assets/images/temp/main_bot/bottom_bn03.png') ?>" alt="bottom_vtn_safevisa">
+                    <figcaption style="right: 8%; text-align: right;">
+                        <h2>시크릿 안전비자</h2>
+                     
+                        <p>
+                            관광단수 및 복수,DN 비즈니스<br>
+                            거주증 및 문제비자 문의
+                        </p>
+                     
+                         <button >
+                             바 로 가 기
+                         </button>
+                    </figcaption>
+                </figure>
+            </a>
+        </section>
+
+        <section class="secret_bn" style="margin-bottom:4%;">
+            <a href="<?php echo base_url('write/vtn_renta') ?>">
+                    <h4>ad02</h4>
+                    <figure>
+                        <img src="<?php echo base_url('assets/images/temp/main_bot/bottom_bn02.png') ?>" alt="bottom_vtn_renta">
+                        <figcaption style="left: 8%;">
+                            <h2>시크릿 렌트카</h2>
+                         
+                            <p>
+                                7인,16인,25인,45인 리무진 <br>
+                                차량요청 서비스
+                            </p>
+                         
+                             <button>
+                                 바 로 가 기
+                             </button>
+                        </figcaption>
+                    </figure>
+            </a>
+        </section> -->
+
+    <?php 
+    if(element('noti_title',element('0',element('notice_result', $view))) || element('eve_title',element('0',element('event_result', $view)))){
+    ?>
+    <!-- notice & event 영역 -->
+        <section class="notice">
+            <ul>
+                <?php 
+                if(element('noti_title',element('0',element('notice_result', $view)))){
+                ?>
+                
+                <li style="border-bottom:1px solid #ededed;">
+                    <a href="<?php echo base_url('/notice/lists'); ?>">
+                        <h3>공지사항</h3>
+                        <p>시크릿베트남에서 알려드립니다.
+                        <?php 
+                        if(element('is_new',element('notice', $view))){
+                        ?>
+                            <img src="<?php echo base_url('/assets/images/temp/new.png')?>" style="width:13px;vertical-align: middle;">
+                        <?php }?>
+                        </p>
+                    </a>
+                </li>
+                <?php }?>
+                <?php 
+                if(element('eve_title',element('0',element('event_result', $view)))){
+                ?>
+                <li>
+                    <a href="<?php echo base_url('/event/lists'); ?>">
+                        <h3>이벤트</h3>
+                        <p>시크릿베트남의 다양한 이벤트를 만나보세요.
+                        <?php 
+                        if(element('is_new',element('event', $view))){
+                        ?>
+                            <img src="<?php echo base_url('/assets/images/temp/new.png')?>" style="width:13px;vertical-align: middle;">
+                        <?php }?>
+                        </p>
+                    </a>
+                </li>
+                <?php }?>
+            </ul>
+        </section>
+    <?php }?>
+    
 </div>

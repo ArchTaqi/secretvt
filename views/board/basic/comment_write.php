@@ -29,7 +29,7 @@ if (element('can_comment_write', element('comment', $view)) OR element('show_tex
                 <?php
                 if (element('is_comment_name', element('comment', $view))) {
                 ?>
-                    <div class="form-group mb3per">
+                    <div class="form-group mb20">
                         <label for="cmt_nickname">이름</label>
                         <input type="text" class="input" id="cmt_nickname" name="cmt_nickname" value="<?php echo set_value('cmt_nickname'); ?>" />
                         <label for="cmt_password">비밀번호</label>
@@ -61,6 +61,12 @@ if (element('can_comment_write', element('comment', $view)) OR element('show_tex
                                 </label>
                             </div>
                         <?php } ?>
+                        <?php if (element('use_emoticon', element('comment', $view))) { ?>
+                            <button type="button" class="btn btn-default btn-sm" title="이모티콘" onclick="window.open('<?php echo site_url('helptool/emoticon?id=cmt_content'); ?>', 'emoticon', 'width=600,height=400,scrollbars=yes')"><i class="fa fa-smile-o fa-lg"></i></button>
+                        <?php } ?>
+                        <?php if (element('use_specialchars', element('comment', $view))) { ?>
+                            <button type="button" class="btn btn-default btn-sm" title="특수문자" onclick="window.open('<?php echo site_url('helptool/specialchars?id=cmt_content'); ?>', 'specialchars', 'width=490,height=245,scrollbars=yes')"><i class="fa fa-star-o fa-lg"></i></button>
+                        <?php } ?>
                         <button type="button" class="btn btn-default btn-sm" title="새글등록" onClick="comment_box('', 'c');"><i class="fa fa-pencil fa-lg"></i></button>
                         <button type="button" class="btn btn-default btn-sm" title="창을크게" onClick="resize_textarea('cmt_content', 'down');"><i class="fa fa-plus fa-lg"></i></button>
                         <button type="button" class="btn btn-default btn-sm" title="창을작게" onClick="resize_textarea('cmt_content', 'up');"><i class="fa fa-minus fa-lg"></i></button>
@@ -68,7 +74,7 @@ if (element('can_comment_write', element('comment', $view)) OR element('show_tex
                 </div>
 
                 <?php if ($this->member->is_member() === false) { ?>
-                    <div class="form-inline passcord mt3per">
+                    <div class="form-inline passcord mt20">
                         <?php if ($this->cbconfig->item('use_recaptcha')) { ?>
                             <div class="captcha" id="recaptcha"></div>
                             <button type="button" id="captcha" style="display:none;"></button>

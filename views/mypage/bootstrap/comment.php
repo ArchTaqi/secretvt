@@ -18,7 +18,7 @@
     <div class="page-header">
         <h4>나의 작성 댓글</h4>
     </div>
-    <div class="btn-group btn-group-justified mb3per" role="group" aria-label="...">
+    <div class="btn-group btn-group-justified mb20" role="group" aria-label="...">
         <div class="btn-group" role="group">
             <a href="<?php echo site_url('mypage/post'); ?>" class="btn btn-warning btn-sm">원글</a>
         </div>

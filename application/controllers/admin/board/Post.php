@@ -105,29 +105,15 @@ class Post extends CB_Controller
                 if (element('post_category', $val)) {
                     $result['list'][$key]['category'] = $this->Board_category_model->get_category_info(element('brd_id', $val), element('post_category', $val));
                 }
-                if(config_item('use_file_storage') == "S3"){
-                    if (element('post_image', $val)) {
-                        $imagewhere = array(
-                            'post_id' => element('post_id', $val),
-                            'pfi_is_image' => 1,
-                        );
-                        $file = $this->Post_file_model->get_one('', '', $imagewhere, '', '', 'pfi_id', 'ASC');
-                        $result['list'][$key]['thumb_url'] = $this->config->config['s3_url'] .config_item('uploads_dir'). '/post/' . element('pfi_filename', $file);
-                    } else {
-                        $result['list'][$key]['thumb_url'] = get_post_image_url(element('post_content', $val), 80);
-                    }
-
+                if (element('post_image', $val)) {
+                    $imagewhere = array(
+                        'post_id' => element('post_id', $val),
+                        'pfi_is_image' => 1,
+                    );
+                    $file = $this->Post_file_model->get_one('', '', $imagewhere, '', '', 'pfi_id', 'ASC');
+                    $result['list'][$key]['thumb_url'] = thumb_url('post', element('pfi_filename', $file), 80);
                 } else {
-                    if (element('post_image', $val)) {
-                        $imagewhere = array(
-                            'post_id' => element('post_id', $val),
-                            'pfi_is_image' => 1,
-                        );
-                        $file = $this->Post_file_model->get_one('', '', $imagewhere, '', '', 'pfi_id', 'ASC');
-                        $result['list'][$key]['thumb_url'] = thumb_url('post', element('pfi_filename', $file), 80);
-                    } else {
-                        $result['list'][$key]['thumb_url'] = get_post_image_url(element('post_content', $val), 80);
-                    }
+                    $result['list'][$key]['thumb_url'] = get_post_image_url(element('post_content', $val), 80);
                 }
             }
         }

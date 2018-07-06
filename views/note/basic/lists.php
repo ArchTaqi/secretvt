@@ -13,7 +13,7 @@
         <li><a href="<?php echo site_url('note/write'); ?>" class="btn btn-default">쪽지 쓰기</a></li>
     </ul>
 
-    <table class="table mt3per">
+    <table class="table mt20">
         <thead>
             <tr>
                 <th><?php echo element('type', $view) === 'recv' ? "보낸사람":"받은사람"; ?></th>

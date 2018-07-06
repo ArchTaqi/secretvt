@@ -61,63 +61,6 @@ class Post_extra_vars_model extends CB_Model
         return isset($data['result']) ? $data['result'] : false;
     }
 
-    public function get_all_map_info($brd_id = 0)
-    {
-        if (empty($brd_id)) {
-            return false;
-        }
-
-        $this->parent_key="brd_id";
-
-        $cachename = $this->cache_prefix . implode('_',$brd_id);
-        $data = array();
-
-        $result = array();
-
-            
-            $this->db->from($this->_table);
-            
-            $this->db->where_in($this->parent_key,$brd_id);
-            $this->db->where('pev_key','google_map');
-            
-            $qry = $this->db->get();
-            $res = $qry->result_array();
-
-            
-
-            if ($res && is_array($res)) {
-                foreach ($res as $val) {
-                    $result[$val[$this->meta_key]] = $val[$this->meta_value];
-                }
-            }
-            $data['result'] = $result;
-            $data['cached'] = '1';
-
-
-        if ( ! $data = $this->cache->get($cachename)) {
-            $result = array();
-
-            
-            $this->db->from($this->_table);
-            
-            $this->db->where_in($this->parent_key,$brd_id);
-            $this->db->where('pev_key','google_map');
-            
-            $res = $this->db->get();
-            print_r($res);
-
-            if ($res && is_array($res)) {
-                foreach ($res as $val) {
-                    $result[$val[$this->meta_key]] = $val[$this->meta_value];
-                }
-            }
-            $data['result'] = $result;
-            $data['cached'] = '1';
-            $this->cache->save($cachename, $data, $this->cache_time);
-        }
-        return isset($data['result']) ? $data['result'] : false;
-    }
-
 
     public function save($post_id = 0, $brd_id = 0, $savedata = '')
     {

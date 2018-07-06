@@ -17,7 +17,7 @@
     <div class="page-header">
         <h4>Followed</h4>
     </div>
-    <div class="btn-group btn-group-justified mb3per" role="group" aria-label="...">
+    <div class="btn-group btn-group-justified mb20" role="group" aria-label="...">
         <div class="btn-group" role="group">
             <a href="<?php echo site_url('mypage/followinglist'); ?>" class="btn btn-warning btn-sm" title="Following">Following (<?php echo number_format(element('following_total_rows', $view)); ?>)</a>
         </div>

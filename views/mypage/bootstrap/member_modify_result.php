@@ -22,7 +22,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <?php echo element('result_message', $view); ?>
-                    <p class="btn_final mt3per"><a href="<?php echo site_url(); ?>" class="btn btn-danger btn-sm" title="<?php echo html_escape($this->cbconfig->item('site_title'));?>">홈페이지로 이동</a></p>
+                    <p class="btn_final mt20"><a href="<?php echo site_url(); ?>" class="btn btn-danger btn-sm" title="<?php echo html_escape($this->cbconfig->item('site_title'));?>">홈페이지로 이동</a></p>
                 </div>
             </div>
         </div>

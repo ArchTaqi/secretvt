@@ -23,7 +23,7 @@ function faqSearch(f) {
 </script>
 </div>
 
-<div class="panel-group mt3per" id="accordion" role="tablist" aria-multiselectable="true">
+<div class="panel-group mt20" id="accordion" role="tablist" aria-multiselectable="true">
 <?php
 $i = 0;
 if (element('list', element('data', $view))) {
@@ -62,7 +62,7 @@ if ( ! element('list', element('data', $view))) {
 <nav><?php echo element('paging', $view); ?></nav>
 
 <?php if ($this->member->is_admin() === 'super') { ?>
-    <div class="text-center mb3per">
+    <div class="text-center mb20">
         <a href="<?php echo admin_url('page/faq'); ?>?fgr_id=<?php echo element('fgr_id', element('faqgroup', $view)); ?>" class="btn btn-black btn-sm" target="_blank" title="FAQ 수정">FAQ 수정</a>
     </div>
 <?php } ?>

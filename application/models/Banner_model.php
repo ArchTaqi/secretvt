@@ -39,8 +39,8 @@ class Banner_model extends CB_Model
     }
 
 
-    public function get_banner($position = '', $type = '', $limit = '', $offset = 0)
-    {   
+    public function get_banner($position = '', $type = '', $limit = '')
+    {
         if (empty($position)) {
             return;
         }
@@ -53,7 +53,7 @@ class Banner_model extends CB_Model
         if ( ! $result = $this->cache->get($cachename)) {
             $this->db->from($this->_table);
             $this->db->where('bng_name', $position);
-            // $this->db->where('ban_activated', 1);
+            $this->db->where('ban_activated', 1);
             $this->db->group_start();
             $this->db->where(array('ban_start_date <=' => cdate('Y-m-d')));
             $this->db->or_where(array('ban_start_date' => null));
@@ -75,8 +75,7 @@ class Banner_model extends CB_Model
             shuffle($result);
         }
         if ($limit) {
-            $result = array_slice($result, $offset, $limit);
-
+            $result = array_slice($result, 0, $limit);
         }
         return $result;
     }

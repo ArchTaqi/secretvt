@@ -1,7 +1,7 @@
 <?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
 
 </head>
-<div class="wrap mypage">
+<div class="wrap05 mypage">
     <section class="title02">
         <h2>내 정보</h2>
         <p><span>내 정보</span>를 확인 하실 수 있습니다.</p>

@@ -145,6 +145,15 @@
                         <?php if (element('post_reply', $result)) { ?><span class="label label-primary" style="margin-left:<?php echo strlen(element('post_reply', $result)) * 10; ?>px">Re</span><?php } ?>
                         <a href="<?php echo element('post_url', $result); ?>" style="
                             <?php
+                            if (element('title_color', $result)) {
+                                echo 'color:' . element('title_color', $result) . ';';
+                            }
+                            if (element('title_font', $result)) {
+                                echo 'font-family:' . element('title_font', $result) . ';';
+                            }
+                            if (element('title_bold', $result)) {
+                                echo 'font-weight:bold;';
+                            }
                             if (element('post_id', element('post', $view)) === element('post_id', $result)) {
                                 echo 'font-weight:bold;';
                             }
@@ -153,6 +162,7 @@
                         <?php if (element('is_mobile', $result)) { ?><span class="fa fa-wifi"></span><?php } ?>
                         <?php if (element('post_file', $result)) { ?><span class="fa fa-download"></span><?php } ?>
                         <?php if (element('post_secret', $result)) { ?><span class="fa fa-lock"></span><?php } ?>
+                        <?php    if (element('ppo_id', $result)) { ?><i class="fa fa-bar-chart"></i><?php } ?>
                         <?php if (element('post_comment_count', $result)) { ?><span class="label label-warning">+<?php echo element('post_comment_count', $result); ?></span><?php } ?>
                     <td><?php echo element('display_name', $result); ?></td>
                     <td><?php echo element('display_datetime', $result); ?></td>
@@ -172,6 +182,15 @@
                         <?php if (element('post_reply', $result)) { ?><span class="label label-primary" style="margin-left:<?php echo strlen(element('post_reply', $result)) * 10; ?>px">Re</span><?php } ?>
                         <a href="<?php echo element('post_url', $result); ?>" style="
                             <?php
+                            if (element('title_color', $result)) {
+                                echo 'color:' . element('title_color', $result) . ';';
+                            }
+                            if (element('title_font', $result)) {
+                                echo 'font-family:' . element('title_font', $result) . ';';
+                            }
+                            if (element('title_bold', $result)) {
+                                echo 'font-weight:bold;';
+                            }
                             if (element('post_id', element('post', $view)) === element('post_id', $result)) {
                                 echo 'font-weight:bold;';
                             }
@@ -182,6 +201,7 @@
                         <?php if (element('post_secret', $result)) { ?><span class="fa fa-lock"></span><?php } ?>
                         <?php if (element('is_hot', $result)) { ?><span class="label label-danger">Hot</span><?php } ?>
                         <?php if (element('is_new', $result)) { ?><span class="label label-warning">New</span><?php } ?>
+                        <?php    if (element('ppo_id', $result)) { ?><i class="fa fa-bar-chart"></i><?php } ?>
                         <?php if (element('post_comment_count', $result)) { ?><span class="label label-warning">+<?php echo element('post_comment_count', $result); ?></span><?php } ?>
                     <td><?php echo element('display_name', $result); ?></td>
                     <td><?php echo element('display_datetime', $result); ?></td>
@@ -200,7 +220,7 @@
         </table>
     <?php echo form_close(); ?>
 
-    <div class="table-bottom mt3per">
+    <div class="table-bottom mt20">
         <div class="pull-left mr10">
             <a href="<?php echo element('list_url', element('list', $view)); ?>" class="btn btn-default btn-sm">목록</a>
             <?php if (element('search_list_url', element('list', $view))) { ?>

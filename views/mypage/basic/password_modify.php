@@ -17,7 +17,7 @@
 
     <h3>회원 비밀번호 변경</h3>
 
-    <div class="mt3per">
+    <div class="mt20">
         <?php
         echo validation_errors('<div class="alert alert-warning" role="alert">', '</div>');
         echo show_alert_message(element('message', $view), '<div class="alert alert-auto-close alert-dismissible alert-info"><button type="button" class="close alertclose" >&times;</button>', '</div>');

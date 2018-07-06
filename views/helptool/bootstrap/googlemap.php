@@ -16,7 +16,7 @@ $zoom = $zoom ? $zoom : 14;
 body { margin:0; padding:0; font:normal 12px dotum; -webkit-text-size-adjust:100%; }
 .infowindow { min-width:180px; max-width:280px; line-height:22px; }
 </style>
-<script src="http://maps.google.com/maps/api/js?v=3.3&key=AIzaSyC5C3WnSgg9h4otykkgKNuBI49zUsOBe9U&sensor=false&language=ko"></script>
+<script src="http://maps.google.com/maps/api/js?v=3.3&sensor=false&language=ko"></script>
 <script type="text/javascript">
 // 구글맵
 var map;

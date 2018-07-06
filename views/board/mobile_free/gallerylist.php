@@ -1,23 +1,5 @@
 <?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
-<?php 
-$menuName="";
-$contentsId="";
-$board_key_arr=explode("_",element('board_key', $view));
-if(count($board_key_arr) > 1) $menu_key=$board_key_arr[0]."_".$board_key_arr[1];
-else $menu_key=element('board_key', $view);
-            
-if (element('menu', $layout)) {
-    $menu = element('menu', $layout);
-    if (element(0, $menu)) {
-        foreach (element(0, $menu) as $mkey => $mval) {
-            if(strpos($mval['men_link'],$menu_key) !==false) {
-                $menuName=html_escape(element('men_name', $mval));
-                $contentsId=$mkey;
-            }
-        }
-    }
-}
- ?>
+
 <?php echo element('headercontent', element('board', element('list', $view))); ?>
 
 <div class="wrap05">
@@ -124,12 +106,12 @@ if (element('menu', $layout)) {
     <?php } ?>
     
     <?php
-    $attributes = array('name' => 'fboardlist'.$contentsId, 'id' => 'fboardlist'.$contentsId);
+    $attributes = array('name' => 'fboardlist', 'id' => 'fboardlist');
     echo form_open('', $attributes);
     ?>
     
     <?php if (element('is_admin', $view)) { ?>
-        <div><label for="all_boardlist_check" class='label'><input id="all_boardlist_check" onclick="if (this.checked) all_boardlist_checked(true,<?php echo $contentsId ?>); else all_boardlist_checked(false,<?php echo $contentsId ?>);" type="checkbox" /> 전체선택</label></div>
+        <div><label for="all_boardlist_check" class='label'><input id="all_boardlist_check" onclick="if (this.checked) all_boardlist_checked(true); else all_boardlist_checked(false);" type="checkbox" /> 전체선택</label></div>
     <?php } ?>
 
     <div>
@@ -186,7 +168,7 @@ if (element('menu', $layout)) {
             <a href="<?php echo element('list_url', element('list', $view)); ?>">전체목록</a>
         <?php if (element('is_admin', $view)) { ?>
             <div class="pull-left mb10">
-                <a onClick="post_multi_action('multi_delete', '0', '선택하신 글들을 완전삭제하시겠습니까?','<?php echo $contentsId ?>');" class="btn btn-default btn-sm">선택삭제</a>
+                <a onClick="post_multi_action('multi_delete', '0', '선택하신 글들을 완전삭제하시겠습니까?');" class="btn btn-default btn-sm">선택삭제</a>
 
                 <!-- <button type="button" class="btn btn-default btn-sm admin-manage-list"><i class="fa fa-cog big-fa"></i>관리</button>
                 <div class="btn-admin-manage-layer admin-manage-layer-list">

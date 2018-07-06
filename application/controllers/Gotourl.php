@@ -78,12 +78,26 @@ class Gotourl extends CB_Controller
                 'banner_click_' . $ban_id,
                 '1'
             );
+
+            $mem_id = (int) $this->member->item('mem_id');
+            $insertdata = array(
+                'ban_id' => element('ban_id', $banner),
+                'mem_id' => $mem_id,
+                'bcl_datetime' => cdate('Y-m-d H:i:s'),
+                'bcl_ip' => $this->input->ip_address(),
+                'bcl_referer' => $this->agent->referrer(),
+                'bcl_url' => element('ban_url', $banner),
+                'bcl_useragent' => $this->agent->agent_string(),
+            );
+            $this->load->model(array('Banner_click_log_model'));
+            $this->Banner_click_log_model->insert($insertdata);
+
             $this->Banner_model->update_plus($ban_id, 'ban_hit', 1);
         }
 
         // 이벤트가 존재하면 실행합니다
         Events::trigger('after', $eventname);
-        
+
         redirect(prep_url(element('ban_url', $banner)));
     }
 }

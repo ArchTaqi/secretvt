@@ -23,72 +23,12 @@ if (typeof(COMMON_JS) === 'undefined') {
     });
 
     $(document).ready(function() {
-
-        $( "#dialog_talk" ).dialog({
-          autoOpen: false,
-          modal : true,
-          
-          show: {
-            effect: "fade",
-            duration: 200
-          },
-          
-          hide: {
-            effect: "fade",
-            duration: 300
-          },
-          open: function() { jQuery('div.ui-widget-overlay').bind('click', function() { jQuery('#dialog_talk').dialog('close'); }) }
-        });
-
         $('.datepicker').datepicker({
             format: 'yyyy-mm-dd',
             language: 'kr',
             autoclose: true,
             todayHighlight: true
         });
-
-
-        $('.footer_02 > nav > ul > li:first-child').click(function(){
-
-            if ($('.footer_02 > nav > ul > li:nth-child(2)').is(':visible')) {
-                $('.footer_02 > nav > ul > li:nth-child(2)').slideUp();
-                $('.footer_02 > nav > ul > li:first-child span').css('transform' , 'rotate(0deg)');
-            } else {
-                $('.footer_02 > nav > ul > li:first-child span').css('transform' , 'rotate(45deg)');
-                $('.footer_02 > nav > ul > li:nth-child(2)').slideDown();
-                $('html,body').animate({scrollTop : $(document).height()} , 400);
-            }
-        });
-
-        $('.footer_02 > nav > ul > li:last-child').click(function(){
-            $('html,body').animate({scrollTop : 0} ,400);
-        });
-
-        $('.footer_02 > nav > ul > li > ul > li:last-child').click(function(){
-
-
-            $( "#dialog_talk" ).dialog( "open" );
-
-            $('#clip_target').select(); // Use try & catch for unsupported browser 
-            try { // The important part (copy selected text) 
-                var successful = document.execCommand('copy'); 
-                // if(successful) answer.innerHTML = 'Copied!'; 
-                // else answer.innerHTML = 'Unable to copy!'; 
-            } catch (err) { 
-                alert('이 브라우저는 지원하지 않습니다.') ;
-            }
-
-            $( ".popup_layer_close" ).on( "click", function() {
-              $( "#dialog_talk" ).dialog( "close" );
-            });
-
-            $( ".popup_layer_copy" ).on( "click", function() {
-              $( "#dialog_talk" ).dialog( "close" );
-            });
-        });
-
-
-
     });
 
     function trim(s) {
@@ -381,8 +321,7 @@ if (typeof(COMMON_JS) === 'undefined') {
         });
     }
 
-    function post_multi_action(action_type, flag, msg,contentsId) {
-        
+    function post_multi_action(action_type, flag, msg) {
         var href;
         if ( action_type == '') {
             return false;
@@ -395,7 +334,7 @@ if (typeof(COMMON_JS) === 'undefined') {
         $.ajax({
             url : href,
             type : 'post',
-            data :  $('#fboardlist'+contentsId).serialize() + '&csrf_test_name=' + cb_csrf_hash,
+            data :  $('#fboardlist').serialize() + '&csrf_test_name=' + cb_csrf_hash,
             dataType : 'json',
             success : function(data) {
                 if (data.error) {
@@ -505,11 +444,11 @@ if (typeof(COMMON_JS) === 'undefined') {
         });
     }
 
-    $(document).on('click', '.admin-manage-post', function () {
+    $(document).on('mouseenter', '.admin-manage-post', function () {
         $manage_button = $(this);
-        $('.admin-manage-post-layer').css('top', $manage_button.position().top+25);
-        $('.admin-manage-post-layer').css('left', $manage_button.position().left-60);
-        $('.admin-manage-post-layer').toggle();
+        $('.admin-manage-post-layer').css('top', $manage_button.position().top);
+        $('.admin-manage-post-layer').css('left', $manage_button.position().left - ($('.admin-manage-post-layer').width()-$manage_button.width()));
+        $('.admin-manage-post-layer').css('display', 'block');
         $(document).on('mouseenter', '.admin-manage-post-layer .item', function () {
             $(this).css('background-color', '#DEDEDE');
         });
@@ -517,11 +456,11 @@ if (typeof(COMMON_JS) === 'undefined') {
             $(this).css('background-color', '#FFFFFF');
         });
     });
-    $(document).on('click', '.admin-manage-list', function () {
+    $(document).on('mouseenter', '.admin-manage-list', function () {
         $manage_button_list = $(this);
-        $('.admin-manage-layer-list').css('top', $manage_button_list.position().top+25);
+        $('.admin-manage-layer-list').css('top', $manage_button_list.position().top);
         $('.admin-manage-layer-list').css('left', $manage_button_list.position().left - ($('.admin-manage-layer-list').width()-$manage_button_list.width()));
-        $('.admin-manage-layer-list').toggle();
+        $('.admin-manage-layer-list').css('display', 'block');
         $(document).on('mouseenter', '.admin-manage-layer-list .item', function () {
             $(this).css('background-color', '#DEDEDE');
         });
@@ -529,11 +468,11 @@ if (typeof(COMMON_JS) === 'undefined') {
             $(this).css('background-color', '#FFFFFF');
         });
     });
-    $(document).on('click', '.admin-manage-comment', function () {
+    $(document).on('mouseenter', '.admin-manage-comment', function () {
         $manage_button_comment = $(this);
-        $('.admin-manage-layer-comment').css('top', $manage_button_comment.position().top+25);
-       
-        $('.admin-manage-layer-comment').toggle();
+        $('.admin-manage-layer-comment').css('top', $manage_button_comment.position().top);
+        $('.admin-manage-layer-comment').css('left', $manage_button_comment.position().left - ($('.admin-manage-layer-comment').width()-$manage_button_comment.width()));
+        $('.admin-manage-layer-comment').css('display', 'block');
         $(document).on('mouseenter', '.admin-manage-layer-comment .item', function () {
             $(this).css('background-color', '#DEDEDE');
         });
@@ -541,8 +480,8 @@ if (typeof(COMMON_JS) === 'undefined') {
             $(this).css('background-color', '#FFFFFF');
         });
     });
-    $(document).on('click', '.btn-admin-manage-layer', function () {
-        //$(this).css('display', 'none');
+    $(document).on('mouseleave', '.btn-admin-manage-layer', function () {
+        $(this).css('display', 'none');
     });
 
     // 쿠키 입력
@@ -680,6 +619,18 @@ if (typeof(COMMON_JS) === 'undefined') {
         window.open(cb_url + '/print/' + post_id , 'win_print', 'left=100,top=100,width=900,height=600,scrollbars=1');
         return false;
     }
+    function post_history( post_id) {
+        window.open(cb_url + '/helptool/post_history/' + post_id , 'win_post_history', 'left=100,top=100,width=620,height=500,scrollbars=1');
+        return false;
+    }
+    function download_log( post_id) {
+        window.open(cb_url + '/helptool/download_log/' + post_id , 'win_download_log', 'left=100,top=100,width=620,height=500,scrollbars=1');
+        return false;
+    }
+    function link_click_log( post_id) {
+        window.open(cb_url + '/helptool/link_click_log/' + post_id , 'win_link_click_log', 'left=100,top=100,width=620,height=500,scrollbars=1');
+        return false;
+    }
     function post_copy(type, post_id) {
         window.open(cb_url + '/helptool/post_copy/' + type + '/' + post_id, 'win_post_copy', 'left=100,top=100,width=620,height=500,scrollbars=1');
         return false;
@@ -707,13 +658,12 @@ if (typeof(COMMON_JS) === 'undefined') {
         f.submit();
     }
     function open_google_map() {
-        window.open(cb_url + '/helptool/googlemap_search' , 'win_map', 'left=100,top=100,width=520,height=660,scrollbars=1');
+        window.open(cb_url + '/helptool/googlemap_search' , 'win_map', 'left=100,top=100,width=720,height=500,scrollbars=1');
         return false;
     }
 
-    function all_boardlist_checked(flag,contentsId) {
-        if(contentsId)  var f =document.getElementById('fboardlist'+contentsId) ;
-        else var f =document.getElementById('fboardlist') ;
+    function all_boardlist_checked(flag) {
+        var f = document.fboardlist;
         for (var i = 0; i < f.length; i++) {
             if (f.elements[i].name === 'chk_post_id[]') {
                 f.elements[i].checked = flag;
@@ -794,24 +744,6 @@ if (typeof(COMMON_JS) === 'undefined') {
         });
     }
 
-    function reload_rg(val){
-
-      //if(!val2) return;
-      console.log('val'+$('#'+val).height());
-      $('#jssor_1').height($('#'+val).height());
-      $('#jssor_1>div>div').height($('#'+val).height());
-
-
-    }
-
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-88829342-9', 'auto');
-    ga('send', 'pageview');
-
     $(document).on('click', '.notifications', function() {
         var display = $('.notifications-menu').css('display');
         if (display === 'none') {
@@ -872,8 +804,7 @@ if (typeof(COMMON_JS) === 'undefined') {
 		}
 	});
 
-
-	/**
+    /**
      * 우편번호 창
      **/
     var win_zip = function(frm_name, frm_zipcode, frm_address1, frm_address2, frm_address3, frm_address4) {
@@ -1001,34 +932,5 @@ if (typeof(COMMON_JS) === 'undefined') {
                 // iframe을 넣은 element를 보이게 한다.
                 element_layer.style.display = 'block';
         }
-    };
-
-    var contentsAjax=function(id,url,data){
-        $.ajax({
-            type: "GET", 
-            async: true,
-            url: url, 
-            cache: false,
-            beforeSend: function () {
-                $("#div_ajax_load_image").show();
-                     
-            },
-            complete: function () {
-                        
-                $("#div_ajax_load_image").fadeOut();
-            },
-            success: function(data) 
-            {                     
-             // createFile(data.tag,value+'.php');
-
-
-                $("#"+id).html(data).promise().done(function(){
-                  $("#div_ajax_load_image").fadeOut();
-                  $('html , body').scrollTop('top' , '0');
-                  setTimeout( "reload_rg('"+js_swipe_contents[curnetIndex]+"')", 500);
-                });
-            },
-            error: function(xhr, status, error) { ; } 
-        });
-    };
+    }
 }

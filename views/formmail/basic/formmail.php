@@ -4,7 +4,7 @@
     <h4 class="modal-title"><?php echo element('mem_nickname', element('member', $view)); ?> 님께 이메일 전송</h4>
 </div>
 <div class="modal-body">
-    <div class="mt3per formmail">
+    <div class="mt20 formmail">
         <?php
         echo validation_errors('<div class="alert alert-warning" role="alert">', '</div>');
         echo show_alert_message(element('message', $view), '<div class="alert alert-auto-close alert-dismissible alert-info"><button type="button" class="close alertclose" >&times;</button>', '</div>');

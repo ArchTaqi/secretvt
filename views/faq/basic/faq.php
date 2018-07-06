@@ -1,7 +1,7 @@
 <?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
 
 <h3><?php echo element('fgr_title', element('faqgroup', $view)); ?></h3>
-<form class="search_box text-center mb3per" action="<?php echo current_url(); ?>" onSubmit="return faqSearch(this)">
+<form class="search_box text-center mb20" action="<?php echo current_url(); ?>" onSubmit="return faqSearch(this)">
     <input type="text" name="skeyword" value="<?php echo html_escape($this->input->get('skeyword')); ?>" class="input" placeholder="Search" />
     <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
 </form>
@@ -45,7 +45,7 @@ if ( ! element('list', element('data', $view))) {
 <?php
 if ($this->member->is_admin() === 'super') {
 ?>
-    <div class="text-center mb3per">
+    <div class="text-center mb20">
         <a href="<?php echo admin_url('page/faq'); ?>?fgr_id=<?php echo element('fgr_id', element('faqgroup', $view)); ?>" class="btn btn-black btn-sm" target="_blank" title="FAQ 수정">FAQ 수정</a>
     </div>
 <?php

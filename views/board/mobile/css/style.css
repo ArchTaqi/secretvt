@@ -63,7 +63,6 @@
 .board .sr-only {position: absolute;width: 1px;height: 1px;margin: -1px;padding: 0;overflow: hidden;clip: rect(0,0,0,0);border: 0;}
 .board .poll-result { padding-bottom: 10px; }
 
-
 .writeform li {display: block;margin: 0px; clear: both; margin-bottom: 15px;}
 .writeform li>span {float: left;width: 10%;padding-right: 20px;margin-top: 5px;color: #000;font-weight: bold;}
 

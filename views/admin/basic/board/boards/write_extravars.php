@@ -72,7 +72,6 @@
                                 <div class="col-sm-2">
                                     <select name="field_type[<?php echo $key; ?>]" class="form-control field_type">
                                         <option value="text" <?php echo element('field_type', $result) === 'text' ? ' selected="selected" ' : ''; ?>>한줄 입력 형식(text)</option>
-                                        <option value="number" <?php echo element('field_type', $result) === 'number' ? ' selected="selected" ' : ''; ?>>숫자 입력 형식(number)</option>
                                         <option value="url" <?php echo element('field_type', $result) === 'url' ? ' selected="selected" ' : ''; ?>>URL 형식</option>
                                         <option value="email" <?php echo element('field_type', $result) === 'email' ? ' selected="selected" ' : ''; ?>>이메일 형식(email)</option>
                                         <option value="phone" <?php echo element('field_type', $result) === 'phone' ? ' selected="selected" ' : ''; ?>>전화번호 형식(phone)</option>

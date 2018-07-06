@@ -23,7 +23,7 @@
     echo show_alert_message(element('message', $view), '<div class="alert alert-auto-close alert-dismissible alert-warning"><button type="button" class="close alertclose" >&times;</button>', '</div>');
     ?>
 
-    <div class="form-horizontal mt3per">
+    <div class="form-horizontal mt20">
         <?php
         $attributes = array('class' => 'form-horizontal', 'name' => 'fconfirmpassword', 'id' => 'fconfirmpassword', 'onsubmit' => 'return confirmleave()');
         echo form_open(current_url(), $attributes);

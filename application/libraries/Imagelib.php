@@ -102,9 +102,7 @@ class Imagelib extends CI_Controller
             list($usec, $sec) = explode(' ', microtime());
             $file_name = md5(uniqid(mt_rand())) . '_' . str_replace('.', '', $sec . $usec) . '.' . $ext;
             $save_dir = $upload_path. $file_name;
-
-            if(config_item('use_file_storage') == "S3") $save_url = $this->config->config['s3_url'].config_item('uploads_dir') . '/editor/' . cdate('Y') . '/' . cdate('m') . '/' . $file_name;
-            else $save_url = site_url(config_item('uploads_dir') . '/editor/' . cdate('Y') . '/' . cdate('m') . '/' . $file_name);
+            $save_url = site_url(config_item('uploads_dir') . '/editor/' . cdate('Y') . '/' . cdate('m') . '/' . $file_name);
 
             $fp = fopen($save_dir, 'w');
             fwrite($fp, $rawdata);

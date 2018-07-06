@@ -25,7 +25,7 @@
             <div class="table-body">
                 <div class="msg_content">
                     <?php echo element('result_message', $view); ?>
-                    <p class="btn_final mt3per">
+                    <p class="btn_final mt20">
                         <a href="<?php echo site_url(); ?>" class="btn btn-danger" title="<?php echo html_escape($this->cbconfig->item('site_title'));?>" title="<?php echo html_escape($this->cbconfig->item('site_title'));?>">홈페이지로 이동</a>
                     </p>
                 </div>

@@ -27,6 +27,13 @@ $hook['post_controller'][] = array(
 );
 
 $hook['post_system'][] = array(
+    'class'           => '_Scheduler',
+    'function'     => 'init',
+    'filename'    => 'Scheduler.php',
+    'filepath'      => 'hooks'
+);
+
+$hook['post_system'][] = array(
     'class'           => '_Member_dormant',
     'function'     => 'init',
     'filename'    => 'Member_dormant.php',

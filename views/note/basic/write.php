@@ -14,7 +14,7 @@
     <?php
     echo validation_errors('<div class="alert alert-warning" role="alert">', '</div>');
     echo show_alert_message(element('message', $view), '<div class="alert alert-auto-close alert-dismissible alert-info"><button type="button" class="close alertclose" >&times;</button>', '</div>');
-    $attributes = array('class' => 'mt3per', 'name' => 'fnote', 'id' => 'fnote');
+    $attributes = array('class' => 'mt20', 'name' => 'fnote', 'id' => 'fnote');
     echo form_open_multipart(current_full_url(), $attributes);
     ?>
         <ol>
@@ -27,6 +27,11 @@
             <li>
                 <?php echo display_dhtml_editor('content', set_value('content'), $classname = 'dhtmleditor', $is_dhtml_editor = element('use_dhtml', $view), $editor_type = $this->cbconfig->item('note_editor_type')); ?>
             </li>
+            <?php if ($this->cbconfig->item('use_note_file')) { ?>
+                <li><span>첨부파일</span>
+                    <input type="file" class="form-control" name="note_file" />
+                </li>
+            <?php } ?>
         </ol>
         <div class="pull-right">
             <button type="submit" class="btn btn-success">보내기</button>

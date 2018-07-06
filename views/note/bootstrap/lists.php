@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <table class="table table-striped mt3per">
+    <table class="table table-striped mt20">
         <thead>
             <tr>
                 <th><?php echo element('type', $view) === 'recv' ? "보낸사람":"받은사람"; ?></th>
