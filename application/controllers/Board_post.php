@@ -1195,6 +1195,9 @@ class Board_post extends CB_Controller
 
         $where['post_main_4'] = 1;
         
+        if(!empty(get_cookie('region')) && element('bgr_id', $board)!=='8' && element('bgr_id', $board)!=='11') {
+            $where['region_category'] = get_cookie('region');
+        }
 
         $category_id = (int) $this->input->get('category_id');
         if (empty($category_id) OR $category_id < 1) {

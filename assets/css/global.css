@@ -186,6 +186,7 @@
 
 	#mainmenu li a{
 		font-family: 'Jeju Gothic', sans-serif;		
+		padding:3px 10px;
 	}
 
 /*메인메뉴 클릭시 첫번째 타이틀,공지사항,이벤트 클릭시 메이타이틀, 영역*/

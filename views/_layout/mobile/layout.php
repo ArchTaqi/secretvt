@@ -5,6 +5,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?php echo html_escape(element('page_title', $layout)); ?></title>
+<link rel="icon" href="<?php echo base_url('assets/images/temp/favi02.png'); ?>"/> 
+<meta property="og:type" content="website">
+<meta property="og:title" content="시크릿베트남">
+<meta property="og:description" content="베트남 소식 및 업소정보 제공! 예약 및 길찾기 지원">
+<meta property="og:image" content="https://secretvt.com/assets/images/temp/logo.png">
+<meta property="og:url" content="https://secretvt.com">
 <?php if (element('meta_description', $layout)) { ?><meta name="description" content="<?php echo html_escape(element('meta_description', $layout)); ?>"><?php } ?>
 <?php if (element('meta_keywords', $layout)) { ?><meta name="keywords" content="<?php echo html_escape(element('meta_keywords', $layout)); ?>"><?php } ?>
 <?php if (element('meta_author', $layout)) { ?><meta name="author" content="<?php echo html_escape(element('meta_author', $layout)); ?>"><?php } ?>
@@ -127,8 +133,8 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
         if (config_item('region_category')) {
             foreach (config_item('region_category') as $key => $value) {
 
-                if($key == element('region', $view)) echo '<option value='.site_url().' selected>'.$value.'</option>';
-                else echo '<option value='.site_url().'>'.$value.'</option>';
+                if($key == element('region', $view)) echo '<option value='.current_url().' selected>'.$value.'</option>';
+                else echo '<option value='.current_url().'>'.$value.'</option>';
             }
         }
         ?>
@@ -187,9 +193,9 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
     </div>
         
     <!-- main end -->
-    <!-- <aside class="back_top_m" style="display:none;">
-        <div><img src="<?php echo element('layout_skin_url', $layout); ?>/images/backtop_03.png" alt="맨위로"></div>
-    </aside> -->
+    <aside class="back_top_m" style="display:none;">
+        <div><img src="<?php echo base_url('/assets/images/backtop_03.png')?>" alt="맨위로"></div>
+    </aside>
     <!-- footer start -->
     <?php echo $this->managelayout->display_footer(); ?>
     <!-- footer end -->
@@ -208,10 +214,44 @@ $(document).on('click', '.viewmobileversion', function(){
 
 <script>
     $(document).ready(function(){
-        // $(window).scroll(function() { 
-        // if ($(this).scrollTop() > 500) { //250 넘으면 버튼이 보여짐니다. 
-        //     $('.back_top_m').fadeIn(); } else { $('.back_top_m').fadeOut(); } 
-        // });
+
+        var select = $("#region");
+        select.change(function(){
+             //var select_name = $(this).children("option:selected").html();
+             //$("header h1 span label").html(select_name);
+            // $("label").css("color" , "#231b26");
+
+
+        Cookies.set('region',$(this).children('option:selected').index(), { expires: 1 },cb_cookie_domain);
+           // set_cookie("region", '11', 0, cb_cookie_domain);     
+    //       alert(js_mem_link[curnetIndex]);   
+           location.href=$(this).val();
+        });
+
+        $("#mainmenu ul li").click(function(){
+
+            if(pageing) pageing=1;
+            $('div.c').eq($(this).index()).click();        
+
+          //  setTimeout( "reload_rg('"+js_swipe_contents[$(this).index()]+"')", 500);
+        });
+
+        if($("#region option:selected").text()){
+            $("#region").siblings("label").text($("#region option:selected").text());
+            $("#region").siblings("label").css("color" , "#231b26");
+        }
+
+        $(window).scroll(function() { 
+        if ($(this).scrollTop() > 500) { //250 넘으면 버튼이 보여짐니다. 
+            $('.back_top_m').fadeIn(); } else { $('.back_top_m').fadeOut(); } 
+        });
+
+        $('.back_top_m').click(function(){
+
+                    $('html, body').animate({
+                        scrollTop: $('html, body').offset().top
+                    }, 500);
+        });
 
         var swiper = new Swiper('.swiper-container', {
           initialSlide :1,

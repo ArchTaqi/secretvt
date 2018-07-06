@@ -23,11 +23,68 @@ if (typeof(COMMON_JS) === 'undefined') {
     });
 
     $(document).ready(function() {
+
+        $( "#dialog_talk" ).dialog({
+          autoOpen: false,
+          modal : true,
+          
+          show: {
+            effect: "fade",
+            duration: 200
+          },
+          
+          hide: {
+            effect: "fade",
+            duration: 300
+          },
+          open: function() { jQuery('div.ui-widget-overlay').bind('click', function() { jQuery('#dialog_talk').dialog('close'); }) }
+        });
+
+
         $('.datepicker').datepicker({
             format: 'yyyy-mm-dd',
             language: 'kr',
             autoclose: true,
             todayHighlight: true
+        });
+
+        $('.footer_02 > nav > ul > li:first-child').click(function(){
+
+            if ($('.footer_02 > nav > ul > li:nth-child(2)').is(':visible')) {
+                $('.footer_02 > nav > ul > li:nth-child(2)').slideUp();
+                $('.footer_02 > nav > ul > li:first-child span').css('transform' , 'rotate(0deg)');
+            } else {
+                $('.footer_02 > nav > ul > li:first-child span').css('transform' , 'rotate(45deg)');
+                $('.footer_02 > nav > ul > li:nth-child(2)').slideDown();
+                $('html,body').animate({scrollTop : $(document).height()} , 400);
+            }
+        });
+
+        $('.footer_02 > nav > ul > li:last-child').click(function(){
+            $('html,body').animate({scrollTop : 0} ,400);
+        });
+
+        $('.footer_02 > nav > ul > li > ul > li:last-child').click(function(){
+
+
+            $( "#dialog_talk" ).dialog( "open" );
+
+            $('#clip_target').select(); // Use try & catch for unsupported browser 
+            try { // The important part (copy selected text) 
+                var successful = document.execCommand('copy'); 
+                // if(successful) answer.innerHTML = 'Copied!'; 
+                // else answer.innerHTML = 'Unable to copy!'; 
+            } catch (err) { 
+                alert('이 브라우저는 지원하지 않습니다.') ;
+            }
+
+            $( ".popup_layer_close" ).on( "click", function() {
+              $( "#dialog_talk" ).dialog( "close" );
+            });
+
+            $( ".popup_layer_copy" ).on( "click", function() {
+              $( "#dialog_talk" ).dialog( "close" );
+            });
         });
     });
 
