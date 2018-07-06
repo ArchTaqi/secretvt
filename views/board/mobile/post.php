@@ -167,7 +167,7 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
     ?>
     <section class="ad" style="margin-bottom:0;">
         <h4>ad</h4>
-        <?php echo banner("karaoke_post_banner_1") ?>
+        <?php echo banner("board_default_banner_1") ?>
     </section>
 </div>
 
