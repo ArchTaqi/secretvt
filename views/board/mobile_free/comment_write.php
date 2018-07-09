@@ -2,7 +2,7 @@
 if ( ! element('post_hide_comment', element('post', $view)) && element('is_admin', $view)) {
 ?>
     <div class="chk_comment_all_wrapper"><label for="chk_comment_all" class='label'><input id="chk_comment_all" onclick="all_commentlist_checked(this.checked);" type="checkbox"> 코멘트 전체선택</label>
-    <a  onClick="comment_multi_action('viewcomment', '<?php echo element('post_id', element('post', $view)); ?>', 'comment_multi_delete', '0', '선택하신 글들을 완전삭제하시겠습니까?');" class="btn btn-default btn-sm pull-right">선택삭제</a>
+    <a  onClick="comment_multi_action('viewcomment', '<?php echo element('post_id', element('post', $view)); ?>', 'comment_multi_delete', '0', '선택하신 글들을 완전삭제하시겠습니까?');" class="btn btn-danger btn-sm pull-right">선택삭제</a>
     </div>
     
     

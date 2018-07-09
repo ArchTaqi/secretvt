@@ -1814,7 +1814,7 @@
 	}
 
 	.reply_write button{
-		width: 50px;
+	/*	width: 50px;
 		height: 25px;
 		line-height: 26px;
 		border-radius: 5px;
@@ -1825,7 +1825,7 @@
 		float: right;
 		font-size: 13px;
 		margin-bottom: 2.5%;
-		outline: none;
+		outline: none;*/
 	}
 
 /*자유게시판의 댓글 리스트 영역*/

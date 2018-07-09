@@ -30,7 +30,9 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
     </h3> -->
     
 
-    <?php if (element('extra_content', $view)) {
+    <?php 
+    $tel1='';
+    if (element('extra_content', $view)) {
                 foreach (element('extra_content', $view) as $key => $value) { 
                         if($value['field_name'] == 'tel1') $tel1=$value['output'];
                         

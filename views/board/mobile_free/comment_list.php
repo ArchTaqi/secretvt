@@ -36,10 +36,10 @@ if (element('list', element('data', $view))) {
                             <?php } ?>
 
                             <?php if (element('can_update', $result)) { ?>
-                                <a href="javascript:;" onClick="comment_box('<?php echo element('cmt_id', $result); ?>', 'cu'); return false;">수정</a>
+                                <a href="javascript:;" onClick="comment_box('<?php echo element('cmt_id', $result); ?>', 'cu'); return false;" class="btn btn-success btn-sm">수정</a>
                             <?php } ?>
                             <?php if (element('can_delete', $result)) { ?>
-                                <a href="javascript:;" onClick="delete_comment('<?php echo element('cmt_id', $result); ?>', '<?php echo element('post_id', $result); ?>', '<?php echo element('page', $view); ?>');">삭제</a>
+                                <a href="javascript:;" onClick="delete_comment('<?php echo element('cmt_id', $result); ?>', '<?php echo element('post_id', $result); ?>', '<?php echo element('page', $view); ?>');" class="btn btn-danger btn-sm">삭제</a>
                             <?php } ?>
                             <?php
                             if (element('is_admin', $view) && element('use_comment_secret', element('board', $view))) {
