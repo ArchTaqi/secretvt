@@ -1,17 +1,12 @@
-<div class="alert-auto-close alert-dismissible alert-comment-list-message reply_msg" style="display:none;"><!-- <button type="button" class="close alertclose">×</button> --><span class="alert-comment-list-message-content"></span></div>
+<div class="alert alert-auto-close alert-dismissible alert-comment-list-message reply_msg" style="display:none;"><!-- <button type="button" class="close alertclose">×</button> --><span class="alert-comment-list-message-content"></span></div>
 
 <?php
 if (element('list', element('data', $view))) {
+    echo '<ul>';
     foreach (element('list', element('data', $view)) as $result) {
 ?>
-    <div  id="comment_<?php echo element('cmt_id', $result); ?>" >
-        <?php if (element('use_comment_profile', element('board', $view))) { ?>
-            <div class="media-left">
-                <img class="media-object member-photo" src="<?php echo element('member_photo_url', $result); ?>" width="64" height="64" alt="<?php echo html_escape(element('cmt_nickname', $result)); ?>" title="<?php echo html_escape(element('cmt_nickname', $result)); ?>" />
-            </div>
-        <?php } ?>
-        <ul>
-            <li class="reply_list">
+    
+            <li class="reply_list" id="comment_<?php echo element('cmt_id', $result); ?>" >
                 
                 <?php if (element('is_admin', $view)) { ?><input type="checkbox" name="chk_comment_id[]" value="<?php echo element('cmt_id', $result); ?>" /><?php } ?>
                 <div class="reply_cont pull-right per95" ><?php echo element('content', $result); ?></div>
@@ -24,7 +19,7 @@ if (element('list', element('data', $view))) {
                     <?php
                     if ( ! element('post_del', element('post', $view)) && ! element('cmt_del', $result)) {
                     ?>
-                        <div class="reply_edit">
+                        <div class="reply_edit mt10 mb10">
                             <?php if (element('use_comment_like', element('board', $view))) { ?>
                                 <a class="good" href="javascript:;" id="btn-comment-like-<?php echo element('cmt_id', $result); ?>" onClick="comment_like('<?php echo element('cmt_id', $result); ?>', '1', 'comment-like-<?php echo element('cmt_id', $result); ?>');" title="추천하기"><i class="fa fa-thumbs-o-up fa-xs"></i> 추천 <span class="comment-like-<?php echo element('cmt_id', $result); ?>"><?php echo number_format(element('cmt_like', $result)); ?></span></a>
                             <?php } ?>
@@ -58,17 +53,19 @@ if (element('list', element('data', $view))) {
                     ?>
                 </div>
 
-
-            <div id="edit_<?php echo element('cmt_id', $result); ?>" class="reply_write"></v><!-- 수정 -->
+            <div id="edit_<?php echo element('cmt_id', $result); ?>" class="reply_write clearfix pb10" ></div><!-- 수정 -->
             
 
-            <sdivpan id="reply_<?php echo element('cmt_id', $result); ?>"></div><!-- 답변 -->
+            <div id="reply_<?php echo element('cmt_id', $result); ?>"></div><!-- 답변 -->
             <input type="hidden" value="<?php echo element('cmt_secret', $result); ?>" id="secret_comment_<?php echo element('cmt_id', $result); ?>" />
             <textarea id="save_comment_<?php echo element('cmt_id', $result); ?>" style="display:none"><?php echo html_escape(element('cmt_content', $result)); ?></textarea>
+            
             </li>
-        </div>
+            
+        
 <?php
     }
+    echo '</ul>';
 }
 ?>
 <nav><?php echo element('paging', $view); ?></nav>

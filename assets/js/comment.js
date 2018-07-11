@@ -191,6 +191,8 @@ if (typeof(COMMENT_JS) === 'undefined') {
             if (save_before) {
                  $('#' + save_before).css('display', 'none');
                 $('#' + save_before).html('');
+                $('.reply_edit').show();
+                $('#comment_'+cmt_id).children('div.reply_info').children('div.reply_edit').hide();
             }
 
             $('#' + el_id).css('display', '');

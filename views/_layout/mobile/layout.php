@@ -158,7 +158,7 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
     
         
         <?php 
-            if(element(0,element('active',$menu))){
+            if(!empty(element(0,element('active',$menu)))){
                 echo $menuhtml;
                 
                 $prev_men_link = element('prev_men_link', $layout);
@@ -252,7 +252,7 @@ $(document).on('click', '.viewmobileversion', function(){
                         scrollTop: $('html, body').offset().top
                     }, 500);
         });
-
+        
         var swiper = new Swiper('.swiper-container', {
           initialSlide :1,
           runCallbacksOnInit : false,
