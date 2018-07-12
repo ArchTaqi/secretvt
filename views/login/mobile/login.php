@@ -3,8 +3,8 @@
 <div class="wrap02">
     <?php
         echo validation_errors('<div class="alert alert-warning" role="alert">', '</div>');
-        echo show_alert_message(element('message', $view), '<div class="alert alert-auto-close alert-dismissible alert-info"><button type="button" class="close alertclose" >&times;</button>', '</div>');
-        echo show_alert_message($this->session->flashdata('message'), '<div class="alert alert-auto-close alert-dismissible alert-info"><button type="button" class="close alertclose" >&times;</button>', '</div>');
+        echo show_alert_message(element('message', $view), '<div class="alert alert-auto-close alert-dismissible alert-info">', '</div>');
+        echo show_alert_message($this->session->flashdata('message'), '<div class="alert alert-auto-close alert-dismissible alert-info">', '</div>');
         $attributes = array('class' => 'form-horizontal', 'name' => 'flogin', 'id' => 'flogin');
         echo form_open(current_full_url(), $attributes);
     ?>
