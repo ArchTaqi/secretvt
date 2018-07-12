@@ -159,7 +159,7 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
         if ( ! element('post_hide_comment', element('post', $view))) { ?>
             <section class="reply_write">
                 <?php   $this->load->view(element('view_skin_path', $layout) . '/comment_write'); ?>
-                <section id="viewcomment"></section>
+                <section id="viewcomment" class="mb0"></section>
             </section>
             
         <?php
