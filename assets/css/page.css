@@ -276,9 +276,10 @@
 		padding-top:2px;
 		margin-bottom: 5%;
 		color: #c21e5a;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
+		line-height: 20px;
+		/*white-space: nowrap;*/
+		/*overflow: hidden;*/
+		/*text-overflow: ellipsis;*/
 	}
 
 	.store_list figcaption p{
@@ -291,7 +292,7 @@
 		font-family: 'Nanum Gothic', sans-serif;
 	}
 
-	.store_list figcaption span{
+	.store_list figcaption > span{
 		display: block;
 		font-size: 11px;
 		padding-top:5px;
@@ -309,7 +310,7 @@
 		width:100%;
 		box-sizing: border-box;
 		border:1px solid #ededed;
-		padding:3.5% 3.5% 3.5% 43.5%;
+		padding:1.5% 1.5% 1.5% 40.5%;
 		position: relative;
 	}
 
@@ -330,9 +331,10 @@
 		padding-top: 2px;
 		margin-bottom:5%;
 		color: #c21e5a;
-		white-space: nowrap;
+		line-height: 20px;
+		/*white-space: nowrap;
 		overflow: hidden;
-		text-overflow: ellipsis;
+		text-overflow: ellipsis;*/
 	}
 
 	.store_list02 li p{
@@ -344,7 +346,7 @@
 		font-family:'Nanum Gothic', sans-serif; 
 	}
 
-	.store_list02 li span{
+	.store_list02 li > a > span{
 		display: block;
 		padding-top: 5px;
 		font-size: 11px;

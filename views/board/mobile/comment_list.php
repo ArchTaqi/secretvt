@@ -1,4 +1,4 @@
-<div class="alert alert-auto-close alert-dismissible alert-comment-list-message" style="display:none;"><button type="button" class="close alertclose">×</button><span class="alert-comment-list-message-content"></span></div>
+<div class="alert alert-auto-close alert-dismissible alert-comment-list-message" style="display:none;"><span class="alert-comment-list-message-content"></span></div>
 
 <?php
 if (element('best_list', $view)) {
@@ -62,15 +62,24 @@ if (element('list', element('data', $view))) {
                 <img class="media-object member-photo" src="<?php echo element('member_photo_url', $result); ?>" width="64" height="64" alt="<?php echo html_escape(element('cmt_nickname', $result)); ?>" title="<?php echo html_escape(element('cmt_nickname', $result)); ?>" />
             </div>
         <?php } ?>
+
         <div class="media-body">
-            <h4 class="media-heading">
+            
+            <div class="comment-content">
+            <?php if(element('cmt_reply', $result)) {?>
+                <img src="<?php echo base_url('/assets/images/temp/write_img/reply_arrow.png') ?>" style="width:15px;">
+            <?php } ?>
+            <?php echo element('content', $result); ?>
+            <?php if (element('lucky', $result)) { ?><div class="lucky"><i class="fa fa-star"></i> <?php echo element('lucky', $result); ?></div><?php } ?>
+            </div>
+            <h4 class="media-heading clearfix">
                 <?php if (element('is_admin', $view)) { ?><input type="checkbox" name="chk_comment_id[]" value="<?php echo element('cmt_id', $result); ?>" /><?php } ?>
                 <?php echo element('display_name', $result); ?>
                 <span class="time"><i class="fa fa-clock-o"></i> <?php echo element('display_datetime', $result); ?></span>
                 <?php if (element('display_ip', $result)) { ?>
                     <span class="ip"><i class="fa fa-map-marker"></i> <?php echo element('display_ip', $result); ?></span>
                 <?php } ?>
-                <?php if (element('is_mobile', $result)) { ?><i class="fa fa-wifi"></i><?php } ?>
+                
                 <?php
                 if ( ! element('post_del', element('post', $view)) && ! element('cmt_del', $result)) {
                 ?>
@@ -86,13 +95,13 @@ if (element('list', element('data', $view))) {
                         <?php } ?>
 
                         <?php if (element('can_reply', $result)) { ?>
-                            <a href="javascript:;" onClick="comment_box('<?php echo element('cmt_id', $result); ?>', 'c'); return false;">답변</a>
+                            <a href="javascript:;" class="btn btn-primary btn-sm" onClick="comment_box('<?php echo element('cmt_id', $result); ?>', 'c'); return false;">답변</a>
                         <?php } ?>
                         <?php if (element('can_update', $result)) { ?>
-                            <a href="javascript:;" onClick="comment_box('<?php echo element('cmt_id', $result); ?>', 'cu'); return false;">수정</a>
+                            <a href="javascript:;" class="btn btn-success btn-sm" onClick="comment_box('<?php echo element('cmt_id', $result); ?>', 'cu'); return false;">수정</a>
                         <?php } ?>
                         <?php if (element('can_delete', $result)) { ?>
-                            <a href="javascript:;" onClick="delete_comment('<?php echo element('cmt_id', $result); ?>', '<?php echo element('post_id', $result); ?>', '<?php echo element('page', $view); ?>');">삭제</a>
+                            <a href="javascript:;" class="btn btn-danger btn-sm"  onClick="delete_comment('<?php echo element('cmt_id', $result); ?>', '<?php echo element('post_id', $result); ?>', '<?php echo element('page', $view); ?>');">삭제</a>
                         <?php } ?>
                         <?php
                         if (element('is_admin', $view) && element('use_comment_secret', element('board', $view))) {
@@ -110,8 +119,6 @@ if (element('list', element('data', $view))) {
                 }
                 ?>
             </h4>
-            <?php echo element('content', $result); ?>
-            <?php if (element('lucky', $result)) { ?><div class="lucky"><i class="fa fa-star"></i> <?php echo element('lucky', $result); ?></div><?php } ?>
             <span id="edit_<?php echo element('cmt_id', $result); ?>"></span><!-- 수정 -->
             <span id="reply_<?php echo element('cmt_id', $result); ?>"></span><!-- 답변 -->
             <input type="hidden" value="<?php echo element('cmt_secret', $result); ?>" id="secret_comment_<?php echo element('cmt_id', $result); ?>" />

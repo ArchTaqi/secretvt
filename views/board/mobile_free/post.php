@@ -154,16 +154,17 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
     <div class="clearfix"></div>
 
     <?php
-    if (element('use_comment', element('board', $view))) {
+    
 
         if ( ! element('post_hide_comment', element('post', $view))) { ?>
             <section class="reply_write">
                 <?php   $this->load->view(element('view_skin_path', $layout) . '/comment_write'); ?>
+                <section id="viewcomment"></section>
             </section>
-            <section id="viewcomment"></section>
+            
         <?php
         }
-    }
+    
     ?>
  
     

@@ -314,7 +314,7 @@ class Comment_list extends CB_Controller
                     ? member_photo_url(element('mem_photo', $val), 64, 64)
                     : site_url('assets/images/member_default.gif');
 
-                $result['list'][$key]['cmt_depth'] = strlen($result['list'][$key]['cmt_reply']) * 30;
+                $result['list'][$key]['cmt_depth'] = strlen($result['list'][$key]['cmt_reply']) * 15;
 
                 $result['list'][$key]['can_update'] = false;
                 $result['list'][$key]['can_delete'] = false;
