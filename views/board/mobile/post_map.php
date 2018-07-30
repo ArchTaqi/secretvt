@@ -169,7 +169,7 @@ img.adp-marker{
                     </a>
                 </td>
                 <td class="active">
-                    <a href="<?php echo base_url('document/map/'.element('post_id', element('post', $view))); ?>">
+                    <a href="<?php echo base_url('/map/'.element('post_id', element('post', $view))); ?>">
                         <img src="<?php echo base_url('assets/images/temp/de_img/de_navi.png')?>" alt="sub02">
                         위치확인
                     </a>
