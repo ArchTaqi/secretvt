@@ -379,11 +379,11 @@
 		float: left;
 	}
 
-	.footer_02 > nav > ul > li:nth-child(3) > a >  figure > figcaption{
+	.footer_02 > nav > ul > li:nth-child(3)  >  figure > figcaption{
 		float: left;
 	}
 
-	.footer_02 > nav > ul > li:nth-child(3) > a > figure > img{
+	.footer_02 > nav > ul > li:nth-child(3)  > figure > img{
 		width: 4.5%;
 		float: right;
 		position: relative;

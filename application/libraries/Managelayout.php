@@ -413,8 +413,8 @@ class Managelayout extends CI_Controller
                        </ul>
                    </li>
 
-                   <li>
-                        <a href="https://play.google.com/store/apps/details?id=com.secretvt">
+                   <li onclick="javascript:location.href=\'https://play.google.com/store/apps/details?id=com.secretvt\';">
+                        
                             <figure>
                                 <figcaption>
                                     구글 앱 다운로드
@@ -422,7 +422,7 @@ class Managelayout extends CI_Controller
                                 <img src="/assets/images/temp/footer_img/footer_down.png" alt="download">
                             </figure>
                             
-                        </a>
+                        
                    </li>
 
                    <li>
