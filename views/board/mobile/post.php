@@ -23,7 +23,7 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
 <?php echo element('headercontent', element('board', $view)); ?>
 
 <div class="wrap">
-    <?php echo show_alert_message($this->session->flashdata('message'), '<div class="alert alert-auto-close alert-dismissible alert-info"><button type="button" class="close alertclose" >&times;</button>', '</div>'); ?>
+    <?php echo show_alert_message($this->session->flashdata('message'), '<div class="alert alert-auto-close alert-dismissible alert-info">', '</div>'); ?>
    <!--  <h3>
         <?php if (element('category', element('post', $view))) { ?>[<?php echo html_escape(element('bca_value', element('category', element('post', $view)))); ?>] <?php } ?>
         <?php echo html_escape(element('post_title', element('post', $view))); ?>
@@ -41,20 +41,41 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
     }
     ?>
     <section class="de_title">
+        <div class="swiper-container swiper-container-sub">
+            <div class="swiper-wrapper">
+            
+            <?php
+            if (element('file_image', $view)) {
+                foreach (element('file_image', $view) as $key => $value) {
+            ?>
+                <div class="swiper-slide per100"><img src="<?php echo element('thumb_image_url', $value); ?>" alt="<?php echo html_escape(element('pfi_originname', $value)); ?>" title="<?php echo html_escape(element('pfi_originname', $value)); ?>" class="view_full_image" data-origin-image-url="<?php echo element('origin_image_url', $value); ?>" style="max-width:100%;" /></div>
+            <?php
+                }
+            }
+            ?>
+                
+            </div>
+            <div class="swiper-pagination  swiper-pagination-sub"></div>
+            <!-- Add Arrows -->
+            <div class="swiper-button-next swiper-button-white"></div>
+            <div class="swiper-button-prev swiper-button-white"></div>
+        </div>
         <h2 class="bottom_02">[<?php echo "업소정보";//$menuName ?>] <?php echo element('post_title', element('post',$view)) ?></h2>
+        
+            
         <table>
             <tr>
-                <td class="active">
-                    <a href="<?php echo element('post_url', $view); ?>">
+                <td onClick="location.href='<?php echo element('post_url', $view); ?>'" class="active">
+                    
                         <img src="<?php echo base_url('assets/images/temp/de_img/de_store.png')?>" alt="sub01"> 
                         업소정보
-                    </a>
+                    
                 </td>
-                <td>
-                    <a href="<?php echo base_url('/map/'.element('post_id', element('post', $view))); ?>">
+                <td onClick="location.href='<?php echo base_url('/map/'.element('post_id', element('post', $view))); ?>'">
+                    
                         <img src="<?php echo base_url('assets/images/temp/de_img/de_navi.png')?>" alt="sub02">
                         위치확인
-                    </a>
+                    
                 </td>
                 <!-- <td>
                     <a href="<?php echo board_url('vtn_review');?>?post_parent=<?php echo element('post_id', element('post', $view))?>">
@@ -70,20 +91,16 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
                 </td>
             </tr>
         </table>
+        <?php if ( ! element('post_del', element('post', $view)) && element('use_scrap', element('board', $view))) { 
+            if(element('scr_id',element('scrap', element('post', $view))))
+                echo '<a href="javascript:post_scrap_cancel(\''.element('post_id', element('post', $view)).'\', \''.element('scr_id',element('scrap', element('post', $view))).'\');"><i class="fa fa-heart" style="font-size:20px;color:#ddd;"></i></a>';
+            else echo '<a id="btn-scrap" href="javascript:post_scrap(\''.element('post_id', element('post', $view)).'\', \'post-scrap\');"><i class="fa fa-heart-o" style="font-size:20px"></i></a>';
+            
+         } ?>
     </section>
     <section class="store">
         <div class="contents-view" style="margin-bottom: 0;">
-            <!-- <div class="contents-view-img">
-                <?php
-                if (element('file_image', $view)) {
-                    foreach (element('file_image', $view) as $key => $value) {
-                ?>
-                    <img src="<?php echo element('thumb_image_url', $value); ?>" alt="<?php echo html_escape(element('pfi_originname', $value)); ?>" title="<?php echo html_escape(element('pfi_originname', $value)); ?>" class="view_full_image" data-origin-image-url="<?php echo element('origin_image_url', $value); ?>" style="max-width:100%;" />
-                <?php
-                    }
-                }
-                ?>
-            </div> -->
+            
 
             <!-- 본문 내용 시작 -->
             <div id="post-content"><?php echo element('content', element('post', $view)); ?></div>
@@ -188,6 +205,22 @@ $(document).ready(function() {
 
 <script type="text/javascript">
 //<![CDATA[
+
+    $(document).ready(function () {
+        var swiper_sub = new Swiper('.swiper-container-sub', {
+            
+            spaceBetween: 30,
+            effect: 'fade',
+            pagination: {
+              el: '.swiper-pagination-sub',
+              clickable: true,
+            },
+            navigation: {
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+            },
+        });           
+    });
 var client = new ZeroClipboard($('.copy_post_url'));
 client.on('ready', function( readyEvent ) {
     client.on('aftercopy', function( event ) {

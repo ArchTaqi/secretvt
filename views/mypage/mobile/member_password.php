@@ -11,17 +11,14 @@
     <section class="info_table">
         <table>
             <tr>
-                <td>
+                <td class="active">
                     <a href="<?php echo site_url('mypage'); ?>">내 정보</a>
                 </td>
                 <td>
                     <a href="<?php echo site_url('mypage/post'); ?>">작성글</a>
                 </td>
-                <td class="active">
-                    <a href="<?php echo site_url('membermodify'); ?>">정보수정</a>
-                </td>
                 <td>
-                   <a href="<?php echo site_url('membermodify/memberleave'); ?>">탈퇴하기</a>
+                    <a href="<?php echo site_url('mypage/scrap'); ?>" title="나의 스크랩">스크랩</a>
                 </td>
             </tr>
         </table>

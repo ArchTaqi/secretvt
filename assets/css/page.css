@@ -310,8 +310,10 @@
 		width:100%;
 		box-sizing: border-box;
 		border:1px solid #ededed;
-		padding:1.5% 1.5% 1.5% 40.5%;
+		/*padding:1.5% 1.5% 1.5% 40.5%;*/
 		position: relative;
+		font-family: 'Jeju Gothic', sans-serif;
+		display:inline-block;
 	}
 
 	.store_list02 li input{
@@ -320,12 +322,7 @@
 		left: 0;
 	}
 
-	.store_list02 li a{
-		display:inline-block;
-		width:100%;
-		box-sizing: border-box;
-		font-family: 'Jeju Gothic', sans-serif;
-	}
+	
 
 	.store_list02 li h2{
 		padding-top: 2px;
@@ -1518,8 +1515,9 @@
 		width: 80%;
 		font-family: 'Jeju Gothic', sans-serif;
 		box-sizing: border-box;
-		padding:2% 0;
+		padding:2% 2%;
 		border-left: 1px solid #ededed;
+		text-align: left;
 	}
 
 

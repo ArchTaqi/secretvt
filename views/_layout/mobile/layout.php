@@ -174,7 +174,7 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
     <!-- header end -->
 
     <!-- main start -->
-     <div class="swiper-container">
+     <div class="swiper-container swiper-container-main">
         <div class="swiper-wrapper">
             <?php if(!empty($prev_men_link)) echo '<div class="swiper-slide" data-location-url="'.$prev_men_link.'"></div>'; ?>
             <div class="swiper-slide">
@@ -259,11 +259,13 @@ $(document).on('click', '.viewmobileversion', function(){
                     }, 500);
         });
         
-        var swiper = new Swiper('.swiper-container', {
+        var swiper = new Swiper('.swiper-container-main', {
           initialSlide :1,
           runCallbacksOnInit : false,
           touchAngle:35,
           threshold : 20,
+          shortSwipes:false,
+
         });
 
         swiper.on('slideChange', function () {

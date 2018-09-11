@@ -956,12 +956,100 @@ class Postact extends CB_Controller
         // 이벤트가 존재하면 실행합니다
         Events::trigger('after', $eventname);
 
+        
+
         $success = '이 글을 스크랩 하셨습니다';
         $result = array('success' => $success, 'count' => $count);
+
+        $this->session->set_flashdata(
+                'message',
+                $success
+            );
+
         exit(json_encode($result));
 
     }
 
+    /**
+     * 게시물 스크랩 취소 하기
+     */
+    public function post_scrap_cancel($post_id = 0 , $scr_id = 0)
+    {
+
+        // 이벤트 라이브러리를 로딩합니다
+        $eventname = 'event_mypage_scrap_delete';
+        $this->load->event($eventname);
+
+        // 이벤트가 존재하면 실행합니다
+        Events::trigger('before', $eventname);
+
+        $result = array();
+        $this->output->set_content_type('application/json');
+
+        if ($this->member->is_member() === false) {
+            $result = array('error' => '로그인 후 이용해주세요');
+            exit(json_encode($result));
+        }
+
+        $scr_id = (int) $scr_id;
+        if (empty($scr_id) OR $scr_id < 1) {
+            $result = array('error' => '잘못된 접근입니다');
+            exit(json_encode($result));
+        }
+        if ( ! $this->session->userdata('post_id_' . $post_id)) {
+            $result = array('error' => '해당 게시물에서만 접근 가능합니다');
+            exit(json_encode($result));
+        }
+
+        $mem_id = (int) $this->member->item('mem_id');
+
+        $this->load->model('Scrap_model');
+
+        $select = 'post_id, brd_id, mem_id, post_del';
+        $post = $this->Post_model->get_one($post_id, $select);
+
+        if ( ! element('post_id', $post)) {
+            $result = array('error' => '존재하지 않는 게시물입니다');
+            exit(json_encode($result));
+        }
+        if (element('post_del', $post)) {
+            $result = array('error' => '삭제된 게시물입니다');
+            exit(json_encode($result));
+        }
+
+        $board = $this->board->item_all(element('brd_id', $post));
+
+        if ( ! element('use_scrap', $board)) {
+            $result = array('error' => '이 게시판은 스크랩 기능을 사용하지 않습니다');
+            exit(json_encode($result));
+        }
+
+        $scrap = $this->Scrap_model->get_one($scr_id);
+        
+
+        if (!element('scr_id', $scrap)) {
+            $result = array('error' => '잘못된 접근입니다.');
+            exit(json_encode($result));
+        }
+
+        $this->Scrap_model->delete($scr_id);
+
+        // 이벤트가 존재하면 실행합니다
+        Events::trigger('after', $eventname);
+
+        
+        
+
+        $success = '스크랩을 취소 하셨습니다';
+        $result = array('success' => $success);
+
+        $this->session->set_flashdata(
+                'message',
+                $success
+            );
+        exit(json_encode($result));
+
+    }
 
     /**
      * 게시물 신고 하기

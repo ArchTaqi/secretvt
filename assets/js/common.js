@@ -277,9 +277,35 @@ if (typeof(COMMON_JS) === 'undefined') {
                     alert(data.error);
                     return false;
                 } else if (data.success) {
-                    //alert(data.success);
-                    $('.' + classname).text('+' + number_format(String(data.count)));
-                    $('#btn-scrap').effect('highlight', { color: '#af75b2' }, 3000);
+                    document.location.reload();
+                    // alert(data.success);
+                    // $('.' + classname).text('+' + number_format(String(data.count)));
+                    // $('#btn-scrap').effect('highlight', { color: '#af75b2' }, 3000);
+                }
+            }
+        });
+    }
+
+    function post_scrap_cancel(post_id, scr_id) {
+
+        var href;
+
+        if ( post_id == '') {
+            return false;
+        }
+
+        href = cb_url + '/postact/post_scrap_cancel/' + post_id+'/'+scr_id;
+        var $that = $(this);
+        $.ajax({
+            url : href,
+            type : 'get',
+            dataType : 'json',
+            success : function(data) {
+                if (data.error) {
+                    alert(data.error);
+                    return false;
+                } else if (data.success) {
+                    document.location.reload();
                 }
             }
         });

@@ -1,24 +1,22 @@
 <?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
 
 <div class="wrap05 mypage">
-    <section class="title">
+    <section class="info_table">
         <table>
             <tr>
-                <td style="width:25%;" >
+                <td class="active">
                     <a href="<?php echo site_url('mypage'); ?>">내 정보</a>
                 </td>
-                <td style="width:25%;">
-                    <a href="<?php echo site_url('mypage/post'); ?>">나의 작성글</a>
+                <td>
+                    <a href="<?php echo site_url('mypage/post'); ?>">작성글</a>
                 </td>
-                <td style="width:25%;" >
-                    <a href="<?php echo site_url('membermodify'); ?>" >정보수정</a>
-                </td>
-                <td style="width:25%;" class="active">
-                   <a href="<?php echo site_url('membermodify/memberleave'); ?>">탈퇴하기</a>
+                <td>
+                    <a href="<?php echo site_url('mypage/scrap'); ?>" title="나의 스크랩">스크랩</a>
                 </td>
             </tr>
         </table>
     </section>
+    
     
     <section class="title02">
         <h2>관리자 회원</h2>

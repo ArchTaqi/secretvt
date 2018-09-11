@@ -1,10 +1,8 @@
 <?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
 
 <div class="wrap05 mypage">
-
     <section class="title02">
         <h2>작성글</h2>
-        <p><span>작성글</span>을 확인 하실 수 있습니다.</p>
     </section>
     
     <section class="myinfo">
@@ -14,22 +12,9 @@
                 <h2>
                     <?php echo html_escape($this->member->item('mem_userid')); ?>
                 </h2>
-                <p><span>"<?php echo html_escape($this->member->item('mem_nickname')); ?>" 님 안녕하세요</span></p>
+                <p><strong>"<?php echo html_escape($this->member->item('mem_nickname')); ?>" </strong>님 안녕하세요</p>
             </figcaption>
         </figure>
-
-        <div class="info_level">
-            <img src="<?php echo base_url('assets/images/temp/level.png') ?>" alt="user">
-            <p>하사 <?php //echo html_escape($this->member->item('mem_level')); ?></p>
-        </div>
-
-        <button id="opener">
-                등급혜택 보기 
-        </button>
-
-        <div id="dialog"  style="display:none">
-            <img src="<?php echo base_url('assets/images/temp/info_img/info_dia.png') ?>" alt="benefit" style="width:100%" >
-        </div>
     </section>
 
     <section class="info_table">
@@ -42,10 +27,7 @@
                     <a href="<?php echo site_url('mypage/post'); ?>">작성글</a>
                 </td>
                 <td>
-                    <a href="<?php echo site_url('membermodify'); ?>">정보수정</a>
-                </td>
-                <td>
-                   <a href="<?php echo site_url('membermodify/memberleave'); ?>">탈퇴하기</a>
+                    <a href="<?php echo site_url('mypage/scrap'); ?>" title="나의 스크랩">스크랩</a>
                 </td>
             </tr>
         </table>

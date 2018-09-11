@@ -644,10 +644,11 @@ class Board_post extends CB_Controller
 
         $view['view']['board'] = $board;
         $this->load->model('Scrap_model');
-        $countwhere = array(
+        $scrapwhere = array(
             'post_id' => element('post_id', $post),
+            'mem_id' => (int) $this->member->item('mem_id'),
         );
-        $view['view']['post']['scrap_count'] = $this->Scrap_model->count_by($countwhere);
+        $view['view']['post']['scrap'] = $this->Scrap_model->get_one('','',$scrapwhere);
 
         $view['view']['comment']['is_cmt_name'] = $is_cmt_name
             = ($this->member->is_member() === false) ? true : false;
@@ -1193,7 +1194,7 @@ class Board_post extends CB_Controller
         }
 
 
-        $where['post_main_4'] = 1;
+        
         
         if(!empty(get_cookie('region')) && element('bgr_id', $board)!=='8' && element('bgr_id', $board)!=='11') {
             $where['region_category'] = get_cookie('region');
@@ -1204,153 +1205,166 @@ class Board_post extends CB_Controller
             $category_id = '';
         }
 
-        $main_result = $this->Post_model
-            ->get_post_list(6, '', $where, $category_id, $findex, $sfield, $skeyword);
+        // $main_result = $this->Post_model
+        //     ->get_post_list(6, '', $where, $category_id, $findex, $sfield, $skeyword);
         
 
-        if (element('list', $main_result)) {
-            foreach (element('list', $main_result) as $key => $val) {
+        // if (element('list', $main_result)) {
+        //     foreach (element('list', $main_result) as $key => $val) {
 
                
-                $main_result['list'][$key]['post_url'] = post_url(element('brd_key', $board), element('post_id', $val));
+        //         $main_result['list'][$key]['post_url'] = post_url(element('brd_key', $board), element('post_id', $val));
 
-                $main_result['list'][$key]['meta'] = $meta
-                    = $this->Post_meta_model
-                    ->get_all_meta(element('post_id', $val));
+        //         $main_result['list'][$key]['meta'] = $meta
+        //             = $this->Post_meta_model
+        //             ->get_all_meta(element('post_id', $val));
 
-                $main_result['list'][$key]['extravars'] = $this->Post_extra_vars_model->get_all_meta(element('post_id', $val));
+        //         $main_result['list'][$key]['extravars'] = $this->Post_extra_vars_model->get_all_meta(element('post_id', $val));
 
-                if ($this->cbconfig->get_device_view_type() === 'mobile') {
-                    $main_result['list'][$key]['title'] = element('mobile_subject_length', $board)
-                        ? cut_str(element('post_title', $val), element('mobile_subject_length', $board))
-                        : element('post_title', $val);
-                } else {
-                    $main_result['list'][$key]['title'] = element('subject_length', $board)
-                        ? cut_str(element('post_title', $val), element('subject_length', $board))
-                        : element('post_title', $val);
-                }
-                if (element('post_del', $val)) {
-                    $main_result['list'][$key]['title'] = '게시물이 삭제 되었습니다';
-                }
-                $is_blind = (element('blame_blind_count', $board) > 0 && element('post_blame', $val) >= element('blame_blind_count', $board)) ? true : false;
-                if ($is_blind) {
-                    $main_result['list'][$key]['title'] = '신고가 접수된 게시글입니다.';
-                }
+        //         if ($this->cbconfig->get_device_view_type() === 'mobile') {
+        //             $main_result['list'][$key]['title'] = element('mobile_subject_length', $board)
+        //                 ? cut_str(element('post_title', $val), element('mobile_subject_length', $board))
+        //                 : element('post_title', $val);
+        //         } else {
+        //             $main_result['list'][$key]['title'] = element('subject_length', $board)
+        //                 ? cut_str(element('post_title', $val), element('subject_length', $board))
+        //                 : element('post_title', $val);
+        //         }
+        //         if (element('post_del', $val)) {
+        //             $main_result['list'][$key]['title'] = '게시물이 삭제 되었습니다';
+        //         }
+        //         $is_blind = (element('blame_blind_count', $board) > 0 && element('post_blame', $val) >= element('blame_blind_count', $board)) ? true : false;
+        //         if ($is_blind) {
+        //             $main_result['list'][$key]['title'] = '신고가 접수된 게시글입니다.';
+        //         }
 
-                if (element('mem_id', $val) >= 0) {
-                    $main_result['list'][$key]['display_name'] = display_username(
-                        element('post_userid', $val),
-                        element('post_nickname', $val),
-                        ($use_sideview_icon ? element('mem_icon', $val) : ''),
-                        ($use_sideview ? 'Y' : 'N')
-                    );
-                } else {
-                    $main_result['list'][$key]['display_name'] = '익명사용자';
-                }
+        //         if (element('mem_id', $val) >= 0) {
+        //             $main_result['list'][$key]['display_name'] = display_username(
+        //                 element('post_userid', $val),
+        //                 element('post_nickname', $val),
+        //                 ($use_sideview_icon ? element('mem_icon', $val) : ''),
+        //                 ($use_sideview ? 'Y' : 'N')
+        //             );
+        //         } else {
+        //             $main_result['list'][$key]['display_name'] = '익명사용자';
+        //         }
 
-                $main_result['list'][$key]['display_datetime'] = display_datetime(
-                    element('post_datetime', $val),
-                    $list_date_style,
-                    $list_date_style_manual
-                );
-                $main_result['list'][$key]['category'] = '';
-                if (element('use_category', $board) && element('post_category', $val)) {
-                    $main_result['list'][$key]['category']
-                        = $this->Board_category_model
-                        ->get_category_info(element('brd_id', $val), element('post_category', $val));
-                }
-                if ($param->output()) {
-                    $main_result['list'][$key]['post_url'] .= '?' . $param->output();
-                }
+        //         $main_result['list'][$key]['display_datetime'] = display_datetime(
+        //             element('post_datetime', $val),
+        //             $list_date_style,
+        //             $list_date_style_manual
+        //         );
+        //         $main_result['list'][$key]['category'] = '';
+        //         if (element('use_category', $board) && element('post_category', $val)) {
+        //             $main_result['list'][$key]['category']
+        //                 = $this->Board_category_model
+        //                 ->get_category_info(element('brd_id', $val), element('post_category', $val));
+        //         }
+        //         if ($param->output()) {
+        //             $main_result['list'][$key]['post_url'] .= '?' . $param->output();
+        //         }
                 
-                $main_result['list'][$key]['is_hot'] = false;
+        //         $main_result['list'][$key]['is_hot'] = false;
 
-                $hot_icon_day = ($this->cbconfig->get_device_view_type() === 'mobile')
-                    ? element('mobile_hot_icon_day', $board)
-                    : element('hot_icon_day', $board);
+        //         $hot_icon_day = ($this->cbconfig->get_device_view_type() === 'mobile')
+        //             ? element('mobile_hot_icon_day', $board)
+        //             : element('hot_icon_day', $board);
 
-                $hot_icon_hit = ($this->cbconfig->get_device_view_type() === 'mobile')
-                    ? element('mobile_hot_icon_hit', $board)
-                    : element('hot_icon_hit', $board);
+        //         $hot_icon_hit = ($this->cbconfig->get_device_view_type() === 'mobile')
+        //             ? element('mobile_hot_icon_hit', $board)
+        //             : element('hot_icon_hit', $board);
 
-                if ($hot_icon_day && ( ctimestamp() - strtotime(element('post_datetime', $val)) <= $hot_icon_day * 86400)) {
-                    if ($hot_icon_hit && $hot_icon_hit <= element('post_hit', $val)) {
-                        $main_result['list'][$key]['is_hot'] = true;
-                    }
-                }
-                $main_result['list'][$key]['is_new'] = false;
-                $new_icon_hour = ($this->cbconfig->get_device_view_type() === 'mobile')
-                    ? element('mobile_new_icon_hour', $board)
-                    : element('new_icon_hour', $board);
+        //         if ($hot_icon_day && ( ctimestamp() - strtotime(element('post_datetime', $val)) <= $hot_icon_day * 86400)) {
+        //             if ($hot_icon_hit && $hot_icon_hit <= element('post_hit', $val)) {
+        //                 $main_result['list'][$key]['is_hot'] = true;
+        //             }
+        //         }
+        //         $main_result['list'][$key]['is_new'] = false;
+        //         $new_icon_hour = ($this->cbconfig->get_device_view_type() === 'mobile')
+        //             ? element('mobile_new_icon_hour', $board)
+        //             : element('new_icon_hour', $board);
 
-                if ($new_icon_hour && ( ctimestamp() - strtotime(element('post_datetime', $val)) <= $new_icon_hour * 3600)) {
-                    $main_result['list'][$key]['is_new'] = true;
-                }
+        //         if ($new_icon_hour && ( ctimestamp() - strtotime(element('post_datetime', $val)) <= $new_icon_hour * 3600)) {
+        //             $main_result['list'][$key]['is_new'] = true;
+        //         }
 
-                $main_result['list'][$key]['is_mobile'] = (element('post_device', $val) === 'mobile') ? true : false;
+        //         $main_result['list'][$key]['is_mobile'] = (element('post_device', $val) === 'mobile') ? true : false;
 
-                $main_result['list'][$key]['thumb_url'] = '';
-                $main_result['list'][$key]['origin_image_url'] = '';
-                if (element('use_gallery_list', $board)) {
-                    if (element('post_image', $val)) {
-                        $filewhere = array(
-                            'post_id' => element('post_id', $val),
-                            'pfi_is_image' => 1,
-                        );
-                        $file = $this->Post_file_model
-                            ->get_one('', '', $filewhere, '', '', 'pfi_id', 'ASC');
-                        $main_result['list'][$key]['thumb_url'] = thumb_url('post', element('pfi_filename', $file), $gallery_image_width, $gallery_image_height);
-                        $main_result['list'][$key]['origin_image_url'] = thumb_url('post', element('pfi_filename', $file));
-                    } else {
-                        $thumb_url = get_post_image_url(element('post_content', $val), $gallery_image_width, $gallery_image_height);
-                        $main_result['list'][$key]['thumb_url'] = $thumb_url
-                            ? $thumb_url
-                            : thumb_url('', '', $gallery_image_width, $gallery_image_height);
+        //         $main_result['list'][$key]['thumb_url'] = '';
+        //         $main_result['list'][$key]['origin_image_url'] = '';
+        //         if (element('use_gallery_list', $board)) {
+        //             if (element('post_image', $val)) {
+        //                 $filewhere = array(
+        //                     'post_id' => element('post_id', $val),
+        //                     'pfi_is_image' => 1,
+        //                 );
+        //                 $file = $this->Post_file_model
+        //                     ->get_one('', '', $filewhere, '', '', 'pfi_id', 'ASC');
+        //                 $main_result['list'][$key]['thumb_url'] = thumb_url('post', element('pfi_filename', $file), $gallery_image_width, $gallery_image_height);
+        //                 $main_result['list'][$key]['origin_image_url'] = thumb_url('post', element('pfi_filename', $file));
+        //             } else {
+        //                 $thumb_url = get_post_image_url(element('post_content', $val), $gallery_image_width, $gallery_image_height);
+        //                 $main_result['list'][$key]['thumb_url'] = $thumb_url
+        //                     ? $thumb_url
+        //                     : thumb_url('', '', $gallery_image_width, $gallery_image_height);
 
-                        $main_result['list'][$key]['origin_image_url'] = $thumb_url;
-                    }
-                } else {
-                    $this->load->model('Post_file_model');
+        //                 $main_result['list'][$key]['origin_image_url'] = $thumb_url;
+        //             }
+        //         } else {
+        //             $this->load->model('Post_file_model');
 
-                    if (element('post_image', $val)) {
-                        $filewhere = array(
-                            'post_id' => element('post_id', $val),
-                            'pfi_is_image' => 1,
-                        );
-                        $file = $this->Post_file_model
-                            ->get_one('', '', $filewhere, '', '', 'pfi_id', 'ASC');
-                        $main_result['list'][$key]['thumb_url'] = thumb_url('post', element('pfi_filename', $file));
-                        $main_result['list'][$key]['origin_image_url'] = thumb_url('post', element('pfi_filename', $file));
-                    } else {
-                        $thumb_url = get_post_image_url(element('post_content', $val));
-                        $main_result['list'][$key]['thumb_url'] = $thumb_url
-                            ? $thumb_url
-                            : thumb_url('', '');
+        //             if (element('post_image', $val)) {
+        //                 $filewhere = array(
+        //                     'post_id' => element('post_id', $val),
+        //                     'pfi_is_image' => 1,
+        //                 );
+        //                 $file = $this->Post_file_model
+        //                     ->get_one('', '', $filewhere, '', '', 'pfi_id', 'ASC');
+        //                 $main_result['list'][$key]['thumb_url'] = thumb_url('post', element('pfi_filename', $file));
+        //                 $main_result['list'][$key]['origin_image_url'] = thumb_url('post', element('pfi_filename', $file));
+        //             } else {
+        //                 $thumb_url = get_post_image_url(element('post_content', $val));
+        //                 $main_result['list'][$key]['thumb_url'] = $thumb_url
+        //                     ? $thumb_url
+        //                     : thumb_url('', '');
 
-                        $main_result['list'][$key]['origin_image_url'] = $thumb_url;
-                    }
+        //                 $main_result['list'][$key]['origin_image_url'] = $thumb_url;
+        //             }
 
 
-                }
+        //         }
 
-                $main_result['list'][$key]['pln_url'] ='';
+        //         $main_result['list'][$key]['pln_url'] ='';
 
-                if (element('post_link_count', $val)) {
-                    $this->load->model('Post_link_model');
-                    $linkwhere = array(
-                        'post_id' => element('post_id', $val),
-                    );
-                    $link = $this->Post_link_model
-                        ->get('', '', $linkwhere, '', '', 'pln_id', 'ASC');
-                    if ($link && is_array($link)) {
-                            $main_result['list'][$key]['pln_url'] = $link;
-                    }
-                }
+        //         if (element('post_link_count', $val)) {
+        //             $this->load->model('Post_link_model');
+        //             $linkwhere = array(
+        //                 'post_id' => element('post_id', $val),
+        //             );
+        //             $link = $this->Post_link_model
+        //                 ->get('', '', $linkwhere, '', '', 'pln_id', 'ASC');
+        //             if ($link && is_array($link)) {
+        //                     $main_result['list'][$key]['pln_url'] = $link;
+        //             }
+        //         }
+        //     }
+        // }
+
+        // $where['post_main_4'] = 0;
+        $scrap_post_id=array();
+        if($this->member->is_member()){
+            $this->load->model('Scrap_model');
+            $scrapwhere = array(
+                'mem_id' => (int) $this->member->item('mem_id'),
+            );
+            
+            $scrap_result = $this->Scrap_model->get('','post_id',$scrapwhere);
+            if ($scrap_result) 
+            foreach ($scrap_result as  $val) {            
+                $scrap_post_id[] = element('post_id',$val);
             }
+            
         }
-
-        $where['post_main_4'] = 0;
-
         $result = $this->Post_model
             ->get_post_list($per_page, $offset, $where, $category_id, $findex, $sfield, $skeyword);
         $list_num = $result['total_rows'] - ($page - 1) * $per_page;
@@ -1360,7 +1374,7 @@ class Board_post extends CB_Controller
 
                
                 $result['list'][$key]['post_url'] = post_url(element('brd_key', $board), element('post_id', $val));
-                
+                $result['list'][$key]['is_scrap'] = in_array(element('post_id', $val),$scrap_post_id) ? 1:0;
                 $result['list'][$key]['meta'] = $meta
                     = $this->Post_meta_model
                     ->get_all_meta(element('post_id', $val));
@@ -1497,7 +1511,7 @@ class Board_post extends CB_Controller
             }
         }
 
-        $return['main_data'] = $main_result;
+        // $return['main_data'] = $main_result;
         $return['data'] = $result;
         $return['notice_list'] = $noticeresult;
         if (empty($from_view)) {

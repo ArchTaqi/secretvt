@@ -1,22 +1,29 @@
 <?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
 
-<div class="mypage">
-    <ul class="nav nav-tabs">
-        <li><a href="<?php echo site_url('mypage'); ?>" title="마이페이지">마이페이지</a></li>
-        <li><a href="<?php echo site_url('mypage/post'); ?>" title="나의 작성글">나의 작성글</a></li>
-        <?php if ($this->cbconfig->item('use_point')) { ?>
-            <li><a href="<?php echo site_url('mypage/point'); ?>" title="포인트">포인트</a></li>
-        <?php } ?>
-        <li><a href="<?php echo site_url('mypage/followinglist'); ?>" title="팔로우">팔로우</a></li>
-        <li><a href="<?php echo site_url('mypage/like_post'); ?>" title="내가 추천한 글">추천</a></li>
-        <li><a href="<?php echo site_url('mypage/scrap'); ?>" title="나의 스크랩">스크랩</a></li>
-        <li><a href="<?php echo site_url('mypage/loginlog'); ?>" title="나의 로그인기록">로그인기록</a></li>
-        <li class="active"><a href="<?php echo site_url('membermodify'); ?>" title="정보수정">정보수정</a></li>
-        <li><a href="<?php echo site_url('membermodify/memberleave'); ?>" title="탈퇴하기">탈퇴하기</a></li>
-    </ul>
+<div class="wrap05 mypage">
 
-    <h3>회원정보 수정</h3>
+    <section class="title02">
+        <h2>회원 정보 수정</h2>
+        <p><span>내 정보</span>를 수정 하실 수 있습니다.</p>
+    </section>
 
+    <section class="info_table">
+        <table>
+            <tr>
+                <td class="active">
+                    <a href="<?php echo site_url('mypage'); ?>">내 정보</a>
+                </td>
+                <td>
+                    <a href="<?php echo site_url('mypage/post'); ?>">작성글</a>
+                </td>
+                <td>
+                    <a href="<?php echo site_url('mypage/scrap'); ?>" title="나의 스크랩">스크랩</a>
+                </td>
+            </tr>
+        </table>
+    </section>
+    
+    <section class="info_modify">
     <?php
     echo validation_errors('<div class="alert alert-warning" role="alert">', '</div>');
     echo show_alert_message(element('message', $view), '<div class="alert alert-auto-close alert-dismissible alert-info"><button type="button" class="close alertclose" >&times;</button>', '</div>');
@@ -32,7 +39,7 @@
     $attributes = array('class' => 'form-horizontal', 'name' => 'fdefaultinfoform', 'id' => 'fdefaultinfoform');
     echo form_open_multipart(current_url(), $attributes);
     ?>
-        <ol class="member_modify">
+        <ol class="">
             <li>
                 <span>회원아이디</span>
                 <div class="form-text text-primary group"><input type="text" id="mem_userid" name="mem_userid" class="form-control input" minlength="3" />
@@ -45,7 +52,7 @@
                 </div>
             </li>
             <li>
-                <span>패스워드 확인</span>
+                <span>패스워드<br>확 인</span>
                 <div class="form-text text-primary group"><input type="password" id="mem_password_re" name="mem_password_re" class="form-control input" /></div>
             </li>
             <li>
@@ -67,11 +74,11 @@
                     </p>
                 </div>
             </li>
-            <li>
-                <span></span>
-                <button type="submit" class="btn btn-success">수정하기</button>
-            </li>
+            
         </ol>
+        <button type="submit">수 정 하 기</button>
+    </section>
+    
     <?php echo form_close(); ?>
 </div>
 

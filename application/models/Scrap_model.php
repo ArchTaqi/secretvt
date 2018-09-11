@@ -31,7 +31,7 @@ class Scrap_model extends CB_Model
     public function get_list($limit = '', $offset = '', $where = '', $like = '', $findex = '', $forder = '', $sfield = '', $skeyword = '', $sop = 'OR')
     {
         $select = 'scrap.*, post.mem_id as post_mem_id, post.post_userid, post.post_nickname, post.post_id, post.brd_id,
-            post.post_datetime, post.post_hit, post.post_secret, post.post_title, post.post_like, post.post_dislike, post.post_image';
+            post.post_datetime, post.post_hit, post.post_secret, post.post_title, post.post_like, post.post_dislike, post.post_image, post.post_category,post.post_content';
         $join[] = array('table' => 'post', 'on' => 'scrap.post_id = post.post_id', 'type' => 'inner');
 
         $result = $this->_get_list_common($select, $join, $limit, $offset, $where, $like, $findex, $forder, $sfield, $skeyword, $sop);
