@@ -1,0 +1,2162 @@
+@charset "utf-8";
+/*wrap padding-top 값*/
+	.wrap{
+		padding-top:30%;
+	}
+
+	.wrap02{
+		padding-top:20%;
+		}
+
+	.wrap03{
+		padding-top:25%;
+		}
+
+	.wrap04{
+		padding-top: 20%;
+	}
+
+	.wrap05{
+		padding-top:18%;
+	}
+
+	.wrap06{
+		padding-top: 13%;
+	}
+
+	.wrap07{
+		padding-top:15%;
+	}
+	.wrap08{
+		padding-top:97px;
+	}
+	.wrap09{
+		padding-top:44px;
+	}
+#jssor_1 > div > div > div > div{
+	width: 100% !important;
+}
+	.filter_padding{
+		padding-bottom:50px;
+	}
+
+/*
+	.registerform{
+		width: 100%;
+	}
+
+	.registerform tr{
+		border-bottom:1px solid #ededed;
+	}
+	.registerform tr:last-child{
+		border-bottom: 0;
+	}
+
+	.registerform tr td:first-child{
+		border-right: 1px solid #ededed;
+		padding: 3.5% 0 2%;
+		box-sizing: border-box;
+		text-align: center;
+		font-size: 12px;
+		font-weight: bold;
+		width: 30%;
+		background-color: rgb(239, 208, 222);
+	}
+*/
+
+/* boyoon 추가 css */
+	div.media div.media-body {
+		border-bottom:1px solid #ededed;
+		font-size:12px;
+		
+	}
+
+	div.media div.media-body h4{
+		padding:1.5% 0;
+		font-size:12px;
+		display: inline-block;
+		float:right;
+	}
+
+/*main 의 이미지 슬라이드 영역*/
+	.slide{
+		padding:0;
+		text-align: center;
+		font-size: 10px;
+		line-height: 11px;
+		color: #4a4a4a;
+		margin-bottom: 0;
+	}
+	div.swiper-slide.per100 img {
+		width: 100%;
+	}
+	.bx-wrapper {
+		position: relative;
+		*zoom: 1;
+		margin-bottom: 3%;
+	}
+
+	.bx-wrapper img {
+		width: 100%;
+		display: block;
+	}
+
+	.bx-wrapper ul{
+		padding:0;
+	}
+
+	.bx-wrapper .bx-viewport {
+		position:fixed;
+		width:100%;
+		/*fix other elements on the page moving (on Chrome)*/
+		-webkit-transform: translatez(0);
+		-moz-transform: translatez(0);
+		-ms-transform: translatez(0);
+		-o-transform: translatez(0);
+		transform: translatez(0);
+	}
+
+	.bx-wrapper .bx-pager,
+	.bx-wrapper .bx-controls-auto {
+		position: absolute;
+		width: 100%;
+		bottom:6px;
+	}
+
+	.bx-wrapper .bx-loading {
+		min-height: 50px;
+		height: 100%;
+		width: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 2000;
+	}
+
+	.bx-wrapper .bx-pager {
+		text-align: center;
+		font-size: .85em;
+		font-family: Arial;
+		font-weight: bold;
+		color: #666;
+		padding-top: 20px;
+	}
+
+	.bx-wrapper .bx-pager .bx-pager-item,
+	.bx-wrapper .bx-controls-auto .bx-controls-auto-item {
+		display: inline-block;
+		*zoom: 1;
+		*display: inline;
+	}
+
+	.bx-wrapper .bx-pager.bx-default-pager a {
+		background:#fff;
+		text-indent: -9999px;
+		display: block;
+		width: 7px;
+		height: 7px;
+		margin: 0 3px;
+		outline: 0;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		border-radius: 5px;
+	}
+
+	.bx-wrapper .bx-pager.bx-default-pager a:hover,
+	.bx-wrapper .bx-pager.bx-default-pager a.active {
+		/* background: #FF006F; */
+		background: #ff9900;
+		width: 12px;
+		height: 7px;
+	}
+
+	.bx-wrapper .bx-prev {
+		left: 10px;
+	}
+
+	.bx-wrapper .bx-next {
+		right: 10px;
+	}
+
+	.bx-wrapper .bx-prev:hover {
+		background-position: 0 0;
+	}
+
+	.bx-wrapper .bx-next:hover {
+		background-position: -43px 0;
+	}
+
+	.bx-wrapper .bx-controls-direction a {
+		position: absolute;
+		top: 72%;
+		margin-top: -16px;
+		outline: 0;
+		width: 32px;
+		height: 32px;
+		text-indent: -9999px;
+		z-index: 9999;
+	}
+
+	.bx-wrapper .bx-controls-direction a.disabled {
+		display: none;
+	}
+
+	.bx-wrapper .bx-controls-auto {
+		text-align: center;
+	}
+
+	.bx-wrapper .bx-controls-auto .bx-start {
+		display: block;
+		text-indent: -9999px;
+		width: 10px;
+		height: 11px;
+		outline: 0;
+		margin: 0 3px;
+	}
+
+	.bx-wrapper .bx-controls-auto .bx-start:hover,
+	.bx-wrapper .bx-controls-auto .bx-start.active {
+		background-position: -86px 0;
+	}
+
+	.bx-wrapper .bx-controls-auto .bx-stop {
+		display: block;
+		text-indent: -9999px;
+		width: 9px;
+		height: 11px;
+		outline: 0;
+		margin: 0 3px;
+	}
+
+	.bx-wrapper .bx-controls-auto .bx-stop:hover,
+	.bx-wrapper .bx-controls-auto .bx-stop.active {
+		background-position: -86px -33px;
+	}
+
+	.bx-wrapper .bx-controls.bx-has-controls-auto.bx-has-pager .bx-pager {
+		text-align: left;
+		width: 80%;
+	}
+
+	.bx-wrapper .bx-controls.bx-has-controls-auto.bx-has-pager .bx-controls-auto {
+		right: 0;
+		width: 35px;
+	}
+
+	.bx-wrapper .bx-caption {
+		position: absolute;
+		bottom: 30px;
+		left: 0;
+		background: #666\9;
+		background: rgba(80, 80, 80, 0.75);
+		width: 100%;
+	}
+
+	.bx-wrapper .bx-caption span {
+		color: #fff;
+		font-family: Arial;
+		display: block;
+		font-size: .85em;
+		padding: 10px;
+	}
+
+/*main 의 대메뉴 영역 */
+	.main_list{
+		/* border-top:1px solid #ebebeb; */
+		padding-top:20px;
+		padding-bottom:10px;
+		background-color:#fbf8f8;
+		margin:0;
+	}
+	.main_list ul{
+		width:100%;
+	}
+	.main_list ul li{
+		width:100%;
+		margin-bottom:3%;
+		overflow:hidden;
+		background-color:#fff;
+		box-shadow: 0 1px 1px rgba(0,0,0,0.3);
+		
+	}
+/* 
+	.main_list ul li:nth-child(3n){
+		margin-right:0;
+	} */
+/* 
+	.main_list ul li:nth-child(7),
+	.main_list ul li:nth-child(8),
+	.main_list ul li:nth-child(9){
+		margin-bottom:0;
+	} */
+
+	.main_list ul li a figure{
+		/* position: relative; */
+	}
+
+	.main_list ul li a figure img{
+		width:60%;
+		display: block;
+		box-sizing: border-box;
+		float: left
+	}
+
+	.main_list ul li a figure figcaption{
+		width:40%;
+		float:right;
+		text-align:center;
+		padding-top:8%;
+		box-sizing:border-box;
+		
+	}
+
+	.main_list ul li a figure figcaption h2{
+		font-family: 'Jeju Gothic', sans-serif;
+		margin-bottom:5%;
+		font-size:16px;
+	}
+
+
+	.main_list ul li a figure figcaption p{
+		margin-bottom:3%;
+		font-family: 'Jeju Gothic', sans-serif;
+		font-size: 12px;
+		line-height: 15px;
+		color:#777;
+	}
+	.main_list_figcaption span object{
+		width: 16px;
+	}
+	.main_list_li:nth-child(2n) .main_list_figure img{
+		float: right;
+	}
+	.main_list_li:nth-child(2n) .main_list_figcaption{
+		float: left;
+	}
+
+/*main 하단 시트릿 바로가기 bn 영역*/
+	.secret_bn{
+		padding:0;
+		margin:0;
+	}
+
+	.secret_bn img{
+		width: 100%;
+		margin-bottom: -2px;
+	}
+
+	.secret_bn figure{
+		position: relative;
+	}
+
+	.secret_bn figure figcaption{
+		height: 80px;
+		position: absolute;
+		top: 0;
+		bottom:0;
+		margin:auto 0;
+		color: #fff;
+		text-shadow: 1px 1px 1px #000;
+		text-align: right;
+	}
+
+	.secret_bn figcaption h2{
+		font-family: 'Jeju Gothic', sans-serif;
+		margin-bottom: 3%;
+		font-size: 15px;
+
+	}
+
+	.secret_bn figcaption p{
+		font-size: 12px;
+		line-height: 16px;
+		margin-bottom:2%;
+		letter-spacing: 1px;
+		text-align: right; 
+	}
+
+	.secret_bn figcaption button{
+		width: 50%;
+		height: 20px;
+		line-height: 20px;
+		float: right;
+		margin-top: 3%;
+		box-sizing: border-box;
+		border:none;
+		outline:none;
+		border-radius: 2px;
+		color: #fff;
+		text-shadow:1px 1px 2px rgba(0,0,0,0.3);
+		font-family: 'Jeju Gothic', sans-serif;
+		/* background-color: #ff7c80; */
+		background-color: #FF006F;
+	}
+
+/*main 공지사항, 이벤트 영역*/
+	.notice{
+		padding:0;
+		margin-bottom:0;
+		position: relative;
+		/* bottom: 2px; */
+		background-color:#fff;
+	}
+
+	.notice ul{
+		border-top: 1px solid #ededed;
+	}
+
+	.notice ul li{
+		padding:1.5% 3%;
+		font-size: 12px;
+	}
+
+	.notice li h3{
+		float: left;
+		width: 20%;
+		height: 20px;
+		line-height: 20px;
+		text-align:center;
+		/* background-color: #ff7c80; */
+		background-color: #25a4f4;
+		font-family: 'Nanum Gothic', sans-serif;
+		border-radius: 10px;
+		margin-right: 3%;
+		color:#fff;
+		box-sizing: border-box;
+		font-weight: bold;
+	}
+
+	.notice li p{
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+		height: 19px;
+		padding:4px 0 3px;
+		box-sizing: border-box;
+	}
+
+/*상점 list(2*2) 영역*/
+	.store_list ul{
+		display: inline-block;
+		width: 100%;
+		margin-bottom: 3%;
+	}
+
+	.store_list ul:last-child{
+		margin-bottom: 0;
+	}
+
+	.store_list ul li{
+		width:49%;
+		float: left;
+		margin-right:2%;
+	}
+
+	.store_list ul li:nth-child(2n){
+		margin-right:0;
+	}
+
+	.store_list ul li:nth-child(3),
+	.store_list ul li:nth-child(4){
+		margin-bottom:0;
+	}
+
+	.store_list ul li a figure{
+		display: inline-block;
+		width:100%;
+	}
+
+	.store_list figure img{
+		width:100%;
+		margin-bottom:5%;
+		border:1px solid #ededed;
+		box-sizing: border-box;
+		display:block;
+	}
+
+	.store_list figcaption{
+		padding:0 3%;
+		box-sizing: border-box;
+		font-family: 'Jeju Gothic', sans-serif;
+	}
+
+	.store_list figcaption h2{
+		padding-top:2px;
+		margin-bottom: 5%;
+		color: #c21e5a;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.store_list figcaption p{
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+		text-align: left;
+		font-size: 12px;
+		padding: 1px 0 5px;
+		font-family: 'Nanum Gothic', sans-serif;
+	}
+
+	.store_list figcaption span{
+		display: block;
+		font-size: 11px;
+		padding-top:5px;
+	}
+
+/*상점 list(1*1) 영역*/
+	.store_list02 ul{
+		margin-bottom: 3%;
+	}
+	.store_list02 ul:last-child{
+		margin-bottom: 0;
+	}
+
+	.store_list02 li{
+		width:100%;
+		box-sizing: border-box;
+		border:1px solid #ededed;
+		padding:3.5% 3.5% 3.5% 43.5%;
+		position: relative;
+	}
+
+	.store_list02 li input{
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
+	.store_list02 li a{
+		display:inline-block;
+		width:100%;
+		box-sizing: border-box;
+		font-family: 'Jeju Gothic', sans-serif;
+	}
+
+	.store_list02 li h2{
+		padding-top: 2px;
+		margin-bottom:5%;
+		color: #c21e5a;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.store_list02 li p{
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		font-size: 12px;
+		padding: 1px 0 5px;
+		font-family:'Nanum Gothic', sans-serif; 
+	}
+
+	.store_list02 li span{
+		display: block;
+		padding-top: 5px;
+		font-size: 11px;
+	}
+
+/*상세의 위치확인 클릭시(위치 텍스트) 영역*/
+	.store table{
+		width:100%;
+	}
+
+	.store td{
+		border:1px solid  #232121;
+		padding:2%;
+		box-sizing: border-box;
+		font-size: 12px;
+		line-height: 17px;
+		font-family: 'Jeju Gothic', sans-serif; 
+	}
+
+	.store td.border{
+		background-color: #efd0de;
+	}
+
+/*상세의 위치확인 클릭시(대중교통,지도) 영역*/
+	.method table{
+		width:100%;
+		font-family: 'Jeju Gothic', sans-serif; 
+	}
+
+	.method table tr td{
+		width:50%;
+		border:1px solid #ededed;
+		text-align: center;
+		box-sizing: border-box;
+		vertical-align: middle;
+		font-size: 13px;
+	}
+
+	.method table tr td.active{
+		background-color:#f7edf1;
+	}
+
+	.method table tr td figure{
+		width:100%;
+		display: inline-block;
+	}
+
+	.method table tr td figure img{
+		width:11.5%;
+		vertical-align: middle;
+	}
+
+	.method table tr td figure figcaption{
+		display: inline-block;
+	}
+
+	.method a img {
+		width:100%;
+		border:1px solid #ededed;
+	}
+
+/*자유게시판 클릭해서 들어갔을때 제목영역*/
+	.notice_title > div{
+		font-size: 14px;
+		line-height: 20px;
+		font-family: 'Jeju Gothic', sans-serif;
+		word-break: break-all;
+		padding-left: 4%;
+	}
+
+/*자유게시판 클릭해서 들어갔을때 컨텐츠영역*/
+	.content {
+		margin-bottom: 6%;
+	}
+
+	.content .contents-view{
+		margin-bottom: 6%;
+	}
+
+	.wrap05 .post-content {
+		border:1px solid #ededed;
+		padding:3% 5%;
+		line-height: 18px;
+	}
+
+	.content .autosize{
+		position:relative;
+		height: 0;
+		padding-bottom: 56.25%;
+		overflow: hidden;
+		margin:0;
+	}
+
+	.content .autosize iframe,
+	.autosize object,
+	.autosize embed{ 
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height:100%;
+	}
+
+/*공지사항 리스트 영역*/
+/*	.notice_list table{
+		width: 100%;
+		border-top: 2px solid #231b26;
+	}
+
+	.notice_list table tr:nth-child(2){
+		border-top:1px solid #231b26;
+	}
+
+	.notice_list table tr{
+		border-bottom:1px solid #231b26;
+	}
+
+	.notice_list table tr th{
+		padding:7px 0 3px;
+		font-size: 12px;
+		text-align:center;
+		font-family: 'Jeju Gothic', sans-serif;
+	}
+
+	.notice_list table tr td{
+		padding:7px 0;
+		font-size: 11px;
+		line-height: 17px;
+		text-align:center;
+	}*/
+
+	.notice_list table{
+		width: 100%;
+		table-layout: fixed;
+	}
+	
+	.notice_list table tr:nth-child(2n){
+		background-color: #fbf8f8;
+	}
+	.notice_list table td{
+		border:1px solid #ededed;
+		box-sizing: border-box;
+		padding:5%;
+	}
+
+	.notice_list table td span{
+		font-family: 'Jeju Gothic', sans-serif;
+		margin-right: 2%;
+	}
+
+	.notice_list table td h2{
+		width: 100%;
+		text-overflow:ellipsis;
+		white-space:nowrap;
+		overflow:hidden;
+		padding-bottom: 3px;
+		float: left;
+		margin-bottom:1.5%;
+	}
+
+	.notice_list table td p{
+		font-size: 10px;
+		color: #7e7e7e;
+		font-family: 'Jeju Gothic', sans-serif;
+	}
+
+
+
+
+/*이벤트 리스트 영역*/
+	.event_list li{
+		width: 49%;
+        margin-right: 2%;
+        float: left;
+        margin-bottom: 5%;
+    }
+
+    .event_list li:nth-child(2n){
+        margin-right: 0;
+    }
+
+    .event_list  figure img{
+        margin-bottom: 5%;
+        width:100%;
+    }
+
+    .event_list figcaption h3{
+        text-align:center;
+        word-break: break-all;
+        font-size: 13px;
+        margin-bottom: 5%;
+        padding-top: 2px;
+        font-family: 'Jeju Gothic', sans-serif;
+        color: #c20e58;
+    }
+
+    .event_list figcaption span{
+        font-size: 11px;
+        display:block;
+        margin-top: 5%;
+        color: #000;
+    }
+
+/*시크릿 투어,비자,렌트 카 클릭시 배너 이미지*/
+	.botbn_img{
+		position: relative;
+	}
+
+	.botbn_img img{
+		width: 100%;
+	}
+
+	.botbn_img figcaption{
+		position: absolute;
+		width: 90%;
+		height: 42px;
+		top: 0;
+		bottom:0;
+		margin:auto;
+		left: 5%;
+		right: 5%;
+	}
+
+	.botbn_img figcaption p{
+		font-size: 11px;
+		margin-bottom: 2%;
+		text-align:left;
+		line-height: 14px; 
+		color: #fff;
+		font-family: 'Jeju Gothic', sans-serif;
+		text-shadow: 1px 1px 1px #000;
+	}
+
+/*시크릿 투어,비자,렌트 카 클릭시 카카오톡 영역*/
+	.talk figure{
+		margin:0 auto;
+		text-align:center;
+		display: inline-block;
+		height: 45px;
+	}
+
+	.talk figure img{
+		height: 45px;
+		float: left;
+		margin-right: 10px;
+	}
+
+	.talk figcaption{
+		height: 45px;
+		display: inline-block;
+	}
+
+	.talk figcaption h2{
+		font-size: 20px;
+		text-align:left;
+		float: left;
+		line-height: 16px;
+		color:#c20e58;
+		font-family: 'Jeju Gothic', sans-serif; 
+		padding:10px 0 0;
+		box-sizing: border-box;
+	}
+
+	.talk figcaption h2 span{
+		font-size: 12px;
+		color: #000;
+		display: block;
+	}
+
+	.talk p{
+		height: 45px;
+		padding:15px 0 0;
+		box-sizing: border-box;
+		font-size: 11px;
+		line-height:14px;
+		text-align:right;
+		float: right;
+		display: inline-block;
+		color: #525252;
+	}
+
+/*시크릿 투어,비자,렌트 카 클릭시 글쓰기 영역*/
+	.write_area input{
+		width: 100%;
+		outline: none;
+		padding:5px;
+		border:1px solid #ededed;
+		box-sizing: border-box; 
+		border-radius: 0;
+	}
+
+	.write_area div.form-group {
+		margin:3% 0;
+	}
+
+	.write_area textarea{
+		width: 100%;
+		height: 150px;
+		outline: none;
+		padding:5px;
+		border:1px solid #ededed;
+		box-sizing: border-box;
+		border-radius: 0;
+		font-family: 'Nanum Gothic', sans-serif;
+		resize: none;
+	}
+
+	.write_area label{
+		text-align: right !important;
+	}
+
+/*시크릿 투어,비자,렌트 카 클릭시 작성완료 버튼 영역*/
+	.write_area button{
+		width: 100%;
+		height: 30px;
+		border-radius: 5px;
+		border: 0;
+		outline: none;
+		background: #232121;
+		font-family: 'Jeju Gothic', sans-serif;
+		color: #fff;
+	}
+
+/*시크릿 투어,비자,렌트 카 클릭시 댓글 검색 영역*/
+	.inquire .form-group{
+		width: 100%;
+		margin:3% 0; 
+	}
+
+	.inquire .form-group input{
+		height: 27px;
+		padding:5px;
+		box-sizing: border-box;
+		border-radius: 0;
+		border:1px solid #ededed;
+	}
+
+	.inquire .form-group button{
+		width: 27px;
+		height: 27px;
+		background: #c00e57;
+		color: #fff;
+		border:0;
+		outline: none;
+		border-radius: 3px;
+		padding:0;
+		float: right;
+	}
+
+/*시크릿 투어,비자,렌트 카 클릭시 댓글리스트 영역*/
+	/*#fboardlist > ul > li{
+		width: 100%;
+		display: inline-block;
+		border:1px solid #ededed;
+		padding:3%;
+		box-sizing: border-box;
+		position: relative;
+		margin-bottom: 3%;
+	}
+
+	#fboardlist > ul > li:nth-child(2n){
+		background-color: #fbf8f8;
+	}
+
+	#fboardlist > ul > li:last-child{
+		margin-bottom: 0;
+	}
+
+	#fboardlist h3{
+		font-size: 14px;
+		font-family: 'Jeju Gothic', sans-serif;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow:hidden;
+		margin-bottom: 2%;
+		width: 80%;
+		padding-top: 2px;
+	}
+
+	#fboardlist .question .re_cont{
+		height: 32px;
+		overflow:hidden; 
+	}
+
+	#fboardlist .question p{
+		padding-left: 2%;
+		text-align: left;
+		font-size: 12px;
+		line-height: 16px;
+	}
+
+	#fboardlist .clear{
+		float: right;
+		margin-top: 3%;
+		font-size: 11px;
+		font-family: 'Jeju Gothic', sans-serif;
+		padding-top: 2px;
+	}
+
+	#fboardlist .color{
+		position: absolute;
+		right: 3%;
+		top: 12%;
+		font-family: 'Jeju Gothic', sans-serif;
+		color: #c00e57;
+	}
+
+	#fboardlist .button{
+		float: right;
+		display: inline-block;
+		width: 100%;
+		text-align: right;
+		margin-bottom:3%;
+	}
+
+	#fboardlist .button button{
+		padding: 0;
+		border:0;
+		background: none;
+		font-size: 11px;
+		outline: none;
+	}*/
+
+		.inquire ul li{
+			border:1px solid #ededed;
+			padding:3% 3% 2%;
+			box-sizing: border-box;
+			display: inline-block;
+			width: 100%;
+			position: relative;
+			margin-bottom: 2%;
+		}
+
+		.inquire h3{
+			width:72%;
+			margin-right: 3%;
+			/* height: 30px; */
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 2; /* 라인수 */
+			-webkit-box-orient: vertical;
+			word-wrap:break-word;
+			line-height: 15px;
+			float: left;
+			margin-bottom: 3%;
+		}
+
+		.inquire .question{
+			 display: none;
+		}
+
+		.inquire li .clear p{
+			float: right;
+			padding-top: 4px;
+			height: 20px;
+			font-size: 11px;
+		}
+
+		.inquire li span{
+			position: absolute;
+			top: 13px;
+			right: 4%;
+			font-family: 'Jeju Gothic', sans-serif;
+		}
+		
+		.inquire form li span.color{
+			color:#c00e57;
+		}
+
+		.inquire form li .clear{
+			width: 100%;
+			display: inline-block;
+			position: relative;
+			bottom:-5px;
+		}
+
+		.inquire .question div.question-content{
+			display: inline-block;
+			margin: 3% 0 5%;
+			width: 100%;
+			line-height:17px;
+		}
+
+		.inquire .question ul{
+			width: 97.5%;
+			margin:0 0 0 2.5%;
+		}
+
+		.inquire .question ul li{
+			border:0;
+			font-size: 11px;
+			background:url(https://secretvt.com/assets/images/temp/write_img/reply_arrow.png) no-repeat top left;
+			background-size: 5%;
+			padding:2px 0 0 4.5%;
+			line-height: 14px;
+			margin-bottom: 3%;
+			display: inline-block;
+			width: 100%;
+		}
+
+		.inquire .question ul li div.question-content{
+			margin-bottom:1.5%;
+			margin-top: 0;
+		}
+
+		.inquire .button{
+			width: 45%;
+			float: right;
+		}
+
+		.inquire .button button{
+			width: 32%;
+			text-align:center;
+			border: 0;
+			border-radius: 3px;
+			background:#232121;
+			font-size: 10px; 
+			padding: 2px 0 2px;
+			float: left;
+			font-weight: bold;
+			color:#fff;
+			outline: none;
+			margin-right: 2%;
+		}
+
+		.inquire .button button:last-child{
+			margin-right: 0%;
+		}
+
+		.inquire .question .button{
+			width:30%;
+		}
+
+		.inquire .question .button button{
+			width:49%;
+		}
+
+/*시크릿 투어,비자,렌트 카 클릭시 주의사항 영역*/
+	.caution h2{
+		margin-bottom: 3%;
+		color:#c00e57;
+		font-family: 'Jeju Gothic', sans-serif;
+		font-size: 14px;
+	}
+
+	.caution li{
+		display: inline-block;
+		width: 100%;
+		font-size: 11px;
+		line-height: 17px;
+		margin-bottom: 2%;
+		color: #5d5d5d;
+	}
+
+	.caution strong{
+		float: left;
+		height: 35px;
+	}
+
+	.caution p{
+		width: 95%;
+		display: inline-block;
+		font-size: 11px;
+		float: right;
+		line-height: 18px;
+	}
+
+/*업소후기의 컨텐츠 영역*/
+	.contents-view .document{
+		border:1px solid #ededed;
+		padding:3% 5%;
+		line-height: 18px;
+	}
+
+/* 로그인 화면 영역 */
+	.enter{
+		margin-bottom: 5%;
+		text-align:center;
+	}
+
+	.enter img{
+		width: 25%;
+		margin-bottom: 3%;
+	}
+
+	.enter h2{
+		margin-bottom:6%;
+		font-size:18px; 
+		color:#c21e5a;
+		font-family: 'Jeju Gothic', sans-serif;
+	}
+
+	.enter span{
+		display: block;
+		line-height: 18px;
+		margin-top:1.5%;
+		font-size: 13px;
+		color: #000;
+	}
+
+	.enter .id_pw{
+		width: 230px;
+		display: inline-block;
+		margin:0 auto;
+	}
+
+	.enter .id_pw li{
+		width: 100%;
+		display: inline-block;
+		margin-bottom:3%;
+	}
+	.enter .id_pw li h3{
+		width: 60px;
+		height: 25px;
+		text-align: right;
+		line-height: 26px;
+		float: left;
+		display: inline-block;
+		font-family: 'Jeju Gothic', sans-serif;
+	}
+
+	.enter .id_pw li input{
+		width: 160px;
+		height: 25px;
+		padding:3px 5px;
+		border:1px solid #ededed;
+		box-sizing: border-box;
+		border-radius: 0;
+		outline: none;
+		float: right;
+	}
+
+	.enter .id_pw label.error{
+		color: #eb2328;
+		text-align: center;
+		margin-top: 3%;
+	}
+
+	.enter .login_re{
+		width: 171px;
+		margin:3% auto 6%;
+		height: 17px; 
+	}
+
+	.enter .login_re input[type="checkbox"]{
+		margin:2px 5px 2px 0;
+		float: left;
+	}
+
+	.enter .login_re label{
+		line-height: 14px;
+	}
+
+	.enter .alert-dismissible{
+		width: 80%;
+		margin:0 auto 6%;
+		font-size: 11px;
+		line-height: 17px;
+	}
+
+	.enter .login_btn input[type="submit"]{
+		width: 65%;
+		height: 30px;
+		margin-bottom: 24px;
+		border-radius: 5px;
+		border:0;
+		outline:none;
+		background: #16a1b1;
+		font-family: 'Jeju Gothic', sans-serif;
+		color: #fff;
+	}
+
+	.enter .login_sign{
+		width: 97%;
+		margin:0 auto;
+	}
+
+	.enter .login_sign li{
+		width: 50%;
+		float: left;
+		text-align: center;
+		font-size: 12px;
+		line-height: 15px;
+		border-right: 1px solid #ededed;
+		padding:0 2%;
+		box-sizing: border-box;
+	}
+
+	.enter .login_sign li a{
+		margin-top: 6%;
+		display: block;
+		/* font-family: 'Jeju Gothic', sans-serif; */
+		font-size: 13px;
+	}
+	.enter .login_sign li span{
+		font-family: 'Jeju Gothic', sans-serif;
+	}
+/*회원가입의 이용약관 영역 */
+	.join_agree{
+		margin-bottom: 10%;
+	}
+
+	.join_agree .join_txt{
+		height: 200px;
+		padding:3%;
+		margin-bottom: 3%;
+		border:1px solid #ededed;
+		box-sizing: border-box;
+		font-size: 12px;
+		line-height: 18px;
+		overflow: auto;
+	}
+
+	.join_agree .join_check{
+		height: 17px;
+	}
+
+	.join_agree .join_check input{
+		margin:2px 5px 2px 0;
+		float: left;
+	}
+
+	.join_agree .join_check label{
+		font-size: 12px;
+		height: 17px;
+		line-height: 14px;
+	}
+
+	.join_btn{
+		width: 30%;
+		height: 25px;
+		outline: none;
+		border-radius: 5px;
+		border:0;
+		background: #232121;
+		color: #fff;
+		font-family: 'Jeju Gothic', sans-serif;
+		float: right;
+	}
+
+/*회원가입 입력폼 영역*/
+	.join_info table{
+		margin-bottom: 3%;
+	}
+	.join_info td{
+		border:1px solid #ededed; 
+		padding:2%;
+		box-sizing: border-box;
+	}
+
+	.join_info td:first-child{
+		width: 30%;
+		background-color: #fbf8f8;
+		font-family: 'Jeju Gothic', sans-serif;
+		text-align: center;
+		font-size: 12px;
+		line-height: 18px;
+	}
+
+	.join_info td:last-child{
+		vertical-align: middle;
+	}
+
+	.join_info td:first-child span{
+		color:#c00e57;
+	}
+
+	.join_info td input{
+		width: 100%;
+		height: 25px;
+		border:1px solid #ededed;
+		box-sizing: border-box;
+		border-radius: 0;
+		outline: none;
+	}
+
+	.join_info td p{
+		font-size: 11px;
+		line-height: 15px;
+		color: #565656;
+		margin-top: 3%;
+	}
+
+	.join_info label.error{
+		text-align: right;
+		color: #eb2328;
+		margin-top:3%;
+		text-indent: 0;
+	}
+
+/*업소후기,자유게시판 리스트  영역*/
+	.txt_list{
+		width: 100%;
+		display: inline-block;
+		border:1px solid #ededed;
+		padding:3%;
+		margin-bottom: 3%;
+		box-sizing: border-box;
+	}
+
+	/*.txt_list:nth-child(2n){
+		background-color: #fbf8f8;
+	}*/
+
+	.txt_list:last-child{
+		margin-bottom: 0;
+	}
+
+	.txt_list h2{
+		width: 100%;
+		padding-top: 2px;
+		margin-bottom:2%;
+		font-size: 14px;
+		font-family: 'Jeju Gothic', sans-serif;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow:hidden;
+	}
+
+	.txt_list div{
+		height:32px;
+		margin-bottom: 3%;
+		overflow:hidden; 
+		padding-left: 2%;
+		text-align: left;
+		font-size: 12px;
+		line-height: 16px;
+	}
+
+	.txt_list span{
+		float: right;
+		font-size: 11px;
+		font-family: 'Jeju Gothic', sans-serif;
+		padding-top: 2px;
+	}
+
+/*자유게시판 리스트 찾기 영역*/
+	.find_list{
+		margin-bottom: 3%;
+	}
+
+	.find_list input[type="text"]{
+		height: 27px;
+		padding:5px;
+		box-sizing: border-box;
+		border:1px solid #ededed;
+	}
+
+	.find_list button{
+		width: 27px;
+		height: 27px;
+		color: #fff;
+		background: #c00e57;
+		border:0;
+		border-radius: 3px;
+	}
+
+/*광고 영역(공통)*/
+	.ad{
+		padding:0;
+	}
+
+	.ad a img{
+		width:100%;
+		border-top: 1px solid #ededed;
+		border-bottom:1px solid #ededed;
+		box-sizing: border-box;
+	}
+
+/*이메일주소로 계정찾기 영역*/
+	.login_find figure{
+		text-align: center;
+	}
+
+	.login_find img{
+		width: 40%;
+		margin-bottom:3%; 
+	}
+
+	.login_find figcaption{
+		line-height: 18px;
+		margin-bottom: 6%;
+		font-size: 12px;
+	}
+
+	.login_find .mail_find{
+		width: 300px;
+		margin:0 auto;
+	}
+
+	.login_find .mail_find input{
+		width: 205px;
+		height: 25px;
+		padding:3px 5px;
+		border:1px solid #ededed;
+		box-sizing: border-box;
+		border-radius: 0;
+		outline: none;
+		float: left;
+	}
+
+	.login_find .mail_find button{
+		width: 90px;
+		height: 25px;
+		border:0;
+		outline: none;
+		border-radius: 5px;
+		color: #fff;
+		background-color: #232121;
+		font-family: 'Jeju Gothic', sans-serif;
+		font-size: 12px;
+		float: right;
+		line-height: 26px;
+	}
+
+	.login_find .mail_error{
+		font-size: 11px;
+		text-align: center;
+		color: #eb2328;
+		margin-bottom: 3%;
+	}
+	.login_sns .login_sns_ul {
+		text-align: center;
+		margin-bottom: 30px;
+	}
+	.login_sns .btn_sns {
+		display: inline-block;
+		box-sizing: border-box;
+		/* width: 12%; */
+		margin:0 1.5%;
+		padding: 3px;
+		border-radius: 5px;
+		font-family: 'Jeju Gothic',sans-serif;
+		overflow: hidden;
+	}
+	/* .login_sns .btn_sns:last-child {
+		margin-right: 0;
+	} */
+	.login_sns .btn_login_kakao {
+		background-color: #fbe03b;
+		color: #3a1e1f;
+	}
+	.login_sns .btn_login_google {
+		background-color: #da4a3e;
+		color: #fff;
+	}
+	.login_sns .btn_sns img {
+		display: block;
+		/* width: 100%; */
+		margin-bottom: 0;
+	}
+	.login_sns .btn_sns figcaption {
+		width: 1px;
+		height: 1px;
+		position: absolute;
+		overflow: hidden;
+		clip: rect(1px 1px 1px 1px);
+		clip: rect(1px, 1px, 1px, 1px);
+	}
+/*myinfo 의 정보 영역 */
+	.info_area img{
+		height: 95px;
+		margin-right: 2%;
+		float: left;
+	}
+
+	.info_area figcaption{
+		padding-top: 20px;
+	}
+
+	.info_area figcaption h2{
+		font-size: 15px;
+		font-family: 'Jeju Gothic', sans-serif;
+		color: #c21e5a;
+		margin-bottom: 3px;
+	}
+
+	.info_area figcaption p{
+		font-size: 12px;
+	}
+
+	.info_area figcaption strong{
+		font-size: 13px;
+		font-family: 'Jeju Gothic', sans-serif;
+	}
+
+	.info_level{
+		width: 80px;
+		height: 25px;
+		margin-top: 5px;
+		font-size: 12px;
+		line-height: 28px;
+		display: inline-block;
+		font-family: 'Jeju Gothic', sans-serif;
+	}
+
+	.info_level img{
+		width: 25px;
+		float: left;
+	}
+
+	.myinfo button{
+		float: right;
+		width: 130px;
+		height: 38px;
+		letter-spacing: 1px;
+		color:#16a1b1;
+		border:1px solid #16a1b1;
+		background-color:#fff;
+		outline: none;
+		/* border-radius: 2px; */
+		font-family: 'Jeju Gothic', sans-serif;
+		font-size: 14px;
+		/* margin-top: 10px; */
+	}
+	/* .myinfo .fa-heart{
+		font-size:16px;
+		vertical-align:middle;
+		color:#ff7c80;
+	} */
+/*myinfo 의 내정보,작성글,정보수정,탈퇴하기 영역*/
+	.info_table table{
+		width: 100%;
+	}
+
+	/* .info_table td{
+		border:1px solid #ededed;
+		text-align: center;
+		padding:2.5% 0 1.5%;
+		font-size: 12px; 
+		font-family: 'Jeju Gothic', sans-serif;
+	} */
+
+	.info_table .active{
+		background-color: #e3f1f2;
+	}
+	.info_table li{
+		display:table-cell;
+		width:1%;
+		text-align:center;
+		font-size: 14px;
+		font-family: 'Jeju Gothic', sans-serif;
+	}
+/*myinfo 의 내정보 영역*/
+	.table_01 li{
+		border-bottom:1px solid #ededed;
+		padding:1.5% 3%;
+		box-sizing: border-box;
+	}
+
+	.table_01 strong{
+		font-family: 'Jeju Gothic', sans-serif;
+	}
+
+	.table_01 p{
+		float: right;
+	}
+
+/*myinfo 의 작성글 영역*/
+	.table_02 table{
+		width: 100%;
+		border-top:2px solid #16a1b1;
+	}
+
+	.table_02 td,
+	.table_02 th{
+		border-bottom:1px solid #ededed;
+		text-align: center;
+	}
+
+	.table_02 th{
+		padding:2.5% 0 1.5%;
+		font-family: 'Jeju Gothic', sans-serif;
+	}
+
+	.table_02 td{
+		font-family: 'Nanum Gothic', sans-serif;
+		font-size: 12px;
+		padding:1.5% 0 2%;
+	}
+
+/*myinfo 의 정보수정,탈퇴하기(비밀번호입력),정보수정완료 영역*/
+	.info_logout{
+		text-align: center;
+	}
+	.info_logout figure{
+		text-align: center;
+		margin-bottom: 10%;
+	}
+
+	.info_logout figure img{
+		width: 35%;
+		margin-bottom: 3%;
+	}
+
+	.info_logout figcaption h2{
+		font-family: 'Jeju Gothic', sans-serif;
+		color: #c21e5a;
+		font-size: 15px;
+		margin-bottom: 3%;
+	}
+
+	.info_logout figcaption b{
+		font-family: 'Jeju Gothic', sans-serif;
+		font-size: 15px;
+	}
+
+
+	.info_logout figcaption,
+	.info_logout figcaption p{
+		line-height: 18px;
+	}
+
+	.info_logout button{
+		width: 40%;
+		height: 25px;
+		background-color: #232121;
+		border: 0;
+		border:0;
+		border-radius: 5px;
+		color: #fff;
+		font-family: 'Jeju Gothic', sans-serif;
+		font-size: 12px;
+		box-sizing: border-box;
+		line-height: 25px;
+	}
+
+	.info_logout button a{
+		color: #fff;
+	}
+
+	.logout_pw{
+		text-align: center;
+		display: inline-block;
+	}
+
+	.logout_pw .logout_alert{
+		color: #eb2328;
+		text-align: center;
+		margin-bottom: 3%;
+		font-size: 11px;
+		display: inline-block;
+		width: 100%;
+	}
+
+	.logout_pw label{
+		width: 60px;
+		height: 25px;
+		line-height: 26px;
+		float: left;
+		display: inline-block;
+		font-family: 'Jeju Gothic', sans-serif;
+	}
+
+	.logout_pw input{
+		width: 170px;
+		height: 25px;
+		padding:3px 5px;
+		border:1px solid #ededed;
+		box-sizing: border-box;
+		border-radius: 0;
+		outline: none;
+		float: left;
+		margin-right: 5px;
+	}
+
+	.logout_pw button{
+		width: 60px;
+		/*height: 25px;
+		outline: none;
+		background-color: #0c1e42;
+		border:0;
+		border-radius: 5px;
+		color: #fff;
+		font-family: 'Jeju Gothic', sans-serif;
+		font-size: 12px;
+		box-sizing: border-box;
+		float: left;
+		line-height: 25px;*/
+	}
+
+/*myinfo 의 회원정보수정 의 li 영역*/
+	.info_modify ol{
+		margin-bottom: 6%;
+		border:1px solid #ededed;
+		box-sizing: border-box;
+	}
+
+	.info_modify ol li{
+		width: 100%;
+		display: inline-block;
+		text-align: center;
+		border-bottom:1px solid #ededed;
+		text-align: center;
+	}
+
+	.info_modify ol li:last-child{
+		border-bottom:0;
+	}
+
+	.info_modify ol li span{
+		display: inline-block;
+		width: 20%;
+		font-family: 'Jeju Gothic', sans-serif;
+		font-size: 12px;
+		float: left;
+		padding:2% 0;
+	}
+
+	.info_modify ol li div{
+		float: right;
+		width: 80%;
+		font-family: 'Jeju Gothic', sans-serif;
+		box-sizing: border-box;
+		padding:2% 0;
+		border-left: 1px solid #ededed;
+	}
+
+
+	.info_modify ol li div a{
+		font-family: 'Jeju Gothic', sans-serif;
+		font-size: 12px;
+		color: #c21e5a;
+	}
+
+	.info_modify ol li div p{
+		font-size: 11px;
+		color: #9d9d9d;
+		display: inline-block;
+		margin-top: 6px;
+		font-family: 'Nanum Gothic', sans-serif;
+	}
+
+	.info_modify button{
+		float: right;
+		width: 30%;
+		height: 25px;
+		outline: none;
+		border-radius: 5px;
+		border:0;
+		background-color:#232121;
+		color:#fff;
+		font-family:'Jeju Gothic', sans-serif;
+	}
+
+/*myinfo 의 정보수정의 패스워드 수정 클릭시 영역*/
+	.modify_pw .pw_alert{
+		text-align: center;
+		color: #eb2328;
+		margin-bottom: 3%;
+		display: inline-block;
+		width: 100%;
+		font-size:11px;
+	}
+
+	.modify_pw form{
+		width: 300px;
+		margin:0 auto;
+	}
+
+	.modify_pw ol li{
+		width: 100%;
+		display: inline-block;
+		margin-bottom: 3%;
+	}
+
+	.modify_pw ol li h3{
+		width: 100px;
+		height: 25px;
+		line-height: 26px;
+		text-align: right;
+		float: left;
+		display: inline-block;
+		font-family: 'Jeju Gothic', sans-serif;
+	}
+
+	.modify_pw ol li strong{
+		width: 180px;
+		height: 25px;
+		font-family: 'Jeju Gothic', sans-serif;
+		float: right;
+		line-height: 25px;
+		text-align: center;
+	}
+
+	.modify_pw ol li input{
+		border:1px solid #ededed;
+		width: 180px;
+		height: 25px;
+		padding:3px 5px;
+		box-sizing: border-box;
+		border-radius: 0;
+		outline: none;
+		float: right;
+	}
+
+	.modify_pw button{
+		float: right;
+		margin-top: 3%;
+		height: 25px;
+		outline: none;
+		background-color: #232121;
+		border:0;
+		border-radius: 5px;
+		color: #fff;
+		font-family: 'Jeju Gothic', sans-serif;
+		font-size: 12px;
+		box-sizing: border-box;
+		line-height: 25px;
+	}
+
+	.modify_pw label.error{
+		text-align: center;
+		color: #eb2328;
+		margin-top: 3%;
+	}
+
+/*업소후기,글쓰기 클릭시 후기갯수 표시 영역*/
+	.title03 p{
+		font-size: 11px;
+		display: inline-block;
+		float: right;
+		font-family: 'Jeju Gothic', sans-serif;
+	}
+
+	.title03 p span{
+		font-size: 13px;
+		color:#c00e57;
+	}
+
+/*업소후기,글쓰기 클릭시 후기 작성하기 버튼 영역*/
+	.title03 h3{
+		display: inline-block;
+		float: left;
+		height: 10px;
+		background-color: #232121;
+		color: #fff;
+		line-height: 7px;
+		border-radius: 5px;
+		padding:5px 0;
+		width: 25%;
+		text-align: center; 
+	}
+
+	.title03 h3 a{
+		font-family: 'Jeju Gothic', sans-serif;
+		color: #fff;
+		font-size: 11px;
+	}
+
+/*업소후기,글쓰기 작성영역의 작성자 정보 영역*/
+	.write_info figure{
+		height: 52px;
+		background-color: #f7edf1;
+		padding:3px 20px;
+		box-sizing: border-box;
+		border-radius:5px;
+	}
+
+	.write_info figure img{
+		height: 47px;
+	}
+
+	.write_info figcaption{
+		font-family: 'Jeju Gothic', sans-serif;
+		float: right;
+		padding:7px 0;
+		height: 35px;
+	}
+
+	.write_info figcaption h2{
+		font-size: 18px;
+		margin-bottom: 3px;
+	}
+
+	.write_info figcaption span{
+		font-size: 11px;
+	}
+
+/*업소후기,글쓰기 작성영역의 제목 영역*/
+	.write_title label{
+		width: 50px;
+		height: 24px;
+		line-height: 26px;
+		border-radius: 5px;
+		background-color: #232121;
+		display: inline-block;
+		color: #fff;
+		text-align:center;
+		font-family: 'Jeju Gothic', sans-serif;
+		float: left;
+		margin-right: 10px;
+	}
+
+	.write_title input{
+		height: 25px;
+		padding:3px 5px;
+		border:1px solid #ededed;
+		box-sizing: border-box;
+		border-radius: 0;
+		outline: none;
+	}
+
+/*업소후기,글쓰기 작성영역의 글쓰기 영역*/
+	.write_cont textarea{
+		width: 100%;
+		height: 300px;
+		border:1px solid #ededed;
+		overflow: auto;
+		box-sizing: border-box;
+		outline: none;
+		padding:10px;
+		resize: none;
+		border-radius: 0;
+	}
+
+/*업소후기,글쓰기 작성영역의 업로드,링크 영역*/
+	.write_upload label{
+		width: 70px;
+		height: 25px;
+		margin-right: 10px;
+		line-height: 26px;
+		border-radius: 5px;
+		background-color: #232121;
+		display: inline-block;
+		color: #fff;
+		text-align:center;
+		font-family: 'Jeju Gothic', sans-serif;
+		float: left;
+	}
+
+	.write_upload input{
+		height: 25px;
+		padding:3px 5px;
+		border:1px solid #ededed;
+		box-sizing: border-box;
+		border-radius: 0;
+		outline: none;
+		background-color: #fff;
+		float: right;
+	}
+
+	.write_upload input[type="file"]{
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0,0,0,0);
+		border:0;
+	}
+
+/*업소후기,글쓰기 작성영역의 작성완료 취소 영역*/
+	.write_clear{
+		text-align: right;
+	}
+
+	.write_clear button{
+		width: 100px;
+		height: 25px;
+		line-height: 26px;
+		border-radius: 5px;
+		background-color: #232121;
+		display: inline-block;
+		color: #fff;
+		text-align: center;
+		font-family: 'Jeju Gothic', sans-serif;
+		border: 0;
+	}
+
+	.write_clear button:first-child{
+		margin-right: 5px;
+	}
+
+/*업소후기,글쓰기 의 수정시 업로드 삭제&파일명 영역*/
+	.write_del{
+		padding:0 6%;
+	}
+	.write_del a{
+		float: left;
+	}
+
+	.write_del label{
+		float: right;
+	}
+
+	.write_del input{
+		margin: 2px 0px 2px 5px;
+		float: right;
+	}
+
+/*자유게시판의 댓글 작성 영역*/
+	.reply_write h2{
+		font-family: 'Jeju Gothic', sans-serif;
+		margin-bottom: 1.5%;
+	}
+
+	.reply_write textarea{
+		width: 100%;
+		height: 50px;
+		padding:5px;
+		margin-bottom: 3%;
+		border: 1px solid #ededed;
+		box-sizing: border-box;
+		overflow: auto;
+		resize: none;
+		outline: none;
+	}
+
+	/* .reply_write button{
+		width: 50px;
+		height: 25px;
+		line-height: 26px;
+		border-radius: 5px;
+		background-color:#c20e58;
+		display: inline-block;
+		color: #fff;
+		text-align: center;
+		float: right;
+		font-size: 13px;
+		margin-bottom: 2.5%;
+		outline: none;
+	} */
+
+/*자유게시판의 댓글 리스트 영역*/
+	.reply_msg{
+		margin-bottom: 3%;
+	}
+
+	.reply_list{
+		width: 100%;
+		border-bottom:1px solid #ededed;
+		margin-bottom:6%;
+		display: inline-block;
+	}
+
+	.reply_list img{
+		width: 15px;
+		float: left;
+	}
+
+	.reply_list .reply_cont{
+		margin-bottom: 3%;
+	}
+
+	.reply_list .reply_info{
+		font-size: 11px;
+		text-align: right;
+		margin-bottom: 3%;
+	}
+
+	.reply_list .reply_edit{
+		float: right;
+		margin-left: 1.5%;
+	}
+
+/*전체목록 영역*/
+	.cont_tab a{
+		font-family: 'Jeju Gothic', sans-serif;
+		font-size: 12px;
+	}
+
+/*이용약관,개인정보,위치정보 내용 영역*/
+	.agree{
+		padding:3%;
+		box-sizing: border-box;
+		line-height: 13px;
+		font-size: 12px;
+		border: 1px solid #ededed;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
