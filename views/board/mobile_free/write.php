@@ -216,8 +216,8 @@
             </div>
         <?php } ?>
              <section class="write_clear table-bottom">            
+                <button type="button" class="btn-history-back" style="font-weight: normal;">취 소</button> 
                 <button type="submit">작성완료</button> 
-                <button type="button" class="btn-history-back" style="font-weight: normal;">취소</button> 
             </section>
         </div>
     <?php echo form_close(); ?>

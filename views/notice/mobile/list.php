@@ -1,6 +1,6 @@
 <?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
 
-<div class="wrap04">
+<div class="wrap05">
 
     <section class="title">
         <div></div>
@@ -8,7 +8,7 @@
         <!-- <span>시크릿 베트남에서 알려 드립니다.</span> -->
         <table class="table02">
             <tr>
-                <td style="background-color:#f7edf1">
+                <td style="background-color:#ecf4f9">
                     <figure>
                         <img src="<?php echo base_url('assets/images/temp/de_img/de_bell.png')?>" alt="sub01"> 
                         <figcaption>

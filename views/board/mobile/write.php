@@ -2,7 +2,7 @@
 <?php echo element('headercontent', element('board', $view)); ?>
 
 <div class="wrap05  board">
-    <h3><?php echo html_escape(element('board_name', element('board', $view))); ?> 글쓰기</h3>
+    <h3 class="title02"><?php echo html_escape(element('board_name', element('board', $view))); ?> 글쓰기</h3>
     <?php
     echo validation_errors('<div class="alert alert-warning" role="alert">', '</div>');
     echo show_alert_message(element('message', $view), '<div class="alert alert-auto-close alert-dismissible alert-info"><button type="button" class="close alertclose" >&times;</button>', '</div>');

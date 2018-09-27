@@ -6,7 +6,7 @@
 
 <?php echo element('headercontent', element('board', element('list', $view))); ?>
 
-<div class="wrap">
+<div class="wrap10">
 
     <!-- <section class="title">
         <h4>title</h4>
@@ -45,7 +45,7 @@
     <?php } ?>
 
     
-    <section class="title02">
+    <section class="title02" style="display:none;">
         <!-- <h2>업소정보 - <span><?php echo html_escape(element(element('region', $view),config_item('region_category')));?></span></h2>
         <p>총 <span><?php echo (element('total_rows', element('main_data', element('list', $view)))+element('total_rows', element('data', element('list', $view)))) ?>개</span>의 업소가 있습니다.</p> -->
     </section>
@@ -142,7 +142,7 @@
                 
                     <h2 >[<?php echo html_escape(element('bca_value',element('category', $result))); ?>]<?php echo html_escape(element('title', $result)); ?><?php if (element('post_comment_count', $result)) { ?><span style="font:normal 11px 'dotum';">[+<?php echo element('post_comment_count', $result); ?>]</span><?php } ?></h2>
                 
-                    <div class="per90 pull-left">
+                    <div class="per90 pull-left text_box">
                         <p class="sub_subject"><?php if(element('sub_subject',element('extravars', $result))) echo element('sub_subject',element('extravars', $result)); ?>
                         </p>
 
@@ -154,9 +154,9 @@
                             
                         </span>
                     </div>
-                    <div class="per10 pull-left ">
+                    <div class="per10 pull-left scrap_heart">
                         <?php 
-                        if(element('is_scrap',$result)) echo '<i class="fa fa-heart" style="font-size:20px;color:#ddd;"></i>';
+                        if(element('is_scrap',$result)) echo '<i class="fa fa-heart" style="font-size:20px;"></i>';
                         else echo '<i class="fa fa-heart-o" style="font-size:20px"></i>';
                          ?>
                         
@@ -185,12 +185,12 @@
         <div class="pull-left mr10">
             <!-- <a href="<?php echo element('list_url', element('list', $view)); ?>" class="btn btn-default btn-sm">목록</a> -->
             <?php if (element('search_list_url', element('list', $view))) { ?>
-                <a href="<?php echo element('list_url', element('list', $view)); ?>" class="btn btn-default btn-sm">전체목록</a>
+                <a href="<?php echo element('list_url', element('list', $view)); ?>" class="btn btn-success btn-sm">전체목록</a>
             <?php } ?>
         </div>
         <?php if (element('is_admin', $view)) { ?>
             <div class="pull-right mr10">
-                <a onClick="post_multi_action('multi_delete', '0', '선택하신 글들을 완전삭제하시겠습니까?');" class="btn btn-danger btn-sm">선택삭제</a>
+                <a onClick="post_multi_action('multi_delete', '0', '선택하신 글들을 완전삭제하시겠습니까?');" class="btn btn-silver btn-sm">선택삭제</a>
 
                 <!-- <button type="button" class="btn btn-default btn-sm admin-manage-list"><i class="fa fa-cog big-fa"></i>관리</button>
                 <div class="btn-admin-manage-layer admin-manage-layer-list">

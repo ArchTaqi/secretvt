@@ -1,6 +1,6 @@
 <?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
 
-<div class="wrap04">
+<div class="wrap05">
 
     <section class="title">
         <div></div>
@@ -16,7 +16,7 @@
                         </figure>
                     </a>
                 </td>
-                <td style="background-color:#f7edf1;">
+                <td style="background-color:#ecf4f9;">
                     <figure>
                         <img src="<?php echo base_url('assets/images/temp/de_img/de_gift.png')?>" alt="sub01"> 
                         <figcaption>이벤트</figcaption>

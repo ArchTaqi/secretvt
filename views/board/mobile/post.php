@@ -22,7 +22,7 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
 
 <?php echo element('headercontent', element('board', $view)); ?>
 
-<div class="wrap">
+<div class="wrap08">
     <?php echo show_alert_message($this->session->flashdata('message'), '<div class="alert alert-auto-close alert-dismissible alert-info">', '</div>'); ?>
    <!--  <h3>
         <?php if (element('category', element('post', $view))) { ?>[<?php echo html_escape(element('bca_value', element('category', element('post', $view)))); ?>] <?php } ?>
@@ -60,7 +60,14 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
             <div class="swiper-button-next swiper-button-white"></div>
             <div class="swiper-button-prev swiper-button-white"></div>
         </div>
-        <h2 class="bottom_02">[<?php echo "업소정보";//$menuName ?>] <?php echo element('post_title', element('post',$view)) ?></h2>
+        <h2 class="bottom_02">[<?php echo "업소정보";//$menuName ?>] <?php echo element('post_title', element('post',$view)) ?>
+		<?php if ( ! element('post_del', element('post', $view)) && element('use_scrap', element('board', $view))) { 
+            if(element('scr_id',element('scrap', element('post', $view))))
+                echo '<a href="javascript:post_scrap_cancel(\''.element('post_id', element('post', $view)).'\', \''.element('scr_id',element('scrap', element('post', $view))).'\');" class="scrap_heart"><i class="fa fa-heart" style="font-size:20px;"></i></a>';
+            else echo '<a id="btn-scrap" class="scrap_heart" href="javascript:post_scrap(\''.element('post_id', element('post', $view)).'\', \'post-scrap\');"><i class="fa fa-heart-o" style="font-size:20px"></i></a>';
+            
+         } ?>
+		</h2>
         
             
         <table>
@@ -91,12 +98,7 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
                 </td>
             </tr>
         </table>
-        <?php if ( ! element('post_del', element('post', $view)) && element('use_scrap', element('board', $view))) { 
-            if(element('scr_id',element('scrap', element('post', $view))))
-                echo '<a href="javascript:post_scrap_cancel(\''.element('post_id', element('post', $view)).'\', \''.element('scr_id',element('scrap', element('post', $view))).'\');"><i class="fa fa-heart" style="font-size:20px;color:#ddd;"></i></a>';
-            else echo '<a id="btn-scrap" href="javascript:post_scrap(\''.element('post_id', element('post', $view)).'\', \'post-scrap\');"><i class="fa fa-heart-o" style="font-size:20px"></i></a>';
-            
-         } ?>
+        
     </section>
     <section class="store">
         <div class="contents-view" style="margin-bottom: 0;">
@@ -153,19 +155,19 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
                     <a href="<?php echo element('search_list_url', $view); ?>" class="btn btn-info btn-sm">검색목록</a>
             <?php } ?>
             <?php if (element('prev_post', $view)) { ?>
-                <a href="<?php echo element('url', element('prev_post', $view)); ?>" class="btn btn-default btn-sm">◀이전 글</a>
+                <a href="<?php echo element('url', element('prev_post', $view)); ?>" class="btn btn-success btn-sm">◀이전 글</a>
             <?php } ?>
             <?php if (element('next_post', $view)) { ?>
-                <a href="<?php echo element('url', element('next_post', $view)); ?>" class="btn btn-default btn-sm">다음 글▶</a>
+                <a href="<?php echo element('url', element('next_post', $view)); ?>" class="btn btn-success btn-sm">다음 글▶</a>
             <?php } ?>
         </div>
         <?php if (element('write_url', $view)) { ?>
             <div class="pull-right">
-                <?php if (element('modify_url', $view)) { ?>
-                <a href="<?php echo element('modify_url', $view); ?>" class="btn btn-success btn-sm">수정</a>
-            <?php } ?>
             <?php    if (element('delete_url', $view)) { ?>
-                <a href="<?php echo element('delete_url', $view); ?>" class="btn btn-danger btn-sm btn-one-delete">삭제</a>
+                <a href="<?php echo element('delete_url', $view); ?>" class="btn btn-silver btn-sm btn-one-delete">삭제</a>
+            <?php } ?>
+                <?php if (element('modify_url', $view)) { ?>
+                <a href="<?php echo element('modify_url', $view); ?>" class="btn btn-info btn-sm">수정</a>
             <?php } ?>
                 <a href="<?php echo element('write_url', $view); ?>" class="btn btn-success btn-sm">글쓰기</a>
             </div>

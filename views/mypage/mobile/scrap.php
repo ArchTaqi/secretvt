@@ -33,8 +33,8 @@
         </table>
     </section>
     
-    <section class="store_list02">
-    <h3>스크랩 <small>총: <?php echo number_format(element('total_rows', element('data', $view), 0)); ?>건</small></h3>
+    <section class="store_list02 scrap_list">
+    <h3>스크랩 <small>총 <?php echo number_format(element('total_rows', element('data', $view), 0)); ?>건</small></h3>
     <?php
     echo show_alert_message(element('alert_message', $view), '<div class="alert alert-auto-close alert-dismissible alert-info"><button type="button" class="close alertclose" >&times;</button>', '</div>');
     ?>
@@ -47,7 +47,7 @@
                 <li class="gallery-box " >
                     
                     <a href="<?php echo element('post_url', $result); ?>" title="<?php echo html_escape(element('title', $result)); ?>">
-                        <div  class="per30 pull-left">
+                        <div  class="scrap_img pull-left">
                         <img src="<?php echo element('thumb_url', $result); ?>" alt="<?php echo html_escape(element('title', $result)); ?>" title="<?php echo html_escape(element('title', $result)); ?>" class="per100 img-responsive"  />
                         </div>
                         <div class="per60 ml10 pull-left">
@@ -58,16 +58,16 @@
                             </p>
 
                             <span>
-                                <?php if (element('open_time',element('extravars', $result))) { 
+                                <?php /* if (element('open_time',element('extravars', $result))) { 
                                    echo  element('open_time',element('extravars', $result));
-                                }
+                                } */
                                 ?>
                                 
                             </span>
                         </div>
                         <div class=" pull-left ">
                             <?php 
-                            echo '<a href="javascript:post_action(\'post_scrap_cancel\',\''.element('post_id',  $result).'\', \''.element('scr_id', $result).'\',\'스크랩을 취소 하시겠습니까?\');"><i class="fa fa-heart" style="font-size:20px;color:#ddd;"></i></a>';
+                            echo '<a href="javascript:post_action(\'post_scrap_cancel\',\''.element('post_id',  $result).'\', \''.element('scr_id', $result).'\',\'스크랩을 취소 하시겠습니까?\');" class="scrap_heart"><i class="fa fa-heart" style="font-size:20px;"></i></a>';
                              
                              ?>
                             

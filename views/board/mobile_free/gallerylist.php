@@ -165,10 +165,10 @@
     </section>
     <?php echo form_close(); ?>
     <div class="border_button">
-        <div class="pull-left mr10">
+        <div class="pull-left mr10 ml3per">
             <!-- <a href="<?php echo element('list_url', element('list', $view)); ?>" class="btn btn-default btn-sm">목록</a> -->
             <?php if (element('search_list_url', element('list', $view))) { ?>
-                <a href="<?php echo element('list_url', element('list', $view)); ?>" class="btn btn-info btn-sm">전체목록</a>
+                <a href="<?php echo element('list_url', element('list', $view)); ?>" class="btn btn-success btn-sm">전체목록</a>
             <?php } ?>
         </div>
         <?php if (element('is_admin', $view)) { ?>

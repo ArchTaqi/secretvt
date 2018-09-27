@@ -1349,9 +1349,10 @@
 		width: 100%;
 		display: inline-block;
 		border:1px solid #ededed;
-		padding:3%;
+		padding: 12px 3%;
 		margin-bottom: 3%;
 		box-sizing: border-box;
+		background-color:#fff;
 	}
 
 	/*.txt_list:nth-child(2n){
@@ -1365,8 +1366,8 @@
 	.txt_list h2{
 		width: 100%;
 		padding-top: 2px;
-		margin-bottom:2%;
-		font-size: 14px;
+		margin-bottom:10px;
+		font-size: 16px;
 		font-family: 'Jeju Gothic', sans-serif;
 		text-overflow: ellipsis;
 		white-space: nowrap;
@@ -1374,20 +1375,26 @@
 	}
 
 	.txt_list div{
-		height:32px;
-		margin-bottom: 3%;
+		/* height:32px; */
+		margin-bottom: 12px;
 		overflow:hidden; 
 		padding-left: 2%;
 		text-align: left;
-		font-size: 12px;
+		font-size: 13px;
 		line-height: 16px;
+	    text-overflow: ellipsis;
 	}
-
+	.txt_list div p{
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
 	.txt_list span{
 		float: right;
-		font-size: 11px;
+		font-size: 12px;
 		font-family: 'Jeju Gothic', sans-serif;
 		padding-top: 2px;
+		color:#333;
 	}
 
 /*자유게시판 리스트 찾기 영역*/

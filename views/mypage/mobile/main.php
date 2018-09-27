@@ -46,7 +46,7 @@
     </section>
     <div class="pull-right mr10">
         <a href="<?php echo site_url('membermodify'); ?>" class="btn btn-success btn-sm">정보수정</a>        
-        <a href="<?php echo site_url('membermodify/memberleave'); ?>" class="btn btn-danger btn-sm btn-one-delete">탈퇴하기</a>
+        <a href="<?php echo site_url('membermodify/memberleave'); ?>" class="btn btn-silver btn-sm btn-one-delete">탈퇴하기</a>
     </div>
 
     <section class="ad" style="margin-bottom:0;">

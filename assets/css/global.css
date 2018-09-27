@@ -42,7 +42,7 @@
 		float: right;
 		padding:0 1.5%;
 		display: inline-block;
-		margin:1% 3% 1.5% 0;
+		margin:4px 3% 3px 0;
 		border:1px solid #ededed;
 		box-sizing: border-box;
 		background:url('/assets/images/temp/search.png') no-repeat  97% center;
@@ -87,17 +87,17 @@
 		max-width: 420px;
 		min-width: 320px;
 		position: fixed;
-		background-color: #232121;
+		background-color: #25a4f4;
 		box-sizing: border-box;
-		z-index: 100;
-		border-bottom: 1px solid #ededed;
+		z-index: 90;
+		/* border-bottom: 1px solid #ededed; */
 	}
 
 	header h1{
-		width:40%;
+		/* width:40%; */
 		display: inline-block;
 		box-sizing: border-box;
-		padding:0.5% 0 0% 3%;
+		padding:2px 0 0% 3%;
 		float:left;
 	}
 
@@ -109,9 +109,10 @@
 	}
 
 	header h1 a img{
-		width:100%;
+		/* width:100%; */
 		position: relative;
 		bottom: -2px;
+		height:40px;
 	}
 
 	header > ul{
@@ -126,7 +127,7 @@
 		width:50%;
 		float: left;
 		text-align: right;
-		font-size: 11px;
+		font-size: 13px;
 	}
 
 	header > ul li a{
@@ -148,7 +149,8 @@
 		display:inline-block;
 		background-color: #fff;
 		position: relative;
-		bottom: -1px;
+		bottom: 0;
+	    border-top: 1px solid #aaa;
 	}
 
 	#mainmenu ul{
@@ -156,7 +158,7 @@
 	}
 
 	#mainmenu li.active{
-		background-color :#c21e5a;
+		background-color : #fbb6b9;
 	}
 
 	#mainmenu li.active a{
@@ -168,9 +170,9 @@
 		width:25%;
 		box-sizing: border-box;
 		text-align: center;
-		padding:1% 0;
-		border-right:1px solid #ededed;
-		border-bottom:1px solid #ededed;
+		padding:5px 0;
+		border-right:1px solid #ddd;
+		border-bottom:1px solid #ddd;
 	}
 
 	#mainmenu li:nth-child(4n){
@@ -187,28 +189,31 @@
 	#mainmenu li a{
 		font-family: 'Jeju Gothic', sans-serif;		
 		padding:3px 10px;
+		font-size:14px;
 	}
 
 /*메인메뉴 클릭시 첫번째 타이틀,공지사항,이벤트 클릭시 메이타이틀, 영역*/
 	.title div{
 		width:3%;
 		height:2px;
-		background-color: #231b26;
+		/* background-color: #231b26; */
 		margin:0 auto 3.5%;
 	}
 
 	.title h2{
 		text-align:center;
 		margin-bottom:3%;
-		font-size:18px;
+		font-size: 20px;
 		font-family: 'Jeju Gothic', sans-serif;
+		color:#000!important;
+		line-height:1.4;
 	}
 	.title span{
 		text-align: center;
 		width: 100%;
 		display: inline-block;
-		margin-bottom:3%;
-		font-size: 11px;
+		margin-bottom: 5%;
+		font-size: 12px;
 		font-family: 'Jeju Gothic', sans-serif;
 	}
 /*메인메뉴 클릭시 첫번째 table(가라오케,마사지,호텔)*/
@@ -248,10 +253,11 @@
 
 	.title .table02 tr td{
 		border:1px solid #ededed;
-		font-size: 11px;
+		font-size: 13px;
 		font-family: 'Jeju Gothic', sans-serif;
 		vertical-align: middle;
-		padding:1% 0;
+		padding:7px 0;
+		width:50%;
     }
 
     .title .table02 td figure{
@@ -271,20 +277,24 @@
 
 /*메인메뉴 클릭시 두번째 타이틀,자유게시판의 작성이,작성자 이름 영역*/
 	.title02{
-		border-bottom:2px solid #232121;
+		border-bottom:2px solid #4d4d4d;
 		width:94%;
-		margin:0 3% 3%;
+		margin:0 3% 20px;
 		padding:0 0 1.5% 0;
 	}
-
+	/* .title03{
+		width:94%;
+		margin:0 3% 3%;
+	} */
 	.title02 h2{
-		font-size:14px;
+		font-size:15px;
 		display: inline-block;
 		font-family: 'Jeju Gothic', sans-serif;
 	}
 
+	.title03 p,
 	.title02 p{
-		font-size:11px;
+		font-size:13px;
 		display: inline-block;
 		font-family: 'Jeju Gothic', sans-serif;
 		float:right;
@@ -293,17 +303,32 @@
 
 	.title02 p span{
 		font-size:13px;
-		color: #c21e5a;
+		color: #25a4f4;
 	}
 
 /*상세의 타이틀 / 자유게시판 상세 타이틀*/
-	.de_title h2{
-		text-align:center;
-		margin-bottom:3%;
-		font-size: 18px;
-		font-family:'Jeju Gothic', sans-serif;  
+	.de_title{
+		padding:0;
+		margin:0;
 	}
-
+	.de_title h2{
+		/* text-align:center; */
+		padding:20px 12% 20px 3%;
+		margin-bottom:20px;
+		border-bottom:1px solid #ebebeb;
+		font-size: 16px;
+		font-family:'Jeju Gothic', sans-serif;  
+		line-height:1.4;
+		position:relative;
+		word-break:keep-all;
+	}
+	.de_title h2 a{
+		display:block;
+		position:absolute;
+		top:50%;
+		right:4%;
+		margin-top:-10px;
+	}
 	.de_title h2 span{
 		display: block;
 		font-size: 12px;
@@ -313,20 +338,20 @@
 	.de_title table{
 		border: 1px solid #ededed;
 		width: 75%;
-		margin:0 auto 5%;
+		margin:0 auto 20px;
 	}
 
 	.de_title td{
 		background-color: #fff;
 		border:1px solid #ededed;
-		font-size: 11px;
+		font-size: 12px;
 		text-align: center;
 		font-family: 'Jeju Gothic', sans-serif;
 		padding:1.5% 0;
 	}
 
 	.de_title td.active{
-		background:#f7edf1; 
+		background:#ecf4f9; 
 	}
 
 	.de_title td img{
@@ -334,18 +359,33 @@
 		display:block;
 		margin:3% auto 9%;
 	}
-
+/* de_title02 자유게시판 게시물 타이틀 */
+	.de_title02{
+		padding:0;
+		margin:0;
+	}
+	.de_title02 h2{
+		text-align:center;
+		padding:30px 3% 35px;
+		/* margin-bottom:20px; */
+		/* border-bottom:1px solid #ebebeb; */
+		font-size: 20px;
+		font-family:'Jeju Gothic', sans-serif;  
+		/* line-height:1.4; */
+		position:relative;
+	}
+	
 /*footer02 (공지사항,이벤트) 영역*/
 	.footer_02{
 		margin-bottom:0;
 		position: relative;
-		background-color: #232121;
-		color:#fff;
+		background-color: #ccc;
+		color:#000;
 		padding-top:3%;
 	}
 
 	.footer_02 > nav > ul{
-		border:1px solid #fff;
+		border:1px solid #666;
 		display: inline-block;
 		width:100%;
 	}
@@ -353,7 +393,7 @@
 	.footer_02 > nav > ul > li{
 		width: 100%;
 		height: 35px;
-		border-bottom: 1px solid #fff;
+		border-bottom: 1px solid #666;
 		box-sizing: border-box;
 		padding:12px 3% 12px;
 		font-family: 'Jeju Gothic', sans-serif;
@@ -365,6 +405,7 @@
 		transform: rotate(0deg);
 		position: relative;
 		top: -1px;
+		margin-right:3px;
 	}
 
 	.footer_02 > nav > ul > li:nth-child(2){
@@ -373,8 +414,8 @@
 	}
 
 	.footer_02 > nav > ul > li:nth-child(3){
-		width: 90%;
-		border-right: 1px solid #fff;
+		width: 100%;
+		/* border-right: 1px solid #666; */
 		box-sizing: border-box;
 		float: left;
 	}
@@ -396,6 +437,7 @@
 	}
 
 	.footer_02 > nav > ul > li:last-child{
+		display:none;
 		width: 10%;
 		float: right;
 		text-align:center;
@@ -412,16 +454,16 @@
 	}
 
 	.footer_02 a{
-		color:#fff;
+		color:#000;
 	}
 
 /*footer 영역*/
 	footer{
 		width:100%;
-		background-color: #232121;
+		background-color: #ccc;
 		padding:3%;
 		box-sizing: border-box;
-		color:#fff;
+		color:#333;
 		text-align: center;
 		line-height: 15px
 	}
@@ -452,14 +494,22 @@
 	}
 
 	footer ul li:nth-child(1),footer ul li:nth-child(2){
-		border-right:1px solid #fff;
+		border-right:1px solid #888;
 		box-sizing: border-box;
 		text-align: center;
 	}
 
 	footer ul li a{
-		color:#fff;
+		color:#333;
 		font-size:12px;
 		font-family: 'Jeju Gothic', sans-serif;
 	}
-
+	/* hr */
+	hr{
+		border:none;
+		height:1px;
+		background-color:#ededed;
+		padding: 0 3%;
+		width: 100%;
+		margin-left: -3%;
+	}

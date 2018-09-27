@@ -3,14 +3,14 @@
 */
 
 .board .table{border-top: 2px solid #000;border-bottom: 1px solid #ccc;}
-.border_button{overflow:hidden;}
+.border_button{overflow:hidden; margin-bottom: 20px;}
 .board .comment-count a{color:#348fe2;padding-left:10px;}
 .board .info{overflow:hidden;}
 .board .info li{float:left; padding-right:20px;}
 .board .contents-view{ clear:both;}
 .board .contents-view-img img { display:block; max-width:100%; margin:0 auto 15px; border:0; height:auto; }
-#post-content {word-wrap: break-word;border:1px solid #ededed;padding:3%;}
-#post-content p{line-height: 21px;}
+#post-content {word-wrap: break-word;border-top:1px solid #ededed;border-bottom:1px solid #ededed;padding:3%;}
+#post-content p{line-height: 1.6;/* 21px; */}
 #post-content img {max-width:100%;}
 
 .board .fa-user{color:#626262;}
@@ -371,12 +371,12 @@ fieldset[disabled] .btn-warning:active,
 fieldset[disabled] .btn-warning.active {background-color: #f49b1b;border-color: #f49b1b;}
 .btn-warning .badge {color: #f49b1b;background-color: #fff;}
 
-.btn-info {color: #fff;background-color: #49b6d5;border-color: #49b6d5;background-image: none;}
+.btn-info {color: #fff;background-color: #ff7c80;border-color: #49b6d5;background-image: none;}
 .btn-info:hover,
 .btn-info:focus,
 .btn-info:active,
 .btn-info.active,
-.open .dropdown-toggle.btn-info {color: #fff;background-color: #3492ac;border-color: #3492ac;}
+.open .dropdown-toggle.btn-info {color: #fff;background-color: #f47176;border-color: #f47176;}
 .btn-info.disabled,
 .btn-info[disabled],
 fieldset[disabled] .btn-info,
@@ -394,12 +394,12 @@ fieldset[disabled] .btn-info:active,
 fieldset[disabled] .btn-info.active {background-color: #49b6d5;border-color: #49b6d5;}
 .btn-info .badge {color: #49b6d5;background-color: #fff;}
 
-.btn-success {color: #fff;background-color: #5db75d;border-color: #5db75d;background-image: none;}
+.btn-success {color: #fff;background-color: #25a4f4;border-color: #5db75d;background-image: none;}
 .btn-success:hover,
 .btn-success:focus,
 .btn-success:active,
 .btn-success.active,
-.open .dropdown-toggle.btn-success {color: #fff;background-color: #409e3e;border-color: #409e3e;}
+.open .dropdown-toggle.btn-success {color: #fff;background-color: #068ce0;border-color: #068ce0;}
 .btn-success.disabled,
 .btn-success[disabled],
 fieldset[disabled] .btn-success,
@@ -482,7 +482,7 @@ fieldset[disabled] .btn-black.active {background-color: #2c353c;border-color: #2
 .pull-left{float:left;}
 .pull-right{float:right !important;}
 
-.btn {display: inline-block;margin-bottom: 0;text-align: center;vertical-align: middle;cursor: pointer;background-image: none;border: 1px solid transparent;white-space: nowrap;line-height: 1.42857143;border-radius: 4px;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;font-size: 12px;padding: 3px;}
+.btn {display: inline-block;margin-bottom: 0;text-align: center;vertical-align: middle;cursor: pointer;background-image: none;border: 1px solid transparent;white-space: nowrap;line-height: 1.42857143;border-radius: 3px;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;font-size: 13px;padding: 3px 5px;}
 .btn:active,
 .btn.active {background-image: none;}
 .btn-default {
@@ -516,7 +516,7 @@ textarea.input{height:100px;}
 .form-text{box-sizing: border-box;}
 .checkbox-group{padding-top: 5px;}
 
-.label {display: inline;padding: .2em .6em .3em;font-size: 75%;font-weight: bold;line-height: 1; text-align: center;white-space: nowrap;vertical-align: baseline;border-radius: .25em;}
+.label {display: inline;padding: .2em .6em .3em;font-size: 90%;font-weight: bold;line-height: 1; text-align: center;white-space: nowrap;vertical-align: baseline;border-radius: .25em;}
 .label[href]:hover,
 .label[href]:focus {color: #fff;text-decoration: none;cursor: pointer;}
 .label:empty {display: none;}
@@ -638,7 +638,7 @@ box-sizing: border-box;
 }
 .table-bottom {overflow: hidden;}
 .pagination {text-align: center;margin: 15px auto;}
-.pagination .active {line-height: 21px; background:#c21e5a;}
+.pagination .active {line-height: 21px; background:#acdbf6;}
 .pagination .active a {color: #fff;font-weight: bold;}
 .pagination li{font-size: 12px;line-height: 20px;display: inline-block;background-image: -moz-linear-gradient(center top , #fff, #E0E0E0);border: 1px solid #ddd;box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;padding: 0 7px;margin: 0 2px;}
 .pagination a{font-size: 12px; position: relative; top: -1px;}
@@ -726,7 +726,11 @@ box-sizing: border-box;
 
 
 .comment-content{
-     line-height:20px; 
+	font-size: 14px;
+     line-height: 1.6; 
+}
+.comment-content .fa-reply{
+	color:#666;
 }
 /*
 div {

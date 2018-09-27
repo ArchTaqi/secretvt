@@ -152,7 +152,7 @@ img.adp-marker{
    }
 
 </style>
-<div class="wrap">
+<div class="wrap08">
 
   <!-- title 영역 -->
     <section class="de_title">
@@ -182,7 +182,14 @@ img.adp-marker{
         
             
       </div>
-      <h2 class="bottom_02">[<?php echo "업소정보";//$menuName ?>] <?php echo element('post_title', element('post',$view)) ?></h2>
+      <h2 class="bottom_02">[<?php echo "업소정보";//$menuName ?>] <?php echo element('post_title', element('post',$view)) ?> 
+	  <?php if ( ! element('post_del', element('post', $view)) && element('use_scrap', element('board', $view))) { 
+            if(element('scr_id',element('scrap', element('post', $view))))
+                echo '<a onClick="post_scrap_cancel(\''.element('post_id', element('post', $view)).'\', \''.element('scr_id',element('scrap', element('post', $view))).'\');" class="scrap_heart"><i class="fa fa-heart" style="font-size:20px;color:#ddd;"></i></a>';
+            else echo '<a id="btn-scrap" onClick="post_scrap(\''.element('post_id', element('post', $view)).'\', \'post-scrap\');" class="scrap_heart"><i class="fa fa-heart-o" style="font-size:20px"></i></a>';
+            
+         } ?>
+	  </h2>
         <table>
             <tr>
                 <td onClick="location.href='<?php echo element('post_url', $view); ?>'" >
@@ -211,12 +218,7 @@ img.adp-marker{
                 </td>
             </tr>
         </table>
-        <?php if ( ! element('post_del', element('post', $view)) && element('use_scrap', element('board', $view))) { 
-            if(element('scr_id',element('scrap', element('post', $view))))
-                echo '<a onClick="post_scrap_cancel(\''.element('post_id', element('post', $view)).'\', \''.element('scr_id',element('scrap', element('post', $view))).'\');"><i class="fa fa-heart" style="font-size:20px;color:#ddd;"></i></a>';
-            else echo '<a id="btn-scrap" onClick="post_scrap(\''.element('post_id', element('post', $view)).'\', \'post-scrap\');"><i class="fa fa-heart-o" style="font-size:20px"></i></a>';
-            
-         } ?>
+        
     </section>
   <!-- ===== -->
 
@@ -232,7 +234,7 @@ img.adp-marker{
           
         </tr>
         <tr>
-          <td class='text-center'><span id="directionsAddress"></span></td>
+          <td class=''><span id="directionsAddress"></span></td>
         </tr>
       </table>
     </section>
@@ -254,7 +256,7 @@ img.adp-marker{
 
           <td class="active">
             <figure>
-              <img style="width:17%;" src="<?php echo base_url('assets/images/temp/de_img/de_map.png')?>" alt="google_map">
+              <img style="width:22%;" src="<?php echo base_url('assets/images/temp/de_img/de_map.png')?>" alt="google_map">
               <figcaption>
                 지 도
               </figcaption>

@@ -4,8 +4,8 @@
 <div class="wrap04">
     <?php echo show_alert_message($this->session->flashdata('message'), '<div class="alert alert-auto-close alert-dismissible alert-info"><button type="button" class="close alertclose" >&times;</button>', '</div>'); ?>
 
-    <section class="title">
-        <h2 >[공지]<?php echo element('noti_title', element('data', $view)); ?></h2>
+    <section class="notice_title">
+        <h2>[공지]<?php echo element('noti_title', element('data', $view)); ?></h2>
         <!-- <table class="table02">
             <tr>
                 <td style="background-color:#e7ecf5;">
@@ -31,7 +31,7 @@
         </table> -->
     </section>
 
-    <section class="title02" style="border-bottom:0;">
+    <section class="title03" style="border-bottom:0;">
         <h4>작성일</h4>
         <p>작성일 : <?php echo element('display_datetime', $view); ?></p>
     </section>
@@ -39,7 +39,7 @@
     <section class="content">
         <div class="contents-view" style="margin-bottom: 0;">
             <!-- 본문 내용 시작 -->
-            <div id="post-content"><?php echo element('content', element('data', $view)); ?></div>
+            <div id="post-content" class="post-content"><?php echo element('content', element('data', $view)); ?></div>
             <!-- 본문 내용 끝 -->
         </div>
     </section>
@@ -57,10 +57,10 @@
             
                 <a href="<?php echo element('list_url', $view); ?>" class="btn btn-info btn-sm">목 록</a>
             <?php if (element('prev_post', $view)) { ?>
-                <a href="<?php echo element('url', element('prev_post', $view)); ?>" class="btn btn-default btn-sm">◀이전 글</a>
+                <a href="<?php echo element('url', element('prev_post', $view)); ?>" class="btn btn-success btn-sm">◀이전 글</a>
             <?php } ?>
             <?php if (element('next_post', $view)) { ?>
-                <a href="<?php echo element('url', element('next_post', $view)); ?>" class="btn btn-default btn-sm">다음 글▶</a>
+                <a href="<?php echo element('url', element('next_post', $view)); ?>" class="btn btn-success btn-sm">다음 글▶</a>
             <?php } ?>
         </div>
 

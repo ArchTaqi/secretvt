@@ -94,12 +94,12 @@
 
                                 <div class='button' >
                                 <?php if (element(abs(element('post_num', $result)),element('modify_url', element('reply_data', element('list', $view))))) { ?>
-                                <button type="button" class="" onClick="event.stopPropagation();location.href='<?php echo element(abs(element('post_num', $result)),element('modify_url', element('reply_data', element('list', $view)))); ?>';">
+                                <button type="button" class="btn-info" onClick="event.stopPropagation();location.href='<?php echo element(abs(element('post_num', $result)),element('modify_url', element('reply_data', element('list', $view)))); ?>';">
                                     수 정
                                 </button>
                                 <?php } ?>
                                 <?php if (element('is_admin', $view) || element(abs(element('post_num', $result)),element('delete_url', element('reply_data', element('list', $view))))) { ?>
-                                <button  type="button" onClick="event.stopPropagation();btn_one_delete_click(this);" data-one-delete-url="<?php echo element(abs(element('post_num', $result)),element('delete_url', element('reply_data', element('list', $view)))); ?>">
+                                <button  type="button" class="btn-silver" onClick="event.stopPropagation();btn_one_delete_click(this);" data-one-delete-url="<?php echo element(abs(element('post_num', $result)),element('delete_url', element('reply_data', element('list', $view)))); ?>">
                                     삭 제
                                 </button>
                                 <?php } ?>
@@ -118,17 +118,17 @@
                         <div class="clear">
                             <div class="button" style="float: left">
                                 <?php if (element('modify_url', $result)) { ?>
-                                    <button type="button" onClick="event.stopPropagation();location.href='<?php echo element('modify_url', $result); ?>';">
+                                    <button type="button" class="btn-info" onClick="event.stopPropagation();location.href='<?php echo element('modify_url', $result); ?>';">
                                         수 정
                                     </button>
                                 <?php } ?>
                                 <?php if ((element('is_admin', $view) || element('reply_url', $result)) && !element(abs(element('post_num', $result)),element('reply_content', element('reply_data', element('list', $view))))) { ?>
-                                <button type="button" onClick="event.stopPropagation();location.href='<?php echo element('reply_url', $result); ?>';">
+                                <button type="button" class="btn-success' onClick="event.stopPropagation();location.href='<?php echo element('reply_url', $result); ?>';">
                                     답 변
                                 </button>
                                 <?php } ?>
                                 <?php if (element('is_admin', $view) || element('delete_url', $result)) { ?>
-                                <button  type="button" onClick="event.stopPropagation();btn_one_delete_click(this);" data-one-delete-url="<?php echo element('delete_url', $result); ?>">
+                                <button  type="button" class="btn-silver" onClick="event.stopPropagation();btn_one_delete_click(this);" data-one-delete-url="<?php echo element('delete_url', $result); ?>">
                                     삭 제
                                 </button>
                                 <?php } ?>
@@ -156,7 +156,7 @@
         <div class="table-bottom mt3per mb3per">
             <div class="pull-left mr10">
                 <?php if (element('search_list_url', element('list', $view))) { ?>
-                    <a href="<?php echo element('search_list_url', element('list', $view)); ?>" class="btn btn-default btn-sm">전체목록</a>
+                    <a href="<?php echo element('search_list_url', element('list', $view)); ?>" class="btn btn-success btn-sm">전체목록</a>
                 <?php } ?>
             </div>
             
