@@ -111,7 +111,7 @@
 	header h1 a img{
 		/* width:100%; */
 		position: relative;
-		bottom: -2px;
+		/* bottom: -2px; */
 		height:40px;
 	}
 
@@ -191,7 +191,13 @@
 		padding:3px 10px;
 		font-size:14px;
 	}
-
+	
+@media screen and (max-width:340px) and (min-width:5px){
+	#mainmenu li a{
+		font-size:13px;
+	}
+	
+}
 /*메인메뉴 클릭시 첫번째 타이틀,공지사항,이벤트 클릭시 메이타이틀, 영역*/
 	.title div{
 		width:3%;

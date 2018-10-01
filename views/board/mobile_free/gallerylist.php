@@ -2,7 +2,7 @@
 
 <?php echo element('headercontent', element('board', element('list', $view))); ?>
 
-<div class="wrap05">
+<div class="wrap10">
     <section class="title">
         <div></div>
         <h2 class="bottom_02" style="color:#000;"><?php echo element('brd_name', element('board', element('list', $view))) ?> <?php echo element('post_title', element('post_parent',$view)) ?>
