@@ -108,7 +108,7 @@ class Main extends CB_Controller
             }
 
             $post_result = $this->Post_model
-            ->get_post_list('5', '', $where, $category_id,'post_order,post_num','asc');
+            ->get_post_list('5', '', $where, $category_id,'(case when post_order=0 then 999 else post_order end),post_num, post_reply','asc');
 
             if (element('list', $post_result)) {
                 foreach (element('list', $post_result) as $key => $val) {

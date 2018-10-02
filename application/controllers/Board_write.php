@@ -311,9 +311,7 @@ class Board_write extends CB_Controller
             = element('use_post_receive_email', $board) ? true : false;
         $view['view']['post']['post_parent'] = $this->input->get('post_parent',null,0);
 
-        $view['view']['post']['max_post_main_order'] = $this->Post_model->max_post_order(element('brd_id', $board),'main');
-        $view['view']['post']['max_post_order'] = $this->Post_model->max_post_order(element('brd_id', $board));
-        $view['view']['post']['post_order'] = $this->Post_model->max_post_order(element('brd_id', $board));
+        
 
         if(strpos(element('brd_key', $board),'_review' )!==false){
 
@@ -1441,8 +1439,7 @@ class Board_write extends CB_Controller
         $view['view']['post']['can_post_secret'] = $can_post_secret
             = element('use_post_secret', $board) === '1' ? true : false;
         $view['view']['post']['can_post_receive_email'] = $can_post_receive_email = element('use_post_receive_email', $board) ? true : false;
-        $view['view']['post']['max_post_main_order'] = $this->Post_model->max_post_order(element('brd_id', $board),'main');
-        $view['view']['post']['max_post_order'] = $this->Post_model->max_post_order(element('brd_id', $board));
+        
 
         if(empty(element('post_order', $post))) $view['view']['post']['post_order'] = $this->Post_model->current_post_order($post);
 
