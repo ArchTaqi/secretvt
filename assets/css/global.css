@@ -385,7 +385,7 @@
 	.footer_02{
 		margin-bottom:0;
 		position: relative;
-		background-color: #ccc;
+		background-color: #f2f2f2;
 		color:#000;
 		padding-top:3%;
 	}
@@ -466,7 +466,7 @@
 /*footer 영역*/
 	footer{
 		width:100%;
-		background-color: #ccc;
+		background-color: #f2f2f2;
 		padding:3%;
 		box-sizing: border-box;
 		color:#333;

@@ -1,29 +1,100 @@
 <?php $this->managelayout->add_js(base_url('assets/js/bxslider/jquery.bxslider.min.js')); ?>
 <?php $this->managelayout->add_js(base_url('assets/js/bxslider/plugins/jquery.fitvids.js')); ?>
+
 <script type="text/javascript">
         $(document).ready(function () {
+          // alert($(window).height());
+          $('.bigbanner').css('height',$(window).height());
+          $('.down').show();
+          // alert(screen.height);
             var swiper_sub = new Swiper('.swiper-container-sub', {
-                autoplay: {
-                    delay: 2500,
+                spaceBetween: 0,
+                  effect: 'fade',
+                  centeredSlides: true,
+                  autoplay: {
+                    delay: 4000,
                     disableOnInteraction: false,
                   },
                   
-            });           
+            });      
+
+            $('li.cont_cate_li').click(function(){
+                $("li.cont_cate_li").removeClass('active');
+                var index = $("li.cont_cate_li").index(this);
+                $("li.cont_cate_li:eq(" + index + ")").addClass('active');
+
+                $("div.cont_contents").hide();
+                $("div.cont_contents:eq(" + index + ")").fadeIn();
+                
+            });
+
+            $(function () {
+              $('.down').bind("click", function () {
+                down_scroll();
+                return false;
+              });
+            });
+
+            // $(window).scroll(function() {
+            //   if($(this).scrollTop() >= 400)
+            // });
         });
+
+        function down_scroll() {
+          var offset = $(".main_category").offset();
+          $('html, body').animate({ scrollTop: offset.top-44 }, 500);
+          
+        }
 </script>
 
-<div class="wrap06">
-        <section class="slide" >
-            <div class="swiper-container-sub">
-                <div class="swiper-wrapper">
-                <?php echo banner('index_bxslider','order',3,'<div class="swiper-slide per100">','</div>'); ?>
-                </div>
-                
+    
+        <section class="bigbanner swiper-container-sub">
+            <h2 class="hidden">배너</h2>
+            <ul class="bn_ul swiper-wrapper">
+                <li class="bn_li bn_li01 swiper-slide"> 
+                    <div class="bn_img" style="background-image:url('<?php echo base_url('assets/images/bn_02.png') ?>');"></div>
+                    <div class="bn_text_box">
+                        <a href="/event/post/7">
+                            <p class="bn_text big_font">Jeong San</p>
+                            <p class="bn_text small_font">동나이강에서 진행하는 지상최고의 라운딩<br>적당한 굴곡, 넓은 페어웨어,<br>현대적인 벙커의 조화</p>
+                            
+                            <span class="btn">할인패키지 내용보기 →</span>
+                        </a>
+                    </div>
+                    <div class="black_back"></div>
+                </li>
+
+                <li class="bn_li bn_li02 swiper-slide"> 
+                    <div class="bn_img" style="background-image:url('<?php echo base_url('assets/images/bn_01.png') ?>');"></div>
+                    <div class="bn_text_box text-right">
+                        <a href="/event/post/7">
+                            <p class="bn_text small_font">인도차이나에서 가장 도전적인 골프 코스 <br>건축의 걸작이라 할 수 있는</p>
+                            <p class="bn_text big_font">Dong Nai 골프</p>
+                            <span class="btn">할인패키지 내용보기 →</span>
+                        </a>
+                    </div>
+                    <div class="black_back"></div>
+                </li>
+               
+                <li class="bn_li bn_li03 swiper-slide"> 
+                    <div class="bn_img" style="background-image:url('<?php echo base_url('assets/images/bn_03.png') ?>');"></div>
+                    <div class="bn_text_box">
+                        <a href="<?php echo post_url('vtn_hotel',208)?>">
+                            <p class="bn_text big_font">Tan Son Nhat</p>
+                            <p class="bn_text small_font">9넓은 페어웨이와<br>롤링 워터 해저드 제방벙커,<br>베트남 최고의 서비스,<br>접근성, 편의시설 관리운영</p>
+                            <span class="btn">할인패키지 내용보기 →</span>
+                        </a>
+                    </div>
+                    <div class="black_back"></div>
+                </li>
+            </ul>
+            <div class="down" style="display: none;">
+            
+                <div class="path path01"></div>
+                <div class="path path02"></div>
+                <div class="path path03"></div>
+            
             </div>
-            <p>
-                  A resort for you only ! You can get all the information<br>
-                  you need in one trip to Vietnam  
-                </p>
         </section>
 
        <!--  <section class="ad" style="margin-bottom:4%;">
@@ -34,124 +105,144 @@
                 <img src="<?php echo base_url('assets/images/temp/middle_btn.png') ?>">
             </a>
         </section> -->
+        <section class="main_category">
+        <h2 class="hidden">메인메뉴</h2>
+        <ul class="main_cate_ul">
+            <?php 
+            if (element('list', $view)) {
+                foreach(element('list', $view) as $value){
 
-        <section class="main_list">
-            <h4>main_list</h4>
-            <ul>
-                <li>
-                    <a href="<?php echo site_url('/board/vtn_karaoke') ?>">
-                        <figure>
-                            <img src="<?php echo base_url('assets/images/temp/main_menu/menu_01.png'); ?>" alt="main_01">
-                            <figcaption>
-                                <h2>가라오케</h2>
-                                <p>맛좋은 술과 노래를 즐길 수 있는 곳</p>
-                            </figcaption>
-                        </figure>
-                    </a>
+               
+             ?>
+            <li class="main_cate_li" style="background-image:url('<?php echo base_url("assets/images/".element('brd_key', element('board',$value)).".png") ?>');">
+                <a href="<?php echo element('board_url',$value) ?>">
+                    <div class="cate_text"><?php echo element('men_name',$value) ?></div>
+                    <div class="cate_count">총&#32;<span class="count"><?php echo element('total_rows',$value) ?>개</span>의 업소정보가 있습니다.</div>
+                </a>
+            </li>
+            <?php 
+                } 
+            }
+            ?>
+            
+        </ul>
+        
+        
+    </section>
+    
+    <section class="mainpage_cont">
+        <h2 class="hidden">업소정보</h2>
+        <div class="cont_category">
+            <ul class="cont_cate_ul">
+                <?php 
+                $i=0;
+                if (element('list', $view)) {
+                    foreach(element('list', $view) as $key => $value){
+
+                    if($i===0)  $active ="active";
+                    else $active ="";
+                 ?>
+
+
+                <li class="cont_cate_li <?php echo $active ?>" id="men_<?php echo $key ?>">
+                    <?php echo element('men_name',$value) ?>
                 </li>
+                <?php 
+                    $i++;
+                    } 
+                }
+                ?>
 
-                <li>
-                    <a href="<?php echo site_url('/board/vtn_club') ?>">
-                        <figure>
-                            <img src="<?php echo base_url('assets/images/temp/main_menu/menu_02.png'); ?>" alt="main_02">
-                            <figcaption>
-                                <h2>클 럽</h2>
-                                <p>베트남 여성들과 다양하고 즐거운 만남</p>
-                            </figcaption>
-                        </figure>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="<?php echo site_url('/board/vtn_msg') ?>">
-                        <figure>
-                            <img src="<?php echo base_url('assets/images/temp/main_menu/menu_03.png'); ?>" alt="main_03">
-                            <figcaption>
-                                <h2>마사지&이발소</h2>
-                                <p>내 몸 관리와 함께 특별한 서비스</p>
-                            </figcaption>
-                        </figure>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="<?php echo site_url('/board/vtn_hotel') ?>">
-                        <figure>
-                            <img src="<?php echo base_url('assets/images/temp/main_menu/menu_04.png'); ?>" alt="main_04">
-                            <figcaption>
-                                <h2>호 텔</h2>
-                                <p>체계적인 서비스와 깜끔한 시설 관리</p>
-                            </figcaption>
-                        </figure>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="<?php echo site_url('/board/vtn_golf') ?>">
-                        <figure>
-                            <img src="<?php echo base_url('assets/images/temp/main_menu/menu_05.png'); ?>" alt="main_05">
-                            <figcaption>
-                                <h2>골 프</h2>
-                                <p>높은 퀄리티와 서비스,<br>넓은 페어웨이 </p>
-                            </figcaption>
-                        </figure>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="<?php echo site_url('/board/vtn_food')?>">
-                        <figure>
-                            <img src="<?php echo base_url('assets/images/temp/main_menu/menu_06.png'); ?>" alt="main_06">
-                            <figcaption>
-                                <h2>맛 집</h2>
-                                <p>베트남 로컬 맛집 부터<br> 퓨전 맛집까지</p>
-                            </figcaption>
-                        </figure>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="<?php echo site_url('/board/vtn_travel') ?>">
-                        <figure>
-                            <img src="<?php echo base_url('assets/images/temp/main_menu/menu_07.png'); ?>" alt="main_07">
-                            <figcaption>
-                                <h2>여행정보</h2>
-                                <p>여행기사부터 코스정보<br>까지 한곳에</p>
-                            </figcaption>
-                        </figure>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="<?php echo site_url('/board/vtn_info')?>">
-                        <figure>
-                            <img src="<?php echo base_url('assets/images/temp/main_menu/menu_08.png'); ?>" alt="main_0">
-                            <figcaption>
-                                <h2>베남 정보</h2>
-                                <p>다양한 정보를 현지에서<br> 전달</p>
-                            </figcaption>
-                        </figure>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="<?php echo site_url('/board/vtn_free')?>">
-                        <figure>
-                            <img src="<?php echo base_url('assets/images/temp/main_menu/menu_09.png'); ?>" alt="main_0">
-                            <figcaption>
-                                <h2>자유 게시판</h2>
-                                <p>베트남의 경험담을<br> 자유롭게 작성</p>
-                            </figcaption>
-                        </figure>
-                    </a>
-                </li>
-
-
+                
+                
             </ul>
-        </section>
+        </div>
+        
+        
+        <?php 
+        $i=0;
+        if (element('list', $view)) {
+            foreach(element('list', $view) as $key => $value){
 
+                if($i===0)  $active ="active";
+                else $active ="";
+                
+                if(element('brd_key', element('board',$value))!=='vtn_free'){
+                    
+                   ?>
+                    <div class="cont_list cont_contents <?php echo $active ?>" >
+                        <ul class="cont_list_ul">
+                           <?php 
+                           if(element('post_list',$value))
+                           foreach(element('post_list',$value) as  $value_){
+                            ?>   
+                           <li class="cont_list_li">
+                           <a href="<?php echo element('post_url',$value_) ?>">
+                               <figure>
+                                   <img src="<?php echo element('thumb_url', $value_); ?>" alt="<?php echo html_escape(element('title', $value_)); ?>" title="<?php echo html_escape(element('title', $value_)); ?>" class=" img-responsive" style="width:100%;" />
+                                   <figcaption>
+                                       <h3 class="cont_title">[<?php echo html_escape(element('bca_value',element('category', $value_))); ?>]<?php echo html_escape(element('title', $value_)); ?></h3>
+                                       <p class="cont_text"><?php if(element('sub_subject',element('extravars', $value_))) echo element('sub_subject',element('extravars', $value_)); ?></p>
+                                   </figcaption>
+                               </figure>
+                           </a>
+                           </li>
+                           
+                           <?php 
+                           }
+                            ?>
+                            <li class="cont_list_li cont_plus">
+                               <a href="<?php echo element('board_url',$value) ?>">
+                                   <figure>
+                                       <img src="<?php echo base_url('assets/images/see_more_icon.png') ?> " alt="더 보 기">
+                                       <figcaption>
+                                           <h3 class="cont_title">더 보 기</h3>
+                                           
+                                       </figcaption>
+                                   </figure>
+                               </a>
+                            </li>
+                       </ul>
+                   </div>
+                <?php
+                } else {
+
+                ?>
+                    <div class="text_list cont_contents" id="men_<?php echo $key ?>">
+                       <ul class="text_list_ul">
+                           <?php 
+                           if(element('post_list',$value))
+                           foreach(element('post_list',$value) as  $value_){
+                            ?>   
+                           <li class="text_list_li">
+                            <a href="<?php echo element('post_url',$value_) ?>">
+                               <h3 class="text_title"><strong><?php echo html_escape(element('title', $value_)); ?></strong>
+                                <?php if (element('post_comment_count', $value_)) { ?><span class="comment_num">+<?php echo element('post_comment_count', $value_); ?></span><?php } ?>
+                                </h3>
+                               <div class="text_cont"><?php if(element('post_content',$value_)) echo element('post_content',$value_); ?></div>
+                            </a>
+                           </li>
+                           
+                           <?php 
+                           }
+                            ?>
+                            
+                       </ul>
+                       <div class="text_plus">
+                        <a href="<?php echo element('board_url',$value) ?>">더 보 기<img src="<?php echo base_url('assets/images/see_more_icon_small.png') ?>" alt="더 보 기"></a>
+                       </div>
+                   </div>
+        <?php 
+                }
+            $i++;
+            } 
+        }
+        ?>
+        
+       </section>
+    
     <!-- main 하단 배너 영역 -->
-        <section class="secret_bn">
+        <!-- <section class="secret_bn">
             <a href="<?php echo base_url('write/vtn_tour') ?>">
                 <h4>ad02</h4>
                 <figure>
@@ -170,7 +261,7 @@
                     </figcaption>
                 </figure>
             </a>
-        </section>
+        </section> -->
 
         <!-- <section class="secret_bn">
             <a href="<?php echo base_url('write/vtn_safevisa') ?>">
@@ -257,4 +348,3 @@
         </section>
     <?php }?>
     
-</div>

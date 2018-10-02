@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?php echo html_escape(element('page_title', $layout)); ?></title>
-<link rel="icon" href="<?php echo base_url('assets/images/temp/favi02.png'); ?>"/> 
+<link rel="icon" href="<?php echo base_url('assets/images/temp/favi02.png?'.$this->cbconfig->item("browser_cache_version")); ?>"/> 
 <meta property="og:type" content="website">
 <meta property="og:title" content="시크릿베트남">
 <meta property="og:description" content="베트남 소식 및 업소정보 제공! 예약 및 길찾기 지원">
@@ -19,8 +19,8 @@
 <link rel="stylesheet" type="text/css" href="<?php echo element('layout_skin_url', $layout); ?>/css/style.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/dialog.css')?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/reset.css?'.$this->cbconfig->item('browser_cache_version'))?>" />
-<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/global.css?'.$this->cbconfig->item('browser_cache_version'))?>" />
-<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/page.css?'.$this->cbconfig->item('browser_cache_version'))?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/global.css?23'.$this->cbconfig->item('browser_cache_version'))?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/page.css?23'.$this->cbconfig->item('browser_cache_version'))?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/style.css?'.$this->cbconfig->item('browser_cache_version'))?>" />
 
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/earlyaccess/nanumgothic.css" />

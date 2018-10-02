@@ -18,7 +18,7 @@ class Main extends CB_Controller
     /**
      * 모델을 로딩합니다
      */
-    protected $models = array('Board','Event','Notice');
+    protected $models = array('Post','Board','Event','Notice', 'Post_extra_vars','Board_category','Post_file');
 
     /**
      * 헬퍼를 로딩합니다
@@ -57,6 +57,144 @@ class Main extends CB_Controller
         if(empty(get_cookie('region'))) $view['view']['region']=0;
         else $view['view']['region'] = 0;
 
+        $this->load->model('Menu_model');
+        $view['view']['menu'] = array();
+
+        $this->Menu_model->allow_order_field = array('men_order');
+
+        $result = $this->Menu_model->get_admin_list('','',array('men_mobile' => 1),'','men_order','asc');
+        if(element('list',$result))
+        foreach(element('list',$result) as $key => $value){
+
+            
+            $men_link_arr=explode('/',element('men_link',$value));
+            $last = end($men_link_arr);
+            
+            
+            
+            
+            $board = $this->board->item_all($this->board->item_key('brd_id', $last));
+            $where = array(
+                'brd_id' => $this->board->item_key('brd_id', $last),
+            );
+            $where['post_del <>'] = 2;
+            if (element('except_notice', $board)
+                && $this->cbconfig->get_device_view_type() !== 'mobile') {
+                $where['post_notice'] = 0;
+            }
+            if (element('mobile_except_notice', $board)
+                && $this->cbconfig->get_device_view_type() === 'mobile') {
+                $where['post_notice'] = 0;
+            }
+            if (element('use_personal', $board) && $is_admin === false) {
+                $where['post.mem_id'] = $mem_id;
+            }
+
+            $category_id = (int) $this->input->get('category_id');
+            if (empty($category_id) OR $category_id < 1) {
+                $category_id = '';
+            }
+
+
+            
+            
+            if(!empty(get_cookie('region')) && element('bgr_id', $board)!=='8' && element('bgr_id', $board)!=='11') {
+                $where['region_category'] = get_cookie('region');
+            }
+
+            $category_id = (int) $this->input->get('category_id');
+            if (empty($category_id) OR $category_id < 1) {
+                $category_id = '';
+            }
+
+            $post_result = $this->Post_model
+            ->get_post_list('5', '', $where, $category_id,'post_order,post_num','asc');
+
+            if (element('list', $post_result)) {
+                foreach (element('list', $post_result) as $key => $val) {
+
+                   
+                    $post_result['list'][$key]['post_url'] = post_url(element('brd_key', $board), element('post_id', $val));
+                    
+                    
+
+                    $post_result['list'][$key]['extravars'] = $this->Post_extra_vars_model->get_all_meta(element('post_id', $val));
+
+                    
+                    $post_result['list'][$key]['title'] = element('mobile_subject_length', $board)
+                        ? cut_str(element('post_title', $val), element('mobile_subject_length', $board))
+                        : element('post_title', $val);
+
+                    $post_result['list'][$key]['category'] = '';
+                    if (element('use_category', $board) && element('post_category', $val)) {
+
+                        $post_result['list'][$key]['category']
+                            = $this->Board_category_model
+                            ->get_category_info(element('brd_id', $val), element('post_category', $val));
+                    }
+
+
+
+
+                    
+
+                    $post_result['list'][$key]['thumb_url'] = '';
+                    $post_result['list'][$key]['origin_image_url'] = '';
+                    if (element('use_gallery_list', $board)) {
+
+                        $gallery_image_width=120;
+                        $gallery_image_height=80;
+                        if (element('post_image', $val)) {
+                            $filewhere = array(
+                                'post_id' => element('post_id', $val),
+                                'pfi_is_image' => 1,
+                            );
+                            $file = $this->Post_file_model
+                                ->get_one('', '', $filewhere, '', '', 'pfi_id', 'ASC');
+                            $post_result['list'][$key]['thumb_url'] = thumb_url('post', element('pfi_filename', $file),$gallery_image_width,$gallery_image_height,1);
+                            $post_result['list'][$key]['origin_image_url'] = thumb_url('post', element('pfi_filename', $file),$gallery_image_width,$gallery_image_height);
+                        } else {
+                            $thumb_url = get_post_image_url(element('post_content', $val),$gallery_image_width,$gallery_image_height);
+                            $post_result['list'][$key]['thumb_url'] = $thumb_url
+                                ? $thumb_url
+                                : thumb_url('', '',$gallery_image_width,$gallery_image_height);
+
+                            $post_result['list'][$key]['origin_image_url'] = $thumb_url;
+                        }
+                        
+                    } else {
+
+                        $this->load->model('Post_file_model');
+
+                        if (element('post_image', $val)) {
+                            $filewhere = array(
+                                'post_id' => element('post_id', $val),
+                                'pfi_is_image' => 1,
+                            );
+                            $file = $this->Post_file_model
+                                ->get_one('', '', $filewhere, '', '', 'pfi_id', 'ASC');
+                            $post_result['list'][$key]['thumb_url'] = thumb_url('post', element('pfi_filename', $file),$gallery_image_width,$gallery_image_height);
+                            $post_result['list'][$key]['origin_image_url'] = thumb_url('post', element('pfi_filename', $file));
+                        } else {
+                            $thumb_url = get_post_image_url(element('post_content', $val),$gallery_image_width,$gallery_image_height);
+                            $post_result['list'][$key]['thumb_url'] = $thumb_url
+                                ? $thumb_url
+                                : thumb_url('', '',$gallery_image_width,$gallery_image_height);
+
+                            $post_result['list'][$key]['origin_image_url'] = $thumb_url;
+                        }
+
+
+                    }
+                }
+            }
+            $view['view']['list'][element('men_id',$value)]['board'] = $board;
+            $view['view']['list'][element('men_id',$value)]['men_name'] = element('men_name',$value);
+            $view['view']['list'][element('men_id',$value)]['total_rows'] = $post_result['total_rows'];
+            $view['view']['list'][element('men_id',$value)]['board_url'] = board_url($last);
+            $view['view']['list'][element('men_id',$value)]['post_list'] = element('list',$post_result);
+        }
+        
         // 이벤트가 존재하면 실행합니다
         $view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
 

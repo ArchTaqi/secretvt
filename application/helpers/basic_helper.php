@@ -1023,6 +1023,7 @@ if ( ! function_exists('get_view_thumbnail')) {
 if ( ! function_exists('get_post_image_url')) {
     function get_post_image_url($contents = '', $thumb_width = '', $thumb_height = '')
     {
+        
         $CI = & get_instance();
 
         if (empty($contents)) {

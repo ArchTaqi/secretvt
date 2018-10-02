@@ -1,0 +1,301 @@
+@charset "utf-8";
+@keyframes down{
+	0%{
+		bottom:5.5%;
+	}
+	100%{
+		bottom:4.5%;
+	}
+}
+@keyframes arrow{
+	0%{
+		opacity:0.3;
+	}
+	
+	40%{
+		opacity:0.7;
+	}
+	80%{
+		opacity:1;
+	}
+		
+	100%{
+		opacity:0.3;
+	}
+}
+/* .hidden */
+.hidden{
+	width:1px;
+	height:1px;
+	position:absolute;
+	overflow:hidden;
+	clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+	clip: rect(1px, 1px, 1px, 1px);
+}
+/* bigbanner 배너 */
+.bigbanner{
+	width:100%;
+	padding:0;
+	margin-bottom: 5%;
+	position: relative;
+}
+.bigbanner .bn_ul{
+	
+}
+.bigbanner .bn_li{
+	width:100%;
+	height:100vh;
+	position: relative;
+}
+.bigbanner .bn_img{
+	width:100%;
+	height:100%;
+	background-repeat:no-repeat;
+	background-position:center top;
+	background-size:cover;
+}
+.bigbanner .bn_text_box{
+	width:100%;
+	padding: 0 5%;
+	box-sizing:border-box;
+	position: absolute;
+	top:50%;
+	left:50%;
+	transform:translate(-50%,-50%);
+	/* text-align:left; */
+}
+.bigbanner .bn_text_box a{
+	color:#fff;
+}
+.bigbanner .bn_text_box .bn_text{
+	line-height: 1.6;
+	margin-bottom: 3%;
+	font-family: 'Nanum Gothic',sans-serif;
+}
+.bigbanner .bn_text_box .big_font{
+	font-size: 40px;
+	font-weight: bold;
+	font-family: 'Times New Roman','Nanum Gothic',sans-serif;
+}
+.bigbanner .bn_text_box .small_font{
+	font-size: 16px;
+}
+.bigbanner .bn_text_box .btn{
+	display:inline-block;	
+	height:auto;
+	padding:10px 10px 9px;
+	margin-top: 30px;
+	
+	font-size:15px;
+	border:1px solid #fff;
+}
+.bigbanner .down{
+	width:40%;
+	font-size: 50px;
+	position:absolute;
+	bottom:5%;
+	left:50%;
+	margin-left: -20%;
+	text-align:center;
+	z-index:400;
+	color:#fff;
+	-webkit-animation: down 0.6s ease-in 12.5 alternate;
+	-o-animation: down 0.6s ease-in 12.5 alternate;
+	animation: down 0.6s ease-in 12.5 alternate;
+}
+.bigbanner .down a{
+	display:block;
+}
+.bigbanner .path{
+	width:30px;
+	height:30px;
+	margin: 0 auto;
+	border-right:2px solid #fff;
+	border-bottom:2px solid #fff;
+	border-radius: 0 0 3px 0;
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+	transform: rotate(45deg);
+	-webkit-animation: arrow 2.5s ease-in 3 normal;
+	-o-animation: arrow 2.5s ease-in 3 normal;
+	animation: arrow 2.5s ease-in 3 normal;
+}
+
+.bigbanner .path01{
+	opacity:0.3;
+	-webkit-animation-delay: -1.2s;
+	-moz-animation-delay: -1.2s;
+	-o-animation-delay: -1.2s;
+	animation-delay:-1.2s;
+	
+}
+.bigbanner .path02,
+.bigbanner .path03{	
+	margin-top:-18px;
+	
+}
+.bigbanner .path02{
+	opacity:0.7;
+	-webkit-animation-delay: -0.6s;
+	-moz-animation-delay: -0.6s;
+	-o-animation-delay: -0.6s;
+	animation-delay:-0.6s;
+}
+.bigbanner .path03{
+	opacity:1;
+	-webkit-animation-delay: 0s;
+	-moz-animation-delay: 0s;
+	-o-animation-delay: 0s;
+	animation-delay: 0s;
+}
+.bigbanner .down img{
+	width:40px;
+}
+/* main_category 메인페이지 메뉴 영역 */ 
+.main_category{
+	margin-bottom: 5%;
+	/* padding: 0; */
+}
+.main_category .main_cate_ul{}
+.main_category .main_cate_li{
+	width:100%;
+	padding:4% 3% 4% 20%;
+	margin-bottom: 0;
+	box-sizing:border-box;
+	border-bottom:1px solid #ebebeb;
+	background-repeat: no-repeat;
+	background-position: 0 center;
+	background-size: 17%;
+	position: relative;
+}
+.main_category .main_cate_li:last-child{
+	border-bottom:none;
+}
+.main_category .main_cate_li a{}
+.main_category .main_cate_li a:after{
+	content:'>';
+	display:block;
+	/* width:20px; */
+	height:20px;
+	position: absolute;
+	right:3%;
+	top:50%;
+	font-size: 20px;
+	margin-top: -10px;
+	color:#ccc;
+}
+.main_category .main_cate_li .cate_text{
+	font-size: 16px;
+	margin-bottom: 8px;
+	font-family: 'Jeju Gothic' ,sans-serif;
+}
+.main_category .main_cate_li .cate_count{
+	font-size: 12px;
+	font-family: 'Nanum Gothic', sans-serif;
+}
+.main_category .main_cate_li .count{
+	color:#25a4f4;
+	font-weight: bold;
+	font-size: 14px;
+}
+/* mainpage_cont 메인페이지 업소정보 */
+.mainpage_cont{
+	margin-bottom: 0;
+	padding:25px 3% 10px;
+	background-color: #f9f9f9;
+}
+/* cont_category 업소정보 카테고리 */
+.mainpage_cont .cont_category{
+	margin-bottom: 3%;
+}
+.cont_category .cont_cate_ul{
+	text-align:center;
+}
+.cont_category .cont_cate_li{
+	display:inline-block;
+	padding:3px 3px 5px;
+	margin:0 2.4% 3%;
+	font-size:16px;
+	font-family: 'Nanum Gothic' ,sans-serif;
+	border-bottom: 2px solid transparent;
+}
+.cont_category .active{
+	color: #25a4f4;
+	border-bottom-color: #25a4f4;
+	font-weight:600;
+}
+/* .cont_list 메인페이지 업소정보 리스트 */
+.mainpage_cont .cont_list{}
+.cont_list .cont_list_ul{}
+.cont_list .cont_list_li{
+	width:49%;
+	margin-bottom: 3%;
+	background-color:#fff;
+	box-shadow: 1px 1px 3px rgba(6, 69, 109, 0.1);
+	position: relative;
+	border-radius:3px;
+	overflow:hidden;
+}
+.cont_list .cont_list_li:nth-child(2n+1){
+	float:left;
+}
+.cont_list .cont_list_li:nth-child(2n){
+	float:right;
+}
+.cont_list .cont_list_li a{}
+.cont_list .cont_list_li figure{}
+.cont_list .cont_list_li img{
+	width:100%;
+	margin-bottom: 5px;	
+}
+.cont_list .cont_list_li figcaption{
+	padding:0 8px 14px;
+	height:60px;
+}
+.cont_list .cont_list_li .cont_title{
+	font-size: 14px;
+	margin-bottom: 6px;
+	font-family: 'Jeju Gothic',sans-serif;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2; /* 라인수 */
+	-webkit-box-orient: vertical;
+	word-wrap:break-word;
+	line-height: 1.4;
+	max-height: 2.8em;
+}
+.cont_list .cont_list_li .cont_text{
+	width:100%;
+	font-size: 13px;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	overflow:hidden;
+	font-family: 'Nanum Gothic',sans-serif;
+}
+
+.cont_list .cont_plus{
+	box-shadow:none;
+	background-color: transparent;
+}
+
+.cont_list .cont_plus .cont_title{
+	text-align:center;
+	font-size: 18px;
+	color:#666;
+}
+
+
+@media screen and (max-width:350px) and (min-width:5px){
+	.cont_category .cont_cate_li{		
+		padding:3px 3px 5px;
+		margin:0 2.2% 3%;		
+	}
+	
+}
+
+
+
+
