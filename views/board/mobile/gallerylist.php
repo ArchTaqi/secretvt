@@ -140,7 +140,7 @@
 
                 <a href="<?php echo element('post_url', $result); ?>" title="<?php echo html_escape(element('title', $result)); ?>"><img src="<?php echo element('thumb_url', $result); ?>" alt="<?php echo html_escape(element('title', $result)); ?>" title="<?php echo html_escape(element('title', $result)); ?>" class=" img-responsive" style="width:100%;" />
                 
-                    <h2 >[<?php echo html_escape(element('bca_value',element('category', $result))); ?>]<?php echo html_escape(element('title', $result)); ?><?php if (element('post_comment_count', $result)) { ?><span style="font:normal 11px 'dotum';">[+<?php echo element('post_comment_count', $result); ?>]</span><?php } ?></h2>
+                    <h2 ><?php echo element('bca_value',element('category', $result)) ? '['.html_escape(element('bca_value',element('category', $result))).']':''; ?><?php echo html_escape(element('title', $result)); ?><?php if (element('post_comment_count', $result)) { ?><span style="font:normal 11px 'dotum';">[+<?php echo element('post_comment_count', $result); ?>]</span><?php } ?></h2>
                 
                     <div class="per90 pull-left text_box">
                         <p class="sub_subject"><?php if(element('sub_subject',element('extravars', $result))) echo element('sub_subject',element('extravars', $result)); ?>
