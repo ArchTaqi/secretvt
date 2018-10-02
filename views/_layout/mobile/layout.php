@@ -259,12 +259,13 @@ $(document).on('click', '.viewmobileversion', function(){
                     }, 500);
         });
         
+        <?php if($prev_men_link || $next_men_link) {?>
         var swiper = new Swiper('.swiper-container-main', {
           initialSlide :1,
           runCallbacksOnInit : false,
           touchAngle:35,
           threshold : 20,
-          shortSwipes:false,
+          
 
         });
 
@@ -275,7 +276,7 @@ $(document).on('click', '.viewmobileversion', function(){
                 location.href='<?php echo $next_men_link?>';
                 
         });
-        
+        <?php } ?>
     });
 </script> 
 
