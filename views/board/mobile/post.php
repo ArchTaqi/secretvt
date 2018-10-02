@@ -90,12 +90,14 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
                         업소후기
                     </a>
                 </td> -->
+                <?php if(!empty($tel1)){ ?>
                 <td>
                    <a href="tel:<?php echo $tel1 ?>">
                         <img src="<?php echo base_url('assets/images/temp/de_img/de_tel.png')?>" alt="sub04">
                         전화걸기
                     </a>
                 </td>
+                <?php } ?>
             </tr>
         </table>
         
