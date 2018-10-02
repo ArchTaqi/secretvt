@@ -70,7 +70,7 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
 		</h2>
         
             
-        <table>
+        <table style="width:<?php echo !empty($tel1) ? '75':'50';?>%;">
             <tr>
                 <td onClick="location.href='<?php echo element('post_url', $view); ?>'" class="active">
                     
