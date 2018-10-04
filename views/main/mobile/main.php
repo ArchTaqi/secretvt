@@ -249,7 +249,7 @@
        </section>
     
     <!-- main 하단 배너 영역 -->
-        <!-- <section class="secret_bn">
+        <section class="secret_bn">
             <a href="<?php echo base_url('write/vtn_tour') ?>">
                 <h4>ad02</h4>
                 <figure>
@@ -268,7 +268,7 @@
                     </figcaption>
                 </figure>
             </a>
-        </section> -->
+        </section>
 
         <!-- <section class="secret_bn">
             <a href="<?php echo base_url('write/vtn_safevisa') ?>">
