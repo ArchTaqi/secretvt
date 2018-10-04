@@ -136,7 +136,26 @@
         
         
     </section>
-    
+    <section class="secret_bn">
+            <a href="<?php echo base_url('write/vtn_tour') ?>">
+                <h4>ad02</h4>
+                <figure>
+                    <img src="<?php echo base_url('assets/images/temp/main_bot/bottom_bn01.png?ver=1.0') ?>" alt="bottom_vtn_tour">
+                    <figcaption style="right: 8%;">
+                        <h2>시크릿 투어</h2>
+                     
+                        <p>
+                            호텔예약,골프부킹 가이드 요청<br>
+                            예약서비스 입니다.
+                        </p>
+                     
+                         <button>
+                             바 로 가 기
+                         </button>
+                    </figcaption>
+                </figure>
+            </a>
+        </section>
     <section class="mainpage_cont">
         <h2 class="hidden">업소정보</h2>
         <div class="cont_category">
@@ -249,26 +268,7 @@
        </section>
     
     <!-- main 하단 배너 영역 -->
-        <section class="secret_bn">
-            <a href="<?php echo base_url('write/vtn_tour') ?>">
-                <h4>ad02</h4>
-                <figure>
-                    <img src="<?php echo base_url('assets/images/temp/main_bot/bottom_bn01.png?ver=1.0') ?>" alt="bottom_vtn_tour">
-                    <figcaption style="right: 8%;">
-                        <h2>시크릿 투어</h2>
-                     
-                        <p>
-                            호텔예약,골프부킹 가이드 요청<br>
-                            예약서비스 입니다.
-                        </p>
-                     
-                         <button>
-                             바 로 가 기
-                         </button>
-                    </figcaption>
-                </figure>
-            </a>
-        </section>
+        
 
         <!-- <section class="secret_bn">
             <a href="<?php echo base_url('write/vtn_safevisa') ?>">
