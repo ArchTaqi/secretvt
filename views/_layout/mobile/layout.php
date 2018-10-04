@@ -264,11 +264,23 @@ $(document).on('click', '.viewmobileversion', function(){
           initialSlide :1,
           runCallbacksOnInit : false,
           touchAngle:35,
-          threshold : 20,
-          
+          threshold : 30,
+          preventClicks :false,
+          preventClicksPropagation:false,
 
         });
+        
 
+        swiper.on('touchMove', function () {
+
+            if((swiper.touches.startY - swiper.touches.currentY) > 0 ) $('#mainmenu').hide();
+            else $('#mainmenu').fadeIn();
+                
+        });
+
+
+
+        
         swiper.on('slideChange', function () {
             if(swiper.activeIndex < 1)
                 location.href='<?php echo $prev_men_link?>';
