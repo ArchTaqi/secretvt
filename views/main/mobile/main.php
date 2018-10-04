@@ -117,7 +117,14 @@
             <li class="main_cate_li" style="background-image:url('<?php echo base_url("assets/images/".element('brd_key', element('board',$value)).".png") ?>');">
                 <a href="<?php echo element('board_url',$value) ?>">
                     <div class="cate_text"><?php echo element('men_name',$value) ?></div>
-                    <div class="cate_count">총&#32;<span class="count"><?php echo element('total_rows',$value) ?>개</span>의 업소정보가 있습니다.</div>
+                    <?php 
+
+                    if(element('brd_key', element('board',$value))!=='vtn_info' || element('brd_key', element('board',$value))!=='vtn_free')
+                      echo'<div class="cate_count">총&#32;<span class="count">'.element('total_rows',$value).'개</span>의 게시글이 있습니다.</div>';
+                    else 
+                      echo'<div class="cate_count">총&#32;<span class="count">'.element('total_rows',$value).'개</span>의 업소정보가 있습니다.</div>';
+                     ?>
+                    
                 </a>
             </li>
             <?php 
