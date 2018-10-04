@@ -273,7 +273,7 @@ $(document).on('click', '.viewmobileversion', function(){
 
         swiper.on('touchMove', function () {
 
-            if((swiper.touches.startY - swiper.touches.currentY) > 0 ) 
+            if((swiper.touches.startY - swiper.touches.currentY) > 0 && Math.abs(swiper.touches.startY - swiper.touches.currentY) > Math.abs(swiper.touches.startX - swiper.touches.currentX)) 
                 $('#mainmenu').hide();
             else 
                 $('#mainmenu').show();
