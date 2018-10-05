@@ -123,7 +123,7 @@
                                     </button>
                                 <?php } ?>
                                 <?php if ((element('is_admin', $view) || element('reply_url', $result)) && !element(abs(element('post_num', $result)),element('reply_content', element('reply_data', element('list', $view))))) { ?>
-                                <button type="button" class="btn-success' onClick="event.stopPropagation();location.href='<?php echo element('reply_url', $result); ?>';">
+                                <button type="button" class="btn-success" onClick="event.stopPropagation();location.href='<?php echo element('reply_url', $result); ?>';">
                                     답 변
                                 </button>
                                 <?php } ?>
