@@ -440,10 +440,7 @@ class Managelayout extends CI_Controller
                <!-- <li>'.mailto('reymonjung@gmail.com','고객센터').'</li> -->
             </ul>
 
-            <p>
-                이 사이트는 베트남에 거주하는 한글을 사용하는<br/>
-                사용자들을 위한 성인전용 서비스이며, 미성년자의 출입을 금지합니다.
-            </p>
+            
 
             <h2>Copyright ⓒ Phillippines. All Rights Reserved </h2>
         </footer>
