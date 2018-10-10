@@ -4,7 +4,7 @@
 <script type="text/javascript">
         $(document).ready(function () {
           // alert($(window).height());
-          $('.bigbanner').css('height',$(window).height());
+          //$('.bigbanner').css('height',$(window).height());
           $('.down').show();
           // alert(screen.height);
             var swiper_sub = new Swiper('.swiper-container-sub', {
@@ -56,7 +56,7 @@
                     <div class="bn_text_box">
                         <a href="/event/post/7">
                             <p class="bn_text big_font">Jeong San</p>
-                            <p class="bn_text small_font">동나이강에서 진행하는 지상최고의 라운딩<br>적당한 굴곡, 넓은 페어웨어,<br>현대적인 벙커의 조화</p>
+                            <p class="bn_text small_font">동나이강에서 진행하는 지상최고의 라운딩<br>적당한 굴곡, 넓은 페어웨이,<br>현대적인 벙커의 조화</p>
                             
                             <span class="btn">할인패키지 내용보기 →</span>
                         </a>
@@ -79,9 +79,9 @@
                 <li class="bn_li bn_li03 swiper-slide"> 
                     <div class="bn_img" style="background-image:url('<?php echo base_url('assets/images/bn_03.png') ?>');"></div>
                     <div class="bn_text_box">
-                        <a href="<?php echo post_url('vtn_hotel',208)?>">
+                        <a href="/event/post/7">
                             <p class="bn_text big_font">Tan Son Nhat</p>
-                            <p class="bn_text small_font">9넓은 페어웨이와<br>롤링 워터 해저드 제방벙커,<br>베트남 최고의 서비스,<br>접근성, 편의시설 관리운영</p>
+                            <p class="bn_text small_font">넓은 페어웨이와<br>롤링 워터 해저드 제방벙커,<br>베트남 최고의 서비스,<br>접근성, 편의시설 관리운영</p>
                             <span class="btn">할인패키지 내용보기 →</span>
                         </a>
                     </div>
