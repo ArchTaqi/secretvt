@@ -136,7 +136,7 @@
                             <ins class="adsbygoogle"
                                  style="display:block"
                                  data-ad-format="fluid"
-                                 data-ad-layout-key="-7j+ew-1a-28+94"
+                                 data-ad-layout-key="-6t+ed+2i-1n-4w"
                                  data-ad-client="ca-pub-7419726859237673"
                                  data-ad-slot="8140858172"></ins>
                             <script>
