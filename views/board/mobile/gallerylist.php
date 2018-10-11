@@ -1,5 +1,5 @@
 <?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
-
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
 
 
@@ -126,14 +126,26 @@
                 $marginright = (($i+1)% $cols === 0) ? 0 : 2;
 
 
-                if($i ===4){
+                if($i ===1){
                     // echo '<section class="ad">
                     //         <h4>ad</h4>
                     //         '.banner("board_rolling_banner_1").'
                     //     </section>';
+                
+                    echo '
+                            <ins class="adsbygoogle"
+                                 style="display:block"
+                                 data-ad-format="fluid"
+                                 data-ad-layout-key="-7j+ew-1a-28+94"
+                                 data-ad-client="ca-pub-7419726859237673"
+                                 data-ad-slot="8140858172"></ins>
+                            <script>
+                                 (adsbygoogle = window.adsbygoogle || []).push({});
+                            </script> 
+                          ';
                 }
 
-                
+               
         ?>
             <li class="gallery-box " style="width:<?php echo element('gallery_percent', element('board', element('list', $view))); ?>%;margin-right:<?php echo $marginright;?>%;">
                 <?php if (element('is_admin', $view)) { ?><input type="checkbox" name="chk_post_id[]" value="<?php echo element('post_id', $result); ?>" /><?php } ?>

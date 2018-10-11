@@ -76,6 +76,17 @@
             </label>
             <input type="text" class="text_title" name="post_title" id="post_title" value="<?php echo set_value('post_title', element('post_title', element('post', $view))); ?>" />
         </section>
+        <?php 
+        if($this->member->is_admin() === 'super'){
+            echo '<section class="write_title">
+                <label>
+                    닉 네 임
+                </label>
+                <input type="text" class="text_title" name="post_nickname" id="post_nickname" value="'.set_value('post_nickname', element('post_nickname', element('post', $view))).'" />
+            </section>';
+        }
+        ?>
+        
        
        
         <?php if (element('use_category', element('board', $view))) { ?>

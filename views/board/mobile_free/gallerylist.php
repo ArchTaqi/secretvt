@@ -1,10 +1,21 @@
 <?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
-
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <?php echo element('headercontent', element('board', element('list', $view))); ?>
 
 
 <div class="wrap10">
 
+<!-- secretvt 자유게시판란 광고 -->
+
+
+<!-- secretvt 자유게시판란광고 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:100%;height:60px"
+     data-ad-client="ca-pub-7419726859237673"
+     data-ad-slot="3682862126"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
     <section class="title">
         <div></div>
         <h2 class="bottom_02" style="color:#000;"><?php echo element('brd_name', element('board', element('list', $view))) ?> <?php echo element('post_title', element('post_parent',$view)) ?>
