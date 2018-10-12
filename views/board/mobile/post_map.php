@@ -15,8 +15,8 @@ $vtn_marker=array();
 
 //설정값
 
-$tel1=element('tel1',element('extravars', $view));
-$geo = element('google_map',element('extravars', $view));
+$tel1=element('tel1',element('extravars', element('post',$view)));
+$geo = element('google_map',element('extravars', element('post',$view)));
 
 $geo_arr = explode(',', $geo);
 $lat = !empty($geo_arr[0]) ? $geo_arr[0] : '37.566535';
