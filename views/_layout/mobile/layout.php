@@ -271,9 +271,9 @@ $(document).on('click', '.viewmobileversion', function(){
         });
         
 
-        swiper.on('touchMove', function () {
+        swiper.on('touchEnd', function () {
 
-            if((swiper.touches.startY - swiper.touches.currentY) > 0 && Math.abs(swiper.touches.startY - swiper.touches.currentY) > Math.abs(swiper.touches.startX - swiper.touches.currentX)) 
+            if((swiper.touches.startY - swiper.touches.currentY) > 0 ) 
                 $('#mainmenu').hide();
             else 
                 $('#mainmenu').show();
