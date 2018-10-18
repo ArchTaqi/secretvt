@@ -1,4 +1,5 @@
 <?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <?php    $this->managelayout->add_js(base_url('plugin/zeroclipboard/ZeroClipboard.js')); ?>
 
 <?php
@@ -20,7 +21,7 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
 
 <?php echo element('headercontent', element('board', $view)); ?>
 
-<div class="wrap09">
+<div class="wrap10">
     <?php echo show_alert_message($this->session->flashdata('message'), '<div class="alert alert-auto-close alert-dismissible alert-info"><button type="button" class="close alertclose" >&times;</button>', '</div>'); ?>
    <!--  <h3>
         <?php if (element('category', element('post', $view))) { ?>[<?php echo html_escape(element('bca_value', element('category', element('post', $view)))); ?>] <?php } ?>
@@ -45,15 +46,22 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
    
 
 
-
-    <section class="de_title02">
+    
+    <!-- <section class="de_title02">
         <h2>
             자유게시판
-            <!-- <span>자신의 의견을 게시하고 의견을 공유 하는 공간입니다.</span> -->
+            <span>자신의 의견을 게시하고 의견을 공유 하는 공간입니다.</span>
         </h2>
-    </section>
-
-    <section class="notice_title">
+    </section> -->
+    <!-- secretvt 자유게시판란광고 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:100%;height:60px"
+     data-ad-client="ca-pub-7419726859237673"
+     data-ad-slot="3682862126"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    <section class="notice_title mt20">
         <div>
         <?php echo element('post_title', element('post',$view)) ?>  
         </div>
