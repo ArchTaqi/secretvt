@@ -1441,7 +1441,7 @@ class Board_write extends CB_Controller
         $view['view']['post']['can_post_receive_email'] = $can_post_receive_email = element('use_post_receive_email', $board) ? true : false;
         
 
-        if(empty(element('post_order', $post))) $view['view']['post']['post_order'] = $this->Post_model->current_post_order($post);
+        
 
         $primary_key = $this->Post_model->primary_key;
 
@@ -2228,18 +2228,7 @@ class Board_write extends CB_Controller
             $this->Post_model->update($this->input->post($primary_key), $updatedata);
 
             
-            if($this->input->post('post_order',null,0) > 0){
-                $field='post_order';
-                $post_order_update[$field.'<']=element('post_order', $post);
-                $post_order_update[$field.'!=']=0;
-                $post_order_update['post_id !=']=$post_id;
-                $post_order_update['brd_id']=element('brd_id', $post);
-                if(!empty($this->input->post('post_main_4',null,0))) $post_order_update['post_main_4']=1;
-
-                $this->Post_model->db->set($field, $field . '+' . 1, false);
-                $this->Post_model->db->where($post_order_update);
-                $this->Post_model->db->update($this->Post_model->_table);
-            } 
+            
             
             // 네이버 신디케이션 보내기
             if ( ! element('post_secret', $updatedata)) {

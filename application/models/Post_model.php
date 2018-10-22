@@ -22,7 +22,7 @@ class Post_model extends CB_Model
      */
     public $primary_key = 'post_id'; // 사용되는 테이블의 프라이머리키
 
-    public $allow_order = array('post_num, post_reply', 'post_datetime desc', 'post_datetime asc', 'post_hit desc', 'post_hit asc', 'post_comment_count desc', 'post_comment_count asc', 'post_comment_updated_datetime desc', 'post_comment_updated_datetime asc', 'post_like desc', 'post_like asc', 'post_id desc','(case when post_order=0 then 999 else post_order end),post_num, post_reply');
+    public $allow_order = array('post_num, post_reply', 'post_datetime desc', 'post_datetime asc', 'post_hit desc', 'post_hit asc', 'post_comment_count desc', 'post_comment_count asc', 'post_comment_updated_datetime desc', 'post_comment_updated_datetime asc', 'post_like desc', 'post_like asc', 'post_id desc','post_num, post_reply');
 
     function __construct()
     {
@@ -595,30 +595,7 @@ class Post_model extends CB_Model
         return $post_num;
     }
 
-    public function max_post_order($brd_id,$type='')
-    {   
-        $this->db->where('post_del <>',2);
-        $this->db->where('post_secret',0);
-        $this->db->where('post_notice',0);
-        $this->db->where('brd_id',$brd_id);
-        if(!empty($type)) $this->db->where('post_main_4',1);
-        else $this->db->where('post_main_4',0);
-        $result = $this->db->count_all_results($this->_table);
-        
-        $max_post_order = $result + 1;
-        return $max_post_order;
-    }
+    
 
-    public function current_post_order($post)
-    {   
-        $this->db->where('post_del <>',2);
-        $this->db->where('post_secret',0);
-        $this->db->where('post_notice',0);
-        $this->db->where('brd_id',element('brd_id',$post));
-        $this->db->where('post_id >=',element('post_id',$post));
-        $this->db->where('post_main_4',element('post_main_4',$post));
-        $current_post_order = $this->db->count_all_results($this->_table);
-
-        return $current_post_order;
-    }
+    
 }
