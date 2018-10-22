@@ -802,7 +802,7 @@ class Board_post extends CB_Controller
                 ->get_prev_next_post(
                     element('post_id', $post),
                     element('post_num', $post),
-                    'next',
+                    'prev',
                     $where,
                     $sfield,
                     $skeyword
@@ -817,7 +817,7 @@ class Board_post extends CB_Controller
                 ->get_prev_next_post(
                     element('post_id', $post),
                     element('post_num', $post),
-                    'prev',
+                    'next',
                     $where,
                     $sfield,
                     $skeyword
