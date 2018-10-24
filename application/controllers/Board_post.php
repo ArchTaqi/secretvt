@@ -2394,22 +2394,7 @@ class Board_post extends CB_Controller
                 $sfield = array('post_title', 'post_content');
             }
             $skeyword = $this->input->get('skeyword', null, '');
-            $view['view']['next_post'] = $next_post
-                = $this->Post_model
-                ->get_prev_next_post(
-                    element('post_id', $post),
-                    element('post_num', $post),
-                    'prev',
-                    $where,
-                    $sfield,
-                    $skeyword
-                );
-
-            if (element('post_id', $next_post)) {
-                $view['view']['next_post']['url'] = post_url(element('brd_key', $board), element('post_id', $next_post)) . '?' . $param->output();
-            }
-
-            $view['view']['prev_post'] = $prev_post
+            $view['view']['prev_post'] = $next_post
                 = $this->Post_model
                 ->get_prev_next_post(
                     element('post_id', $post),
@@ -2419,8 +2404,23 @@ class Board_post extends CB_Controller
                     $sfield,
                     $skeyword
                 );
+
+            if (element('post_id', $next_post)) {
+                $view['view']['prev_post']['url'] = post_url(element('brd_key', $board), element('post_id', $next_post)) . '?' . $param->output();
+            }
+
+            $view['view']['next_post'] = $prev_post
+                = $this->Post_model
+                ->get_prev_next_post(
+                    element('post_id', $post),
+                    element('post_num', $post),
+                    'prev',
+                    $where,
+                    $sfield,
+                    $skeyword
+                );
             if (element('post_id', $prev_post)) {
-                $view['view']['prev_post']['url'] = post_url(element('brd_key', $board), element('post_id', $prev_post)) . '?' . $param->output();
+                $view['view']['next_post']['url'] = post_url(element('brd_key', $board), element('post_id', $prev_post)) . '?' . $param->output();
             }
         }
 
