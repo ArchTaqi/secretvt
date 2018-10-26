@@ -8,30 +8,7 @@
 
 <div class="wrap10">
 
-    <!-- <section class="title">
-        <h4>title</h4>
-        <div></div>
-        <h2><?php echo html_escape(element('board_name', element('board', element('list', $view)))); ?></h2>
-        <?php
-            if (element('use_category', element('board', element('list', $view))) && element('cat_display_style', element('board', element('list', $view))) === 'tab') {
-                $category = element('category', element('board', element('list', $view)));
-                ?>
-                <table class="table01">
-                    <tr>
-                        <td role="presentation" <?php if ( ! $this->input->get('category_id')) { ?>class="active" <?php } ?>><a href="<?php echo board_url(element('brd_key', element('board', element('list', $view)))); ?>?findex=<?php echo html_escape($this->input->get('findex')); ?>&category_id="><img src="<?php echo base_url('assets/images/temp/sub_img/sub_all.png'); ?>" alt="sub01">전체</a></td>
-                        <?php
-                        if (element(0, $category)) {
-                            foreach (element(0, $category) as $ckey => $cval) {
-                                ?>
-                                <td role="presentation" <?php if ($this->input->get('category_id') === element('bca_key', $cval)) { ?>class="active" <?php } ?>><a href="<?php echo board_url(element('brd_key', element('board', element('list', $view)))); ?>?findex=<?php echo html_escape($this->input->get('findex')); ?>&category_id=<?php echo element('bca_key', $cval); ?>"><img src="<?php echo base_url('assets/images/temp/sub_img/kara_0'.($ckey+1).'.png'); ?>" alt="sub01"><?php echo html_escape(element('bca_value', $cval)); ?></a></td>
-                                <?php
-                            }
-                        }
-                        ?>
-                    </tr>
-                </table>
-        <?php } ?>
-    </section> -->
+    
 
 
 
@@ -204,23 +181,7 @@
             <div class="pull-right mr10">
                 <a onClick="post_multi_action('multi_delete', '0', '선택하신 글들을 완전삭제하시겠습니까?');" class="btn btn-silver btn-sm">선택삭제</a>
 
-                <!-- <button type="button" class="btn btn-default btn-sm admin-manage-list"><i class="fa fa-cog big-fa"></i>관리</button>
-                <div class="btn-admin-manage-layer admin-manage-layer-list">
-                    <?php if (element('is_admin', $view) === 'super') { ?>
-                        <div class="item" onClick="document.location.href='<?php echo admin_url('board/boards/write/' . element('brd_id', element('board', element('list', $view)))); ?>';"><i class="fa fa-cog"></i> 게시판설정</div>
-                        <div class="item" onClick="post_multi_copy('copy');"><i class="fa fa-files-o"></i> 복사하기</div>
-                        <div class="item" onClick="post_multi_copy('move');"><i class="fa fa-arrow-right"></i> 이동하기</div>
-                        <div class="item" onClick="post_multi_change_category();"><i class="fa fa-tags"></i> 카테고리변경</div>
-                    <?php } ?>
-                    <div class="item" onClick="post_multi_action('multi_delete', '0', '선택하신 글들을 완전삭제하시겠습니까?');"><i class="fa fa-trash-o"></i> 선택삭제하기</div>
-                    <div class="item" onClick="post_multi_action('post_multi_secret', '0', '선택하신 글들을 비밀글을 해제하시겠습니까?');"><i class="fa fa-unlock"></i> 비밀글해제</div>
-                    <div class="item" onClick="post_multi_action('post_multi_secret', '1', '선택하신 글들을 비밀글로 설정하시겠습니까?');"><i class="fa fa-lock"></i> 비밀글로</div>
-                    <div class="item" onClick="post_multi_action('post_multi_notice', '0', '선택하신 글들을 공지를 내리시겠습니까?');"><i class="fa fa-bullhorn"></i> 공지내림</div>
-                    <div class="item" onClick="post_multi_action('post_multi_notice', '1', '선택하신 글들을 공지로 등록 하시겠습니까?');"><i class="fa fa-bullhorn"></i> 공지올림</div>
-                    <div class="item" onClick="post_multi_action('post_multi_blame_blind', '0', '선택하신 글들을 블라인드 해제 하시겠습니까?');"><i class="fa fa-exclamation-circle"></i> 블라인드해제</div>
-                    <div class="item" onClick="post_multi_action('post_multi_blame_blind', '1', '선택하신 글들을 블라인드 처리 하시겠습니까?');"><i class="fa fa-exclamation-circle"></i> 블라인드처리</div>
-                    <div class="item" onClick="post_multi_action('post_multi_trash', '', '선택하신 글들을 휴지통으로 이동하시겠습니까?');"><i class="fa fa-trash"></i> 휴지통으로</div>
-                </div> -->
+                
             </div>
         <?php } ?>
         <?php if (element('write_url', element('list', $view))) { ?>
