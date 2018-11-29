@@ -802,7 +802,7 @@ class Board_post extends CB_Controller
                 ->get_prev_next_post(
                     element('post_id', $post),
                     element('post_num', $post),
-                    'next',
+                    'prev',
                     $where,
                     $sfield,
                     $skeyword
@@ -817,7 +817,7 @@ class Board_post extends CB_Controller
                 ->get_prev_next_post(
                     element('post_id', $post),
                     element('post_num', $post),
-                    'prev',
+                    'next',
                     $where,
                     $sfield,
                     $skeyword
@@ -1694,6 +1694,7 @@ class Board_post extends CB_Controller
             show_404();
         }
         $board = $this->board->item_all($board_id);
+        
         return $board;
     }
 
@@ -1711,6 +1712,9 @@ class Board_post extends CB_Controller
             return false;
         }
 
+        $sco_agent = $this->agent->agent_string() ? $this->agent->agent_string() : '';
+        if(stripos($sco_agent,'bot')) return;
+        
         // 이벤트가 존재하면 실행합니다
         Events::trigger('count_before', $eventname);
 
@@ -2393,7 +2397,7 @@ class Board_post extends CB_Controller
                 $sfield = array('post_title', 'post_content');
             }
             $skeyword = $this->input->get('skeyword', null, '');
-            $view['view']['next_post'] = $next_post
+            $view['view']['prev_post'] = $next_post
                 = $this->Post_model
                 ->get_prev_next_post(
                     element('post_id', $post),
@@ -2405,10 +2409,10 @@ class Board_post extends CB_Controller
                 );
 
             if (element('post_id', $next_post)) {
-                $view['view']['next_post']['url'] = post_url(element('brd_key', $board), element('post_id', $next_post)) . '?' . $param->output();
+                $view['view']['prev_post']['url'] = post_url(element('brd_key', $board), element('post_id', $next_post)) . '?' . $param->output();
             }
 
-            $view['view']['prev_post'] = $prev_post
+            $view['view']['next_post'] = $prev_post
                 = $this->Post_model
                 ->get_prev_next_post(
                     element('post_id', $post),
@@ -2419,7 +2423,7 @@ class Board_post extends CB_Controller
                     $skeyword
                 );
             if (element('post_id', $prev_post)) {
-                $view['view']['prev_post']['url'] = post_url(element('brd_key', $board), element('post_id', $prev_post)) . '?' . $param->output();
+                $view['view']['next_post']['url'] = post_url(element('brd_key', $board), element('post_id', $prev_post)) . '?' . $param->output();
             }
         }
 

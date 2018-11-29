@@ -996,10 +996,7 @@ class Postact extends CB_Controller
             $result = array('error' => '잘못된 접근입니다');
             exit(json_encode($result));
         }
-        if ( ! $this->session->userdata('post_id_' . $post_id)) {
-            $result = array('error' => '해당 게시물에서만 접근 가능합니다');
-            exit(json_encode($result));
-        }
+       
 
         $mem_id = (int) $this->member->item('mem_id');
 

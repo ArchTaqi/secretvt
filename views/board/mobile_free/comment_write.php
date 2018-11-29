@@ -18,7 +18,17 @@ if (element('can_comment_write', element('comment', $view)) OR element('show_tex
                 <input type="hidden" name="post_id" value="<?php echo element('post_id', element('post', $view)); ?>" />
                 <input type="hidden" name="cmt_id" value="" id="cmt_id" />
                 <input type="hidden" name="cmt_page" value="" id="cmt_page" />
-                
+                <?php
+                if ($this->member->is_admin() === 'super') {
+                ?>
+                    <div class="form-group mb20">
+                        <label for="cmt_nickname">닉네임</label>
+                        <input type="text" class="input" id="cmt_nickname" name="cmt_nickname" value="<?php echo set_value('cmt_nickname',element('cmt_nickname', element('comment', $view))); ?>" />
+                        
+                    </div>
+                <?php
+                }
+                ?>
                 <textarea class="input commenttextarea" name="cmt_content" id="cmt_content" rows="5" accesskey="c" <?php if ( ! element('can_comment_write', element('comment', $view))) {echo 'onClick="alert(\'' . html_escape(element('can_comment_write_message', element('comment', $view))) . '\');return false;"';} ?>><?php echo set_value('cmt_content', element('cmt_content', element('comment', $view))); ?></textarea>
                 <?php if (element('comment_min_length', element('board', $view)) OR element('comment_max_length', element('board', $view))) { ?>
                     <div class="pull-right">
