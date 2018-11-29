@@ -49,6 +49,7 @@
 		background-size:12%;
 		background-color: #fff;
 		line-height: 14px;
+		display: none;
 	}
 
 	header span label{
@@ -98,19 +99,17 @@
 		display: inline-block;
 		box-sizing: border-box;
 		padding:0 0 0% 3%;
-		float:left;
+		float:left; 
 	}
 
 	header h1 a{
 		display: inline-block;
 		width:100%;
-
-		color: #001c44;
 	}
 
 	header h1 a img{
 		/* width:100%; */
-		position: relative;
+		/* position: relative; */
 		/* bottom: -2px; */
 		height:42px;
 	}
@@ -118,18 +117,27 @@
 	header > ul{
 		width:40%;
 		float: right;
-		padding-right:3%;
+		/* height:44px; */
+		box-sizing: border-box;
+		padding-right: 3%;
 		letter-spacing: 1px;
 		margin-bottom: 5px;
+		/* +++ */
+		padding-top: 8px;
+		margin-bottom: 0;
 	}
 
 	header > ul li{
 		width:50%;
+		/* width: 30px;	 */
 		float: left;
 		text-align: right;
 		font-size: 13px;
+		/* +++ */
+		width:32px;
+		float:right;
+		margin-left: 10px;
 	}
-
 	header > ul li a{
 		display: inline-block;
 		width:100%;
@@ -137,10 +145,16 @@
 		font-family: 'Jeju Gothic', sans-serif;
 		color:#fff;
 	}
-
-	header > ul li a img{
-		width:40%;
-		float: right;
+	header > ul li button{
+		background: none;
+		padding: 0;
+		margin: 0;
+		border: none;
+	}
+	header > ul li img{
+		/* width:40%; */
+		/* float: right; */
+		width: 100%;
 	}
 
 /*header의 메인 메뉴 영역*/
@@ -179,10 +193,10 @@
 		border-right: 0;
 	}
 
-	#mainmenu li:nth-child(5),
-	#mainmenu li:nth-child(6),
-	#mainmenu li:nth-child(7),
-	#mainmenu li:nth-child(8){
+	#mainmenu li:nth-child(9),
+	#mainmenu li:nth-child(10),
+	#mainmenu li:nth-child(11),
+	#mainmenu li:nth-child(12){
 		border-bottom:0;
 	}
 
