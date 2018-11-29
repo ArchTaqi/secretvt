@@ -95,12 +95,23 @@
 	  effect: 'fade',
       centeredSlides: true,
       autoplay: {
-        delay: 5000,
+        delay: 4000,
         disableOnInteraction: false,
       },
       
       
     });
+	$(function () {
+              $('.down').bind("click", function () {
+                down_scroll();
+                return false;
+              });
+            });
+	function down_scroll() {
+          var offset = $(".main_category").offset();
+          $('html, body').animate({ scrollTop: offset.top-44 }, 500);
+          
+        }
   </script>
 	<!-- mainmenu -->
 	<section class="main_category">
