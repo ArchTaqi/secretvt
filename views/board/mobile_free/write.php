@@ -77,20 +77,7 @@
             <input type="text" class="text_title" name="post_title" id="post_title" value="<?php echo set_value('post_title', element('post_title', element('post', $view))); ?>" />
         </section>
 
-        <?php if (element('can_post_notice', element('post', $view)) OR element('can_post_secret', element('post', $view)) OR element('can_post_receive_email', element('post', $view))) { ?>
-            <section class="write_title" style="margin-bottom: 2%">
-                <label class="label_title">옵션</label>
-                
-                <?php if (element('can_post_secret', element('post', $view))) { ?>
-                    
-                    <input type="checkbox" name="post_secret" id="post_secret" value="1" <?php echo set_checkbox('post_secret', '1', (element('post_secret', element('post', $view)) ? true : false)); ?> />
-                    <label class="checkbox-inline" for="post_secret">
-                         비밀글
-                    </label>
-                <?php } ?>
-                
-            </section>
-        <?php } ?>
+        
         <?php 
         if($this->member->is_admin() === 'super'){
             echo '<section class="write_title">

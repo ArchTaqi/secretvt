@@ -35,7 +35,16 @@ if (element('can_comment_write', element('comment', $view)) OR element('show_tex
                     <div class="form-group pull-right">
                         <button type="button" class="btn btn-success btn-sm" id="cmt_btn_submit" onClick="<?php if ( ! element('can_comment_write', element('comment', $view))) {echo 'alert(\'' . html_escape(element('can_comment_write_message', element('comment', $view))) . '\');return false;"';} else { ?>add_comment(this.form, '<?php echo element('post_id', element('post', $view)); ?>');<?php } ?> ">댓글등록</button>
                     </div>
-                    
+                    <div class="btn-group pull-right" role="group" aria-label="...">
+                        <?php if (element('can_comment_secret', element('comment', $view))) { ?>
+                            <div class="checkbox pull-left mr10">
+                                <label for="cmt_secret">
+                                    <input type="checkbox" name="cmt_secret" id="cmt_secret" value="1" <?php echo set_checkbox('cmt_secret', '1', (element('cmt_secret', element('comment', $view)) ? true : false)); ?> /> 비밀글
+                                </label>
+                            </div>
+                        <?php } ?>
+                        
+                    </div>
                 </div>
                 
             <?php echo form_close(); ?>
