@@ -148,12 +148,20 @@
             <a href="<?php echo element('post_url', $result); ?>" title="<?php echo html_escape(element('title', $result)); ?>">
            
                 <!-- <?php if (element('category', $result)) { ?><span class="label label-default">[<?php echo html_escape(element('bca_value', element('category', $result))); ?>]</span><?php } ?> -->
-                <h2><?php echo html_escape(element('title', $result));?> <?php if (element('post_comment_count', $result)) { ?>[+<?php echo element('post_comment_count', $result); ?>]<?php } ?> </h2>
-                <div><p><?php echo element('post_content', $result); ?></p></div>
+                <?php 
+                if(element('thumb_url', $result))
+                    echo '<div class="thum_box">
+                    <img src="'.element('thumb_url', $result).'" alt="'.html_escape(element('title', $result)).'">
+                    </div>';
+                 ?>
+                <h2>
+                    <?php if(!empty(element('post_secret', $result))) echo '<i class="fa fa-lock"></i>'; ?><?php if (element('is_hot', $result)) { ?><b class="lab_hot">HOT</b><?php } ?><?php echo html_escape(element('title', $result));?> <?php if (element('post_comment_count', $result)) { ?>[+<?php echo element('post_comment_count', $result); ?>]<?php } ?> </h2>
+                    <div><p><?php if(empty(element('post_secret', $result))) echo element('post_content', $result); ?></p></div>
+            </a>
                 <span>
                     <?php echo element('display_name', $result); ?> | 작성일 : <?php echo element('display_datetime', $result); ?>
                 </span>
-            </a>
+            
             </li>
         <?php
                 $i++;

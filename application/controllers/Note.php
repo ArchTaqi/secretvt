@@ -743,4 +743,64 @@ class Note extends CB_Controller
 
         redirect('note/lists/' . $note_list . '?' . $param->output());
     }
+
+    public function chat($height = '')
+    {
+
+        // 이벤트 라이브러리를 로딩합니다
+        $eventname = 'event_note_write';
+        $this->load->event($eventname);
+
+        /**
+         * 로그인이 필요한 페이지입니다
+         */
+        // required_user_login();
+
+
+
+        $view = array();
+        $view['view'] = array();
+
+        // 이벤트가 존재하면 실행합니다
+        $view['view']['event']['before'] = Events::trigger('before', $eventname);
+
+        $view['view']['height'] = $height;
+
+        
+
+        // 이벤트가 존재하면 실행합니다
+        $view['view']['event']['formruntrue'] = Events::trigger('formruntrue', $eventname);
+
+        // 이벤트가 존재하면 실행합니다
+        $view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
+
+        /**
+         * 레이아웃을 정의합니다
+         */
+        $page_title = $this->cbconfig->item('site_meta_title_note_write');
+        $meta_description = $this->cbconfig->item('site_meta_description_note_write');
+        $meta_keywords = $this->cbconfig->item('site_meta_keywords_note_write');
+        $meta_author = $this->cbconfig->item('site_meta_author_note_write');
+        $page_name = $this->cbconfig->item('site_page_name_note_write');
+
+        $layoutconfig = array(
+            'path' => 'note',
+            'layout' => 'layout_popup',
+            'skin' => 'chat',
+            'layout_dir' => $this->cbconfig->item('layout_note'),
+            'mobile_layout_dir' => $this->cbconfig->item('mobile_layout_note'),
+            'skin_dir' => $this->cbconfig->item('skin_note'),
+            'mobile_skin_dir' => $this->cbconfig->item('mobile_skin_note'),
+            'page_title' => $page_title,
+            'meta_description' => $meta_description,
+            'meta_keywords' => $meta_keywords,
+            'meta_author' => $meta_author,
+            'page_name' => $page_name,
+        );
+        $view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
+        $this->data = $view;
+        $this->layout = element('layout_skin_file', element('layout', $view));
+        $this->view = element('view_skin_file', element('layout', $view));
+    
+    }
 }

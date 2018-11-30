@@ -553,7 +553,7 @@ small {font-size: 11px;padding-left: 10px;}
 .logo{font-size: 18px; padding-left: 20px; }
 .m_nav{padding: 8px 10px 0 0;}
 
-#side_menu {display: block;position:fixed;top:0;right:0;width:100%;height:100%;overflow:hidden;z-index:9999;margin:0;background-color: rgba( 0, 0, 0, 0.5 );display:none}
+#side_menu {display: block;position:fixed;top:0;width:100%;height:100%;overflow:hidden;z-index:9999;margin:0;background-color: rgba( 0, 0, 0, 0.5 );display:none;margin:0 auto;max-width: 420px;min-width: 320px;}
 #side_menu .side_wr{width:250px;background:#222222;opacity:1;position:absolute;top:0;right:0;box-shadow:0 0 10px #000;overflow-x:hidden;height:100%;overflow-y:auto}
 #side_menu .side_wr.add_side_wr{}
 #side_menu .side_wr .side_inner_rel{position:relative;height:100%;display:block;overflow:hidden}

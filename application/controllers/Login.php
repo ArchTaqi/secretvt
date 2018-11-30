@@ -389,7 +389,7 @@ class Login extends CB_Controller
         }
 
         // 이벤트가 존재하면 실행합니다
-        Events::trigger('after', $eventname);
+        Events::trigger('after_logout', $eventname);
 
         redirect($url_after_logout, 'refresh');
     }

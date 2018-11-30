@@ -65,6 +65,8 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
 <body <?php echo isset($view) ? element('body_script', $view) : ''; ?>>
 
 <?php
+
+
     $menuhtml = '<nav id="mainmenu">
                     <ul>';
     
@@ -115,38 +117,27 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
 
  ?>
     <header>
-        <h1>
-        <!-- 로고 영역 -->
-            <a href="<?php echo site_url(); ?>" title="<?php echo html_escape($this->cbconfig->item('site_title'));?>"><?php echo $this->cbconfig->item('site_logo'); ?>
-            </a>
-        </h1>
-        <span style="visibility:hidden;">
-        
-         
-            <label for="select">지역선택하기</label>
-            <select id="region">
-        <?php
-        /*
-        if (config_item('region_category')) {
-            foreach (config_item('region_category') as $key => $value) {
+        <ul >
 
-                if($key == element('region', $view)) echo '<option value='.current_url().' selected>'.$value.'</option>';
-                else echo '<option value='.current_url().'>'.$value.'</option>';
-            }
-        }
-        */
-        ?>
-            </select>
-        </span>
-        <ul>
             <?php if ($this->member->is_member()) { ?>
-                <li><a href="<?php echo site_url('login/logout?url=' . urlencode(current_full_url())); ?>" title="로그아웃">로그아웃</a></li>
-                <li><a href="<?php echo site_url('mypage'); ?>" title="My Page">My Page</a></li>
+                
+                <li style="width:15%;float:left;"><a href="<?php echo site_url('mypage'); ?>" ><img src="<?php echo base_url('assets/images/icon_user_config.png'); ?>" alt="My Page" class="pull-left" style="padding:10px 0 0 10px;"></a></li>
             <?php } else { ?>
-                <li><a href="<?php echo site_url('login?url=' . urlencode(current_full_url())); ?>" title="로그인">로그인</a></li>
-                <li><a href="<?php echo site_url('register'); ?>" title="회원가입">회원가입</a></li>
+                <li style="width:15%;"><a href="<?php echo site_url('login?url=' . urlencode(current_full_url())); ?>" ><img src="<?php echo base_url('assets/images/icon_user.png'); ?>" alt="로그인" class="pull-left" style="padding:10px 0 0 10px;"></a></li>
+                
             <?php } ?>
+            <li style="width:70%;text-align: center;">
+                <h1>
+        <!-- 로고 영역 -->
+                    <a href="<?php echo site_url(); ?>" title="<?php echo html_escape($this->cbconfig->item('site_title'));?>"><?php echo $this->cbconfig->item('site_logo'); ?>
+                    </a>
+                </h1>
+            </li>
+            <li  style="width:15%;"><a href="javascript:note_chat();" ><img src="<?php echo base_url('assets/images/icon_chat.png'); ?>" alt="채팅방" class="pull-right" style="padding:10px 10px 0 0;"></a></li>
         </ul>
+        
+        
+        
         <!-- 지역선택하기 영역 -->  
        
      
@@ -198,7 +189,71 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
     <?php echo $this->managelayout->display_footer(); ?>
     <!-- footer end -->
 
+<div class="menu" id="side_menu">
+    <div class="side_wr add_side_wr">
+        <div id="isroll_wrap" class="side_inner_rel">
+            <div class="side_inner_abs">
+                <div class="m_search">
+                    
+                </div>
+                <div class="m_login">
+                    <?php if ($this->member->is_member()) { ?>
+                        <span><a href="<?php echo site_url('login/logout?url=' . urlencode(current_full_url())); ?>" class="btn btn-primary" title="로그아웃"><i class="fa fa-sign-out"></i> 로그아웃</a></span>
+                        <span><a href="<?php echo site_url('mypage'); ?>" class="btn btn-primary" title="로그아웃"><i class="fa fa-user"></i> 마이페이지</a></span>
+                    <?php } else { ?>
+                        <span><a href="<?php echo site_url('login?url=' . urlencode(current_full_url())); ?>" class="btn btn-primary" title="로그인"><i class="fa fa-sign-in"></i> 로그인</a></span>
+                        <span><a href="<?php echo site_url('register'); ?>" class="btn btn-primary" title="회원가입"><i class="fa fa-user"></i> 회원가입</a></span>
+                    <?php } ?>
+                </div>
+                <ul class="m_board">
+                    <?php if ($this->cbconfig->item('open_currentvisitor')) { ?>
+                        <li><a href="<?php echo site_url('currentvisitor'); ?>" title="현재 접속자"><span class="fa fa-link"></span> 현재 접속자</a></li>
+                    <?php } ?>
+                </ul>
+                <ul class="m_menu">
+                    <?php
+                    $menuhtml = '';
+                    if (element('menu', $layout)) {
+                        $menu = element('menu', $layout);
+                        if (element(0, $menu)) {
+                            foreach (element(0, $menu) as $mkey => $mval) {
+                                if (element(element('men_id', $mval), $menu)) {
+                                    $mlink = element('men_link', $mval) ? element('men_link', $mval) : 'javascript:;';
+                                    $menuhtml .= '<li class="dropdown">
+                                    <a href="' . $mlink . '" ' . element('men_custom', $mval);
+                                    if (element('men_target', $mval)) {
+                                        $menuhtml .= ' target="' . element('men_target', $mval) . '"';
+                                    }
+                                    $menuhtml .= ' title="' . html_escape(element('men_name', $mval)) . '">' . html_escape(element('men_name', $mval)) . '</a><a href="#" style="width:25px;float:right;" class="subopen" data-menu-order="' . $mkey . '"><i class="fa fa-chevron-down"></i></a>
+                                    <ul class="dropdown-menu drop-downorder-' . $mkey . '">';
 
+                                    foreach (element(element('men_id', $mval), $menu) as $skey => $sval) {
+                                        $menuhtml .= '<li><a href="' . element('men_link', $sval) . '" ' . element('men_custom', $sval);
+                                        if (element('men_target', $sval)) {
+                                            $menuhtml .= ' target="' . element('men_target', $sval) . '"';
+                                        }
+                                        $menuhtml .= ' title="' . html_escape(element('men_name', $sval)) . '">' . html_escape(element('men_name', $sval)) . '</a></li>';
+                                    }
+                                    $menuhtml .= '</ul></li>';
+
+                                } else {
+                                    $mlink = element('men_link', $mval) ? element('men_link', $mval) : 'javascript:;';
+                                    $menuhtml .= '<li><a href="' . $mlink . '" ' . element('men_custom', $mval);
+                                    if (element('men_target', $mval)) {
+                                        $menuhtml .= ' target="' . element('men_target', $mval) . '"';
+                                    }
+                                    $menuhtml .= ' title="' . html_escape(element('men_name', $mval)) . '">' . html_escape(element('men_name', $mval)) . '</a></li>';
+                                }
+                            }
+                        }
+                    }
+                    echo $menuhtml;
+                    ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script type="text/javascript">
@@ -219,6 +274,8 @@ $(document).on('click', '.viewmobileversion', function(){
     ga('create', 'UA-88829342-9', 'auto');
     ga('send', 'pageview');
     
+
+
     $(document).ready(function(){
 
         var select = $("#region");
@@ -293,6 +350,41 @@ $(document).on('click', '.viewmobileversion', function(){
         <?php } ?>
     });
 </script> 
+
+
+
+<!-- <script>
+window.GitpleConfig = { appCode: '0DoFz2YzRfSUpTuBYVs4KF3VuI6ys2' };
+!function(){function e(){function e(){var e=t.contentDocument,a=e.createElement("script");a.type="text/javascript",a.async=!0,a.src=window[n]&&window[n].url?window[n].url+"/inapp-web/gitple-loader.js":"https://app.gitple.io/inapp-web/gitple-loader.js",a.charset="UTF-8",e.head&&e.head.appendChild(a)}var t=document.getElementById(a);t||((t=document.createElement("iframe")).id=a,t.style.display="none",t.style.width="0",t.style.height="0",t.addEventListener?t.addEventListener("load",e,!1):t.attachEvent?t.attachEvent("onload",e):t.onload=e,document.body.appendChild(t))}var t=window,n="GitpleConfig",a="gitple-loader-frame";if(!window.Gitple){document;var i=function(){i.ex&&i.ex(arguments)};i.q=[],i.ex=function(e){i.processApi?i.processApi.apply(void 0,e):i.q&&i.q.push(e)},window.Gitple=i,t.attachEvent?t.attachEvent("onload",e):t.addEventListener("load",e,!1)}}();
+Gitple('boot');
+</script> -->
+
+<!-- 깃플 로그인 예제 시작 { -->
+<script>
+<?php
+/*
+if ($this->member->is_member()) {
+    $unique_id = $this->member->item('mem_id'); // 보안을 위해 유추할 수 없는 UUID(소문자), 숫자 등으로 변경해 주세요.
+    $mb_id = $this->member->item('mem_userid');
+    $name = html_escape($this->member->item('mem_nickname'));
+    $nick = html_escape($this->member->item('mem_nickname'));
+    $email = valid_email($this->member->item('mem_email')) ? $this->member->item('mem_email') : $this->member->item('mem_userid').'@secretvt.com';
+    printf("
+    Gitple('update', {
+        id: '%s',
+        name: '%s',
+        email: '%s',
+        meta: {
+            '아이디': '%s',
+            '별명': '%s'
+        }
+    });", $unique_id, $name, $email, $mb_id, $nick);
+}
+*/
+?>
+
+
+</script>
 
 <?php echo element('popup', $layout); ?>
 <?php echo $this->cbconfig->item('footer_script'); ?>

@@ -16,6 +16,7 @@
             <input type="hidden" name="mem_open_profile" id="mem_open_profile" value="1" >
             <input type="hidden" name="mem_receive_email" id="mem_receive_email" value="1" >
             <input type="hidden" name="mem_receive_sms" id="mem_receive_sms" value="1" >
+            <input type="hidden" name="mem_use_note" id="mem_use_note" value="1" >
             
              <table>
                 <tbody>

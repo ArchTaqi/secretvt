@@ -98,8 +98,8 @@
 		/* width:40%; */
 		display: inline-block;
 		box-sizing: border-box;
-		padding:0 0 0% 3%;
-		float:left; 
+		/*padding:0 0 0% 3%;*/
+		text-align: center;
 	}
 
 	header h1 a{
@@ -112,31 +112,32 @@
 		/* position: relative; */
 		/* bottom: -2px; */
 		height:42px;
+		vertical-align : bottom
 	}
 
 	header > ul{
-		width:40%;
-		float: right;
+		/*width:40%;
+		float: right;*/
 		/* height:44px; */
 		box-sizing: border-box;
-		padding-right: 3%;
+		/*padding-right: 3%;*/
 		letter-spacing: 1px;
-		margin-bottom: 5px;
+		/*margin-bottom: 5px;*/
 		/* +++ */
-		padding-top: 8px;
+		/*padding-top: 8px;*/
 		margin-bottom: 0;
 	}
 
 	header > ul li{
-		width:50%;
+		/*width:50%;*/
 		/* width: 30px;	 */
 		float: left;
 		text-align: right;
 		font-size: 13px;
 		/* +++ */
-		width:32px;
-		float:right;
-		margin-left: 10px;
+		/*width:32px;*/
+		/*float:right;*/
+		/*margin-left: 10px;*/
 	}
 	header > ul li a{
 		display: inline-block;
@@ -151,10 +152,10 @@
 		margin: 0;
 		border: none;
 	}
-	header > ul li img{
+	header > ul > li > a >img{
 		/* width:40%; */
 		/* float: right; */
-		width: 100%;
+		width: 32px;
 	}
 
 /*header의 메인 메뉴 영역*/

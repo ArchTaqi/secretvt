@@ -897,7 +897,8 @@ class Social extends CB_Controller
                 $insertdata['mem_register_ip'] = $this->input->ip_address();
                 $insertdata['mem_lastlogin_datetime'] = cdate('Y-m-d H:i:s');
                 $insertdata['mem_lastlogin_ip'] = $this->input->ip_address();
-
+                $insertdata['mem_use_note'] = 1;
+                
                 $mem_id = $this->Member_model->insert($insertdata);
 
                 $nickinsert = array(

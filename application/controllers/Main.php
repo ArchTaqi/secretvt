@@ -62,7 +62,12 @@ class Main extends CB_Controller
 
         $this->Menu_model->allow_order_field = array('men_order');
 
-        $result = $this->Menu_model->get_admin_list('','',array('men_mobile' => 1),'','men_order','asc');
+        $where['men_mobile'] = 1;
+        
+        $where['men_main'] = 1;
+        
+
+        $result = $this->Menu_model->get_admin_list('','',$where,'','men_order','asc');
         if(element('list',$result))
         foreach(element('list',$result) as $key => $value){
 

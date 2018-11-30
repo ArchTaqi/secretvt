@@ -202,6 +202,7 @@ class Managelayout extends CI_Controller
                 $menu_keys=array_keys(element(0, $menu));
 
                 if (element(0, $menu)) {
+                    
                     foreach (element(0, $menu) as $mkey => $mval) {
                         if (element(element('men_id', $mval), $menu)) {
                             foreach (element(element('men_id', $mval), $menu) as $skey => $sval) {

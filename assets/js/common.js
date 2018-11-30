@@ -1013,7 +1013,14 @@ if (typeof(COMMON_JS) === 'undefined') {
                 }).embed(element_layer);
 
                 // iframe을 넣은 element를 보이게 한다.
+                // 
                 element_layer.style.display = 'block';
         }
+    }
+
+    function note_chat() {
+
+        window.open(cb_url + '/note/chat/'+$( window ).height() , 'win_note', 'left=0,top=0,width=420,height='+$( window ).height()+',scrollbars=0');
+        return false;
     }
 }

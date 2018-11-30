@@ -15,6 +15,7 @@
                     <?php echo html_escape($this->member->item('mem_userid')); ?>
                 </h2>
                 <p><strong>"<?php echo html_escape($this->member->item('mem_nickname')); ?>" </strong>님 안녕하세요</p>
+                <a href="<?php echo site_url('membermodify'); ?>" class="btn btn-success btn-sm pull-right">정보수정</a>        
             </figcaption>
         </figure>
     </section>
@@ -45,7 +46,8 @@
         </ul>
     </section>
     <div class="pull-right mr10">
-        <a href="<?php echo site_url('membermodify'); ?>" class="btn btn-success btn-sm">정보수정</a>        
+        <a href="<?php echo site_url('login/logout'); ?>" class="btn btn-danger btn-sm"><i class="fa fa-sign-out"></i> 로그아웃</a>
+        
         <a href="<?php echo site_url('membermodify/memberleave'); ?>" class="btn btn-silver btn-sm btn-one-delete">탈퇴하기</a>
     </div>
 

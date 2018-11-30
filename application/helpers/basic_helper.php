@@ -442,7 +442,7 @@ if ( ! function_exists('display_username')) {
         if ($use_sideview) {
             if ($use_sideview === 'Y' && $userid) {
                 $result .= '<a href="javascript:;"
-                    onClick="getSideView(this, \'' . $userid . '\');"
+                    onClick="note_write(\'' . $userid . '\');"
                     title="' . $title . $name . '" style="text-decoration:none;">';
             }
         } elseif ($_use_sideview && $userid) {

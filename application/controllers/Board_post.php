@@ -1398,6 +1398,9 @@ class Board_post extends CB_Controller
                     $result['list'][$key]['title'] = '신고가 접수된 게시글입니다.';
                 }
 
+                if (element('post_secret', $val)) {
+                    $result['list'][$key]['title'] = '비밀글입니다';
+                }
                 if (element('mem_id', $val) >= 0) {
                     $result['list'][$key]['display_name'] = display_username(
                         element('post_userid', $val),
@@ -1466,7 +1469,7 @@ class Board_post extends CB_Controller
                         $thumb_url = get_post_image_url(element('post_content', $val), $gallery_image_width, $gallery_image_height);
                         $result['list'][$key]['thumb_url'] = $thumb_url
                             ? $thumb_url
-                            : thumb_url('', '', $gallery_image_width, $gallery_image_height);
+                            : '';
 
                         $result['list'][$key]['origin_image_url'] = $thumb_url;
                     }
@@ -1697,7 +1700,6 @@ class Board_post extends CB_Controller
         
         return $board;
     }
-
 
     /**
      * 방문로그를 남깁니다

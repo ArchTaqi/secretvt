@@ -257,11 +257,11 @@ class Comment_list extends CB_Controller
                     $result['list'][$key]['content'] .= '<div class="alert alert-danger">신고가 접수된 게시글입니다. 본인과 관리자만 확인이 가능합니다</div>';
                 }
                 if (element('cmt_secret', $val)) {
-                    $result['list'][$key]['content'] .= '<span class="label label-warning">비밀글입니다</span>';
+                    $result['list'][$key]['content'] .= '<span class="label">비밀글입니다</span>';
                 }
                 if (($is_blind === false && ! element('cmt_secret', $val)) OR $is_admin !== false OR (element('mem_id', $val) && abs(element('mem_id', $val)) === $mem_id)
                     OR (element('mem_id', $post) && abs(element('mem_id', $post)) === $mem_id)) {
-                    $result['list'][$key]['content'] .= display_html_content(
+                    $result['list'][$key]['content'] = ' '.display_html_content(
                         element('cmt_content', $val),
                         element('cmt_html', $val),
                         $image_width,

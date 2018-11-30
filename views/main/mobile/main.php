@@ -207,7 +207,7 @@
                                <figure>
                                    <img src="<?php echo element('thumb_url', $value_); ?>" alt="<?php echo html_escape(element('title', $value_)); ?>" title="<?php echo html_escape(element('title', $value_)); ?>" class=" img-responsive" style="width:100%;" />
                                    <figcaption>
-                                       <h3 class="cont_title">[<?php echo html_escape(element('bca_value',element('category', $value_))); ?>]<?php echo html_escape(element('title', $value_)); ?></h3>
+                                       <h3 class="cont_title"><?php if(!empty(element('bca_value',element('category', $value_)))) echo '['.html_escape(element('bca_value',element('category', $value_))).']'; ?><?php echo html_escape(element('title', $value_)); ?></h3>
                                        <p class="cont_text"><?php if(element('sub_subject',element('extravars', $value_))) echo element('sub_subject',element('extravars', $value_)); ?></p>
                                    </figcaption>
                                </figure>
