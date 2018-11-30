@@ -713,6 +713,7 @@ class Board_write extends CB_Controller
                 'meta_keywords' => $meta_keywords,
                 'meta_author' => $meta_author,
                 'page_name' => $page_name,
+                'page_url' => $this->uri->uri_string(),
             );
             $view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
             $this->data = $view;

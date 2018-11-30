@@ -8,7 +8,7 @@ if ($this->member->is_member() === false) {
 }
 ?>
 
-<div class="wrap05">
+<div class="wrap">
 
     <section class="title">
             <div></div>
