@@ -50,7 +50,7 @@ var cb_device_type = "<?php echo $this->cbconfig->get_device_type() === 'mobile'
 var cb_csrf_hash = "<?php echo $this->security->get_csrf_hash(); ?>";
 var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
 </script>
-<script type="text/javascript" src="<?php echo base_url('assets/js/common.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/js/common.js?'.$this->cbconfig->item('browser_cache_version')); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/jquery.validate.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/jquery.validate.extension.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/sideview.js'); ?>"></script>
