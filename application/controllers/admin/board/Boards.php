@@ -768,7 +768,7 @@ class Boards extends CB_Controller
             $array = array('order_by_field', 'list_count', 'mobile_list_count', 'page_count',
                 'mobile_page_count', 'always_show_write_button', 'mobile_always_show_write_button',
                 'show_list_from_view', 'mobile_show_list_from_view', 'new_icon_hour',
-                'mobile_new_icon_hour', 'hot_icon_hit', 'mobile_hot_icon_hit', 'hot_icon_day',
+                'mobile_new_icon_hour', 'hot_icon_hit', 'mobile_hot_icon_hit', 'hot_icon_day','mobile_hot_icon_day',
                 'subject_length', 'mobile_subject_length', 'except_notice', 'mobile_except_notice',
                 'except_all_notice', 'mobile_except_all_notice', 'reply_order', 'use_gallery_list',
                 'gallery_cols', 'gallery_image_width', 'gallery_image_height', 'mobile_gallery_cols',
