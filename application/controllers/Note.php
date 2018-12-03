@@ -791,7 +791,7 @@ class Note extends CB_Controller
             'mobile_layout_dir' => $this->cbconfig->item('mobile_layout_note'),
             'skin_dir' => $this->cbconfig->item('skin_note'),
             'mobile_skin_dir' => $this->cbconfig->item('mobile_skin_note'),
-            'page_title' => $page_title,
+            'page_title' => '채팅창',
             'meta_description' => $meta_description,
             'meta_keywords' => $meta_keywords,
             'meta_author' => $meta_author,
