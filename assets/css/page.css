@@ -28,7 +28,8 @@
 
 /*wrap padding-top 값*/
 	.wrap{
-		padding-top:30%;
+		/* padding-top:30%; */
+		padding-top:140px;
 	}
 
 	.wrap02{
@@ -63,6 +64,15 @@
 	.wrap10{
 		padding-top:140px;
 	}
+	
+	.wrap,
+	.wrap02,
+	.wrap04,
+	.wrap05{
+		box-sizing: border-box;
+		min-height: calc(100vh - 106px - 15vw);
+	}
+	
 #jssor_1 > div > div > div > div{
 	width: 100% !important;
 }
@@ -1663,6 +1673,7 @@
 		white-space:nowrap;
 		text-overflow:ellipsis;
 		overflow:hidden; 
+		line-height: 1.2;
 		}
 	.txt_list span{
 		float: right;
@@ -1790,7 +1801,8 @@
 
 /*myinfo 의 정보 영역 */
 	.myinfo{
-		margin-bottom:20px;
+		margin-bottom: 20px;
+		position: relative;
 	}
 	.info_area img{
 		/* display:none; */
@@ -1800,7 +1812,7 @@
 	}
 
 	.info_area figcaption{
-		padding-top: 14px;
+		padding-top: 8px;
 		padding-left: 3%;
 	}
 
@@ -1815,6 +1827,9 @@
 	.info_area figcaption p{
 		/* display: inline-block; */
 		font-size: 12px;
+		padding-right: 78px;
+		padding-left: 67px;
+		line-height: 1.4;
 	}
 
 	.info_area figcaption strong{
@@ -1851,6 +1866,11 @@
 		font-family: 'Jeju Gothic', sans-serif;
 		font-size: 11px;
 		margin-top: 10px;
+	}
+	.info_area .btn{
+		position: absolute;
+		right: 3%;
+		top: 33px;
 	}
 
 /*myinfo 의 내정보,작성글,정보수정,탈퇴하기 영역*/
