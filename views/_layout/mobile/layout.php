@@ -60,6 +60,7 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
 <script type="text/javascript" src="<?php echo base_url('assets/js/mobile.sidemenu.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/js.cookie.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/swiper.min.js'); ?>"></script>
+
 <?php echo $this->managelayout->display_js(); ?>
 </head>
 <body <?php echo isset($view) ? element('body_script', $view) : ''; ?>>
@@ -121,7 +122,7 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
 
             <?php if ($this->member->is_member()) { ?>
                 
-                <li style="width:15%;float:left;"><a href="<?php echo site_url('mypage'); ?>" ><img src="<?php echo base_url('assets/images/icon_user_config.png'); ?>" alt="My Page" class="pull-left" style="padding:10px 0 0 10px;"></a></li>
+                <li style="width:15%;float:left;"><a href="<?php echo site_url('mypage'); ?>" ><img src="<?php echo base_url('assets/images/icon_user_config.png'); ?>" alt="My Page" class="pull-left" style="padding:10px 0 0 10px;"></a><?php echo number_format(element('notification_num', $layout) + 0); ?></li>
             <?php } else { ?>
                 <li style="width:15%;"><a href="<?php echo site_url('login?url=' . urlencode(current_full_url())); ?>" ><img src="<?php echo base_url('assets/images/icon_user.png'); ?>" alt="로그인" class="pull-left" style="padding:10px 0 0 10px;"></a></li>
                 

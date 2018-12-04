@@ -26,6 +26,9 @@
                 <td>
                     <a href="<?php echo site_url('mypage/post'); ?>">작성글</a>
                 </td>
+                <td>
+                    <a href="<?php echo site_url('notification'); ?>">알&nbsp;&nbsp;림</a>
+                </td> 
                 <td class="active">
                     <a href="<?php echo site_url('mypage/scrap'); ?>" title="나의 스크랩">스크랩</a>
                 </td>
