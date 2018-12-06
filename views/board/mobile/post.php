@@ -22,7 +22,7 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
 
 <?php echo element('headercontent', element('board', $view)); ?>
 
-<div class="wrap08">
+<div class="wrap10">
     <?php echo show_alert_message($this->session->flashdata('message'), '<div class="alert alert-auto-close alert-dismissible alert-info">', '</div>'); ?>
    <!--  <h3>
         <?php if (element('category', element('post', $view))) { ?>[<?php echo html_escape(element('bca_value', element('category', element('post', $view)))); ?>] <?php } ?>

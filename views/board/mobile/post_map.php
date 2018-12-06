@@ -152,7 +152,7 @@ img.adp-marker{
    }
 
 </style>
-<div class="wrap08">
+<div class="wrap10">
 
   <!-- title 영역 -->
     <section class="de_title">
