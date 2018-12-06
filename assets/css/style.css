@@ -606,7 +606,7 @@ box-sizing: border-box;
 .table-body{border-collapse: collapse;border-spacing: 0; width: 100%;}
 
 .table-footer {padding: 4% 0% 4%; width: 100%; text-align:center; background-color: #f5f5f5;border-top: 1px solid #ddd;border-bottom-right-radius: 3px;border-bottom-left-radius: 3px;overflow: hidden;}
-.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {padding: 8px;line-height: 1.42857143;vertical-align: top;border-top: 1px solid #ddd; text-align:center;}
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {padding: 8px;line-height: 1.42857143;vertical-align: middle;border-top: 1px solid #ddd; text-align:center;}
 .table-body>thead>tr>th, .table-body>tbody>tr>th, .table-body>tfoot>tr>th, .table-body>thead>tr>td, .table-body>tbody>tr>td, .table-body>tfoot>tr>td {padding: 8px;line-height: 1.42857143;vertical-align: top;border-top: 1px solid #ddd; }
 
 .view-all {float: right;width: 75px;position: absolute;top: 10px;right: 0;}

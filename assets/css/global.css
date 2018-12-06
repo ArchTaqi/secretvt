@@ -157,7 +157,28 @@
 		/* float: right; */
 		width: 32px;
 	}
-
+/* 마이페이지아이콘옆 알림표시 */
+	.lab_notification{
+		display: block; 
+		min-width: 14px;
+		width:auto;
+		height: 14px;
+		padding: 0 3px;
+		box-sizing: border-box;
+		position: absolute;
+		text-align: center;
+		line-height: 14px;
+		font-size: 11px;
+		font-weight: bold;
+		color: #fff;
+		background-color: #f00;
+		border-radius: 8px;
+	}
+	header > ul li .lab_notification{
+		top: 10px;
+		left: 28px;
+	}
+	
 /*header의 메인 메뉴 영역*/
 	#mainmenu{
 		width:100%;

@@ -9,7 +9,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="시크릿베트남">
 <meta property="og:description" content="베트남 소식 및 업소정보 제공! 예약 및 길찾기 지원">
-<meta property="og:image" content="https://secretvt.com/assets/images/temp/logo.png">
+<meta property="og:image" content="https://secretvt.com/assets/images/temp/link_thum.png">
 <meta property="og:url" content="https://secretvt.com">
 <?php if (element('meta_description', $layout)) { ?><meta name="description" content="<?php echo html_escape(element('meta_description', $layout)); ?>"><?php } ?>
 <?php if (element('meta_keywords', $layout)) { ?><meta name="keywords" content="<?php echo html_escape(element('meta_keywords', $layout)); ?>"><?php } ?>
@@ -122,7 +122,7 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
 
             <?php if ($this->member->is_member()) { ?>
                 
-                <li style="width:15%;float:left;"><a href="<?php echo site_url('mypage'); ?>" ><img src="<?php echo base_url('assets/images/icon_user_config.png'); ?>" alt="My Page" class="pull-left" style="padding:10px 0 0 10px;"></a><?php echo number_format(element('notification_num', $layout) + 0); ?></li>
+                <li style="width:15%;float:left;"><a href="<?php echo site_url('mypage'); ?>" ><img src="<?php echo base_url('assets/images/icon_user_config.png'); ?>" alt="My Page" class="pull-left" style="padding:10px 0 0 10px;"></a><div class="lab_notification"><b class="lab_noti_num"><?php echo number_format(element('notification_num', $layout) + 0); ?></b><span class="hidden">개의 알림이 있습니다</span></div></li>
             <?php } else { ?>
                 <li style="width:15%;"><a href="<?php echo site_url('login?url=' . urlencode(current_full_url())); ?>" ><img src="<?php echo base_url('assets/images/icon_user.png'); ?>" alt="로그인" class="pull-left" style="padding:10px 0 0 10px;"></a></li>
                 
