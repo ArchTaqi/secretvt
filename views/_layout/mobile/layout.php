@@ -330,8 +330,8 @@ $(document).on('click', '.viewmobileversion', function(){
         
 
         swiper.on('touchEnd', function () {
-
-            if((swiper.touches.startY - swiper.touches.currentY) > 0 ) 
+            // alert(swiper.touches.startY +"-"+ swiper.touches.currentY);
+            if((swiper.touches.startY - swiper.touches.currentY) > 5 ) 
                 $('#mainmenu').hide();
             else 
                 $('#mainmenu').show();
