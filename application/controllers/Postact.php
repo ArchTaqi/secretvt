@@ -3277,4 +3277,296 @@ class Postact extends CB_Controller
         $result = array('error' => 1,"message" => '오류입니다 다시 시도해 주세요');
             exit(json_encode($result));
     }
+
+        public function send_vtn_free_gallery($brd_key='')
+     {
+        
+        // 이벤트 라이브러리를 로딩합니다
+        $eventname = 'event_board_write_write_common';
+        $this->load->event($eventname);
+
+        $board_id = $this->board->item_key('brd_id', $brd_key);
+        if (empty($board_id)) {
+            show_404();
+        }
+        $board = $this->board->item_all($board_id);
+
+        
+
+        
+        
+        
+
+        $primary_key = $this->Post_model->primary_key;
+
+        
+
+        $where = array(
+            'bgr_id' => element('bgr_id', $board)
+        );
+        $board_id = $this->Board_model->get_board_list($where);
+        
+        $board_list = array();
+        if ($board_id && is_array($board_id)) {
+            foreach ($board_id as $key => $val) {
+                $board_list[] = $this->board->item_all(element('brd_id', $val));
+            }
+        }
+
+
+        $extravars = element('extravars', $board);
+        $form = json_decode($extravars, true);        
+
+        
+        $use_upload = true;
+
+        $use_dhtml = true;
+
+        foreach($_FILES as $key => $value){
+            
+            $_FILES['post_file']['name'][] = $value['name'];
+            $_FILES['post_file']['type'][] = $value['type'];
+            $_FILES['post_file']['tmp_name'][] = $value['tmp_name'];
+            $_FILES['post_file']['error'][] = $value['error'];
+            $_FILES['post_file']['size'][] = $value['size'];
+        }
+
+        // 이벤트가 존재하면 실행합니다
+        
+
+        if ($use_upload === true ) {
+
+            $this->load->library('upload');
+
+            if (isset($_FILES) && isset($_FILES['post_file']) && isset($_FILES['post_file']['name']) && is_array($_FILES['post_file']['name'])) {
+                $filecount = count($_FILES['post_file']['name']);
+                $upload_path = config_item('uploads_dir') . '/post/';
+                if(config_item('use_file_storage')=='S3'){
+                    $upload_path .= cdate('Y') . '/';
+                    $upload_path .= cdate('m') . '/';
+                } else {
+                    if (is_dir($upload_path) === false) {
+                        mkdir($upload_path, 0707);
+                        $file = $upload_path . 'index.php';
+                        $f = @fopen($file, 'w');
+                        @fwrite($f, '');
+                        @fclose($f);
+                        @chmod($file, 0644);
+                    }
+                    $upload_path .= cdate('Y') . '/';
+                    if (is_dir($upload_path) === false) {
+                        mkdir($upload_path, 0707);
+                        $file = $upload_path . 'index.php';
+                        $f = @fopen($file, 'w');
+                        @fwrite($f, '');
+                        @fclose($f);
+                        @chmod($file, 0644);
+                    }
+                    $upload_path .= cdate('m') . '/';
+                    if (is_dir($upload_path) === false) {
+                        mkdir($upload_path, 0707);
+                        $file = $upload_path . 'index.php';
+                        $f = @fopen($file, 'w');
+                        @fwrite($f, '');
+                        @fclose($f);
+                        @chmod($file, 0644);
+                    }
+                }
+                foreach ($_FILES['post_file']['name'] as $i => $value) {
+                    if ($value) {
+                        $uploadconfig = '';
+                        $uploadconfig['upload_path'] = $upload_path;
+                        $uploadconfig['allowed_types']
+                            = element('upload_file_extension', $board)
+                            ? element('upload_file_extension', $board) : '*';
+                        $uploadconfig['max_size'] = element('upload_file_max_size', $board) * 1024;
+                        $uploadconfig['encrypt_name'] = true;
+
+                        $this->upload->initialize($uploadconfig);
+                        $_FILES['userfile']['name'] = $_FILES['post_file']['name'][$i];
+                        $_FILES['userfile']['type'] = $_FILES['post_file']['type'][$i];
+                        $_FILES['userfile']['tmp_name'] = $_FILES['post_file']['tmp_name'][$i];
+                        $_FILES['userfile']['error'] = $_FILES['post_file']['error'][$i];
+                        $_FILES['userfile']['size'] = $_FILES['post_file']['size'][$i];
+                        if ($this->upload->do_upload()) {
+                            $filedata = $this->upload->data();
+
+                            $uploadfiledata[$i]['pfi_filename'] = cdate('Y') . '/' . cdate('m') . '/' . element('file_name', $filedata);
+                            $uploadfiledata[$i]['pfi_originname'] = element('orig_name', $filedata);
+                            $uploadfiledata[$i]['pfi_filesize'] = intval(element('file_size', $filedata) * 1024);
+                            $uploadfiledata[$i]['pfi_width'] = element('image_width', $filedata) ? element('image_width', $filedata) : 0;
+                            $uploadfiledata[$i]['pfi_height'] = element('image_height', $filedata) ? element('image_height', $filedata) : 0;
+                            $uploadfiledata[$i]['pfi_type'] = str_replace('.', '', element('file_ext', $filedata));
+                            $uploadfiledata[$i]['is_image'] = element('is_image', $filedata) ? 1 : 0;
+                        } else {
+                            $file_error = $this->upload->display_errors();
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+
+        
+            /**
+             * 유효성 검사를 통과한 경우입니다.
+             * 즉 데이터의 insert 나 update 의 process 처리가 필요한 상황입니다
+             */
+
+            // 이벤트가 존재하면 실행합니다
+            $view['view']['event']['formruntrue'] = Events::trigger('common_formruntrue', $eventname);
+
+            $content_type = $use_dhtml ? 1 : 0;
+
+
+                $post_num = $this->Post_model->next_post_num();
+                $post_reply = '';
+
+            $metadata = array();
+
+            $post_title = $this->input->post('post_title', null, '');
+            $post_content = $this->input->post('post_content', null, '');
+            if (element('save_external_image', $board)) {
+                $post_content = $this->imagelib->replace_external_image($post_content);
+            }
+
+            
+
+            $spam_word = explode(',', trim($this->cbconfig->item('spam_word')));
+            if ($spam_word) {
+                for ($i = 0; $i < count($spam_word); $i++) {
+                    $str = trim($spam_word[$i]);
+                    if ($post_title) {
+                        $pos = stripos($post_title, $str);
+                        if ($pos !== false) {
+                            $ment='';
+                            for($len=0;$len <mb_strlen($str, 'utf-8');$len++){
+                                $ment.='*';
+                            }
+
+                            $post_title = str_replace($str,$ment, $post_title);
+                            // break;
+                        }
+                    }
+                    if ($post_content) {
+                        $pos = stripos($post_content, $str);
+                        if ($pos !== false) {
+                            $ment='';
+                            for($len=0;$len <mb_strlen($str, 'utf-8');$len++){
+                                $ment.='*';
+                            }
+
+                            $post_content = str_replace($str,$ment, $post_content);
+                            //break;
+                        }
+                    }
+                }
+            }
+
+            $updatedata = array(
+                'post_num' => $post_num,
+                'post_reply' => $post_reply,
+                'post_title' => $post_title,
+                'post_content' => $post_content,
+                'post_html' => $content_type,
+                'post_datetime' => cdate('Y-m-d H:i:s'),
+                'post_updated_datetime' => cdate('Y-m-d H:i:s'),
+                'post_ip' => $this->input->ip_address(),
+                'brd_id' => element('brd_id', $board),
+                'post_parent' => $this->input->get('post_parent',null,0),
+                'region_category' => $this->input->post('region_category',null,1),
+                'post_main_4' => $this->input->post('post_main_4',null,0),
+                'post_order' => $this->input->post('post_order',null,0),
+            );
+
+           $mem_id=1;
+                    $updatedata['mem_id'] = $mem_id;
+                    $updatedata['post_userid'] = 'admin';
+                    $updatedata['post_username'] = '관리자';
+                    $updatedata['post_nickname'] = '관리자';
+                    $updatedata['post_email'] = '';
+                    $updatedata['post_homepage'] = '';
+           
+            
+            
+
+            $updatedata['post_device'] = 'mobile';
+
+            $post_id = $this->Post_model->insert($updatedata);
+
+            
+
+            
+
+            
+
+           
+
+            $post_link = $this->input->post('post_link');
+            if ($post_link && is_array($post_link) && count($post_link) > 0) {
+                foreach ($post_link as $pkey => $pval) {
+                    if ($pval) {
+                        $linkupdate = array(
+                            'post_id' => $post_id,
+                            'brd_id' => element('brd_id', $board),
+                            'pln_url' => prep_url($pval),
+                        );
+                        $this->Post_link_model->insert($linkupdate);
+                    }
+                }
+                $postupdate = array(
+                    'post_link_count' => count($post_link),
+                 );
+                $this->Post_model->update($post_id, $postupdate);
+            }
+            
+
+            $file_updated = false;
+            if ($use_upload && $uploadfiledata
+                && is_array($uploadfiledata) && count($uploadfiledata) > 0) {
+                $this->load->model('Post_file_model');
+                foreach ($uploadfiledata as $pkey => $pval) {
+                    if ($pval) {
+                        $fileupdate = array(
+                            'post_id' => $post_id,
+                            'brd_id' => element('brd_id', $board),
+                            'mem_id' => $mem_id,
+                            'pfi_originname' => element('pfi_originname', $pval),
+                            'pfi_filename' => element('pfi_filename', $pval),
+                            'pfi_filesize' => element('pfi_filesize', $pval),
+                            'pfi_width' => element('pfi_width', $pval),
+                            'pfi_height' => element('pfi_height', $pval),
+                            'pfi_type' => element('pfi_type', $pval),
+                            'pfi_is_image' => element('is_image', $pval),
+                            'pfi_datetime' => cdate('Y-m-d H:i:s'),
+                            'pfi_ip' => $this->input->ip_address(),
+                            'file_storage' => config_item('use_file_storage'),
+
+                        );
+                        $file_id = $this->Post_file_model->insert($fileupdate);
+                        
+                        $file_updated = true;
+                    }
+                }
+            }
+            $result = $this->Post_file_model->get_post_file_count($post_id);
+            $postupdatedata = array();
+            if ($result && is_array($result)) {
+                foreach ($result as $value) {
+                    if (element('pfi_is_image', $value)) {
+                        $postupdatedata['post_image'] = element('cnt', $value);
+                    } else {
+                        $postupdatedata['post_file'] = element('cnt', $value);
+                    }
+                }
+                $this->Post_model->update($post_id, $postupdatedata);
+            }
+
+            
+        
+
+        $result = array('success' => 1,"message" => '오류입니다 다시 시도해 주세요');
+            exit(json_encode($result));   
+    }
 }
