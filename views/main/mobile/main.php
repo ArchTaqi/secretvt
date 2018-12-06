@@ -119,7 +119,7 @@
                     <div class="cate_text"><?php echo element('men_name',$value) ?></div>
                     <?php 
 
-                    if(element('brd_key', element('board',$value))==='vtn_info' || element('brd_key', element('board',$value))==='vtn_free')
+                    if(element('brd_key', element('board',$value))==='vtn_info' || element('brd_key', element('board',$value))==='vtn_free'|| element('brd_key', element('board',$value))==='vtn_free_gallery')
                       echo'<div class="cate_count">총&#32;<span class="count">'.element('total_rows',$value).'개</span>의 게시글이 있습니다.</div>';
                     else 
                       echo'<div class="cate_count">총&#32;<span class="count">'.element('total_rows',$value).'개</span>의 업소정보가 있습니다.</div>';
