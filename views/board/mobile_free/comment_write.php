@@ -21,7 +21,7 @@ if (element('can_comment_write', element('comment', $view)) OR element('show_tex
                 <?php
                 if ($this->member->is_admin() === 'super') {
                 ?>
-                    <div class="form-group mb20">
+                    <div class="form-group mb20 clearfix">
                         <label for="cmt_nickname">닉네임</label>
                         <input type="text" class="input" id="cmt_nickname" name="cmt_nickname" value="<?php echo set_value('cmt_nickname',element('cmt_nickname', element('comment', $view))); ?>" />
                         
