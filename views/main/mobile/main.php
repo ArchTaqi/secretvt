@@ -242,7 +242,15 @@
                             ?>   
                            <li class="text_list_li">
                             <a href="<?php echo element('post_url',$value_) ?>">
-                              <img src="<?php echo element('thumb_url', $value_); ?>" alt="<?php echo html_escape(element('title', $value_)); ?>" title="<?php echo html_escape(element('title', $value_)); ?>" class=" img-responsive" style="width:100%;" />
+
+                              <?php 
+                            if(element('thumb_url', $value_))
+                                echo '<div class="thum_box">
+                                <img src="'.element('thumb_url', $value_).'" alt="'.html_escape(element('title', $value_)).'">
+                                </div>';
+                             ?>
+
+                              
                                <h3 class="text_title"><strong><?php echo html_escape(element('title', $value_)); ?></strong>
                                 <?php if (element('post_comment_count', $value_)) { ?><span class="comment_num">+<?php echo element('post_comment_count', $value_); ?></span><?php } ?>
                                 </h3>
