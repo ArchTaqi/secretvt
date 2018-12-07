@@ -328,7 +328,7 @@ class Comment_write extends CB_Controller
 
                 if ($is_comment_name || $is_admin==="super") {
                     
-                    $updatedata['cmt_nickname'] = $this->input->post('cmt_nickname', null, '');
+                    $updatedata['cmt_nickname'] = $this->input->post('cmt_nickname', null, $this->member->item('mem_nickname'));
                     
                 }
 

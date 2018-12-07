@@ -159,7 +159,7 @@
                     <div><p><?php if(empty(element('post_secret', $result))) echo element('post_content', $result); ?></p></div>
             </a>
                 <span>
-                    <?php echo element('display_name', $result); ?> | 작성일 : <?php echo element('display_datetime', $result); ?>
+                    <?php echo element('display_name', $result); ?> | 작성일 : <?php echo element('display_datetime', $result); ?> | 조회수 : <?php echo element('post_hit', $result); ?>
                 </span>
             
             </li>

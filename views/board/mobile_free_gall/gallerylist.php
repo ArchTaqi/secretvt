@@ -139,6 +139,9 @@
                     </div> -->
                    
                 </a>
+                 <span class="pull-right">
+                     <?php echo element('display_name', $result); ?> | 작성일 : <?php echo element('display_datetime', $result); ?> | 조회수 : <?php echo element('post_hit', $result); ?>
+                </span>
             </li>
 
             <?php

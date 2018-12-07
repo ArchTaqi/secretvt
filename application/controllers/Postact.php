@@ -3484,7 +3484,7 @@ class Postact extends CB_Controller
                     $updatedata['mem_id'] = $mem_id;
                     $updatedata['post_userid'] = 'admin';
                     $updatedata['post_username'] = '관리자';
-                    $updatedata['post_nickname'] = '관리자';
+                    $updatedata['post_nickname'] = $this->input->post('post_nickname', null, '');
                     $updatedata['post_email'] = '';
                     $updatedata['post_homepage'] = '';
            
