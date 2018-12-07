@@ -160,11 +160,9 @@ class Main extends CB_Controller
                             $post_result['list'][$key]['origin_image_url'] = thumb_url('post', element('pfi_filename', $file),$gallery_image_width,$gallery_image_height);
                         } else {
                             $thumb_url = get_post_image_url(element('post_content', $val),$gallery_image_width,$gallery_image_height);
-                            $post_result['list'][$key]['thumb_url'] = $thumb_url;
-                            
-                            // $post_result['list'][$key]['thumb_url'] = $thumb_url
-                            //     ? $thumb_url
-                            //     : thumb_url('', '',$gallery_image_width,$gallery_image_height);
+                            $post_result['list'][$key]['thumb_url'] = $thumb_url
+                                ? $thumb_url
+                                : thumb_url('', '',$gallery_image_width,$gallery_image_height);
 
                             $post_result['list'][$key]['origin_image_url'] = $thumb_url;
                         }
