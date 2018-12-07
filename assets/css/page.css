@@ -1672,7 +1672,7 @@
 		color:#333;
 	}
 	/* ++++자유게시판 게시물에 사진 있을시 썸네일 추가++++ */
-	.txt_list .thum_box ,.text_list_ul .thum_box{
+	.txt_list .thum_box {
 		float: left;
 		width: 67px;
 		height: 67px;
@@ -1683,7 +1683,7 @@
 		border: 1px solid #ebebeb;
 	}
 
-	.txt_list .thum_box img ,.text_list_ul .thum_box img{
+	.txt_list .thum_box img {
 		min-height: 100%;
 		width: 100%;
 	}
