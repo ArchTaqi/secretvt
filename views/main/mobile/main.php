@@ -235,13 +235,20 @@
 
                 ?>
                     <div class="text_list cont_contents" id="men_<?php echo $key ?>">
-                       <ul class="text_list_ul">
+                       <ul class="text_list_ul txt_list">
                            <?php 
                            if(element('post_list',$value))
                            foreach(element('post_list',$value) as  $value_){
                             ?>   
                            <li class="text_list_li">
                             <a href="<?php echo element('post_url',$value_) ?>">
+                            <?php 
+                            if(element('thumb_url', $value_))
+                                echo '<div class="thum_box">
+                                <img src="'.element('thumb_url', $value_).'" alt="'.html_escape(element('title', $value_)).'">
+                                </div>';
+                            ?>
+                              
                                <h3 class="text_title"><strong><?php echo html_escape(element('title', $value_)); ?></strong>
                                 <?php if (element('post_comment_count', $value_)) { ?><span class="comment_num">+<?php echo element('post_comment_count', $value_); ?></span><?php } ?>
                                 </h3>
