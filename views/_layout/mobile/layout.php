@@ -322,7 +322,7 @@ $(document).on('click', '.viewmobileversion', function(){
           initialSlide :1,
           runCallbacksOnInit : false,
           touchAngle:20,
-          threshold : 130,
+          threshold : 90,
           preventClicks :false,
           preventClicksPropagation:false,
 
