@@ -1338,9 +1338,9 @@
 		.inquire .question ul li{
 			border:0;
 			font-size: 14px;
-			background:url(https://secretvt.com/assets/images/temp/write_img/reply_arrow.png) no-repeat top left;
+			/*background:url(https://secretvt.com/assets/images/temp/write_img/reply_arrow.png) no-repeat top left;*/
 			background-size: 6%;
-			padding:2px 0 0 6%;
+			padding-top:2px;
 			line-height: 1.6;
 			margin-bottom: 3%;
 			display: inline-block;
