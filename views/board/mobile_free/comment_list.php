@@ -53,14 +53,14 @@ if (element('best_list', $view)) {
 if (element('list', element('data', $view))) {
     foreach (element('list', element('data', $view)) as $result) {
 ?>
-    <div class="media" id="comment_<?php echo element('cmt_id', $result); ?>" style="padding-left:<?php echo element('cmt_depth', $result); ?>px;">
+    <div class="media" id="comment_<?php echo element('cmt_id', $result); ?>" style="padding-left:<?php echo element('cmt_depth', $result); ?>px;background-color: #fff;<?php if(element('cmt_reply', $result)) echo 'margin-top: 0px;'; ?>">
         <?php if (element('use_comment_profile', element('board', $view))) { ?>
             <div class="media-left">
                 <img class="media-object member-photo" src="<?php echo element('member_photo_url', $result); ?>" width="64" height="64" alt="<?php echo html_escape(element('cmt_nickname', $result)); ?>" title="<?php echo html_escape(element('cmt_nickname', $result)); ?>" />
             </div>
         <?php } ?>
 
-        <div class="media-body">
+        <div class="media-body" >
             
             <div class="comment-content">
             <?php if(element('cmt_reply', $result)) {?>
