@@ -103,7 +103,7 @@
 
 /* boyoon 추가 css  // 댓글영역  */
 	div.media{
-		border-bottom:1px solid #ededed;
+		border:1px solid #e8e8e8;
 		
 	}
 	div.media div.media-body {
@@ -119,7 +119,7 @@
 	}
 
 	.reply_write {
-		background-color:#e5e5e5;
+		background-color:#f9f9f9;
 		padding-top: 20px; 
 		padding-bottom : 20px;
 		margin-bottom: 0;
@@ -1752,6 +1752,7 @@
 /*광고 영역(공통)*/
 	.ad{
 		padding:0;
+		background-color:#f4f4f4;
 	}
 
 	.ad a img{
@@ -2435,7 +2436,7 @@
 		height: 50px;
 		padding:5px;
 		margin-bottom: 3%;
-		border: 1px solid #ededed;
+		border: 1px solid #e8e8e8;
 		box-sizing: border-box;
 		overflow: auto;
 		resize: none;
