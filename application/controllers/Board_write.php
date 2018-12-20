@@ -1435,7 +1435,7 @@ class Board_write extends CB_Controller
             : element('footer_content', $board);
 
         $view['view']['post']['is_post_name'] = $is_post_name
-            = ($this->member->is_member() === false OR ($is_admin !== false && $mem_id !== (int) element('mem_id', $post))) ? true : false;
+            = ($this->member->is_member() === false OR ($is_admin === false && $mem_id !== (int) element('mem_id', $post))) ? true : false;
         $view['view']['post']['can_post_notice'] = $can_post_notice = ($is_admin !== false) ? true : false;
         $view['view']['post']['can_post_secret'] = $can_post_secret
             = element('use_post_secret', $board) === '1' ? true : false;
