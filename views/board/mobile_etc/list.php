@@ -88,7 +88,7 @@
                             <?php if (element(abs(element('post_num', $result)),element('reply_content', element('reply_data', element('list', $view))))) { ?>
 
                                 <ul>
-                                    <li><p><?php echo display_html_content(element(abs(element('post_num', $result)),element('reply_content', element('reply_data', element('list', $view)))),
+                                    <li><p><i class="fa fa-reply fa-rotate-180" aria-hidden="true" style="font-size: 1.5em;"></i> <?php echo display_html_content(element(abs(element('post_num', $result)),element('reply_content', element('reply_data', element('list', $view)))),
                         element('post_html', $result)) ?>
                                     </p>
 

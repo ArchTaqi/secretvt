@@ -28,7 +28,7 @@
 
 /*wrap padding-top 값*/
 	.wrap{
-		padding-top:30%;
+		padding-top:35%;
 	}
 
 	.wrap02{
@@ -103,8 +103,8 @@
 
 /* boyoon 추가 css  // 댓글영역  */
 	div.media{
-		border-bottom:1px solid #ededed;
-		
+		border:1px solid #e8e8e8;
+		margin-top: 10px;
 	}
 	div.media div.media-body {
 		font-size:12px;
@@ -117,6 +117,16 @@
 		display: inline-block;
 		float:right;
 	}
+
+	.reply_write {
+		background-color:#f9f9f9;
+		padding-top: 20px; 
+		padding-bottom : 20px;
+		margin-bottom: 20px;
+		border-top: 1px solid #e8e8e8;
+		border-bottom: 1px solid #e8e8e8;
+	}
+	
 	.reply_write #viewcomment{
 		padding:0;
 	}
@@ -368,7 +378,10 @@
 	}
 	.cont_list .cont_list_li img{
 		width:100%;
-		margin-bottom: 5px;	
+		margin-bottom: 5px;
+		height: 30.7vw;
+		max-height: 129px;
+		min-height: 98px;
 	}
 	.cont_list .cont_list_li figcaption{
 		padding:0 8px 14px;
@@ -756,7 +769,7 @@
 	}
 	.store_list02 li h2{
 		
-		margin: 10px 13% 6px 3%;
+		margin: 10px 13% 10px 3%;
 		/* color: #c21e5a; */
 		line-height: 20px;
 		font-size: 16px;
@@ -788,6 +801,11 @@
 	.store_list02 .gallery-box .scrap_heart{
 		margin-top:-2%;
 		
+	}
+	.store_list02 .gallery-box > .pull-right{
+		margin-right: 3%;
+		font-size: 12px;
+		color:#333;
 	}
 	.scrap_heart{
 		color:#ff7c80;
@@ -883,7 +901,9 @@
 	.content .contents-view{
 		margin-bottom: 6%;
 	}
-
+	.content .contents-view .contents-view-img{
+		text-align: center;
+	}
 	.content .post-content {
 		border:1px solid #ededed;
 		padding: 5% 3%;
@@ -891,7 +911,9 @@
 		font-size: 15px;
 		min-height: 80px;
 	}
-
+	.content .post-content div{
+		max-width: 100%;
+	}
 	.content .autosize{
 		position:relative;
 		height: 0;
@@ -1318,9 +1340,9 @@
 		.inquire .question ul li{
 			border:0;
 			font-size: 14px;
-			background:url(https://secretvt.com/assets/images/temp/write_img/reply_arrow.png) no-repeat top left;
+			/*background:url(https://secretvt.com/assets/images/temp/write_img/reply_arrow.png) no-repeat top left;*/
 			background-size: 6%;
-			padding:2px 0 0 6%;
+			padding-top:2px;
 			line-height: 1.6;
 			margin-bottom: 3%;
 			display: inline-block;
@@ -1687,13 +1709,14 @@
 		padding-top: 2px;
 		color:#333;
 	}
-	/* ++++자유게시판 게시물에 사진 있을시 썸네일 추가++++ */
+	/* 자유게시판 게시물에 사진 있을시 썸네일 추가 */
 	.txt_list .thum_box {
 		width: 67px;
 		height: 67px;
-		margin: 0 10px 0 0;		
+		margin: 0 10px 0 0;	
+		padding: 0;
 	}
-	/* +++++ 자유게시판 인기게시물 hot 표시 */
+	/* 자유게시판 인기게시물 hot 표시 */
 	.lab_hot {
 		display: inline-block;
 		float: none;
@@ -1731,6 +1754,7 @@
 /*광고 영역(공통)*/
 	.ad{
 		padding:0;
+		background-color:#f4f4f4;
 	}
 
 	.ad a img{
@@ -1868,6 +1892,7 @@
 	}
 
 	.info_table td{
+		position: relative;
 		border:1px solid #ededed;
 		text-align: center;
 		padding:3.5% 0 2.5%;
@@ -1878,7 +1903,10 @@
 	.info_table td.active{
 		background-color: #ecf4f9;
 	}
-
+	.info_table .lab_notification{
+		top: 6px;
+		left: 70%;
+	}
 /*myinfo 의 내정보 영역*/
 	
 	.mypage .table_01{
@@ -2410,7 +2438,7 @@
 		height: 50px;
 		padding:5px;
 		margin-bottom: 3%;
-		border: 1px solid #ededed;
+		border: 1px solid #e8e8e8;
 		box-sizing: border-box;
 		overflow: auto;
 		resize: none;

@@ -312,6 +312,7 @@ class Post_model extends CB_Model
                 $ssf = $sval;
                 if ($skeyword && $ssf && in_array($ssf, $this->allow_search_field)) {
                     if (in_array($ssf, $this->search_field_equal)) {
+
                         $search_where[$ssf] = $skeyword;
                     } else {
                         $swordarray = explode(' ', $skeyword);
@@ -354,9 +355,9 @@ class Post_model extends CB_Model
         $this->db->join('member', 'post.mem_id = member.mem_id', 'left');
 
         if ($type === 'next') {
-            $where['post_num >'] = $post_num;
-        } else {
             $where['post_num <'] = $post_num;
+        } else {
+            $where['post_num >'] = $post_num;
         }
 
         if ($where) {
@@ -385,7 +386,7 @@ class Post_model extends CB_Model
             $this->db->group_end();
         }
 
-        $orderby = $type === 'next'
+        $orderby = $type === 'prev'
             ? 'post_num, post_reply' : 'post_num desc, post_reply desc';
 
         $this->db->order_by($orderby);

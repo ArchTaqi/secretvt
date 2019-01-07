@@ -777,6 +777,10 @@ class Board_post extends CB_Controller
             $use_prev_next = true;
         }
         if ($use_prev_next) {
+
+            $this->Post_model->allow_search_field = array('post_id', 'post_title', 'post_content', 'post_both', 'post_category', 'post_userid', 'post_nickname'); // 검색이 가능한 필드
+            $this->Post_model->search_field_equal = array('post_id', 'post_userid', 'post_nickname'); // 검색중 like 가 아닌 = 검색을 하는 필드
+            
             $where = array();
             $where['brd_id'] = element('brd_id', $post);
             $where['post_del <>'] =2;
@@ -796,13 +800,15 @@ class Board_post extends CB_Controller
             if ($sfield === 'post_both') {
                 $sfield = array('post_title', 'post_content');
             }
+
             $skeyword = $this->input->get('skeyword', null, '');
+
             $view['view']['next_post'] = $next_post
                 = $this->Post_model
                 ->get_prev_next_post(
                     element('post_id', $post),
                     element('post_num', $post),
-                    'prev',
+                    'next',
                     $where,
                     $sfield,
                     $skeyword
@@ -817,7 +823,7 @@ class Board_post extends CB_Controller
                 ->get_prev_next_post(
                     element('post_id', $post),
                     element('post_num', $post),
-                    'next',
+                    'prev',
                     $where,
                     $sfield,
                     $skeyword

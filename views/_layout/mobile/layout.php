@@ -321,8 +321,8 @@ $(document).on('click', '.viewmobileversion', function(){
         var swiper = new Swiper('.swiper-container-main', {
           initialSlide :1,
           runCallbacksOnInit : false,
-          touchAngle:35,
-          threshold : 30,
+          touchAngle:20,
+          threshold : 90,
           preventClicks :false,
           preventClicksPropagation:false,
 
