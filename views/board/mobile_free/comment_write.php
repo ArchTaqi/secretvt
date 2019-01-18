@@ -1,3 +1,4 @@
+<div class="alert alert-auto-close alert-dismissible alert-comment-message" style="display:none;"><span class="alert-comment-message-content"></span></div>
 <?php
 if ( ! element('post_hide_comment', element('post', $view)) && element('is_admin', $view)) {
 ?>
@@ -9,7 +10,7 @@ if (element('can_comment_write', element('comment', $view)) OR element('show_tex
 ?>
     <div id="comment_write_box">
         <div class="well comment_write_box_inner pd0">
-            <div class="alert alert-auto-close alert-dismissible alert-comment-message" style="display:none;"><span class="alert-comment-message-content"></span></div>
+            
             <?php
             $attributes = array('name' => 'fcomment', 'id' => 'fcomment');
             echo form_open('', $attributes);

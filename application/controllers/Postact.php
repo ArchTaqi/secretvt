@@ -200,8 +200,15 @@ class Postact extends CB_Controller
         Events::trigger('after', $eventname);
         $param =& $this->querystring;
 
-        if (element('bgr_id', $board)==='11')
+        if (element('bgr_id', $board)==='11'){
+
+            
+            $this->session->set_flashdata(
+                'message',
+                '선택된 게시글이 삭제되었습니다'
+            );
             redirect(write_url(element('brd_key', $board)).'?' . $param->output());
+        }
         else
             redirect(board_url(element('brd_key', $board)).'?' . $param->output());
     }

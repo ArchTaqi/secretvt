@@ -130,7 +130,7 @@ class Board_write extends CB_Controller
             element('access_reply_level', $board),
             element('access_reply_group', $board),
             $alertmessage,
-            $check
+iu            $check
         );
 
         if (element('post_del', $origin)) {
@@ -142,7 +142,7 @@ class Board_write extends CB_Controller
             alert('더 이상 답변하실 수 없습니다.\\n답변은 10단계 까지만 가능합니다');
             return;
         }
-
+kjjijiji bobb huhhu
         $reply_len = strlen(element('post_reply', $origin)) + 1;
         if (element('reply_order', $board) !== 'desc') {
             $begin_reply_char = 'A';
@@ -154,7 +154,7 @@ class Board_write extends CB_Controller
             if (element('post_id', $origin)) {
                 $this->db->like('post_reply', element('post_reply', $origin), 'after');
             }
-            $result = $this->db->get('post');
+            $result = $this->db->get('post');                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      98
             $row = $result->row_array();
 
         } else {
@@ -834,7 +834,7 @@ class Board_write extends CB_Controller
             }
 
             if ($is_post_name || $is_admin==="super") {
-                $updatedata['post_nickname'] = $this->input->post('post_nickname', null, '');
+                $updatedata['post_nickname'] = empty($this->input->post('post_nickname')) ? $this->member->item('mem_nickname') : $this->input->post('post_nickname');
                 $updatedata['post_email'] = $this->input->post('post_email', null, '');
                 $updatedata['post_homepage'] = $this->input->post('post_homepage', null, '');
             }
@@ -2022,7 +2022,7 @@ class Board_write extends CB_Controller
             );
 
             if ($is_post_name || $is_admin==="super") {
-                $updatedata['post_nickname'] = $this->input->post('post_nickname', null, '');
+                $updatedata['post_nickname'] = empty($this->input->post('post_nickname')) ? $this->member->item('mem_nickname') : $this->input->post('post_nickname');
                 $updatedata['post_email'] = $this->input->post('post_email', null, '');
                 $updatedata['post_homepage'] = $this->input->post('post_homepage', null, '');
             }
