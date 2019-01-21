@@ -86,12 +86,13 @@ if ($this->member->is_member() === false) {
         <div >
        
         
-            
-            <input type="text" name="post_title" id="post_title" <?php echo $readonly ?> value="<?php echo element('reply', $view) && element('origin', $view) ? 'RE) '.set_value('post_title', element('post_title', element('origin', $view))) : set_value('post_title', element('post_title', element('post', $view))); ?>" placeholder="제목글을 작성해 주세요.리스트에 노출됩니다." onfocus="this.placeholder=''" onblur="this.placeholder='제목글을 작성해 주세요. 리스트에 노출됩니다.'" style="display:block;" />
+            <label for="post_title" class="write_label">제목</label>
+            <input type="text" name="post_title" id="post_title" <?php echo $readonly ?> value="<?php echo element('reply', $view) && element('origin', $view) ? 'RE) '.set_value('post_title', element('post_title', element('origin', $view))) : set_value('post_title', element('post_title', element('post', $view))); ?>" placeholder="제목글을 작성해 주세요.리스트에 노출됩니다." onfocus="this.placeholder=''" onblur="this.placeholder='제목글을 작성해 주세요. 리스트에 노출됩니다.'" style="display:block;margin-bottom:10px;" />
             <?php if ($this->member->is_member() === false ) { ?>
             <input type="hidden" name="post_nickname"  value="손님" />
             <input type="hidden" name="post_email"  value="guest@secretvt.com" />
-<input type="password" name="post_password" id="post_password" value="" placeholder="비밀번호를 입력해 주세요" onfocus="this.placeholder=''" onblur="this.placeholder='비밀번호를 입력해 주세요.'" style="display:block;margin-top:5px;" autocomplete="new-password" />
+			<label for="post_password" class="write_label">비밀번호</label> 
+<input type="password" name="post_password" id="post_password" value="" placeholder="비밀번호를 입력해 주세요" onfocus="this.placeholder=''" onblur="this.placeholder='비밀번호를 입력해 주세요.'" style="display:block;" autocomplete="new-password" />
             
         <?php } ?>
         <?php if ( ! element('use_dhtml', element('board', $view)) AND (element('post_min_length', element('board', $view)) OR element('post_max_length', element('board', $view)))) { ?>
