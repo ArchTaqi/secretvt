@@ -91,7 +91,7 @@ if ($this->member->is_member() === false) {
             <?php if ($this->member->is_member() === false ) { ?>
             <input type="hidden" name="post_nickname"  value="손님" />
             <input type="hidden" name="post_email"  value="guest@secretvt.com" />
-<input type="password" name="post_password" id="post_password" value="" placeholder="비밀번호를 입력해 주세요" onfocus="this.placeholder=''" onblur="this.placeholder='비밀번호를 입력해 주세요.'" style="display:block;margin-top:5px;" />
+<input type="password" name="post_password" id="post_password" value="" placeholder="비밀번호를 입력해 주세요" onfocus="this.placeholder=''" onblur="this.placeholder='비밀번호를 입력해 주세요.'" style="display:block;margin-top:5px;" autocomplete="new-password" />
             
         <?php } ?>
         <?php if ( ! element('use_dhtml', element('board', $view)) AND (element('post_min_length', element('board', $view)) OR element('post_max_length', element('board', $view)))) { ?>

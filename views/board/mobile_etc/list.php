@@ -184,12 +184,12 @@
 <div id="dialog_tour"  style="display:none;" title="비밀번호 확인">
     <?php 
 
-    $attributes = array('class' => 'form-horizontal', 'name' => 'fpassword', 'id' => 'fpassword');
-    echo form_open_multipart(current_full_url(), $attributes);
+    $attributes = array('class' => 'form-horizontal', 'name' => 'fpassword', 'id' => 'fpassword','onsubmit'=>'faq_open_confirm();return false;');
+    echo form_open(current_full_url(), $attributes);
      ?>
     <input type="hidden" name="<?php echo element('primary_key', $view); ?>"    value="<?php echo element(element('primary_key', $view), element('post', $view)); ?>" />
     <label for="password">Password</label>
-    <input type="password" name="modify_password" id="modify_password" value="" class="text">
+    <input type="password" name="modify_password" id="modify_password" value="" class="text" autocomplete="new-password">
     <?php echo form_close(); ?>
    
 
@@ -244,6 +244,7 @@ var guest_post_id;
         $( "#dialog_tour" ).dialog({
           autoOpen: false,
           modal : true,
+          show :true,
           buttons: {
             "확 인": faq_open_confirm,
             Cancel: function() {
@@ -261,6 +262,28 @@ var guest_post_id;
           // open: function() { jQuery('div.ui-widget-overlay').bind('click', function() { jQuery('#dialog_tour').dialog('close'); }) }
         });
 
+
+
+ // $( "#dialog_tour" ).dialog( "open" );
+
+        $('.guest_post').click(function(){
+
+
+            var $heading_ = $(this).find('div.table-box div.question');
+
+            if ($heading_.is(':visible')) {
+                
+            } else {
+                $('.table-answer.answer:visible').css('display', 'none');
+                guest_post_id=$(this).data('post_id');
+                $( "#dialog_tour" ).dialog( "open" );
+            }
+            
+            
+
+          
+        });
+    });
 function faq_open_confirm(){
     
 
@@ -303,27 +326,5 @@ function faq_open_confirm(){
 
     jQuery('#dialog_tour').dialog('close');
 }
-
- // $( "#dialog_tour" ).dialog( "open" );
-
-        $('.guest_post').click(function(){
-
-
-            var $heading_ = $(this).find('div.table-box div.question');
-
-            if ($heading_.is(':visible')) {
-                
-            } else {
-                $('.table-answer.answer:visible').css('display', 'none');
-                guest_post_id=$(this).data('post_id');
-                $( "#dialog_tour" ).dialog( "open" );
-            }
-            
-            
-
-          
-        });
-    });
-
 
 </script>
