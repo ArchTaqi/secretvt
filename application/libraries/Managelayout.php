@@ -401,9 +401,9 @@ class Managelayout extends CI_Controller
                             </li>
 
                            <li>
-                                <a href="mailto:vinadone@gmail.com" style="background:url(\''.base_url('/assets/images/temp/footer_img/footer_mail.png').'\') no-repeat right center; display: inline-block; width: 100%; background-size: 9%;">
+                                <a href="mailto:boyoon8@gmail.com" style="background:url(\''.base_url('/assets/images/temp/footer_img/footer_mail.png').'\') no-repeat right center; display: inline-block; width: 100%; background-size: 9%;">
                                     E-Mail<br/>
-                                    vinadone@gmail.com
+                                    boyoon8@gmail.com
                                 </a>
                             </li>
                            <li style="background:url(\''.base_url('/assets/images/temp/footer_img/footer_talk.png').'\') no-repeat right center; display: inline-block; width: 100%; background-size: 9%;">

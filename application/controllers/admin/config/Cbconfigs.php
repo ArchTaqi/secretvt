@@ -192,7 +192,7 @@ class Cbconfigs extends CB_Controller
             ),
             array(
                 'field' => 'browser_cache_version',
-                'label' => '구브라우저 캐시 버전',
+                'label' => '브라우저 캐시 버전',
                 'rules' => 'trim',
             ),
         );
