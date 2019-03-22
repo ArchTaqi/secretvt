@@ -104,7 +104,7 @@
         <ul class="login_sign">
             <li>
                 <a href="<?php echo site_url('register'); ?>"  title="회원가입">
-                아직도 SecretPhilippines<br>회원이 아니세요 ?
+                아직도 Secret 베트남<br>회원이 아니세요 ?
                     <span>
                     회원가입
                     </span>

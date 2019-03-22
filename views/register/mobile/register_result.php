@@ -13,7 +13,7 @@
             <img src="../assets/images/temp/login_img/login_cong.png">
             <figcaption>
                 <b class="text-primary"><?php echo html_escape($this->session->flashdata('nickname')); ?></b>
-                님의 Secret Philippines 회원가입을<br/> 진심으로 축하드립니다. <br />
+                님의 Secret 베트남 회원가입을<br/> 진심으로 축하드립니다. <br />
                 <?php echo $this->session->flashdata('email_auth_message'); ?>
             </figcaption>
         </figure>
