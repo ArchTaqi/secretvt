@@ -1382,7 +1382,8 @@ class Register extends CB_Controller
             'mem_userid' => $userid,
         );
         $count = $this->Member_userid_model->count_by($where);
-        if ($count > 0) {
+        $count_ = $this->Member_model->count_by($where);
+        if ($count > 0 || $count_ > 0) {
             $result = array(
                 'result' => 'no',
                 'reason' => '이미 사용중인 아이디입니다',
