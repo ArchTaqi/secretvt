@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="https://cmy.secretvt.com/views/_layout/mobile/css/style.css">
+	<link rel="stylesheet" type="text/css" href="https://cmy.secretvt.com/assets/css/dialog.css">
+	<link rel="stylesheet" type="text/css" href="https://cmy.secretvt.com/assets/css/reset.css?ver=0.2099">
+	<link rel="stylesheet" type="text/css" href="https://cmy.secretvt.com/assets/css/global.css?23ver=0.2099">
+	<link rel="stylesheet" type="text/css" href="https://cmy.secretvt.com/assets/css/page.css?23ver=0.2099">
+	<!--	-->
+	<link rel="stylesheet" href="css/page_new.css">
+	<!--	-->
+	<link rel="stylesheet" type="text/css" href="https://cmy.secretvt.com/assets/css/style.css?ver=0.2099">
+	<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/earlyaccess/jejugothic.css">
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cmy.secretvt.com/assets/css/swiper.min.css">
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<script type="text/javascript" src="https://secretvt.com/assets/js/swiper.min.js"></script>
+</head>
+
+<body>
+	<!-- header -->
+	<header class="header">
+		<h1 class="h_logo"><a href=""><img src="/assets/images/temp/logo.png?ver=0.24" alt="시크릿베트남"></a></h1>
+		<ul class="h_btn_box">
+			<li class="pull-left">
+				<button><img src="images/h_icon_ham.svg" alt="네비게이션"></button>
+			</li>
+			<li class="pull-right">
+				<a href=""><img src="images/h_icon_user.svg" alt="마이페이지"></a>
+			</li>
+			<li class="pull-right mr10">
+				<a href="">
+					<img src="images/h_icon_search.svg" alt="검색">
+				</a>
+			</li>
+		</ul>
+	</header>
+	<!-- header end -->
+
+	<!-- main -->
+	<div class="main_flex">
+		<div class="wrap09">
+			<section class="myinfo01">
+				<h2 class="hidden">마이페이지</h2>
+				<div class="user_info">
+					<p class="user">userid</p>
+					<p class="greeting"><strong class="nick">"홍길동"</strong> 님 안녕하세요</p>
+				</div>
+				<ul class="btn_box">
+					<li><a href="" class="btn"><i class="fa fa-user"></i> 내 정보</a></li>
+					<li><a href="" class="btn"><i class="fa fa-bell"></i> 알 림 <span class="lab_notification">1</span></a></li>
+				</ul>
+			</section>
+			<style>
+				.myinfo01 {
+					padding: 4% 3%;
+					background-color: #ecf4f8;
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					border-bottom: 1px solid #ddd;
+					/*					position: relative;*/
+				}
+
+				.myinfo01 .user {
+					margin-bottom: 10px;
+					font-size: 24px;
+					font-family: 'Jeju Gothic', sans-serif;
+				}
+
+				.myinfo01 .greeting {
+					font-size: 12px;
+				}
+
+				.myinfo01 .nick {
+					font-size: 14px;
+					font-family: 'Jeju Gothic', sans-serif;
+					color: #25a4f4;
+				}
+
+				.myinfo01 .btn_box {
+					/*
+					position: absolute;
+					right: 3%;
+					top: 50%;
+					transform: translateY(-50%);
+*/
+				}
+
+				.myinfo01 .btn {
+					position: relative;
+					display: block;
+					margin-bottom: 0;
+					margin-right: 0;
+					padding: 5px 10px 4px;
+					font-size: 13px;
+					border-radius: 20px;
+					background-color: rgba(255, 255, 255, 0.5);
+					border: 1px solid #25a4f4;
+					font-family: 'Jeju Gothic', sans-serif;
+				}
+
+				.myinfo01 li {
+					margin-bottom: 5px;
+					width: 86px;
+				}
+
+				.myinfo01 li:last-child {
+					margin-bottom: 0;
+				}
+
+				.myinfo01 .btn .fa {
+					color: #25a4f4;
+				}
+
+				.myinfo01 .lab_notification {
+					top: -4px;
+					right: 3px;
+				}
+
+			</style>
+			<!-- 마이페이지 카테고리 -->
+			<section class="info_cate">
+				<ul class="cate_list">
+					<li class="list_li"><a href=""><img src="images/icon_writing.svg" alt="작성글">작성글</a></li>
+					<li class="list_li"><a href=""><img src="images/icon_scrap.svg" alt="스크랩">스크랩</a></li>
+					<li class="list_li"><a href=""><img src="images/icon_mail_inbox.svg" alt="받은쪽지함">받은쪽지함<span class="lab_notification">2</span></a></li>
+					<li class="list_li"><a href=""><img src="images/icon_mail_send.svg" alt="보낸쪽지함">보낸쪽지함</a></li>
+					<li class="list_li"><a href=""><img src="images/icon_friends.svg" alt="친구보기">친구보기</a></li>
+				</ul>
+			</section>
+			<style>
+				.info_cate {
+					padding-bottom: 4%;
+					border-bottom: 1px solid #ddd;
+				}
+
+				.info_cate .cate_list {
+					display: flex;
+					justify-content: space-around;
+				}
+
+				.info_cate .list_li {
+					position: relative;
+					text-align: center;
+					width: 56px;
+					font-size: 10px;
+					font-family: 'Jeju Gothic', sans-serif;
+				}
+
+				.info_cate .list_li a {
+					color: #414141;
+				}
+
+				.info_cate img {
+					display: block;
+					width: 26px;
+					height: 26px;
+					margin: 0 auto 5px;
+				}
+
+				.info_cate .list_li.active:after {
+					content: '';
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+					z-index: -1;
+					width: 56px;
+					height: 56px;
+					border-radius: 30px;
+					background-color: #ecf4f8;
+				}
+				.info_cate .lab_notification{
+					top: -2px;
+					right: calc(50% - 21px);
+				}
+			</style>
+			
+			
+			<div class="">
+				<div class="notification">
+					<div class="title">
+						<h2 class="bottom_02 mt10">보낸쪽지함</h2>
+					</div>
+					
+					<form action="https://secretvt.com/notification" class="form-inline pt10" name="flist" id="flist" method="post" accept-charset="utf-8">
+						<ul class="table-top  pull-left">
+							<li>
+								<button type="button" class="btn btn-black btn-sm btn-list-delete btn-list-selected disabled">선택삭제</button>
+							</li>
+						</ul>
+
+						<table class="table clearfix">
+						<thead>
+							<tr>
+								<th>번호</th>
+								<th>받는이</th>
+								<th>등록일</th>
+								<th>읽은시간</th>
+								<th><input type="checkbox" name="chkall" id="chkall"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="text-center">1</td>
+								<td class="text-center"><a href="">싸라있눼</a></td>
+
+								<td>19.04.03</td>
+								<td>19.04.05</td>
+								<td class="text-center"><input type="checkbox" class="list-chkbox"></td>
+
+							</tr>
+							<tr>
+								<td class="text-center">2</td>
+								<td class="text-center"><a href="">마리니</a></td>
+
+								<td>19.04.02</td>
+								<td></td>
+								<td class="text-center"><input type="checkbox" class="list-chkbox"></td>
+
+							</tr>
+						</tbody>
+					</table>
+					</form>
+					<nav></nav>
+				</div>
+			</div>
+		
+		<style>
+			.table>thead {
+				border-top: 2px solid #626262;
+			}
+		</style>
+	</div>
+
+	</div>
+
+	<!-- main end-->
+	<!-- footer -->
+	<section class="footer_02">
+		<h2 class="hidden">푸터</h2>
+		<ul class="btn_box">
+			<li class="f_btn"><a href="">로그인</a></li>
+			<li class="f_btn"><a href="">회원가입</a></li>
+			<li class="f_btn"><a href="">구글 앱 다운로드</a></li>
+		</ul>
+	</section>
+	<footer>
+		<ul>
+			<li><a href="" title="고객센터">고객센터</a></li>
+			<li><a href="" title="제휴문의">제휴문의</a></li>
+			<li><a href="" title="이용약관">이용약관</a></li>
+			<li><a href="" title="개인정보 방침">개인정보처리방침</a></li>
+		</ul>
+		<h2>Copyright &copy; Phillippines. All Rights Reserved </h2>
+	</footer>
+	<!-- footer end -->
+</body>
+
+</html>
