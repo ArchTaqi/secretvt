@@ -177,11 +177,15 @@ if (typeof(SIDEVIEW_JS) === 'undefined') // 한번만 실행
 
     function getAbsoluteLeft(oNode) {
         var oCurrentNode=oNode;
+
         var iLeft = 0;
         iLeft+=oCurrentNode.offsetWidth;
         while(oCurrentNode.tagName != 'BODY') {
             iLeft+=oCurrentNode.offsetLeft;
             oCurrentNode=oCurrentNode.offsetParent;
+
+            if(oCurrentNode.getAttribute('class') && oCurrentNode.getAttribute('class').indexOf('swiper-slide') != -1)
+                break;
         }
         return iLeft;
     }

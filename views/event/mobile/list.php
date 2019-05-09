@@ -1,6 +1,6 @@
 <?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
 
-<div class="wrap">
+<div class="main_flex">
 
     <section class="title">
         <div></div>

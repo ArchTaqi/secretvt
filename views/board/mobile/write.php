@@ -1,8 +1,10 @@
 <?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
 <?php echo element('headercontent', element('board', $view)); ?>
 
-<div class="wrap05  board">
-    <h3 class="title02"><?php echo html_escape(element('board_name', element('board', $view))); ?> 글쓰기</h3>
+<div class="main_flex">
+    <div class="wrap09 board" style="padding-top:0px">
+        <section class="write_post">
+            <h2 class="title04"><b class="cate"><?php echo html_escape(element('bgr_name', element('group', $view))); ?></b> 글쓰기</h2>
     <?php
     echo validation_errors('<div class="alert alert-warning" role="alert">', '</div>');
     echo show_alert_message(element('message', $view), '<div class="alert alert-auto-close alert-dismissible alert-info"><button type="button" class="close alertclose" >&times;</button>', '</div>');
@@ -10,7 +12,7 @@
     echo form_open_multipart(current_full_url(), $attributes);
     ?>
         <input type="hidden" name="<?php echo element('primary_key', $view); ?>"    value="<?php echo element(element('primary_key', $view), element('post', $view)); ?>" />
-        <div class="writeform">
+        <div class="write_top">
         <?php if (element('is_post_name', element('post', $view))) { ?>
             <li>
                 <span>이름</span>
@@ -31,13 +33,54 @@
                 <input type="text" class="input per95" name="post_homepage" id="post_homepage" value="<?php echo set_value('post_homepage', element('post_homepage', element('post', $view))); ?>" />
             </li>
         <?php } ?>
-        <li>
-            <span>제목</span>
-            <div class="group">
-            <input type="text" class="input per100" name="post_title" id="post_title" value="<?php echo set_value('post_title', element('post_title', element('post', $view))); ?>" />
-            </div>
+
+            <?php if(element('board_list',$view)){ ?>
+            <select name="brd_id" id="brd_id" class="select_cate">
+                <?php 
+                foreach(element('board_list',$view) as $key => $value){ 
+                    $selected = element('brd_id', element('board', $view)) == $key ? 'selected="selected"':'';
+                    echo '<option value="'.$key.'" '.$selected.'>'.$value.'</option>';
+                
+                 } 
+                 ?>
+            </select>
+            <?php } ?>
+            <?php if (element('use_category', element('board', $view))) { ?>
+            <select name="post_category" class=" select_area">
+                <option value="">지역을 선택해주세요</option>
+                <?php
+                $category = element('category', $view);
+                function ca_select($p = '', $category = '', $post_category = '')
+                {
+                    $return = '';
+                    if ($p && is_array($p)) {
+                        foreach ($p as $result) {
+                            $exp = explode('.', element('bca_key', $result));
+                            $len = (element(1, $exp)) ? strlen(element(1, $exp)) : '0';
+                            $space = str_repeat('-', $len);
+                            $return .= '<option value="' . html_escape(element('bca_key', $result)) . '"';
+                            if (element('bca_key', $result) === $post_category) {
+                                $return .= 'selected="selected"';
+                            }
+                            $return .= '>' . $space . html_escape(element('bca_value', $result)) . '</option>';
+                            $parent = element('bca_key', $result);
+                            $return .= ca_select(element($parent, $category), $category, $post_category);
+                        }
+                    }
+                    return $return;
+                }
+
+                echo ca_select(element(0, $category), $category, element('post_category', element('post', $view)));
+                ?>
+            </select>
             
-        </li>
+            <?php } ?>
+            <div class="write_tit">
+                <label for="" class="hidden">제목</label>
+                <input type="text" class="" name="post_title" id="post_title" value="<?php echo set_value('post_title', element('post_title', element('post', $view))); ?>" placeholder="제목을 입력하세요" />
+            </div>
+        </div>
+        
         <?php if (element('can_post_notice', element('post', $view)) OR element('can_post_secret', element('post', $view)) OR element('can_post_receive_email', element('post', $view))) { ?>
             <li>
                 <span>옵션</span>
@@ -64,67 +107,14 @@
                 <?php } ?>
             </li>
         <?php } ?>
-        <li>
+        <!-- <li>
             <span>슬롯 정렬</span>
             <div class="group">
             <input type="number" class="input px70" name="post_order" id="post_order" value="<?php echo set_value('post_order', element('post_order', element('post', $view))+ 0); ?>" />
             </div>
-        </li>
-        <?php if (element('use_category', element('board', $view))) { ?>
-            <li>
-                <span>카테고리</span>
-                <select name="post_category" class="input">
-                    <option value="">카테고리선택</option>
-                    <?php
-                    $category = element('category', $view);
-                    function ca_select($p = '', $category = '', $post_category = '')
-                    {
-                        $return = '';
-                        if ($p && is_array($p)) {
-                            foreach ($p as $result) {
-                                $exp = explode('.', element('bca_key', $result));
-                                $len = (element(1, $exp)) ? strlen(element(1, $exp)) : '0';
-                                $space = str_repeat('-', $len);
-                                $return .= '<option value="' . html_escape(element('bca_key', $result)) . '"';
-                                if (element('bca_key', $result) === $post_category) {
-                                    $return .= 'selected="selected"';
-                                }
-                                $return .= '>' . $space . html_escape(element('bca_value', $result)) . '</option>';
-                                $parent = element('bca_key', $result);
-                                $return .= ca_select(element($parent, $category), $category, $post_category);
-                            }
-                        }
-                        return $return;
-                    }
-
-                    echo ca_select(element(0, $category), $category, element('post_category', element('post', $view)));
-                    ?>
-                </select>
-            </li>
-        <?php } ?>
-        <li>
-            <span>지역</span>
-            <div class="group">
-            <select name="region_category" class="input">
-        <?php 
-        $return = '';
-        foreach(config_item('region_category') as $key => $value){
-            if($key ===0) continue;
-            $return .= '<option value="' . $key. '"';
-            if ($key == element('region_category', element('post', $view))) {
-                $return .= 'selected="selected"';
-            } else if($key == get_cookie('region')) {
-                $return .= 'selected="selected"';
-            }
-
-             
-            $return .= '>' .html_escape($value) . '</option>';
-        }
-        echo $return;
-        ?>
-            </select>
-            </div>
-        </li>
+        </li> -->
+        
+        
         <?php
         if (element('extra_content', $view)) {
             foreach (element('extra_content', $view) as $key => $value) {
@@ -160,16 +150,24 @@
         $form_group_style="";
         // if($this->cbconfig->get_device_type()!=='mobile' && element('use_dhtml', element('board', $view))) $form_group_style="style='width:740px;'";
          ?>
-        <div class="form-group mb3per" <?php echo $form_group_style ?>>
-            <?php if ( ! element('use_dhtml', element('board', $view))) { ?>
-                <div class="btn-group pull-right mb10">
-                    <button type="button" class="btn btn-default btn-sm" onClick="resize_textarea('post_content', 'down');"><i class="fa fa-plus fa-lg"></i></button>
-                    <button type="button" class="btn btn-default btn-sm" onClick="resize_textarea('post_content', 'up');"><i class="fa fa-minus fa-lg"></i></button>
-                </div>
-            <?php } ?>
+        <div class="write_txt"> 
+            <div class="form-group mb3per" <?php echo $form_group_style ?>>
+                <?php if ( ! element('use_dhtml', element('board', $view))) { ?>
+                    <div class="btn-group pull-right mb10">
+                        <button type="button" class="btn btn-default btn-sm" onClick="resize_textarea('post_content', 'down');"><i class="fa fa-plus fa-lg"></i></button>
+                        <button type="button" class="btn btn-default btn-sm" onClick="resize_textarea('post_content', 'up');"><i class="fa fa-minus fa-lg"></i></button>
+                    </div>
+                <?php } ?>
 
-            <?php echo display_dhtml_editor('post_content', set_value('post_content', element('post_content', element('post', $view))), $classname = 'dhtmleditor', $is_dhtml_editor = element('use_dhtml', element('board', $view)), $editor_type = $this->cbconfig->item('post_editor_type')); ?>
+                <?php echo display_dhtml_editor('post_content', set_value('post_content', element('post_content', element('post', $view))), $classname = 'dhtmleditor', $is_dhtml_editor = element('use_dhtml', element('board', $view)), $editor_type = $this->cbconfig->item('post_editor_type')); ?>
+            </div>
+            <p class="noti">
+                [이미지 업로드] 최대 <?php echo element('upload_file_count', element('board', $view)) ?>개까지 가능합니다<br>
+                통신환경에 따라 고용량 업로드는 실패할 수 있습니다.
+            </p>
         </div>
+        <div class="pr3per pl3per">
+            <div class="filebox bs3-primary preview-image pr mb20">
         <?php
         if (element('link_count', element('board', $view)) > 0) {
             $link_count = element('link_count', element('board', $view));
@@ -177,10 +175,13 @@
                 $link = html_escape(element('pln_url', element($i, element('link', $view))));
                 $link_column = $link ? 'post_link_update[' . element('pln_id', element($i, element('link', $view))) . ']' : 'post_link[' . $i . ']';
         ?>
-            <li>
-                <span>링크 #<?php echo $i+1; ?></span>
-                <input type="text" class="input per95" name="<?php echo $link_column; ?>" value="<?php echo set_value($link_column, $link); ?>" />
-            </li>
+                <div class="write_upload" style="margin-bottom:1.5%; display: inline-block; width: 100%;">
+                    <input type="text" class="upload-name text_title" name="<?php echo $link_column; ?>" value="<?php echo set_value($link_column, $link); ?>" />
+                    <label class="label_title text_title">
+                        링크 <?php echo $i+1; ?>
+                        <!--1-->
+                    </label>
+                </div>
         <?php
             }
         }
@@ -191,20 +192,27 @@
                 $file_column = $download_link ? 'post_file_update[' . element('pfi_id', element($i, element('file', $view))) . ']' : 'post_file[' . $i . ']';
                 $del_column = $download_link ? 'post_file_del[' . element('pfi_id', element($i, element('file', $view))) . ']' : '';
         ?>
-            <li>
-                <span>파일 #<?php echo $i+1; ?></span>
-                <input type="file" class="input" name="<?php echo $file_column; ?>" />
-                <?php if ($download_link) { ?>
-                    <a href="<?php echo $download_link; ?>"><?php echo html_escape(element('pfi_originname', element($i, element('file', $view)))); ?></a>
-                    <label for="<?php echo $del_column; ?>">
-                        <input type="checkbox" name="<?php echo $del_column; ?>" id="<?php echo $del_column; ?>" value="1" <?php echo set_checkbox($del_column, '1'); ?> /> 삭제
+                <div class="write_upload" style="margin-bottom:1.5%; display: inline-block; width: 100%;">
+                    <input type="file" class="upload-name text_title" name="<?php echo $file_column; ?>" />
+                    <label class="label_title text_title">
+                        파일 <?php echo $i+1; ?>
+                        <!--1-->
                     </label>
-                <?php } ?>
-            </li>
+                    
+                </div>
+                <?php if ($download_link) { ?>
+                    <div style="margin-left:100px;">
+                        <a href="<?php echo $download_link; ?>"><?php echo html_escape(element('pfi_originname', element($i, element('file', $view)))); ?></a>
+                        <label for="<?php echo $del_column; ?>">
+                            <input type="checkbox" name="<?php echo $del_column; ?>" id="<?php echo $del_column; ?>" value="1" <?php echo set_checkbox($del_column, '1'); ?> /> 삭제
+                        </label>
+                    </div>
+                    <?php } ?>
         <?php
             }
         }
         ?>
+            </div>
         <?php if ($this->member->is_member() === false) { ?>
             <div class="well text-center mt3per">
                 <?php if ($this->cbconfig->item('use_recaptcha')) { ?>
@@ -217,12 +225,16 @@
                 <?php } ?>
             </div>
         <?php } ?>
-            <div class="table-bottom text-center mb3per">
-                <button type="button" class="btn btn-default btn-sm btn-history-back">취소</button>
-                <button type="submit" class="btn btn-success btn-sm">작성완료</button>
+            <div class="write_clear table-bottom">
+                <button type="button" class="btn-history-back">취소</button>
+                <button type="submit" class="">작성완료</button>
             </div>
         </div>
     <?php echo form_close(); ?>
+    </section>
+
+    </div>
+
 </div>
 
 <?php echo element('footercontent', element('board', $view)); ?>
@@ -302,9 +314,9 @@ if (element('is_post_name', element('post', $view))) {
 $(function() {
     $('#fwrite').validate({
         rules: {
-            post_title: {required :true, minlength:2, maxlength:60},
+            // post_title: {required :true, minlength:2, maxlength:60},
             
-            post_content : {<?php echo (element('use_dhtml', element('board', $view))) ? 'required_' . $this->cbconfig->item('post_editor_type') : 'required'; ?> : true }
+            post_content : {<?php echo (element('use_dhtml', element('board', $view))) ? 'valid_' . $this->cbconfig->item('post_editor_type') : 'valid'; ?> : true }
 <?php if (element('is_post_name', element('post', $view))) { ?>
             , post_nickname: {required :true, minlength:2, maxlength:20}
             , post_email: {required :true, email:true}
@@ -318,7 +330,7 @@ $(function() {
 <?php } ?>
 <?php } ?>
 <?php if (element('use_category', element('board', $view))) { ?>
-            , post_category : {required: true}
+            // , post_category : {required: true}
 <?php } ?>
         },
         messages: {

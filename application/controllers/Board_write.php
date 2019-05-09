@@ -32,7 +32,7 @@ class Board_write extends CB_Controller
         /**
          * 라이브러리를 로딩합니다
          */
-        $this->load->library(array('querystring', 'accesslevel', 'email', 'notelib', 'point', 'imagelib','pagination'));
+        $this->load->library(array('querystring', 'accesslevel', 'email', 'notelib', 'point', 'imagelib','pagination', 'board_group'));
     }
 
 
@@ -69,7 +69,7 @@ class Board_write extends CB_Controller
             'board_id' => element('brd_id', $board),
         );
 
-
+        
 
         $this->accesslevel->check(
             element('access_write', $board),
@@ -213,12 +213,16 @@ class Board_write extends CB_Controller
 
         $view['view']['post'] = array();
 
-        if (element('bgr_id', $board)==='11')
+        if (element('brd_id', $board)==='70')
             $view['view']['list'] = $list = $this->_get_list(element('brd_key', $board), 1);
         
 
         $view['view']['board'] = $board;
         $view['view']['board_key'] = element('brd_key', $board);
+
+        $group = $this->board_group->item_all(element('bgr_id', $board));
+
+        $view['view']['group'] = $group;
         $mem_id = (int) $this->member->item('mem_id');
 
         $primary_key = $this->Post_model->primary_key;
@@ -230,22 +234,25 @@ class Board_write extends CB_Controller
             )
         );
 
-        $where = array(
-            'bgr_id' => element('bgr_id', $board)
+        
+
+         $where = array(
+            'bgr_id' => element('bgr_id', $board),
+            'brd_search' => 1,
         );
         $board_id = $this->Board_model->get_board_list($where);
         
         $board_list = array();
         if ($board_id && is_array($board_id)) {
             foreach ($board_id as $key => $val) {
-                $board_list[] = $this->board->item_all(element('brd_id', $val));
+                $board_list[element('brd_id', $val)] = element('brd_name', $val);
             }
         }
 
         $view['view']['board_list'] = $board_list;
 
-        if(empty(get_cookie('region'))) $view['view']['region']=0;
-        else $view['view']['region'] = get_cookie('region');
+        // if(empty(get_cookie('region'))) $view['view']['region']=0;
+        // else $view['view']['region'] = get_cookie('region');
 
         
         
@@ -313,12 +320,12 @@ class Board_write extends CB_Controller
 
         
 
-        if(strpos(element('brd_key', $board),'_review' )!==false){
+        // if(strpos(element('brd_key', $board),'_review' )!==false){
 
-           $post_parent=$this->Post_model->get_one($this->input->get('post_parent', null, 0));
-           $board_parent = $this->board->item_all(element('brd_id', $post_parent));
-           $view['view']['board_key_parent']=element('brd_key', $board_parent);
-        }
+        //    $post_parent=$this->Post_model->get_one($this->input->get('post_parent', null, 0));
+        //    $board_parent = $this->board->item_all(element('brd_id', $post_parent));
+        //    $view['view']['board_key_parent']=element('brd_key', $board_parent);
+        // }
 
 
         $extravars = element('extravars', $board);
@@ -408,7 +415,7 @@ class Board_write extends CB_Controller
         if (element('use_category', $board) && $is_admin === false) {
             $config[] = array(
                 'field' => 'post_category',
-                'label' => '카테고리',
+                'label' => '지역',
                 'rules' => 'trim|required',
             );
         }
@@ -719,7 +726,7 @@ class Board_write extends CB_Controller
             $this->data = $view;
             $this->layout = element('layout_skin_file', element('layout', $view));
 
-            if (element('bgr_id', $board)==='11'){
+            if (element('brd_id', $board)==='70'){
                 $list_skin_file = element('use_gallery_list', $board) ? 'gallerylist' : 'list';
                 $listskindir = ($this->cbconfig->get_device_view_type() === 'mobile')
                     ? $mobile_skin_dir : $skin_dir;
@@ -1199,7 +1206,7 @@ class Board_write extends CB_Controller
             /**
              * 게시물의 신규입력 또는 수정작업이 끝난 후 뷰 페이지로 이동합니다
              */
-            if (element('bgr_id', $board)==='11')
+            if (element('brd_id', $board)==='70')
                 $redirecturl = write_url(element('brd_key', $board), $post_id). '?' . $param->output();
             else 
                 $redirecturl = post_url(element('brd_key', $board), $post_id). '?' . $param->output();
@@ -1253,19 +1260,39 @@ class Board_write extends CB_Controller
             show_404();
         }
 
-        if (element('bgr_id', $board)==='11')
+        if (element('brd_id', $board)==='70')
             $view['view']['list'] = $list = $this->_get_list(element('brd_key', $board), 1);
         
         
         $view['view']['board'] = $board;
         $view['view']['board_key'] = element('brd_key', $board);
 
-        if(strpos(element('brd_key', $board),'_review' )!==false){
+        $group = $this->board_group->item_all(element('bgr_id', $board));
 
-           $post_parent=$this->Post_model->get_one($this->input->get('post_parent', null, 0));
-           $board_parent = $this->board->item_all(element('brd_id', $post_parent));
-           $view['view']['board_key_parent']=element('brd_key', $board_parent);
+        $view['view']['group'] = $group;
+
+        // if(strpos(element('brd_key', $board),'_review' )!==false){
+
+        //    $post_parent=$this->Post_model->get_one($this->input->get('post_parent', null, 0));
+        //    $board_parent = $this->board->item_all(element('brd_id', $post_parent));
+        //    $view['view']['board_key_parent']=element('brd_key', $board_parent);
+        // }
+
+
+        $where = array(
+            'bgr_id' => element('bgr_id', $board),
+            'brd_search' => 1,
+        );
+        $board_id = $this->Board_model->get_board_list($where);
+        
+        $board_list = array();
+        if ($board_id && is_array($board_id)) {
+            foreach ($board_id as $key => $val) {
+                $board_list[element('brd_id', $val)] = element('brd_name', $val);
+            }
         }
+
+        $view['view']['board_list'] = $board_list;
 
         $mem_id = (int) $this->member->item('mem_id');
 
@@ -1540,7 +1567,7 @@ class Board_write extends CB_Controller
         if (element('use_category', $board) && $is_admin === false) {
             $config[] = array(
                 'field' => 'post_category',
-                'label' => '카테고리',
+                'label' => '지역',
                 'rules' => 'trim|required',
             );
         }
@@ -1942,7 +1969,7 @@ class Board_write extends CB_Controller
             $view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
             $this->data = $view;
             $this->layout = element('layout_skin_file', element('layout', $view));
-            if (element('bgr_id', $board)==='11'){
+            if (element('brd_id', $board)==='70'){
                 $list_skin_file = element('use_gallery_list', $board) ? 'gallerylist' : 'list';
                 $listskindir = ($this->cbconfig->get_device_view_type() === 'mobile')
                     ? $mobile_skin_dir : $skin_dir;
@@ -2251,7 +2278,7 @@ class Board_write extends CB_Controller
              */
             $param =& $this->querystring;
 
-            if (element('bgr_id', $board)==='11')
+            if (element('brd_id', $board)==='70')
                 $redirecturl = write_url(element('brd_key', $board), $post_id). '?' . $param->output();
             else 
                 $redirecturl = post_url(element('brd_key', $board), $post_id). '?' . $param->output();
@@ -2625,13 +2652,13 @@ class Board_write extends CB_Controller
             'brd_id' => $this->board->item_key('brd_id', $brd_key),
         );
         
-        if(strpos($brd_key,'_review' )!==false){
-            $where = array(
-                'post_parent' => $this->input->get('post_parent', null, 0)
-            );   
-        }
+        // if(strpos($brd_key,'_review' )!==false){
+        //     $where = array(
+        //         'post_parent' => $this->input->get('post_parent', null, 0)
+        //     );   
+        // }
 
-        if(!empty(get_cookie('region')) && element('bgr_id', $board)!=='8' && element('bgr_id', $board)!=='11') {
+        if(!empty(get_cookie('region')) && element('bgr_id', $board)!=='8' && element('brd_id', $board)!=='70') {
             $where['region_category'] = get_cookie('region');
         }
 
@@ -3020,9 +3047,9 @@ class Board_write extends CB_Controller
         $return['write_url'] = '';
         if ($can_write === true) {
             $return['write_url'] = write_url($brd_key);
-            if(strpos($brd_key,'_review' )!==false){
-                $return['write_url'] .='?' . $param->output();
-            }
+            // if(strpos($brd_key,'_review' )!==false){
+            //     $return['write_url'] .='?' . $param->output();
+            // }
         } elseif ($this->cbconfig->get_device_view_type() !== 'mobile' && element('always_show_write_button', $board)) {
             $return['write_url'] = 'javascript:alert(\'비회원은 글쓰기 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.\');';
         } elseif ($this->cbconfig->get_device_view_type() === 'mobile' && element('mobile_always_show_write_button', $board)) {

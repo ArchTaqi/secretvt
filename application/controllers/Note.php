@@ -160,7 +160,7 @@ class Note extends CB_Controller
 
         $layoutconfig = array(
             'path' => 'note',
-            'layout' => 'layout_popup',
+            'layout' => 'layout',
             'skin' => 'lists',
             'layout_dir' => $this->cbconfig->item('layout_note'),
             'mobile_layout_dir' => $this->cbconfig->item('mobile_layout_note'),
@@ -288,6 +288,8 @@ class Note extends CB_Controller
         $view['view']['type'] = $type;
         $view['view']['canonical'] = site_url('note/view/' . $type . '/' . $note_id);
 
+        $view['view']['delete_url'] = site_url('note/delete/' . element('nte_type', $result) . '/' . element('nte_id', $result));
+
         // 이벤트가 존재하면 실행합니다
         $view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
 
@@ -315,7 +317,7 @@ class Note extends CB_Controller
 
         $layoutconfig = array(
             'path' => 'note',
-            'layout' => 'layout_popup',
+            'layout' => 'layout',
             'skin' => 'view',
             'layout_dir' => $this->cbconfig->item('layout_note'),
             'mobile_layout_dir' => $this->cbconfig->item('mobile_layout_note'),
@@ -541,12 +543,12 @@ class Note extends CB_Controller
 
         $layoutconfig = array(
             'path' => 'note',
-            'layout' => 'layout_popup',
+            'layout' => 'layout',
             'skin' => 'write',
-            'layout_dir' => $this->cbconfig->item('layout_note'),
-            'mobile_layout_dir' => $this->cbconfig->item('mobile_layout_note'),
-            'skin_dir' => $this->cbconfig->item('skin_note'),
-            'mobile_skin_dir' => $this->cbconfig->item('mobile_skin_note'),
+            'layout_dir' => $this->cbconfig->item('layout_main'),
+            'mobile_layout_dir' => $this->cbconfig->item('mobile_layout_main'),
+            'skin_dir' => $this->cbconfig->item('skin_main'),
+            'mobile_skin_dir' => $this->cbconfig->item('mobile_skin_main'),
             'page_title' => $page_title,
             'meta_description' => $meta_description,
             'meta_keywords' => $meta_keywords,
@@ -555,6 +557,7 @@ class Note extends CB_Controller
         );
         $view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
         $this->data = $view;
+        
         $this->layout = element('layout_skin_file', element('layout', $view));
         $this->view = element('view_skin_file', element('layout', $view));
     }

@@ -162,6 +162,13 @@ class Editorfileupload extends CB_Controller
         // 이벤트가 존재하면 실행합니다
         Events::trigger('before', $eventname);
 
+        $this->output->set_content_type('application/json');
+
+
+
+
+    
+
         $this->_init();
 
         $mem_id = (int) $this->member->item('mem_id');
@@ -209,11 +216,17 @@ class Editorfileupload extends CB_Controller
                 // 이벤트가 존재하면 실행합니다
                 Events::trigger('doupload_after', $eventname);
 
-                echo "<script>window.parent.CKEDITOR.tools.callFunction("
-                    . $this->input->get('CKEditorFuncNum', null, '') . ", '"
-                    . $image_url . "', '업로드완료');</script>";
+                $result = array('uploaded' => true , 'url'=>$image_url);
+                exit(json_encode($result));
+                        
+                // echo "<script>window.parent.CKEDITOR.tools.callFunction("
+                //  . $this->input->get('CKEditorFuncNum', null, '') . ", '"
+                //  . $image_url . "', '업로드완료');</script>";
             } else {
-                echo $this->upload->display_errors();
+                $result = array('uploaded' => false , 'error'=>array('message' => 'could not upload this image'));
+                exit(json_encode($result));
+
+                ;
             }
         }
     }

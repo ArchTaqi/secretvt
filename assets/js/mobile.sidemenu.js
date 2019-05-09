@@ -5,7 +5,7 @@ jQuery(function($) {
         side_obj = { my : {} },
         is_trans_sup = supportsTransitions();
 
-    $side_wr.css({'left':'-250px'});   //초기화
+    $side_wr.css({'left':'-300px'});   //초기화
 
     side_obj.destory = function(){
         if ( ! is_trans_sup ) return;
@@ -65,7 +65,7 @@ jQuery(function($) {
 
     function remove_side_data(){
         $btn_side.data('toggle_enable', false);
-        $side_wr.animate({'left': '-250px'}, 160, function(){
+        $side_wr.animate({'left': '-300px'}, 160, function(){
             $side_menu.hide();
             $('body').css({'min-height':''});
             side_obj.my.destroy();
@@ -73,6 +73,12 @@ jQuery(function($) {
     }
 
     $('#side_menu .side_wr').on('clickoutside', function(e){
+        if ( ! $(e.target).closest('#btn_side').length && $btn_side.data('toggle_enable')){
+            remove_side_data();
+        }
+    });
+
+    $('#side_menu .btn_close').on('click', function(e){
         if ( ! $(e.target).closest('#btn_side').length && $btn_side.data('toggle_enable')){
             remove_side_data();
         }

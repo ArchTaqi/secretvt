@@ -368,6 +368,33 @@ if (typeof(COMMON_JS) === 'undefined') {
         });
     }
 
+    function note_blame(nte_id, classname) {
+
+        var href;
+
+        if ( nte_id == '') {
+            return false;
+        }
+
+        if ( ! confirm("이 쪽지를 신고하시겠습니까?\n\n한번 신고하신 후에는 취소가 불가능합니다")) { return false; }
+
+        href = cb_url + '/postact/note_blame/' + nte_id;
+        var $that = $(this);
+        $.ajax({
+            url : href,
+            type : 'get',
+            dataType : 'json',
+            success : function(data) {
+                if (data.error) {
+                    alert(data.error);
+                    return false;
+                } else if (data.success) {
+                    alert(data.success);
+                }
+            }
+        });
+    }
+
     function post_action(action_type, action_id, flag, msg) {
         var href;
         if ( action_type == '') {
@@ -676,7 +703,7 @@ if (typeof(COMMON_JS) === 'undefined') {
     }
 
     function note_write(userid) {
-        window.open(cb_url + '/note/write/' + userid , 'win_note', 'left=100,top=100,width=730,height=500,scrollbars=1');
+        document.location.href = (cb_url + '/note/write/' + userid);
         return false;
     }
 

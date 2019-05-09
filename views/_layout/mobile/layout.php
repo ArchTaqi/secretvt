@@ -21,9 +21,9 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/reset.css?'.$this->cbconfig->item('browser_cache_version'))?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/global.css?23'.$this->cbconfig->item('browser_cache_version'))?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/page.css?23'.$this->cbconfig->item('browser_cache_version'))?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/page_new.css?'.$this->cbconfig->item('browser_cache_version'))?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/style.css?'.$this->cbconfig->item('browser_cache_version'))?>" />
-
-<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/earlyaccess/nanumgothic.css" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nanum+Gothic" />
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/earlyaccess/jejugothic.css" />
 
 <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
@@ -68,74 +68,97 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
 <?php
 
 
-    $menuhtml = '<nav id="mainmenu">
-                    <ul>';
-    
+    $menuhtml = '<nav id="" class="gnb_main wrap09">
+                    <ul class="gnb_list">';
+    $menuhtml_sub ='';
     if (element('menu', $layout)) {
         $menu = element('menu', $layout);
+
+
         $menu_keys=array_keys(element(0, $menu));
         if (element(0, $menu)) {
             foreach (element(0, $menu) as $mkey => $mval) {
-                // if (element(element('men_id', $mval), $menu)) {
-                //     $mlink = element('men_link', $mval) ? element('men_link', $mval) : 'javascript:;';
-                //     $menuhtml .= '<li class="dropdown">
-                //     <a href="' . $mlink . '" ' . element('men_custom', $mval);
-                //     if (element('men_target', $mval)) {
-                //         $menuhtml .= ' target="' . element('men_target', $mval) . '"';
-                //     }
-                //     $menuhtml .= ' title="' . html_escape(element('men_name', $mval)) . '">' . html_escape(element('men_name', $mval)) . '</a>
-                //     <ul class="dropdown-menu">';
+                $mlink = element('men_link', $mval) ? element('men_link', $mval) : 'javascript:;';
+                $active='';
+                
+                if(element('men_id',$mval) === element(0,element('active',$menu))) {
+                    $active='active';
+                }
 
-                //     foreach (element(element('men_id', $mval), $menu) as $skey => $sval) {
-                //         $slink = element('men_link', $sval) ? element('men_link', $sval) : 'javascript:;';
-                //         $menuhtml .= '<li><a href="' . $slink . '" ' . element('men_custom', $sval);
-                //         if (element('men_target', $sval)) {
-                //             $menuhtml .= ' target="' . element('men_target', $sval) . '"';
-                //         }
-                //         $menuhtml .= ' title="' . html_escape(element('men_name', $sval)) . '">' . html_escape(element('men_name', $sval)) . '</a></li>';
-                //     }
-                //     $menuhtml .= '</ul></li>';
-
-                // } else {
+                if (element(element('men_id', $mval), $menu) && element(0,element('active',$menu)) === element('men_id', $mval)) {
                     $mlink = element('men_link', $mval) ? element('men_link', $mval) : 'javascript:;';
-                    $active='';
-                    
-                    if(element('men_id',$mval) === element(0,element('active',$menu))) {
-                        $active='active';
+                    $menuhtml .= '<li class="gnb_li '.$active.'">
+                    <a href="' . $mlink . '" ' . element('men_custom', $mval);
+                    if (element('men_target', $mval)) {
+                        $menuhtml .= ' target="' . element('men_target', $mval) . '"';
                     }
-                    $menuhtml .= '<li class="'.$active.'" ><a href="' . $mlink . '" ' . element('men_custom', $mval);
+                    $menuhtml .= ' title="' . html_escape(element('men_name', $mval)) . '">' . html_escape(element('men_name', $mval)) . '</a>';
+                    $menuhtml .= '</li>';
+
+                    $menuhtml_sub = '<nav class="lnb01">
+                                        <ul class="lnb_list">';
+
+                    foreach (element(element('men_id', $mval), $menu) as $skey => $sval) {
+                        $active='';
+                        
+                        if(element('men_id',$sval) === element(1,element('active',$menu))) {
+                            $active='active';
+                        }
+                        $slink = element('men_link', $sval) ? element('men_link', $sval) : 'javascript:;';
+                        $menuhtml_sub .= '<li class="lnb_li '.$active.'"><a href="' . $slink . '" ' . element('men_custom', $sval);
+                        if (element('men_target', $sval)) {
+                            $menuhtml_sub .= ' target="' . element('men_target', $sval) . '"';
+                        }
+                        $menuhtml_sub .= ' title="' . html_escape(element('men_name', $sval)) . '">' . html_escape(element('men_name', $sval)) . '</a></li>';
+                    }
+                    $menuhtml_sub .= '</ul></nav>';
+
+                } else {
+                    
+                    $menuhtml .= '<li class="gnb_li '.$active.'" ><a href="' . $mlink . '" ' . element('men_custom', $mval);
                     if (element('men_target', $mval)) {
                         $menuhtml .= ' target="' . element('men_target', $mval) . '"';
                     }
                     $menuhtml .= ' title="' . html_escape(element('men_name', $mval)) . '">' . html_escape(element('men_name', $mval)) . '</a></li>';
 
                     $menuhtml .= "\n";
-                // }
+                }
             }
         }
     }
     $menuhtml.='</ul></nav>';
 
  ?>
-    <header>
-        <ul >
 
+    <header class="header">
+        <h1 class="h_logo"><a href="<?php echo site_url(); ?>" title="<?php echo html_escape($this->cbconfig->item('site_title'));?>"><?php echo $this->cbconfig->item('site_logo'); ?>
+                    </a></h1>
+        <ul class="h_btn_box">
+            <li class="pull-left" id="btn_side">
+                <button><img src="<?php echo base_url('assets/images/h_icon_ham.svg'); ?>" alt="네비게이션"></button>
+            </li>
             <?php if ($this->member->is_member()) { ?>
                 
-                <li style="width:15%;float:left;"><a href="<?php echo site_url('mypage'); ?>" ><img src="<?php echo base_url('assets/images/icon_user_config.png'); ?>" alt="My Page" class="pull-left" style="padding:10px 0 0 10px;"></a><div class="lab_notification"><b class="lab_noti_num"><?php echo number_format(element('notification_num', $layout) + 0); ?></b><span class="hidden">개의 알림이 있습니다</span></div></li>
+
+                <li class="pull-right"><a href="<?php echo site_url('mypage'); ?>" ><img src="<?php echo base_url('assets/images/icon_user_config.png'); ?>" alt="My Page" ></a></li>
             <?php } else { ?>
-                <li style="width:15%;"><a href="<?php echo site_url('login?url=' . urlencode(current_full_url())); ?>" ><img src="<?php echo base_url('assets/images/icon_user.png'); ?>" alt="로그인" class="pull-left" style="padding:10px 0 0 10px;"></a></li>
+                 <li class="pull-right">
+                    <a href="<?php echo site_url('login?url=' . urlencode(current_full_url())); ?>" ><img src="<?php echo base_url('assets/images/h_icon_user.svg'); ?>" alt="로그인"></a>
+                </li>   
+                
                 
             <?php } ?>
-            <li style="width:70%;text-align: center;">
-                <h1>
-        <!-- 로고 영역 -->
-                    <a href="<?php echo site_url(); ?>" title="<?php echo html_escape($this->cbconfig->item('site_title'));?>"><?php echo $this->cbconfig->item('site_logo'); ?>
-                    </a>
-                </h1>
+
+            
+            <li class="pull-right mr10">
+                <a href="<?php echo site_url('search'); ?>">
+                    <img src="<?php echo base_url('assets/images/h_icon_search.svg'); ?>" alt="검색">
+                </a>
             </li>
-            <li  style="width:15%;"><a href="javascript:note_chat();" ><img src="<?php echo base_url('assets/images/icon_chat.png'); ?>" alt="채팅방" class="pull-right" style="padding:10px 10px 0 0;"></a></li>
         </ul>
+    </header>
+
+   
         
         
         
@@ -148,8 +171,11 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
     
         
         <?php 
+
+        echo $menuhtml;
+        echo $menuhtml_sub;
             if(!empty(element(0,element('active',$menu)))){
-                echo $menuhtml;
+                
                 
                 $prev_men_link = element('prev_men_link', $layout);
                 $next_men_link = element('next_men_link', $layout);
@@ -161,7 +187,7 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
             }
             ?>
         
-    </header>
+
     <!-- nav end -->
     <!-- header end -->
 
@@ -183,6 +209,17 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
     </div>
         
     <!-- main end -->
+    <aside class="fixed_btn_box">
+        <ul class="btn_box">
+            <li class="btn btn_top" style="display:none;"><img src="<?php echo base_url('/assets/images/icon_top.svg');?>" alt="맨위로"></li>
+            <?php if (element('write_url', element('list', $view))) { ?>
+            <li class="btn btn_write"><a href="<?php echo element('write_url', element('list', $view)) ?>" class=""><img src="<?php echo base_url('/assets/images/icon_write.svg');?>" alt="글쓰기"></a></li>
+            <?php }elseif (element('write_url', $view)) { ?>
+            <li class="btn btn_write"><a href="<?php echo element('write_url', $view) ?>" class=""><img src="<?php echo base_url('/assets/images/icon_write.svg');?>" alt="글쓰기"></a></li>
+            <?php } ?>
+        </ul>
+    </aside>
+
     <aside class="back_top_m" style="display:none;">
         <div><img src="<?php echo base_url('/assets/images/backtop_03.png')?>" alt="맨위로"></div>
     </aside>
@@ -190,68 +227,86 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
     <?php echo $this->managelayout->display_footer(); ?>
     <!-- footer end -->
 
-<div class="menu" id="side_menu">
+<div class="menu " id="side_menu">
     <div class="side_wr add_side_wr">
-        <div id="isroll_wrap" class="side_inner_rel">
-            <div class="side_inner_abs">
-                <div class="m_search">
-                    
-                </div>
-                <div class="m_login">
+        <div id="isroll_wrap" class="side_inner_rel black">
+            <section class="side_inner_abs gnb_side">
+                <h2 class="hidden">네비게이션</h2>
+                
+                <div class="top">
                     <?php if ($this->member->is_member()) { ?>
-                        <span><a href="<?php echo site_url('login/logout?url=' . urlencode(current_full_url())); ?>" class="btn btn-primary" title="로그아웃"><i class="fa fa-sign-out"></i> 로그아웃</a></span>
-                        <span><a href="<?php echo site_url('mypage'); ?>" class="btn btn-primary" title="로그아웃"><i class="fa fa-user"></i> 마이페이지</a></span>
+                        <h3 class="txt"><a href="<?php echo site_url('mypage'); ?>" title="마이페이지" style="color:#fff"><span class="t_bold">홍길동</span>님 안녕하세요</a></h3>
                     <?php } else { ?>
-                        <span><a href="<?php echo site_url('login?url=' . urlencode(current_full_url())); ?>" class="btn btn-primary" title="로그인"><i class="fa fa-sign-in"></i> 로그인</a></span>
-                        <span><a href="<?php echo site_url('register'); ?>" class="btn btn-primary" title="회원가입"><i class="fa fa-user"></i> 회원가입</a></span>
+                        <h3 class="txt"><a style="color:#fff" href="<?php echo site_url('login?url=' . urlencode(current_full_url())); ?>" title="로그인">로그인 하세요</a></h3>
                     <?php } ?>
+                    <button type="button" class="btn_close" ><img src="<?php echo base_url('assets/images/icon_close.svg') ?>" alt="메뉴닫기"></button>
                 </div>
-                <ul class="m_board">
-                    <?php if ($this->cbconfig->item('open_currentvisitor')) { ?>
-                        <li><a href="<?php echo site_url('currentvisitor'); ?>" title="현재 접속자"><span class="fa fa-link"></span> 현재 접속자</a></li>
-                    <?php } ?>
-                </ul>
-                <ul class="m_menu">
-                    <?php
-                    $menuhtml = '';
-                    if (element('menu', $layout)) {
-                        $menu = element('menu', $layout);
-                        if (element(0, $menu)) {
-                            foreach (element(0, $menu) as $mkey => $mval) {
-                                if (element(element('men_id', $mval), $menu)) {
-                                    $mlink = element('men_link', $mval) ? element('men_link', $mval) : 'javascript:;';
-                                    $menuhtml .= '<li class="dropdown">
-                                    <a href="' . $mlink . '" ' . element('men_custom', $mval);
-                                    if (element('men_target', $mval)) {
-                                        $menuhtml .= ' target="' . element('men_target', $mval) . '"';
-                                    }
-                                    $menuhtml .= ' title="' . html_escape(element('men_name', $mval)) . '">' . html_escape(element('men_name', $mval)) . '</a><a href="#" style="width:25px;float:right;" class="subopen" data-menu-order="' . $mkey . '"><i class="fa fa-chevron-down"></i></a>
-                                    <ul class="dropdown-menu drop-downorder-' . $mkey . '">';
-
-                                    foreach (element(element('men_id', $mval), $menu) as $skey => $sval) {
-                                        $menuhtml .= '<li><a href="' . element('men_link', $sval) . '" ' . element('men_custom', $sval);
-                                        if (element('men_target', $sval)) {
-                                            $menuhtml .= ' target="' . element('men_target', $sval) . '"';
-                                        }
-                                        $menuhtml .= ' title="' . html_escape(element('men_name', $sval)) . '">' . html_escape(element('men_name', $sval)) . '</a></li>';
-                                    }
-                                    $menuhtml .= '</ul></li>';
-
-                                } else {
-                                    $mlink = element('men_link', $mval) ? element('men_link', $mval) : 'javascript:;';
-                                    $menuhtml .= '<li><a href="' . $mlink . '" ' . element('men_custom', $mval);
-                                    if (element('men_target', $mval)) {
-                                        $menuhtml .= ' target="' . element('men_target', $mval) . '"';
-                                    }
-                                    $menuhtml .= ' title="' . html_escape(element('men_name', $mval)) . '">' . html_escape(element('men_name', $mval)) . '</a></li>';
+                <?php if ($this->member->is_member()) { ?>
+                    <div class="">
+                        <ul class="">
+                        <li ><a href="<?php echo site_url('notification'); ?>" title="나의 알림"><span class="fa fa-bell-o"></span>알림 : <?php echo number_format((int) element('notification_num', $layout)); ?> 개</a></li>
+                        <?php if ($this->cbconfig->item('use_note') && $this->member->item('mem_use_note')) { ?>
+                            <li ><a href="javascript:;" onClick="note_list();" title="나의 쪽지"><span class="fa fa-envelope"></span> 쪽지 : <?php echo number_format((int) $this->member->item('meta_unread_note_num')); ?> 개</a></li>
+                        <?php } ?>
+                        <?php if ($this->cbconfig->item('use_point')) { ?>
+                            <li><a href="<?php echo site_url('mypage/point'); ?>" title="나의 포인트"><span class="fa fa-gift"></span> 포인트 : <?php echo number_format((int) $this->member->item('mem_point')); ?> 점</a></li>
+                        <?php } ?>
+                        </ul>
+                    </div>
+                <?php } ?>
+                <?php
+                $menuhtml = '';
+                if (element('menu', $layout)) {
+                    $menu = element('menu', $layout);
+                    if (element(0, $menu)) {
+                        foreach (element(0, $menu) as $mkey => $mval) {
+                            if (element(element('men_id', $mval), $menu)) {
+                                $mlink = element('men_link', $mval) ? element('men_link', $mval) : 'javascript:;';
+                                $menuhtml .= '<div class="cate_box01"><h3 class="tit">
+                                <a href="' . $mlink . '" ' . element('men_custom', $mval);
+                                if (element('men_target', $mval)) {
+                                    $menuhtml .= ' target="' . element('men_target', $mval) . '"';
                                 }
+                                $menuhtml .= ' title="' . html_escape(element('men_name', $mval)) . '">' . html_escape(element('men_name', $mval)) . '</a><a href="#" style="width:25px;float:right;" class="subopen" data-menu-order="' . $mkey . '"><i class="fa fa-chevron-down"></i></a></h3>
+                                <ul class="list  drop-downorder-' . $mkey . '">';
+
+                                foreach (element(element('men_id', $mval), $menu) as $skey => $sval) {
+                                    $men_key = explode("_",element('men_link', $sval));
+                                    $menuhtml .= '<li class="list_li"><a href="' . element('men_link', $sval) . '" ' . element('men_custom', $sval);
+                                    if (element('men_target', $sval)) {
+                                        $menuhtml .= ' target="' . element('men_target', $sval) . '"';
+                                    }
+                                    $menuhtml .= ' title="' . html_escape(element('men_name', $sval)) . '"><img src="'.base_url("assets/images/icon_".element(1,$men_key,'')).'.svg">' . html_escape(element('men_name', $sval)) . '</a></li>';
+                                }
+                                $menuhtml .= '</ul></div>';
+
+                            } else {
+                                $mlink = element('men_link', $mval) ? element('men_link', $mval) : 'javascript:;';
+                                $menuhtml .= '<div class="cate_box02"><h3 class="tit"><a href="' . $mlink . '" ' . element('men_custom', $mval);
+                                if (element('men_target', $mval)) {
+                                    $menuhtml .= ' target="' . element('men_target', $mval) . '"';
+                                }
+                                $menuhtml .= ' title="' . html_escape(element('men_name', $mval)) . '">' . html_escape(element('men_name', $mval)) . '</a></h3></div>';
                             }
                         }
                     }
-                    echo $menuhtml;
-                    ?>
+                }
+                echo $menuhtml;
+                ?>
+                <div class="cate_box02">
+                    <h3 class="tit"><a href="<?php echo board_url('vtn_other') ?>">제휴문의</a></h3>
+                </div>
+                <ul class="login_box">
+    
+                    <?php if ($this->member->is_member()) { ?>
+                    <li><a href="<?php echo site_url('login/logout?url=' . urlencode(current_full_url())); ?>"  title="로그아웃"><i class="fa fa-sign-out"></i> 로그아웃</a></li>
+                    <?php }else{ ?>
+                    <li><a href="<?php echo site_url('login?url=' . urlencode(current_full_url())); ?>"  title="로그인"><i class="fa fa-sign-in"></i> 로그인</a></li>
+                    <?php } ?>
+                    
+                    <li><a href="">공지사항</a></li>
                 </ul>
-            </div>
+            </section>
         </div>
     </div>
 </div>
@@ -305,12 +360,12 @@ $(document).on('click', '.viewmobileversion', function(){
             $("#region").siblings("label").css("color" , "#231b26");
         }
 
-        $(window).scroll(function() { 
-        if ($(this).scrollTop() > 500) { //250 넘으면 버튼이 보여짐니다. 
-            $('.back_top_m').fadeIn(); } else { $('.back_top_m').fadeOut(); } 
-        });
+        // $(window).scroll(function() { 
+        // if ($(this).scrollTop() > 500) { //250 넘으면 버튼이 보여짐니다. 
+        //     $('.back_top_m').fadeIn(); } else { $('.back_top_m').fadeOut(); } 
+        // });
 
-        $('.back_top_m').click(function(){
+        $('.btn_top').click(function(){
 
                     $('html, body').animate({
                         scrollTop: $('html, body').offset().top
@@ -349,6 +404,12 @@ $(document).on('click', '.viewmobileversion', function(){
                 
         });
         <?php } ?>
+
+        $(window).scroll(function() { 
+            if ($(this).scrollTop() > 500) { //250 넘으면 버튼이 보여짐니다. 
+                $('.btn_top').fadeIn(); } else { $('.btn_top').fadeOut(); 
+            } 
+        });
     });
 </script> 
 

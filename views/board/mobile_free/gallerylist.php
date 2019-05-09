@@ -3,32 +3,28 @@
 <?php echo element('headercontent', element('board', element('list', $view))); ?>
 
 
-<div class="wrap10">
 
+<div class="main_flex">
 <!-- secretvt 자유게시판란 광고 -->
 
 
 <!-- secretvt 자유게시판란광고 -->
-<ins class="adsbygoogle"
+<ins class="adsbygoogle mt10"
      style="display:inline-block;width:100%;height:60px"
      data-ad-client="ca-pub-7419726859237673"
      data-ad-slot="3682862126"></ins>
 <script>
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
-    <section class="title">
-        <div></div>
-        <h2 class="bottom_02" style="color:#000;"><?php echo element('brd_name', element('board', element('list', $view))) ?> <?php echo element('post_title', element('post_parent',$view)) ?>
+    <section class="title03 mt20">
+        
+        <h2 class="hidden"><?php echo element('brd_name', element('board', element('list', $view))) ?> <?php echo element('post_title', element('post_parent',$view)) ?>
         
         </h2>
-    </section>
-
-    <section class="title03">
         <p>총 <span><?php echo element('total_rows', element('data', element('list', $view))) ?>개</span>의 게시글이 있습니다.</p>
          <?php if (element('write_url', element('list', $view))) { ?>
-        <h3>
-            <a href="<?php echo element('write_url', element('list', $view)); ?>" class="btn-sm">글쓰기</a>
-        </h3>
+        <a href="<?php echo element('write_url', element('list', $view)); ?>" class="btn-sm bold"><h3>글쓰기</h3></a>
+        
     <?php } ?>
     </section>
 
@@ -215,19 +211,12 @@
                 </div> -->
             </div>
         <?php } ?>
-        <?php if (element('write_url', element('list', $view))) { ?>
-            <div class="pull-left ml10">
-                <a href="<?php echo element('write_url', element('list', $view)); ?>" class="btn btn-success btn-sm">글쓰기</a>
-            </div>
-        <?php } ?>
+    
     </div>
 
     
     <nav><?php echo element('paging', element('list', $view)); ?></nav>
-    <section class="ad" style="margin-bottom: 0;">
-        <h4>ad</h4>
-        <?php echo banner("karaoke_post_banner_1") ?>
-    </section>
+  
 </div>
 
 <?php echo element('footercontent', element('board', element('list', $view))); ?>

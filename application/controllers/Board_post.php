@@ -18,7 +18,7 @@ class Board_post extends CB_Controller
     /**
      * 모델을 로딩합니다
      */
-    protected $models = array('Post', 'Post_meta', 'Post_extra_vars');
+    protected $models = array('Post', 'Post_meta', 'Post_extra_vars','Scrap');
 
     /**
      * 헬퍼를 로딩합니다
@@ -348,7 +348,7 @@ class Board_post extends CB_Controller
                 ->get_by_memid(element('mem_id', $post), 'mem_icon');
             $view['view']['post']['display_name'] = display_username(
                 element('post_userid', $post),
-                element('post_nickname', $post),
+                (element('post_nickname', $post) ? element('post_nickname', $post) : element('post_username', $post)), 
                 ($use_sideview_icon ? element('mem_icon', $dbmember) : ''),
                 ($use_sideview ? 'Y' : 'N')
             );
@@ -643,7 +643,12 @@ class Board_post extends CB_Controller
         $param =& $this->querystring;
 
         $view['view']['board'] = $board;
-        $this->load->model('Scrap_model');
+        
+        $scrapwhere = array(
+            'post_id' => element('post_id', $post),
+        );
+        $view['view']['post']['scrap_count'] = $this->Scrap_model->count_by($scrapwhere);
+
         $scrapwhere = array(
             'post_id' => element('post_id', $post),
             'mem_id' => (int) $this->member->item('mem_id'),
@@ -704,10 +709,10 @@ class Board_post extends CB_Controller
         $view['view']['write_url'] = '';
         if ($can_write === true) {
             $view['view']['write_url'] = write_url(element('brd_key', $board));
-        } elseif ($this->cbconfig->get_device_view_type() !== 'mobile'
+        } elseif ($this->member->is_member()
             && element('always_show_write_button', $board)) {
-            $view['view']['write_url'] = 'javascript:alert(\'비회원은 글쓰기 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.\');';
-        } elseif ($this->cbconfig->get_device_view_type() === 'mobile'
+            $view['view']['write_url'] = 'javascript:alert(\'회원님은 글쓰기 권한이 없습니다.\');';
+        } elseif (!$this->member->is_member()
             && element('mobile_always_show_write_button', $board)) {
             $view['view']['write_url'] = 'javascript:alert(\'비회원은 글쓰기 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.\');';
         }
@@ -1149,7 +1154,7 @@ class Board_post extends CB_Controller
                 if (element('mem_id', $val) >= 0) {
                     $noticeresult[$key]['display_name'] = display_username(
                         element('post_userid', $val),
-                        element('post_nickname', $val),
+                        (element('post_nickname', $val) ? element('post_nickname', $val) : element('post_username', $val)), 
                         ($use_sideview_icon ? element('mem_icon', $val) : ''),
                         ($use_sideview ? 'Y' : 'N')
                     );
@@ -1359,7 +1364,7 @@ class Board_post extends CB_Controller
         // $where['post_main_4'] = 0;
         $scrap_post_id=array();
         if($this->member->is_member()){
-            $this->load->model('Scrap_model');
+            
             $scrapwhere = array(
                 'mem_id' => (int) $this->member->item('mem_id'),
             );
@@ -1380,7 +1385,23 @@ class Board_post extends CB_Controller
 
                
                 $result['list'][$key]['post_url'] = post_url(element('brd_key', $board), element('post_id', $val));
-                $result['list'][$key]['is_scrap'] = in_array(element('post_id', $val),$scrap_post_id) ? 1:0;
+                
+                $swhere = array(
+                    'post_id' => element('post_id', $val),
+                );
+                $count = $this->Scrap_model->count_by($swhere);
+
+                $result['list'][$key]['scrap_count'] = $count;
+
+                if($this->member->is_member()){            
+                    $scrapwhere = array(
+                       'post_id' => element('post_id', $val),
+                       'mem_id' => (int) $this->member->item('mem_id'),
+                   );
+                   $result['list'][$key]['scrap'] = $this->Scrap_model->get_one('','',$scrapwhere);
+                    
+                }
+                
                 $result['list'][$key]['meta'] = $meta
                     = $this->Post_meta_model
                     ->get_all_meta(element('post_id', $val));
@@ -1410,7 +1431,7 @@ class Board_post extends CB_Controller
                 if (element('mem_id', $val) >= 0) {
                     $result['list'][$key]['display_name'] = display_username(
                         element('post_userid', $val),
-                        element('post_nickname', $val),
+                        (element('post_nickname', $val) ? element('post_nickname', $val) : element('post_username', $val)), 
                         ($use_sideview_icon ? element('mem_icon', $val) : ''),
                         ($use_sideview ? 'Y' : 'N')
                     );
@@ -1681,9 +1702,9 @@ class Board_post extends CB_Controller
         $return['write_url'] = '';
         if ($can_write === true) {
             $return['write_url'] = write_url($brd_key);
-        } elseif ($this->cbconfig->get_device_view_type() !== 'mobile' && element('always_show_write_button', $board)) {
-            $return['write_url'] = 'javascript:alert(\'비회원은 글쓰기 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.\');';
-        } elseif ($this->cbconfig->get_device_view_type() === 'mobile' && element('mobile_always_show_write_button', $board)) {
+        } elseif ($this->member->is_member() && element('always_show_write_button', $board)) {
+            $return['write_url'] = 'javascript:alert(\'회원님은 글쓰기 권한이 없습니다.\');';
+        } elseif (!$this->member->is_member() && element('mobile_always_show_write_button', $board)) {
             $return['write_url'] = 'javascript:alert(\'비회원은 글쓰기 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.\');';
         }
 
@@ -1957,7 +1978,7 @@ class Board_post extends CB_Controller
                 ->get_by_memid(element('mem_id', $post), 'mem_icon');
             $view['view']['post']['display_name'] = display_username(
                 element('post_userid', $post),
-                element('post_nickname', $post),
+                (element('post_nickname', $post) ? element('post_nickname', $post) : element('post_username', $post)), 
                 ($use_sideview_icon ? element('mem_icon', $dbmember) : ''),
                 ($use_sideview ? 'Y' : 'N')
             );
@@ -2252,7 +2273,7 @@ class Board_post extends CB_Controller
         $param =& $this->querystring;
 
         $view['view']['board'] = $board;
-        $this->load->model('Scrap_model');
+        
         $countwhere = array(
             'post_id' => element('post_id', $post),
         );
@@ -2312,10 +2333,10 @@ class Board_post extends CB_Controller
         $view['view']['write_url'] = '';
         if ($can_write === true) {
             $view['view']['write_url'] = write_url(element('brd_key', $board));
-        } elseif ($this->cbconfig->get_device_view_type() !== 'mobile'
+        } elseif ($this->member->is_member()
             && element('always_show_write_button', $board)) {
-            $view['view']['write_url'] = 'javascript:alert(\'비회원은 글쓰기 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.\');';
-        } elseif ($this->cbconfig->get_device_view_type() === 'mobile'
+            $view['view']['write_url'] = 'javascript:alert(\'회원님은 글쓰기 권한이 없습니다.\');';
+        } elseif (!$this->member->is_member()
             && element('mobile_always_show_write_button', $board)) {
             $view['view']['write_url'] = 'javascript:alert(\'비회원은 글쓰기 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.\');';
         }

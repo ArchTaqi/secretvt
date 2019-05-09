@@ -1,56 +1,90 @@
 <?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
+<div class="main_flex">
+    <div class="mt20 mypage ">
+        <section class="title02">
+            <h2>Followed</h2>
+        </section>
+        
+        <section class="myinfo">
+            <figure class="info_area">
+                <img src="<?php echo base_url('assets/images/temp/info_img/info_user.png') ?>" alt="user">
+                <figcaption>
+                    <h2>
+                        <?php echo html_escape($this->member->item('mem_userid')); ?>
+                    </h2>
+                    <p><strong>"<?php echo html_escape($this->member->item('mem_nickname')); ?>" </strong>님 안녕하세요</p>
+                </figcaption>
+            </figure>
+        </section>
 
-<div class="mypage">
-    <ul class="nav nav-tabs">
-        <li><a href="<?php echo site_url('mypage'); ?>" title="마이페이지">마이페이지</a></li>
-        <li><a href="<?php echo site_url('mypage/post'); ?>" title="나의 작성글">나의 작성글</a></li>
-        <?php if ($this->cbconfig->item('use_point')) { ?>
-            <li><a href="<?php echo site_url('mypage/point'); ?>" title="포인트">포인트</a></li>
-        <?php } ?>
-        <li class="active"><a href="<?php echo site_url('mypage/followinglist'); ?>" title="팔로우">팔로우</a></li>
-        <li><a href="<?php echo site_url('mypage/like_post'); ?>" title="내가 추천한 글">추천</a></li>
-        <li><a href="<?php echo site_url('mypage/scrap'); ?>" title="나의 스크랩">스크랩</a></li>
-        <li><a href="<?php echo site_url('mypage/loginlog'); ?>" title="나의 로그인기록">로그인기록</a></li>
-        <li><a href="<?php echo site_url('membermodify'); ?>" title="정보수정">정보수정</a></li>
-        <li><a href="<?php echo site_url('membermodify/memberleave'); ?>" title="탈퇴하기">탈퇴하기</a></li>
-    </ul>
-
-    <h3>Followed</h3>
-
-    <ul class="table-top mb10">
-        <li><a href="<?php echo site_url('mypage/followinglist'); ?>" class="btn btn-warning btn-sm" title="Following">Following (<?php echo number_format(element('following_total_rows', $view)); ?>)</a></li>
-        <li><a href="<?php echo site_url('mypage/followedlist'); ?>" class="btn btn-success btn-sm" title="Followed">Followed (<?php echo number_format(element('followed_total_rows', $view)); ?>)</a></li>
-    </ul>
-    <table class="table">
-        <thead>
-            <tr>
-                <th><i class="fa fa-user"></i></th>
-                <th>회원명</th>
-                <th>Follow한날짜</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php
-        if (element('list', element('data', $view))) {
-            foreach (element('list', element('data', $view)) as $result) {
-        ?>
-            <tr>
-                <td><i class="fa fa-user"></i></td>
-                <td><?php echo element('display_name', $result); ?></td>
-                <td><?php echo display_datetime(element('fol_datetime', $result), 'full'); ?></td>
-            </tr>
-        <?php
-            }
-        }
-        if ( ! element('list', element('data', $view))) {
-        ?>
-            <tr>
-                <td colspan="3" class="nopost">아직 나를 Follow 한 사람이 없습니다</td>
-            </tr>
-        <?php
-        }
-        ?>
-        </tbody>
-    </table>
-    <nav><?php echo element('paging', $view); ?></nav>
+        <section class="info_table">
+            <table>
+                <tr>
+                    <td>
+                        <a href="<?php echo site_url('mypage'); ?>">내 정보</a>
+                    </td>
+                    <td>
+                        <a href="<?php echo site_url('mypage/post'); ?>">작성글</a>
+                    </td>
+                    <td>
+                        <a href="<?php echo site_url('notification'); ?>">알&nbsp;&nbsp;림<span class="lab_notification badge notification_num"><?php echo number_format(element('notification_num', $layout) + 0); ?></span></a>
+                    </td> 
+                </tr>
+                <tr>
+                    <td>
+                        <a href="<?php echo site_url('mypage/scrap'); ?>" title="스크랩">스크랩</a>
+                    </td>
+                    <td>
+                        <a href="<?php echo site_url('note/lists/recv'); ?>" title="쪽지함">쪽지함<span class="lab_notification"><?php echo number_format((int) $this->member->item('meta_unread_note_num')); ?></span></a>
+                    </td>
+                    <td class="active">
+                        <a href="<?php echo site_url('mypage/followinglist'); ?>" title="팔로우">팔로우</a>
+                    </td>
+                </tr>
+            </table>
+        </section>
+        
+        <section class="table_02">
+            <div class="mypg_sub_cate">
+                <ul class="cate_list">
+                    <li class="cate_li "><button type="button" class="btn" style="margin-bottom:0px" onClick="location.href='<?php echo site_url('mypage/followinglist'); ?>';">Following (<?php echo number_format(element('following_total_rows', $view)); ?>)</button></li>
+                    <li class="cate_li active"><button type="button" style="margin-bottom:0px" onClick="location.href='<?php echo site_url('mypage/followedlist'); ?>';" class="btn">Followed (<?php echo number_format(element('followed_total_rows', $view)); ?>)</button></li>
+                </ul>
+            </div>   
+            <table class="">
+                <thead>
+                    <tr>
+                        <th><i class="fa fa-user"></i></th>
+                        <th>회원명</th>
+                        <th>Follow한날짜</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                if (element('list', element('data', $view))) {
+                    foreach (element('list', element('data', $view)) as $result) {
+                ?>
+                    <tr>
+                        <td><i class="fa fa-user"></i></td>
+                        <td><?php echo element('display_name', $result); ?></td>
+                        <td><?php echo display_datetime(element('fol_datetime', $result), 'full'); ?></td>
+                    </tr>
+                <?php
+                    }
+                }
+                if ( ! element('list', element('data', $view))) {
+                ?>
+                    <tr>
+                        <td colspan="3" class="nopost">아직 나를 Follow 한 사람이 없습니다</td>
+                    </tr>
+                <?php
+                }
+                ?>
+                </tbody>
+            </table>
+        <nav><?php echo element('paging', $view); ?></nav>
+        </section>
+    </div>
 </div>
+
+

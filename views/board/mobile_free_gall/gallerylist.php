@@ -6,7 +6,17 @@
 
 <?php echo element('headercontent', element('board', element('list', $view))); ?>
 
-<div class="wrap10">
+<div class="main_flex">
+    <section class="post_list">
+        <h2 class="hidden">자유갤러리</h2>
+        <div class="select_area_box title03">
+            
+            <?php if (element('write_url', element('list', $view))) { ?>
+             
+            <a href="<?php echo element('write_url', element('list', $view)); ?>" class="btn-sm bold"><h3>글쓰기</h3></a>
+            <?php } ?>
+   
+        </div>
 
     
 
@@ -22,73 +32,10 @@
     <?php } ?>
 
     
-    <section class="title02" style="display:none;">
-        <!-- <h2>업소정보 - <span><?php echo html_escape(element(element('region', $view),config_item('region_category')));?></span></h2>
-        <p>총 <span><?php echo (element('total_rows', element('main_data', element('list', $view)))+element('total_rows', element('data', element('list', $view)))) ?>개</span>의 업소가 있습니다.</p> -->
-    </section>
-
-    <?php /* ?>
-    <section class="store_list">
-        <?php
-            $i = 0;
-            $open = false;
-            $cols = 2;
-
-            if (element('list', element('main_data', element('list', $view)))) {
-                foreach (element('list', element('main_data', element('list', $view))) as $result) {
-
-                    if ($cols && $i % $cols === 0) {
-                        echo '<ul>';
-                        $open = true;
-                    }
-                    $marginright = (($i+1)% $cols === 0) ? 0 : 2;
-                    ?>
-                    <li>
-                        <?php if (element('is_admin', $view)) { ?><input type="checkbox" name="chk_post_id[]" value="<?php echo element('post_id', $result); ?>" /><?php } ?>
-                        <a href="<?php echo element('post_url', $result); ?>" title="<?php echo html_escape(element('title', $result)); ?>">
-                            <figure>
-                                <img src="<?php echo element('thumb_url', $result); ?>" alt="<?php echo html_escape(element('title', $result)); ?>" title="<?php echo html_escape(element('title', $result)); ?>"/>
-                                
-                                <figcaption>
-                                    <h2 class="info_subject">[<?php echo html_escape(element('bca_value',element('category', $result))); ?>]<?php echo html_escape(element('title', $result)); ?>
-                                        <?php if (element('post_comment_count', $result)) { ?><span style="font:normal 11px 'dotum';">[+<?php echo element('post_comment_count', $result); ?>]</span><?php } ?>
-
-                                    </h2>
-
-                                    <p class="sub_subject"><?php if(element('sub_subject',element('extravars', $result))) echo element('sub_subject',element('extravars', $result)); ?>
-
-                                    </p>
-                                    <span>
-                                        <?php if (element('open_time',element('extravars', $result))) { 
-                                         echo  element('open_time',element('extravars', $result));
-                                     }
-                                     ?>
-                                    </span>
-                             </figcaption>
-                         </figure>
-
-
-                     </a>
-                 </li>
-                 <?php
-                 $i++;
-                 if ($cols && $i > 0 && $i % $cols === 0 && $open) {
-                    echo '</ul>';
-                    $open = false;
-                }
-            }
-            } else {
-                echo '<div class="table-answer nopost">내용이 없습니다</div>';
-            }
-            if ($open) {
-                echo '</ul>';
-                $open = false;
-        }?>
-    </section>
-    <?php */ ?>
+    
     
 
-    <section class="store_list02">
+    
         <?php
         $i = 0;
         $open = false;
@@ -97,7 +44,7 @@
         if (element('list', element('data', element('list', $view)))) {
             foreach (element('list', element('data', element('list', $view))) as $result) {
                 if ($cols && $i % $cols === 0) {
-                    echo '<ul>';
+                    echo '<ul class="gallery_list01">';
                     $open = true;
                 }
                 $marginright = (($i+1)% $cols === 0) ? 0 : 2;
@@ -124,24 +71,43 @@
 
                
         ?>
-            <li class="gallery-box " style="width:<?php echo element('gallery_percent', element('board', element('list', $view))); ?>%;margin-right:<?php echo $marginright;?>%;">
+            <li class="list_li " style="width:<?php echo element('gallery_percent', element('board', element('list', $view))); ?>%;margin-right:<?php echo $marginright;?>%;">
                 <?php if (element('is_admin', $view)) { ?><input type="checkbox" name="chk_post_id[]" value="<?php echo element('post_id', $result); ?>" /><?php } ?>
 
-                <a href="<?php echo element('post_url', $result); ?>" title="<?php echo html_escape(element('title', $result)); ?>"><img src="<?php echo element('thumb_url', $result); ?>" alt="<?php echo html_escape(element('title', $result)); ?>" title="<?php echo html_escape(element('title', $result)); ?>" class=" img-responsive" style="width:100%;" />
-                
-                    <h2 ><?php echo element('bca_value',element('category', $result)) ? '['.html_escape(element('bca_value',element('category', $result))).']':''; ?><?php echo html_escape(element('title', $result)); ?><?php if (element('post_comment_count', $result)) { ?><span class="comment_num"> [+<?php echo element('post_comment_count', $result); ?>]</span><?php } ?></h2>
-                
-                    <!-- <div class="per90 pull-left text_box">
-                        <div class="sub_subject" style="padding:0"><?php if(empty(element('post_secret', $result))) echo (element('post_content', $result)); ?>
-                        </div>
-                        
-                        
-                    </div> -->
-                   
+                <a href="<?php echo element('post_url', $result); ?>" title="<?php echo html_escape(element('title', $result)); ?>">
+                    <div class="thum">
+                        <img src="<?php echo element('thumb_url', $result); ?>" alt="<?php echo html_escape(element('title', $result)); ?>" title="<?php echo html_escape(element('title', $result)); ?>" class=" img-responsive" style="width:100%;" />
+                    </div>
+                    <div class="txt_box">
+                        <h3 class="tit"><span class="lab"><?php echo element('bca_value',element('category', $result)) ? '['.html_escape(element('bca_value',element('category', $result))).']':''; ?></span><?php echo html_escape(element('title', $result)); ?></h3>
+                        <!-- <p class="sub_tit"><?php if(element('sub_subject',element('extravars', $result))) echo element('sub_subject',element('extravars', $result)); ?>
+                        </p> -->
+                        <ul class="info_list01">
+
+                                <li class="info_li nick"><?php echo element('display_name', $result); ?></li>
+                                <li class="info_li"><?php echo element('display_datetime', $result); ?></li>
+                                <li class="info_li">댓글 : <?php echo element('post_comment_count', $result);?></li>
+                        </ul>
+                        <ul class="info_list02">
+                            <li class="info_li">
+                                <i class="fa fa-eye"></i><span class="hidden">조회수</span><?php echo element('post_hit', $result); ?>
+                            </li>
+                            <?php if ( ! element('post_del', $result) && element('use_scrap', element('board', element('list', $view)))) {  ?>
+                            <li class="info_li">
+                                <i class="fa fa-heart-o"></i><span class="hidden">스크랩수</span><?php echo element('scrap_count', $result); ?>
+                            </li>
+                            <?php } ?>
+                        </ul>
+                            
+                    </div>
                 </a>
-                 <span class="pull-right">
-                     <?php echo element('display_name', $result); ?> | 작성일 : <?php echo element('display_datetime', $result); ?> | 조회수 : <?php echo element('post_hit', $result); ?>
-                </span>
+                <?php if ( ! element('post_del', $result) && element('use_scrap', element('board', element('list', $view)))) { 
+                    if(element('scr_id',element('scrap', $result)))
+                        echo '<button type="button" class="scrap_heart" onClick="javascript:post_scrap_cancel(\''.element('post_id', $result).'\', \''.element('scr_id',element('scrap', $result)).'\');" ><i class="fa fa-heart" ></i></button>';
+                    else echo '<button type="button" class="scrap_heart" onClick="javascript:post_scrap(\''.element('post_id', $result).'\', \'post-scrap\');"><i class="fa fa-heart-o" ></i></button>';
+                    
+                 } ?>
+                
             </li>
 
             <?php
@@ -175,21 +141,12 @@
                 
             </div>
         <?php } ?>
-        <?php if (element('write_url', element('list', $view))) { ?>
-            <div class="pull-left ml10">
-                <a href="<?php echo element('write_url', element('list', $view)); ?>" class="btn btn-success btn-sm">글쓰기</a>
-            </div>
-        <?php } ?>
+     
     </div>
 
     <nav><?php echo element('paging', element('list', $view)); ?></nav>
-
-    <!-- 광고 배너 영역 -->
-        <section class="ad" style="margin-bottom: 0;">
-            <h4>ad</h4>
-            <?php echo banner("board_default_banner_1") ?>
-        </section>
-    <!-- ===== -->
+    </section>
+   
 </div>
 
 <?php echo element('footercontent', element('board', element('list', $view))); ?>

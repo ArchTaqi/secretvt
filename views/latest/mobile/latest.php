@@ -2,7 +2,7 @@
     <div class="table-box">
         <!-- Default panel contents -->
         <div class="table-heading">
-            <?php echo html_escape(element('board_name', element('board', $view))); ?>
+            <?php echo html_escape(element('latest_title', element('config', $view))); ?>
             <div class="view-all pull-right">
                 <a href="<?php echo board_url(element('brd_key', element('board', $view))); ?>" title="<?php echo html_escape(element('board_name', element('board', $view))); ?>">더보기 <i class="fa fa-angle-right"></i></a>
             </div>

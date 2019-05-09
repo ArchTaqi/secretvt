@@ -429,7 +429,8 @@ if ( ! function_exists('display_admin_ip')) {
  */
 if ( ! function_exists('display_username')) {
     function display_username($userid = '', $name = '', $icon = '', $use_sideview = '')
-    {
+    {   
+        
         $CI = & get_instance();
         $name = $name ? html_escape($name) : '비회원';
         $title = $userid ? '[' . $userid . ']' : '[비회원]';
@@ -442,7 +443,7 @@ if ( ! function_exists('display_username')) {
         if ($use_sideview) {
             if ($use_sideview === 'Y' && $userid) {
                 $result .= '<a href="javascript:;"
-                    onClick="note_write(\'' . $userid . '\');"
+                    onClick="getSideView(this, \'' . $userid . '\');"
                     title="' . $title . $name . '" style="text-decoration:none;">';
             }
         } elseif ($_use_sideview && $userid) {

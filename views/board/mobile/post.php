@@ -22,7 +22,7 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
 
 <?php echo element('headercontent', element('board', $view)); ?>
 
-<div class="wrap10">
+<div class="main_flex">
     <?php echo show_alert_message($this->session->flashdata('message'), '<div class="alert alert-auto-close alert-dismissible alert-info">', '</div>'); ?>
    <!--  <h3>
         <?php if (element('category', element('post', $view))) { ?>[<?php echo html_escape(element('bca_value', element('category', element('post', $view)))); ?>] <?php } ?>
@@ -40,7 +40,7 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
               
     }
     ?>
-    <section class="de_title">
+    <div class="de_title">
         <div class="swiper-container swiper-container-sub">
             <div class="swiper-wrapper">
             
@@ -48,7 +48,7 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
             if (element('file_image', $view)) {
                 foreach (element('file_image', $view) as $key => $value) {
             ?>
-                <div class="swiper-slide per100"><img src="<?php echo element('thumb_image_url', $value); ?>" alt="<?php echo html_escape(element('pfi_originname', $value)); ?>" title="<?php echo html_escape(element('pfi_originname', $value)); ?>" class="view_full_image" data-origin-image-url="<?php echo element('origin_image_url', $value); ?>" style="max-width:100%;" /></div>
+                <div class="swiper-slide "><img src="<?php echo element('thumb_image_url', $value); ?>" alt="<?php echo html_escape(element('pfi_originname', $value)); ?>" title="<?php echo html_escape(element('pfi_originname', $value)); ?>" class=" per100 view_full_image" data-origin-image-url="<?php echo element('origin_image_url', $value); ?>" style="max-width:100%;" /></div>
             <?php
                 }
             }
@@ -60,48 +60,34 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
             <div class="swiper-button-next swiper-button-white"></div>
             <div class="swiper-button-prev swiper-button-white"></div>
         </div>
-        <h2 class="bottom_02">[<?php echo "업소정보";//$menuName ?>] <?php echo element('post_title', element('post',$view)) ?>
+
+        <div class="cont_tit">
+            
+            <h3 class="tit"><?php if (element('category', element('post', $view))) { echo '<span class="lab_box lab">'.html_escape(element('bca_value', element('category', element('post', $view)))).'</span>';  } ?>
+            <?php echo html_escape(element('post_title', element('post', $view))); ?></h3>
+            
+    
+        
 		<?php if ( ! element('post_del', element('post', $view)) && element('use_scrap', element('board', $view))) { 
             if(element('scr_id',element('scrap', element('post', $view))))
-                echo '<a href="javascript:post_scrap_cancel(\''.element('post_id', element('post', $view)).'\', \''.element('scr_id',element('scrap', element('post', $view))).'\');" class="scrap_heart"><i class="fa fa-heart" style="font-size:20px;"></i></a>';
-            else echo '<a id="btn-scrap" class="scrap_heart" href="javascript:post_scrap(\''.element('post_id', element('post', $view)).'\', \'post-scrap\');"><i class="fa fa-heart-o" style="font-size:20px"></i></a>';
+                echo '<button type="button" class="scrap_heart" onClick="javascript:post_scrap_cancel(\''.element('post_id', element('post', $view)).'\', \''.element('scr_id',element('scrap', element('post', $view))).'\');" ><i class="fa fa-heart" ></i><span class="num">'.element('scrap_count', element('post', $view)).'</span></button>';
+            else echo '<button type="button" class="scrap_heart" onClick="javascript:post_scrap(\''.element('post_id', element('post', $view)).'\', \'post-scrap\');"><i class="fa fa-heart-o" ></i><span class="num">'.element('scrap_count', element('post', $view)).'</span></button>';
             
          } ?>
-		</h2>
-        
-            
-        <table style="width:<?php echo !empty($tel1) ? '75':'50';?>%;">
-            <tr>
-                <td onClick="location.href='<?php echo element('post_url', $view); ?>'" class="active">
-                    
-                        <img src="<?php echo base_url('assets/images/temp/de_img/de_store.png')?>" alt="sub01"> 
-                        업소정보
-                    
-                </td>
-                <td onClick="location.href='<?php echo base_url('/map/'.element('post_id', element('post', $view))); ?>'">
-                    
-                        <img src="<?php echo base_url('assets/images/temp/de_img/de_navi.png')?>" alt="sub02">
-                        위치확인
-                    
-                </td>
-                <!-- <td>
-                    <a href="<?php echo board_url('vtn_review');?>?post_parent=<?php echo element('post_id', element('post', $view))?>">
-                        <img src="<?php echo base_url('assets/images/temp/de_img/de_write.png')?>" alt="sub03">
-                        업소후기
-                    </a>
-                </td> -->
-                <?php if(!empty($tel1)){ ?>
-                <td>
-                   <a href="tel:<?php echo $tel1 ?>">
-                        <img src="<?php echo base_url('assets/images/temp/de_img/de_tel.png')?>" alt="sub04">
-                        전화걸기
-                    </a>
-                </td>
-                <?php } ?>
-            </tr>
-        </table>
-        
-    </section>
+	        <ul class="post_info">
+                <li class="info_li">
+                    <button class="btn_nick"><?php echo element('display_name', element('post', $view)) ?><!-- <img src="images/icon_mail_nick.svg" alt=""> --></button>
+                    <!-- <ul class="click_nick" style="display: none;">
+                        <li class=""><a href="">쪽지보내기</a></li>
+                        <li class=""><a href="">친구등록</a></li>
+                    </ul> -->
+                </li>
+                <li class="info_li"><?php echo element('display_datetime', element('post', $view)) ?></li>
+                <li class="info_li">조회수: <?php echo element('post_hit', element('post', $view)) ?></li>
+                <li class="info_li">댓글: <?php echo element('post_comment_count', element('post', $view));  ?></li>
+            </ul>
+        </div>
+    </div>
     <section class="store">
         <div class="contents-view" style="margin-bottom: 0;">
             
@@ -171,7 +157,7 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
                 <?php if (element('modify_url', $view)) { ?>
                 <a href="<?php echo element('modify_url', $view); ?>" class="btn btn-info btn-sm">수정</a>
             <?php } ?>
-                <a href="<?php echo element('write_url', $view); ?>" class="btn btn-success btn-sm">글쓰기</a>
+                
             </div>
         <?php } ?>
     </section>
@@ -181,6 +167,7 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
 
     if ( ! element('post_hide_comment', element('post', $view))) { ?>
         <section class="reply_write">
+            <h2 class="reply_num">댓글 <span class="num"><?php echo element('post_comment_count', element('post', $view));  ?></span></h2>
             <?php   $this->load->view(element('view_skin_path', $layout) . '/comment_write'); ?>
             <section id="viewcomment" class="mb0" style="display:block"></section>
         </section>
@@ -189,10 +176,7 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
     }
 
     ?>
-    <section class="ad" style="margin-bottom:0;">
-        <h4>ad</h4>
-        <?php echo banner("board_default_banner_1") ?>
-    </section>
+   
 </div>
 
 <?php echo element('footercontent', element('board', $view)); ?>

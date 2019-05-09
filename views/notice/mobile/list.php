@@ -1,6 +1,6 @@
 <?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
 
-<div class="wrap">
+<div class="main_flex">
 
     <section class="title">
         <div></div>
@@ -43,7 +43,7 @@
                     <h2><span>[공지]</span><a href="<?php echo element('post_url', $result); ?>" title="<?php echo html_escape(element('noti_title', $result)); ?>"><?php echo html_escape(element('noti_title', $result)); ?></a></h2>
         
                     
-                    <p><?php echo element('display_datetime', $result); ?></p>
+                    <p class="pull-right"><?php echo element('display_datetime', $result); ?></p>
                     </td>
                 </tr>
             <?php

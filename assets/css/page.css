@@ -115,10 +115,10 @@
 	}
 
 	div.media div.media-body h4{
-		padding:1.5% 0;
+	/*	padding:1.5% 0;
 		font-size:12px;
 		display: inline-block;
-		float:right;
+		float:right;*/
 	}
 
 	.reply_write {
@@ -2384,14 +2384,14 @@
 	}
 
 	.write_upload input[type="file"]{
-		width: 1px;
+/*		width: 1px;
 		height: 1px;
 		padding: 0;
 		margin: -1px;
 		margin: -1px;
 		overflow: hidden;
 		clip: rect(0,0,0,0);
-		border:0;
+		border:0;*/
 	}
 
 /*업소후기,글쓰기 작성영역의 작성완료 취소 영역*/

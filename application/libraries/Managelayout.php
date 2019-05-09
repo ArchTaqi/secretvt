@@ -203,6 +203,12 @@ class Managelayout extends CI_Controller
 
                 if (element(0, $menu)) {
                     foreach (element(0, $menu) as $mkey => $mval) {
+
+                        if(str_replace("/","",element('men_link', $mval)) === str_replace("/","",element('page_url', $config))){
+                            $data['menu']['active']= array(element('men_id', $mval));
+                            
+                        }
+                         
                         if (element(element('men_id', $mval), $menu)) {
                             foreach (element(element('men_id', $mval), $menu) as $skey => $sval) {
 
@@ -218,7 +224,9 @@ class Managelayout extends CI_Controller
                         }
                     }
                 }
-                if(!empty($data['menu']['active'][0])){
+
+                if(!empty($data['menu']['active'][0]) && strpos($CI->uri->uri_string(),'post') === false){
+
                     $m = array_search($data['menu']['active'][0], $menu_keys);
                     
                     if($m===0)
@@ -384,60 +392,36 @@ class Managelayout extends CI_Controller
     {
         $return = '
         <section class="footer_02">
-           <nav>
-               <ul>
-                   <li>
-                       고객센터
-                       <span>+</span>
-                   </li>
+            <h2 class="hidden">푸터</h2>
+            <ul class="btn_box">
+                <li class="f_btn">
+                    <a href="'.site_url('login?url=' . urlencode(current_full_url())).'"  title="로그인"><i class="fa fa-sign-in"></i> 로그인</a>
+                </li>
+                <li class="f_btn">
+                    <a href="'.site_url('register').'"  title="회원가입"><i class="fa fa-user"></i> 회원가입</a>
+                </li>
+                       
+                       
 
-                   <li>
-                       <ul>
-                           <li>
-                                <a href="tel::+8416-8639-1004" style="background:url(\''.base_url('/assets/images/temp/footer_img/footer_tel.png').'\') no-repeat right center; display: inline-block; width: 100%; background-size: 9%; ">
-                                    Telephone<br/>
-                                    +8416-8639-1004
-                                </a>
-                            </li>
+                <li class="f_btn">
+                    <a href="https://play.google.com/store/apps/details?id=com.secretvt"  title="구글앱다운로드"><i class="fa fa-download"></i> 구글 앱 다운로드
+                    </a>
+               </li>
 
-                           <li>
-                                <a href="mailto:boyoon8@gmail.com" style="background:url(\''.base_url('/assets/images/temp/footer_img/footer_mail.png').'\') no-repeat right center; display: inline-block; width: 100%; background-size: 9%;">
-                                    E-Mail<br/>
-                                    boyoon8@gmail.com
-                                </a>
-                            </li>
-                           <li style="background:url(\''.base_url('/assets/images/temp/footer_img/footer_talk.png').'\') no-repeat right center; display: inline-block; width: 100%; background-size: 9%;">
-                                Kakao Talk<br/>
-                                ID : secretvn17
-                           </li>
-                       </ul>
-                   </li>
-
-                   <li onclick="javascript:location.href=\'https://play.google.com/store/apps/details?id=com.secretvt\';">
-                        
-                            <figure>
-                                <figcaption>
-                                    구글 앱 다운로드
-                                </figcaption>
-                                <img src="/assets/images/temp/footer_img/footer_down.png" alt="download">
-                            </figure>
-                            
-                        
-                   </li>
-
-                   <li>
-                        ▲<br/>TOP
-                    </li>
-               </ul>
-           </nav> 
+                  
+            </ul>
+            
         </section>
         <footer>
             
             <ul>
+                <li>'.mailto('boyoon8@gmail.com','고객센터').'</li>
+                <li><a href="'.board_url('vtn_other').'" title="제휴문의">제휴문의</a></li>
                 <li><a href="'.document_url('provision').'" title="이용약관">이용약관</a></li>
                 <li><a href="'.document_url('privacy').'" title="개인정보 방침">개인정보 방침</a></li>
-                <li><a href="'.document_url('gps_info').'" title="위치정보">위치정보</a></li>
-               <!-- <li>'.mailto('reymonjung@gmail.com','고객센터').'</li> -->
+                
+
+               
             </ul>
 
             
@@ -445,18 +429,7 @@ class Managelayout extends CI_Controller
             <h2>Copyright ⓒ Phillippines. All Rights Reserved </h2>
         </footer>
 
-        <div id="dialog_talk"  style="display:none;background:#fff">
-            <div>
-                <img src="'.base_url('assets/images/temp/talk_logo.png').'" alt="benefit" style="display:block" >
-                복사하기 <span id="clip_target" >secretvn17</span>
-            </div>
-            <div class="popup_layer_footer" >
-                <div style="width:50%;" class="popup_layer_close pull-left text-center" >닫기
-                </div>
-                <div style="width:50%" class="popup_layer_copy pull-right text-center" data-wrapper-id="popup_layer_talk">확인
-                </div>
-            </div>
-        </div>
+        
         ';
         return $return;
     }

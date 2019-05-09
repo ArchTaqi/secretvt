@@ -907,10 +907,7 @@ class Postact extends CB_Controller
             $result = array('error' => '잘못된 접근입니다');
             exit(json_encode($result));
         }
-        if ( ! $this->session->userdata('post_id_' . $post_id)) {
-            $result = array('error' => '해당 게시물에서만 접근 가능합니다');
-            exit(json_encode($result));
-        }
+        
 
         $mem_id = (int) $this->member->item('mem_id');
 
@@ -1706,6 +1703,81 @@ class Postact extends CB_Controller
 
     }
 
+
+    /**
+     * 댓글 신고 하기
+     */
+    public function note_blame($nte_id = 0)
+    {
+
+        // 이벤트 라이브러리를 로딩합니다
+        $eventname = 'event_postact_comment_blame';
+        $this->load->event($eventname);
+
+        // 이벤트가 존재하면 실행합니다
+        Events::trigger('before', $eventname);
+
+        $result = array();
+        $target_type = 9; // 쪽지
+        $this->output->set_content_type('application/json');
+
+        if ($this->member->is_member() === false) {
+            $result = array('error' => '로그인 후 이용해주세요');
+            exit(json_encode($result));
+        }
+
+        $nte_id = (int) $nte_id;
+        if (empty($nte_id) OR $nte_id < 1) {
+            $result = array('error' => '잘못된 접근입니다');
+            exit(json_encode($result));
+        }
+
+        $mem_id = (int) $this->member->item('mem_id');
+
+        $this->load->model(array('Note_model'));
+
+        $note = $this->Note_model->get_one($nte_id);
+
+        if ( ! element('nte_id', $note)) {
+            $result = array('error' => '존재하지 않는 쪽지입니다');
+            exit(json_encode($result));
+        }
+
+        $where = array(
+            'target_id' => $nte_id,
+            'target_type' => $target_type,
+            'mem_id' => $mem_id,
+        );
+        $this->load->model('Blame_model');
+        $exist = $this->Blame_model->get_one('', 'bla_id', $where);
+
+        if (element('bla_id', $exist)) {
+            $result = array('error' => '이미 이 쪽지를 신고 하셨습니다');
+            exit(json_encode($result));
+        }
+
+        $insertdata = array(
+            'target_id' => $nte_id,
+            'target_type' => $target_type,
+            'brd_id' => 1,
+            'mem_id' => $mem_id,
+            'target_mem_id' => abs(element('send_mem_id', $note)),
+            'bla_datetime' => cdate('Y-m-d H:i:s'),
+            'bla_ip' => $this->input->ip_address(),
+        );
+        $this->Blame_model->insert($insertdata);
+        
+
+
+        // 이벤트가 존재하면 실행합니다
+        Events::trigger('after', $eventname);
+
+        $result = array(
+            'success' => '이 쪽지를 신고 하셨습니다',
+        );
+        exit(json_encode($result));
+
+    }
 
     /**
      * 게시물 비밀글 설정 및 해제 하기

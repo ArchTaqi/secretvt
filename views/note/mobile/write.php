@@ -1,42 +1,45 @@
 <?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
 
-<div class="modal-header">
-    <h4 class="modal-title">쪽지함</h4>
-</div>
+<div class="main_flex">
+    <div class="">
+        <section class="write_post">
+            <h2 class="title04">쪽지 보내기</h2>
+            <?php
+            echo validation_errors('<div class="alert alert-warning" role="alert">', '</div>');
+            echo show_alert_message(element('message', $view), '<div class="alert alert-auto-close alert-dismissible alert-info"><button type="button" class="close alertclose" >&times;</button>', '</div>');
+            $attributes = array('class' => 'mt20', 'name' => 'fnote', 'id' => 'fnote');
+            echo form_open(current_full_url(), $attributes);
+            ?>
+            <input type="hidden" name="userid" id="userid" value="<?php echo set_value('userid', element('userid', $view)); ?>"  />
+                <div class="write_top">
+                    <div class="write_nick">
+                        <label for="usernick">받는이</label>
+                        <input type="text" name="usernick" id="usernick" value="<?php echo set_value('userid', element('userid', $view)); ?>" disabled>
+                    </div>
+                </div>
+                <div class="write_top mt10">
+                    <div class="write_nick">
+                        <label for="title">제 &nbsp;&nbsp;목</label>
+                        <input type="text" name="title" id="title" value="<?php echo set_value('title', element('title', $view)); ?>" >
+                    </div>
+                </div>
 
-<div class="modal-body">
-    <ul class="note_menu">
-        <li><a href="<?php echo site_url('note/lists/recv'); ?>" class="btn btn-default">받은 쪽지</a></li>
-        <li><a href="<?php echo site_url('note/lists/send'); ?>" class="btn btn-default ">보낸 쪽지</a></li>
-        <li><a href="<?php echo site_url('note/write'); ?>" class="btn btn-default active">쪽지 쓰기</a></li>
-    </ul>
-
-    <?php
-    echo validation_errors('<div class="alert alert-warning" role="alert">', '</div>');
-    echo show_alert_message(element('message', $view), '<div class="alert alert-auto-close alert-dismissible alert-info"><button type="button" class="close alertclose" >&times;</button>', '</div>');
-    $attributes = array('class' => 'mt20', 'name' => 'fnote', 'id' => 'fnote');
-    echo form_open_multipart(current_full_url(), $attributes);
-    ?>
-        <ol>
-            <li><span>받은 회원</span>
-                <input type="text" class="input px300" name="userid" id="userid" value="<?php echo set_value('userid', element('userid', $view)); ?>" placeholder="회원아이디를 입력, 여러명에게 보낼 때는 쉼표로 구분" />
-            </li>
-            <li><span>제목</span>
-                <input type="text" class="input px300" name="title" id="title" value="<?php echo set_value('title'); ?>" placeholder="쪽지 제목을 입력해주세요" />
-            </li>
-            <li>
-                <?php echo display_dhtml_editor('content', set_value('content'), $classname = 'dhtmleditor', $is_dhtml_editor = element('use_dhtml', $view), $editor_type = $this->cbconfig->item('note_editor_type')); ?>
-            </li>
-            <?php if ($this->cbconfig->item('use_note_file')) { ?>
-                <li><span>첨부파일</span>
-                    <input type="file" class="form-control" name="note_file" />
-                </li>
-            <?php } ?>
-        </ol>
-        <div class="pull-right">
-            <button type="submit" class="btn btn-success">보내기</button>
-        </div>
-    <?php echo form_close(); ?>
+                
+                <div class="write_txt">
+                    <?php echo display_dhtml_editor('content', set_value('content'), $classname = 'dhtmleditor', $is_dhtml_editor = element('use_dhtml', $view), $editor_type = $this->cbconfig->item('note_editor_type')); ?>
+                </div>
+                <div class="pr3per pl3per mt5per">
+                    
+                    <div class="write_clear table-bottom">
+                        <button type="button" class="btn-history-back" style="font-weight: normal;">취 소</button>
+                        <button type="submit">보내기</button>
+                    </div>
+                </div>
+                
+                
+            <?php echo form_close(); ?>
+        </section>
+    </div>
 </div>
 
 <script type="text/javascript">

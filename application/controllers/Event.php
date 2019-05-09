@@ -197,7 +197,7 @@ class Event extends CB_Controller
             'mobile_skin_dir' => $mobile_skin_dir,
             'page_title' => '공지사항',
             'page_name' => '공지사항',
-            'page_url' => '/notice/lists',
+            'page_url' => $this->uri->uri_string(),
         );
 
         $view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
@@ -351,6 +351,7 @@ class Event extends CB_Controller
                 'mobile_skin_dir' => $mobile_skin_dir,
                 'page_title' => '공지사항',
                 'page_name' => '공지사항',
+                'page_url' => '/event/lists',
             );
 
             

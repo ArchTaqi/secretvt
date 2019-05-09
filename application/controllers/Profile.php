@@ -259,6 +259,8 @@ class Profile extends CB_Controller
             $result['profile'] = '2'; // 상대방이 프로필공개 기능을 사용하지 않고 있음
         }
 
+        $result['profile'] = '10';
+
         $result['following'] = $followcount;
         $result['homepage'] = html_escape(element('mem_homepage', $member));
         $result['memid'] = $this->member->is_admin() === 'super' ? element('mem_id', $member) : '';
