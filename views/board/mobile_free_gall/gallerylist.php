@@ -90,7 +90,7 @@
                         </ul>
                         <ul class="info_list02">
                             <li class="info_li">
-                                <i class="fa fa-eye"></i><span class="hidden">조회수</span><?php echo element('post_hit', $result); ?>
+                                <i class="fa fa-eye"></i><span class="hidden">조회수</span><?php echo hit_format(element('post_hit', $result)); ?>
                             </li>
                             <?php if ( ! element('post_del', $result) && element('use_scrap', element('board', element('list', $view)))) {  ?>
                             <li class="info_li">
@@ -118,7 +118,7 @@
             }
         }
         } else {
-            echo '<div class="table-answer nopost">내용이 없습니다</div>';     
+            echo '<div class="table-answer nopost text-center">내용이 없습니다</div>';     
         }
         if ($open) {
             echo '</ul>';

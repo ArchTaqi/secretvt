@@ -65,8 +65,8 @@ class Index extends CB_Controller
         $view['view']['board_list'] = $board_list;
         $view['view']['canonical'] = site_url();
 
-        if(empty(get_cookie('region'))) $view['view']['region']=0;
-        else $view['view']['region'] = 0;
+        // if(empty(get_cookie('region'))) $view['view']['region']=0;
+        // else $view['view']['region'] = 0;
         // else $view['view']['region'] = get_cookie('region');
 
         // 이벤트가 존재하면 실행합니다

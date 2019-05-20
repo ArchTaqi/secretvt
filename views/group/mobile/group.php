@@ -11,7 +11,7 @@
         <h2 class="hidden">관광 전체</h2>
         <div class="select_area_box title03">
             <select  onchange="location.href='<?php echo group_url('/g-a'); ?>?findex=<?php echo html_escape($this->input->get('findex')); ?>&category_id=' + this.value;">
-                <option value="">지역 선택</option>
+                <option value=""><?php echo $this->input->get('category_id') || $this->session->userdata('category_id') ? '전체':'지역 선택'; ?></option>
                 <?php
                 $category = element('category', element('board', element('list', $view)));
                 function ca_select($p = '', $category = '', $category_id = '')
@@ -19,6 +19,7 @@
                     $return = '';
                     if ($p && is_array($p)) {
                         foreach ($p as $result) {
+
                             $exp = explode('.', element('bca_key', $result));
                             $len = (element(1, $exp)) ? strlen(element(1, $exp)) : '0';
                             $space = str_repeat('-', $len);
@@ -34,7 +35,7 @@
                     return $return;
                 }
 
-                echo ca_select(element(0, $category), $category, $this->input->get('category_id'));
+                echo ca_select(element(0, $category), $category, $this->input->get('category_id') ? $this->input->get('category_id'):$this->session->userdata('category_id'));
                 ?>
             </select>
 
@@ -111,11 +112,11 @@
 
                                 <li class="info_li nick"><?php echo element('display_name', $result); ?></li>
                                 <li class="info_li"><?php echo element('display_datetime', $result); ?></li>
-                                <li class="info_li"><?php if (element('post_comment_count', $result)) { echo '댓글 : '.element('post_comment_count', $result);  } ?></li>
+                                <li class="info_li">댓글 : <?php echo element('post_comment_count', $result);?></li>
                         </ul>
                         <ul class="info_list02">
                             <li class="info_li">
-                                <i class="fa fa-eye"></i><span class="hidden">조회수</span><?php echo element('post_hit', $result); ?>
+                                <i class="fa fa-eye"></i><span class="hidden">조회수</span><?php echo hit_format(element('post_hit', $result)); ?>
                             </li>
                             <li class="info_li">
                                 <i class="fa fa-heart-o"></i><span class="hidden">스크랩수</span><?php echo element('scrap_count', $result); ?>
@@ -141,7 +142,7 @@
             }
         }
         } else {
-            echo '<div class="table-answer nopost">내용이 없습니다</div>';     
+            echo '<div class="table-answer nopost text-center">내용이 없습니다</div>';     
         }
         if ($open) {
             echo '</ul>';

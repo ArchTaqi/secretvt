@@ -4,12 +4,12 @@
 
     <section class="title">
         <div></div>
-        <h2>이벤트</h2>
+        
         <!-- <span>다양한 이벤트를 만나보세요.</span> -->
         <table class="table02">
             <tr>
                 <td>
-                    <a href="<?php echo element('document_board_url', $view); ?>" title="공지사항">
+                    <a href="<?php echo element('document_board_url', $view); ?>" title="공지사항" style="padding:5px 0px;">
                         <figure>
                             <img src="<?php echo base_url('assets/images/temp/de_img/de_bell.png')?>" alt="sub01"> 
                             <figcaption>공지사항</figcaption>

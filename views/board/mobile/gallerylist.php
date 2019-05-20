@@ -10,11 +10,32 @@
     <section class="post_list">
         <h2 class="hidden">관광 전체</h2>
         <div class="select_area_box title03">
-            <select name="region" id="region">
-                <option value="">지역 선택</option>
-                <option value="">다 낭</option>
-                <option value="">하노이</option>
-                <option value="">호치민</option>
+            <select  onchange="location.href='<?php echo board_url(element('brd_key', element('board', element('list', $view)))); ?>?findex=<?php echo html_escape($this->input->get('findex')); ?>&category_id=' + this.value;">
+                <option value=""><?php echo $this->input->get('category_id') || $this->session->userdata('category_id') ? '전체':'지역 선택'; ?></option>
+                <?php
+                $category = element('category', element('board', element('list', $view)));
+                function ca_select($p = '', $category = '', $category_id = '')
+                {
+                    $return = '';
+                    if ($p && is_array($p)) {
+                        foreach ($p as $result) {
+                            $exp = explode('.', element('bca_key', $result));
+                            $len = (element(1, $exp)) ? strlen(element(1, $exp)) : '0';
+                            $space = str_repeat('-', $len);
+                            $return .= '<option value="' . html_escape(element('bca_key', $result)) . '"';
+                            if (element('bca_key', $result) === $category_id) {
+                                $return .= 'selected="selected"';
+                            }
+                            $return .= '>' . $space . html_escape(element('bca_value', $result)) . '</option>';
+                            $parent = element('bca_key', $result);
+                            $return .= ca_select(element($parent, $category), $category, $category_id);
+                        }
+                    }
+                    return $return;
+                }
+
+                echo ca_select(element(0, $category), $category, $this->input->get('category_id') ? $this->input->get('category_id'):$this->session->userdata('category_id'));
+                ?>
             </select>
             <?php if (element('write_url', element('list', $view))) { ?>
              
@@ -96,7 +117,7 @@
                         </ul>
                         <ul class="info_list02">
                             <li class="info_li">
-                                <i class="fa fa-eye"></i><span class="hidden">조회수</span><?php echo element('post_hit', $result); ?>
+                                <i class="fa fa-eye"></i><span class="hidden">조회수</span><?php echo hit_format(element('post_hit', $result)); ?>
                             </li>
                             <li class="info_li">
                                 <i class="fa fa-heart-o"></i><span class="hidden">스크랩수</span><?php echo element('scrap_count', $result); ?>
@@ -122,7 +143,7 @@
             }
         }
         } else {
-            echo '<div class="table-answer nopost">내용이 없습니다</div>';     
+            echo '<div class="table-answer nopost text-center">내용이 없습니다</div>';     
         }
         if ($open) {
             echo '</ul>';

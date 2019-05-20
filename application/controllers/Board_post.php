@@ -68,8 +68,8 @@ class Board_post extends CB_Controller
             )
         );
 
-        if(empty(get_cookie('region'))) $view['view']['region']=0;
-        else $view['view']['region'] = get_cookie('region');
+        // if(empty(get_cookie('region'))) $view['view']['region']=0;
+        // else $view['view']['region'] = get_cookie('region');
 
         // 이벤트가 존재하면 실행합니다
         $view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
@@ -899,6 +899,34 @@ class Board_post extends CB_Controller
             // 이벤트가 존재하면 실행합니다
             $view['view']['event']['before_post_layout'] = Events::trigger('before_post_layout', $eventname);
 
+            //최근 본 게시물 시작
+            if(empty($this->session->userdata('lately'))){
+                $this->session->set_userdata(
+                'lately',
+                array($post_id)
+                );  
+            } elseif(count($this->session->userdata('lately')) <5){
+                $lately = $this->session->userdata('lately');
+                if(!in_array($post_id,$lately)){
+                    array_unshift($lately, $post_id);
+                    $this->session->set_userdata(
+                    'lately',
+                    $lately
+                    );  
+                }
+            } else {
+                $lately = $this->session->userdata('lately');
+                if(!in_array($post_id,$lately)){
+                    array_unshift($lately, $post_id);
+                    array_pop($lately);
+                    $this->session->set_userdata(
+                    'lately',
+                    $lately
+                    );  
+                }
+            }
+            
+
             $view['view']['short_url'] = $view['view']['canonical'] = post_url(element('brd_key', $board), $post_id);
             
             if(element('use_bitly', $board)) {
@@ -918,6 +946,22 @@ class Board_post extends CB_Controller
                     }
                 }
             }
+
+            if(element('use_post_like', $board) OR element('use_post_dislike', $board)){
+                $this->load->model( 'Like_model');
+                $select = 'lik_id, lik_type';
+                $where = array(
+                    'target_id' => $post_id,
+                    'target_type' => 1,
+                    'mem_id' => $mem_id,
+                );
+                $exist = $this->Like_model->get_one('', $select, $where);
+
+                if (element('lik_id', $exist)) {
+                    $view['view']['lik_type'] = element('lik_type', $exist);
+                }    
+            }
+            
 
             $layout_dir = element('board_layout', $board) ? element('board_layout', $board) : $this->cbconfig->item('layout_board');
             $mobile_layout_dir = element('board_mobile_layout', $board) ? element('board_mobile_layout', $board) : $this->cbconfig->item('mobile_layout_board');
@@ -1199,22 +1243,27 @@ class Board_post extends CB_Controller
             $where['post.mem_id'] = $mem_id;
         }
 
-        $category_id = (int) $this->input->get('category_id');
-        if (empty($category_id) OR $category_id < 1) {
-            $category_id = '';
-        }
+        $category_id = '';
+        if (element('use_category', $board)) {
+            
+            
+            if(is_null($this->input->get('category_id'))) $category_id = $this->session->userdata('category_id');
+            else $category_id = $this->input->get('category_id');
 
+            if (empty($category_id) OR $category_id < 1) {
+                $category_id = '';
+            }
+            
+            $this->session->set_userdata(
+                'category_id',
+                $category_id
+            );
+        }
+        // if(!empty(get_cookie('region')) && element('bgr_id', $board)!=='8' && element('bgr_id', $board)!=='11') {
+        //     $where['region_category'] = get_cookie('region');
+        // }
 
         
-        
-        if(!empty(get_cookie('region')) && element('bgr_id', $board)!=='8' && element('bgr_id', $board)!=='11') {
-            $where['region_category'] = get_cookie('region');
-        }
-
-        $category_id = (int) $this->input->get('category_id');
-        if (empty($category_id) OR $category_id < 1) {
-            $category_id = '';
-        }
 
         // $main_result = $this->Post_model
         //     ->get_post_list(6, '', $where, $category_id, $findex, $sfield, $skeyword);
@@ -1417,6 +1466,15 @@ class Board_post extends CB_Controller
                         ? cut_str(element('post_title', $val), element('subject_length', $board))
                         : element('post_title', $val);
                 }
+
+                $result['list'][$key]['content'] = element('post_html', $val) ? 
+                    display_html_content(
+                        strip_tags(element('post_content', $val),'<div><p><br><ul><ol><li><table>'),
+                        element('post_html', $val)
+                        
+                    ) : element('post_content', $val);
+
+
                 if (element('post_del', $val)) {
                     $result['list'][$key]['title'] = '게시물이 삭제 되었습니다';
                 }

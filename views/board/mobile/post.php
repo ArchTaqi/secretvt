@@ -83,7 +83,7 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
                     </ul> -->
                 </li>
                 <li class="info_li"><?php echo element('display_datetime', element('post', $view)) ?></li>
-                <li class="info_li">조회수: <?php echo element('post_hit', element('post', $view)) ?></li>
+                <li class="info_li">조회수: <?php echo number_format(element('post_hit', element('post', $view))) ?></li>
                 <li class="info_li">댓글: <?php echo element('post_comment_count', element('post', $view));  ?></li>
             </ul>
         </div>
@@ -103,10 +103,10 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
     <?php if ( ! element('post_del', element('post', $view)) && (element('use_post_like', element('board', $view)) OR element('use_post_dislike', element('board', $view)))) { ?>
         <div class="recommand">
             <?php if (element('use_post_like', element('board', $view))) { ?>
-                <a class="good" href="javascript:;" id="btn-post-like" onClick="post_like('<?php echo element('post_id', element('post', $view)); ?>', '1', 'post-like');" title="추천하기"><span class="post-like"><?php echo number_format(element('post_like', element('post', $view))); ?></span><br /><i class="fa fa-thumbs-o-up fa-lg"></i></a>
+                <a class="good" href="javascript:;" id="btn-post-like" onClick="post_like('<?php echo element('post_id', element('post', $view)); ?>', '1', 'post-like');" title="추천하기"><span class="post-like"><?php echo number_format(element('post_like', element('post', $view))); ?></span><br /><i class="fa <?php echo !empty(element('lik_type', $view)) && element('lik_type', $view)==='1' ? 'fa-thumbs-up':'fa-thumbs-o-up'; ?> fa-lg"></i></a>
             <?php } ?>
             <?php if (element('use_post_dislike', element('board', $view))) { ?>
-                <a class="bad" href="javascript:;" id="btn-post-dislike" onClick="post_like('<?php echo element('post_id', element('post', $view)); ?>', '2', 'post-dislike');" title="비추하기"><span class="post-dislike"><?php echo number_format(element('post_dislike', element('post', $view))); ?></span><br /><i class="fa fa-thumbs-o-down fa-lg"></i></a>
+                <a class="bad" href="javascript:;" id="btn-post-dislike" onClick="post_like('<?php echo element('post_id', element('post', $view)); ?>', '2', 'post-dislike');" title="비추하기"><span class="post-dislike"><?php echo number_format(element('post_dislike', element('post', $view))); ?></span><br /><i class="fa <?php echo !empty(element('lik_type', $view)) && element('lik_type', $view)==='2' ? 'fa-thumbs-down':'fa-thumbs-o-down'; ?> fa-lg"></i></a>
             <?php } ?>
         </div>
     <?php } ?>

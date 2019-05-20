@@ -713,7 +713,8 @@ if (typeof(COMMON_JS) === 'undefined') {
         } else {
             note_url = cb_url + '/note/lists/recv';
         }
-        window.open(note_url , 'win_note', 'left=100,top=100,width=730,height=500,scrollbars=1');
+        document.location.href = note_url;
+        // window.open(note_url , 'win_note', 'left=100,top=100,width=730,height=500,scrollbars=1');
         return false;
     }
 

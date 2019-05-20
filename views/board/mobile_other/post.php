@@ -77,7 +77,7 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
                     </ul> -->
                 </li>
                 <li class="info_li"><?php echo element('display_datetime', element('post', $view)) ?></li>
-                <li class="info_li">조회수: <?php echo element('post_hit', element('post', $view)) ?></li>
+                <li class="info_li">조회수: <?php echo number_format(element('post_hit', element('post', $view))) ?></li>
                 <li class="info_li">댓글: <?php echo element('post_comment_count', element('post', $view));  ?></li>
             </ul>
             <?php if (element('link_count', $view) > 0 OR element('file_download_count', $view) > 0) { ?>

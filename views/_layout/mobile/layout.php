@@ -235,7 +235,7 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
                 
                 <div class="top">
                     <?php if ($this->member->is_member()) { ?>
-                        <h3 class="txt"><a href="<?php echo site_url('mypage'); ?>" title="마이페이지" style="color:#fff"><span class="t_bold">홍길동</span>님 안녕하세요</a></h3>
+                        <h3 class="txt"><a href="<?php echo site_url('mypage'); ?>" title="마이페이지" style="color:#fff"><span class="t_bold"><?php echo $this->member->item('mem_nickname') ?></span>님 안녕하세요</a></h3>
                     <?php } else { ?>
                         <h3 class="txt"><a style="color:#fff" href="<?php echo site_url('login?url=' . urlencode(current_full_url())); ?>" title="로그인">로그인 하세요</a></h3>
                     <?php } ?>
@@ -271,7 +271,7 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
                                 <ul class="list  drop-downorder-' . $mkey . '">';
 
                                 foreach (element(element('men_id', $mval), $menu) as $skey => $sval) {
-                                    $men_key = explode("_",element('men_link', $sval));
+                                    $men_key = explode("vtn_",element('men_link', $sval));
                                     $menuhtml .= '<li class="list_li"><a href="' . element('men_link', $sval) . '" ' . element('men_custom', $sval);
                                     if (element('men_target', $sval)) {
                                         $menuhtml .= ' target="' . element('men_target', $sval) . '"';
@@ -304,14 +304,12 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
                     <li><a href="<?php echo site_url('login?url=' . urlencode(current_full_url())); ?>"  title="로그인"><i class="fa fa-sign-in"></i> 로그인</a></li>
                     <?php } ?>
                     
-                    <li><a href="">공지사항</a></li>
+                    <li><a href="<?php echo site_url('notice/lists'); ?>"  title="공지사항">공지사항</a></li>
                 </ul>
             </section>
         </div>
     </div>
 </div>
-
-
 <script type="text/javascript">
 $(document).on('click', '.viewpcversion', function(){
     Cookies.set('device_view_type', 'desktop', { expires: 1 });
@@ -320,7 +318,6 @@ $(document).on('click', '.viewmobileversion', function(){
     Cookies.set('device_view_type', 'mobile', { expires: 1 });
 });
 </script>
-
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -334,31 +331,31 @@ $(document).on('click', '.viewmobileversion', function(){
 
     $(document).ready(function(){
 
-        var select = $("#region");
-        select.change(function(){
-             //var select_name = $(this).children("option:selected").html();
-             //$("header h1 span label").html(select_name);
-            // $("label").css("color" , "#231b26");
+    //     var select = $("#region");
+    //     select.change(function(){
+    //          //var select_name = $(this).children("option:selected").html();
+    //          //$("header h1 span label").html(select_name);
+    //         // $("label").css("color" , "#231b26");
 
 
-        Cookies.set('region',$(this).children('option:selected').index(), { expires: 1 },cb_cookie_domain);
-           // set_cookie("region", '11', 0, cb_cookie_domain);     
-    //       alert(js_mem_link[curnetIndex]);   
-           location.href=$(this).val();
-        });
+    //     Cookies.set('region',$(this).children('option:selected').index(), { expires: 1 },cb_cookie_domain);
+    //        // set_cookie("region", '11', 0, cb_cookie_domain);     
+    // //       alert(js_mem_link[curnetIndex]);   
+    //        location.href=$(this).val();
+    //     });
 
-        $("#mainmenu ul li").click(function(){
+        // $("#mainmenu ul li").click(function(){
 
-            if(pageing) pageing=1;
-            $('div.c').eq($(this).index()).click();        
+        //     if(pageing) pageing=1;
+        //     $('div.c').eq($(this).index()).click();        
 
-          //  setTimeout( "reload_rg('"+js_swipe_contents[$(this).index()]+"')", 500);
-        });
+        //   //  setTimeout( "reload_rg('"+js_swipe_contents[$(this).index()]+"')", 500);
+        // });
 
-        if($("#region option:selected").text()){
-            $("#region").siblings("label").text($("#region option:selected").text());
-            $("#region").siblings("label").css("color" , "#231b26");
-        }
+        // if($("#region option:selected").text()){
+        //     $("#region").siblings("label").text($("#region option:selected").text());
+        //     $("#region").siblings("label").css("color" , "#231b26");
+        // }
 
         // $(window).scroll(function() { 
         // if ($(this).scrollTop() > 500) { //250 넘으면 버튼이 보여짐니다. 
@@ -384,14 +381,14 @@ $(document).on('click', '.viewmobileversion', function(){
         });
         
 
-        swiper.on('touchEnd', function () {
-            // alert(swiper.touches.startY +"-"+ swiper.touches.currentY);
-            if((swiper.touches.startY - swiper.touches.currentY) > 5 ) 
-                $('#mainmenu').hide();
-            else 
-                $('#mainmenu').show();
+        // swiper.on('touchEnd', function () {
+        //     // alert(swiper.touches.startY +"-"+ swiper.touches.currentY);
+        //     if((swiper.touches.startY - swiper.touches.currentY) > 5 ) 
+        //         $('#mainmenu').hide();
+        //     else 
+        //         $('#mainmenu').show();
                 
-        });
+        // });
 
 
 

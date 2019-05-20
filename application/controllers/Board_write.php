@@ -2658,9 +2658,9 @@ class Board_write extends CB_Controller
         //     );   
         // }
 
-        if(!empty(get_cookie('region')) && element('bgr_id', $board)!=='8' && element('brd_id', $board)!=='70') {
-            $where['region_category'] = get_cookie('region');
-        }
+        // if(!empty(get_cookie('region')) && element('bgr_id', $board)!=='8' && element('brd_id', $board)!=='70') {
+        //     $where['region_category'] = get_cookie('region');
+        // }
 
         
 

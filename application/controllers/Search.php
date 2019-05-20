@@ -147,16 +147,27 @@ class Search extends CB_Controller
         $list_num = $result['total_rows'] - ($page - 1) * $per_page;
         if (element('list', $result)) {
             foreach (element('list', $result) as $key => $val) {
-                $images = '';
+                
                 if (element('post_image', $val)) {
+                    $file = '';
                     $imagewhere = array(
                         'post_id' => element('post_id', $val),
                         'pfi_is_image' => 1,
                     );
-                    $images = $this->Post_file_model
+                    $file = $this->Post_file_model
                         ->get_one('', '', $imagewhere, '', '', 'pfi_id', 'ASC');
+
+                    $result['list'][$key]['thumb_url'] = thumb_url('post', element('pfi_filename', $file));
+                    $result['list'][$key]['origin_image_url'] = thumb_url('post', element('pfi_filename', $file));
+                } else {
+                    $thumb_url = get_post_image_url(element('post_content', $val));
+                    $result['list'][$key]['thumb_url'] = $thumb_url
+                            ? $thumb_url
+                            : '';
+
+                    $result['list'][$key]['origin_image_url'] = $result['list'][$key]['thumb_url'];
                 }
-                $result['list'][$key]['images'] = $images;
+                // $result['list'][$key]['images'] = $images;
                 $result['list'][$key]['post_url'] = post_url(element('brd_key', $val), element('post_id', $val));
                 $result['list'][$key]['display_name'] = display_username(
                     element('post_userid', $val),
@@ -165,7 +176,7 @@ class Search extends CB_Controller
                     'Y'
                 );
                 $result['list'][$key]['display_datetime'] = display_datetime(element('post_datetime', $val), 'user', 'Y-m-d H:i');
-                $result['list'][$key]['content'] = cut_str(strip_tags(element('post_content', $val)),200);
+                $result['list'][$key]['content'] = cut_str(strip_tags(element('post_content', $val)),100);
                 $result['list'][$key]['is_mobile'] = (element('post_device', $val) === 'mobile') ? true : false;
             }
         }

@@ -1532,3 +1532,26 @@ if ( ! function_exists('event_image_url')) {
         return thumb_url('event', $img, $width, $height);
     }
 }
+
+
+if ( ! function_exists('hit_format'))
+{
+    
+    function hit_format($num, $precision = 1)
+    {
+        $CI =& get_instance();
+        $CI->lang->load('number');
+
+        if ($num >= 1000)
+        {
+            $num = round($num / 1000, $precision);
+            $unit = 'k';
+        }
+        else
+        {
+            return number_format($num);
+        }
+
+        return number_format($num, $precision).' '.$unit;
+    }
+}

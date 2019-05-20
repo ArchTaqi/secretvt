@@ -163,6 +163,7 @@ class Comment_list extends CB_Controller
          * 상단에 베스트 부분에 필요한 정보를 가져옵니다.
          */
         $bestresult = '';
+        $best_cmt_id = '';
         if ($comment_best) {
             $bestresult = $this->Comment_model
                 ->get_best_list($post_id, $comment_best, element('comment_best_like_num', $board));
@@ -171,6 +172,7 @@ class Comment_list extends CB_Controller
                     $bestresult[$key]['meta'] = $meta = $this->Comment_meta_model->get_all_meta(element('cmt_id', $val));
                     $bestresult[$key]['content'] = '';
 
+                    $best_cmt_id = element('cmt_id', $val);
                     $is_blind = (element('comment_blame_blind_count', $board) > 0 && element('cmt_blame', $val) >= element('comment_blame_blind_count', $board)) ? true : false;
 
                     if ($is_blind === true) {
@@ -230,6 +232,40 @@ class Comment_list extends CB_Controller
                         = member_photo_url(element('mem_photo', $val), 64, 64)
                         ? member_photo_url(element('mem_photo', $val), 64, 64)
                         : site_url('assets/images/member_default.gif');
+
+
+                    $bestresult[$key]['can_update'] = false;
+                    $bestresult[$key]['can_delete'] = false;
+                    $bestresult[$key]['can_reply'] = false;
+                    if ( ! element('post_del', $post) && ! element('cmt_del', $val)) {
+                        if ( ! element('mem_id', $val)) {
+                            $bestresult[$key]['can_delete'] = true;
+                        }
+                        if ($is_admin !== false
+                            OR (element('mem_id', $val) && $mem_id === abs(element('mem_id', $val)))) {
+                            $bestresult[$key]['can_update'] = true;
+                            $bestresult[$key]['can_delete'] = true;
+                        }
+                        if ($key > 0 && $is_admin === false) {
+                            if (element('cmt_reply', $val)) {
+                                $prev_reply = substr(
+                                    element('cmt_reply', $val),
+                                    0,
+                                    strlen(element('cmt_reply', $val)) - 1
+                                );
+                                if ($prev_reply === $bestresult[$key-1]['cmt_reply']) {
+                                    $bestresult[$key-1]['can_update'] = false;
+                                    $bestresult[$key-1]['can_delete'] = false;
+                                }
+                            }
+                        }
+                        if (element('block_delete', $board) && $is_admin === false) {
+                            $bestresult[$key]['can_delete'] = false;
+                        }
+                        if (strlen(element('cmt_reply', $val)) < 5 && $can_comment_write === true && $mem_id !== abs(element('mem_id', $val))) {
+                            $bestresult[$key]['can_reply'] = true;
+                        }
+                    }
                 }
             }
         }
@@ -240,7 +276,12 @@ class Comment_list extends CB_Controller
         $where = array(
             'post_id' => $post_id,
             'cmt_del <>' => 2,
+            
         );
+
+        if($best_cmt_id) $where['cmt_id <>'] = $best_cmt_id;
+        
+
         $result = $this->Comment_model
             ->get_comment_list($per_page, $offset, $where, '', $findex, $sfield = '', $skeyword = '');
         $list_num = $result['total_rows'] - ($page - 1) * $per_page;

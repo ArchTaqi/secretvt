@@ -1397,6 +1397,7 @@
 		white-space: nowrap;
 		overflow:hidden;
 	}
+
 	.txt_list div{
 		height: 1.1em;
 		max-width:100%;
@@ -1406,6 +1407,7 @@
 		padding-left: 2%;
 		text-align: left;
 		font-size: 13px;
+
 		line-height: 1.1;
 		text-overflow: ellipsis;
 	}
@@ -1603,7 +1605,7 @@
 	.info_table td{
 		position: relative;
 		width: 25%;
-		padding:3.5% 0 2.5%;
+		/*padding:3.5% 0 2.5%;*/
 		text-align: center;
 		border: 1px solid #ddd;
 		font-size: 14px; 
@@ -1613,7 +1615,7 @@
 		background-color: #ecf4f9;
 	}
 	.info_table .lab_notification{
-		top: -6px;
+		top: 2px;
 		right: 10px;
 	}
 	.info_table a{
@@ -1639,10 +1641,10 @@
 	}
 	.mypage .btn{
 		font-size: 14px;
-		padding:5px 10px 4px;
-		margin-right:3px;
+		/*padding:5px 10px 4px;
+		margin-right:3px;*/
 		font-family:'Jeju Gothic',sans-serif;
-		margin-bottom: 20px;
+		/*margin-bottom: 20px;*/
 	}
 	.mypage .btn:last-child{
 		margin-right:0;

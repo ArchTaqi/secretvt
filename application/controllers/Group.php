@@ -359,22 +359,29 @@ class Group extends CB_Controller
             $where['post.mem_id'] = $mem_id;
         }
 
-        $category_id = (int) $this->input->get('category_id');
-        if (empty($category_id) OR $category_id < 1) {
-            $category_id = '';
+         $category_id = '';
+        if (element('use_category', $board)) {
+            
+            
+            if(is_null($this->input->get('category_id'))) $category_id = $this->session->userdata('category_id');
+            else $category_id = $this->input->get('category_id');
+
+            if (empty($category_id) OR $category_id < 1) {
+                $category_id = '';
+            }
+            
+            $this->session->set_userdata(
+                'category_id',
+                $category_id
+            );
         }
-
-
         
         
-        if(!empty(get_cookie('region')) && element('bgr_id', $board)!=='8' && element('bgr_id', $board)!=='11') {
-            $where['region_category'] = get_cookie('region');
-        }
+        // if(!empty(get_cookie('region')) && element('bgr_id', $board)!=='8' && element('bgr_id', $board)!=='11') {
+        //     $where['region_category'] = get_cookie('region');
+        // }
 
-        $category_id = (int) $this->input->get('category_id');
-        if (empty($category_id) OR $category_id < 1) {
-            $category_id = '';
-        }
+        
 
         
         $this->load->model('Scrap_model');

@@ -16,7 +16,7 @@ if ($this->member->is_member() === false) {
                 <?php echo(element('board_name',element('board', $view)));?>
             </h2>
 
-            <span>
+           <!--  <span>
                     <?php 
                     switch (element('brd_key',element('board', $view))) {
                         case 'vtn_tour':
@@ -40,16 +40,15 @@ if ($this->member->is_member() === false) {
                             break;
                     }
                     ?>
-            </span>
+            </span> -->
 
             <?php if(element('brd_key',element('board', $view)) !== 'vtn_discount'){ ?>
             <figure class="botbn_img">
                 <img src="<?php echo base_url('assets/images/temp/botbn_img/bottom_'.element('brd_key',element('board', $view)).'.png'); ?>">
                 <figcaption>
                     <p>
-                        베트남 현지 대형 여행사와 특정 제휴하여<br>
-                        가장 좋은 조건으로 안전하게 타사보다 <br>
-                        무조건 저렴하게 견적 드립니다.
+                        베트남 관련 문의글을 작성해 주세요.<br>
+                        운영자가 실시간 상담해 드립니다.<br>
                     </p>
                 </figcaption>
             </figure>
@@ -60,7 +59,7 @@ if ($this->member->is_member() === false) {
             <?php } ?>
     </section>
 
-    <section class="talk">
+    <!-- <section class="talk">
             <figure>
                 <img src="<?php echo base_url('assets/images/temp/talk_logo.png'); ?>">
                 <figcaption>
@@ -71,7 +70,7 @@ if ($this->member->is_member() === false) {
                 카카오톡 친구추가를 하시고<br>
                 상담 요청을 하실 수 있습니다.
             </p> 
-    </section>
+    </section> -->
 <?php if(element('brd_key',element('board', $view))!=='vtn_discount' || element('is_admin', $view) ) {?>
 <section class="write_area">
     
@@ -107,11 +106,10 @@ if ($this->member->is_member() === false) {
             </div>
         <?php } ?>
         <div class="form-group ">
-            <?php echo display_dhtml_editor('post_content', set_value('post_content', element('post_content', element('post', $view))), $classname = '"" placeholder="호텔예약,골프부팅,가이드 요청 관련한 문의글을 작성해 주세요.
-카톡 아이디를 내용에 적어 주시면 운영자가
-카톡으로 실시간 상담해 드립니다." '.$readonly.'
+            <?php echo display_dhtml_editor('post_content', set_value('post_content', element('post_content', element('post', $view))), $classname = '"" placeholder="베트남 관련 문의글을 작성해 주세요.
+운영자가 실시간 상담해 드립니다." '.$readonly.'
     onfocus="this.placeholder=\'\'"
-    onblur="this.placeholder=\'관련 문의글을 작성해 주세요. \n카톡 아이디를 내용에 적어 주시면 운영자가 \n카톡으로 실시간 상담해 드립니다.\'"', $is_dhtml_editor = element('use_dhtml', element('board', $view)), $editor_type = $this->cbconfig->item('post_editor_type')); ?>
+    onblur="this.placeholder=\'베트남 관련 문의글을 작성해 주세요. \n운영자가 실시간 상담해 드립니다.\'"', $is_dhtml_editor = element('use_dhtml', element('board', $view)), $editor_type = $this->cbconfig->item('post_editor_type')); ?>
         </div>
         <?php
         if (element('link_count', element('board', $view)) > 0) {

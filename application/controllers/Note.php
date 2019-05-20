@@ -228,7 +228,8 @@ class Note extends CB_Controller
         );
         $result = $this->Note_model->get_note($where);
         if ( ! element('nte_id', $result)) {
-            show_404();
+            alert('지워지거나 없는 쪽지입니다.');
+            return false;
         }
         if ($result[$mem_column]) {
             $result['userid'] = element('mem_userid', $result);

@@ -151,11 +151,11 @@
                     </div>';
                  ?>
                 <h2>
-                    <?php if(!empty(element('post_secret', $result))) echo '<i class="fa fa-lock"></i>'; ?><?php if (element('is_hot', $result)) { ?><b class="lab_hot">HOT</b><?php } ?><?php echo html_escape(element('title', $result));?> <?php if (element('post_comment_count', $result)) { ?>[+<?php echo element('post_comment_count', $result); ?>]<?php } ?> </h2>
-                    <div><p><?php if(empty(element('post_secret', $result))) echo element('post_content', $result); ?></p></div>
+                    <?php if(!empty(element('post_secret', $result))) echo '<i class="fa fa-lock"></i>'; ?><?php if (element('is_hot', $result)) { ?><b class="lab_hot">HOT</b><?php } ?><?php echo html_escape(element('title', $result));?> </h2>
+                    <div class="content_txt"><p><?php if(empty(element('post_secret', $result))) echo (element('content', $result)); ?></p></div>
             </a>
                 <span>
-                    <?php echo element('display_name', $result); ?> | 작성일 : <?php echo element('display_datetime', $result); ?> | 조회수 : <?php echo element('post_hit', $result); ?>
+                    <?php echo element('display_name', $result); ?> | 작성일 : <?php echo element('display_datetime', $result); ?> | 조회수 : <?php echo hit_format(element('post_hit', $result)); ?> | 댓글 : <?php echo element('post_comment_count', $result); ?>
                 </span>
             
             </li>
@@ -168,7 +168,7 @@
             }
         }else {
 
-            echo '<div class="nopost ">내용이 없습니다</div>';
+            echo '<div class="table-answer nopost text-center">내용이 없습니다</div>';     
         }
         if ($open) {
             echo '</ul>';

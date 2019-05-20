@@ -154,7 +154,7 @@
                         <?php if (element('post_comment_count', $result)) { ?><span class="label label-warning">+<?php echo element('post_comment_count', $result); ?></span><?php } ?>
                     <td><?php echo element('display_name', $result); ?></td>
                     <td><?php echo element('display_datetime', $result); ?></td>
-                    <td><?php echo number_format(element('post_hit', $result)); ?></td>
+                    <td><?php echo hit_format(element('post_hit', $result)); ?></td>
                 </tr>
             <?php
                 }
@@ -203,7 +203,7 @@
                     <?php if (element('is_new', $result)) { ?><span class="label label-warning">New</span><?php } ?>
                     <?php if (element('post_secret', $result)) { ?><span class="fa fa-lock"></span><?php } ?>
                     <?php if (element('post_comment_count', $result)) { ?><span class="comment-count"><i class="fa fa-comments"></i><?php echo element('post_comment_count', $result); ?></span><?php } ?>
-                    <span class="hit-count"><i class="fa fa-eye"></i> <?php echo number_format(element('post_hit', $result)); ?></span>
+                    <span class="hit-count"><i class="fa fa-eye"></i> <?php echo hit_format(element('post_hit', $result)); ?></span>
                 </p>
             </li>
         <?php

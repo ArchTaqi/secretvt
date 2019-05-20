@@ -31,11 +31,11 @@ if (element('list', element('data', $view))) {
 ?>
     <div class="media">
 <?php
-        if (element('images', $result)) {
+        if (element('thumb_url', $result)) {
 ?>
         <div class="media-left">
             <a href="<?php echo element('post_url', $result); ?>" title="<?php echo html_escape(element('post_title', $result)); ?>">
-                <img class="media-object" src="<?php echo thumb_url('post', element('pfi_filename', element('images', $result)), 100, 80); ?>" alt="<?php echo html_escape(element('post_title', $result)); ?>" title="<?php echo html_escape(element('post_title', $result)); ?>" style="width:100px;height:80px;" />
+                <img class="media-object" src="<?php echo element('thumb_url', $result); ?>" alt="<?php echo html_escape(element('post_title', $result)); ?>" title="<?php echo html_escape(element('post_title', $result)); ?>" style="width:100px;height:80px;" />
             </a>
         </div>
 <?php
@@ -43,12 +43,11 @@ if (element('list', element('data', $view))) {
 ?>
         <div class="media-body">
             <h4 class="media-heading"><a href="<?php echo element('post_url', $result); ?>" title="<?php echo html_escape(element('post_title', $result)); ?>"><?php echo html_escape(element('post_title', $result)); ?></a>
+                <?php if (element('post_comment_count', $result)) { ?><span class="label">+<?php echo element('post_comment_count', $result); ?></span><?php } ?>
             </h4>
             <div class="media-comment">
-                <?php if (element('post_comment_count', $result)) { ?><span class="label label-info label-xs"><?php echo element('post_comment_count', $result); ?> comments</span><?php } ?>
-                <!-- <a href="<?php echo element('post_url', $result); ?>" target="_blank" title="<?php echo html_escape(element('post_title', $result)); ?>"><span class="label label-default label-xs">새창</span></a> -->
             </div>
-            <p><?php echo element('content', $result); ?></p>
+            <p style="line-height:1.4;"><?php echo element('content', $result); ?></p>
             <p class="media-info">
                 <span><?php echo element('display_name', $result); ?></span>
                 <span><i class="fa fa-clock-o"></i> <?php echo element('display_datetime', $result); ?></span>

@@ -188,7 +188,7 @@ if (element('menu', $layout)) {
                         <?php if (element('post_comment_count', $result)) { ?><span class="label label-warning">+<?php echo element('post_comment_count', $result); ?></span><?php } ?>
                     <td><?php echo element('display_name', $result); ?></td>
                     <td><?php echo element('display_datetime', $result); ?></td>
-                    <td><?php echo number_format(element('post_hit', $result)); ?></td>
+                    <td><?php echo hit_format(element('post_hit', $result)); ?></td>
                 </tr>
             <?php
                 }
@@ -250,7 +250,7 @@ if (element('menu', $layout)) {
                 }
             }
         } else {
-            echo '<div class="table-answer nopost">내용이 없습니다</div>';
+            echo '<div class="table-answer nopost text-center">내용이 없습니다</div>';
                     
         }
         if ($open) {
@@ -305,7 +305,7 @@ if (element('menu', $layout)) {
                 }
             }
         } else {
-            echo '<div class="table-answer nopost">내용이 없습니다</div>';
+            echo '<div class="table-answer nopost text-center">내용이 없습니다</div>';
                     
         }
         if ($open) {

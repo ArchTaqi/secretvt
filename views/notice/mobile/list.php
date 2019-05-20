@@ -4,7 +4,7 @@
 
     <section class="title">
         <div></div>
-        <h2>공지사항</h2>
+        
         <!-- <span>시크릿 베트남에서 알려 드립니다.</span> -->
         <table class="table02">
             <tr>
@@ -18,7 +18,7 @@
                 </td>
 
                 <td>
-                    <a href="<?php echo element('document_board_url', $view); ?>" title="이벤트">
+                    <a href="<?php echo element('document_board_url', $view); ?>" title="이벤트" style="padding:5px 0px;">
                         <figure>
                             <img src="<?php echo base_url('assets/images/temp/de_img/de_gift.png')?>" alt="sub01"> 
                             <figcaption>
