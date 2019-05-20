@@ -196,8 +196,8 @@ $(document).ready(function() {
 
     $(document).ready(function () {
         var swiper_sub = new Swiper('.swiper-container-sub', {
-            
-            spaceBetween: 30,
+            autoHeight: true,
+            spaceBetween: 0,
             effect: 'fade',
             pagination: {
               el: '.swiper-pagination-sub',

@@ -13,8 +13,8 @@ if (element('best_list', $view)) {
         <div class="media-body">
             <h4 class="media-heading">
                 <?php if (element('is_admin', $view)) { ?><input type="checkbox" name="chk_comment_id[]" value="<?php echo element('cmt_id', $result); ?>" /><?php } ?>
-                <span class="label label-warning">베플</span>
-                <?php echo element('display_name', $result); ?>
+                
+                <?php echo element('display_name', $result); ?> <span class="label label-warning">베플</span>
                 <span class="time pl10 pr10"><i class="fa fa-clock-o"></i> <?php echo element('display_datetime', $result); ?></span>
                 
                 <?php
@@ -53,7 +53,7 @@ if (element('best_list', $view)) {
 if (element('list', element('data', $view))) {
     foreach (element('list', element('data', $view)) as $result) {
 ?>
-    <div class="media" id="comment_<?php echo element('cmt_id', $result); ?>" style="padding-left:<?php echo element('cmt_depth', $result); ?>px;background-color: #fff;<?php if(element('cmt_reply', $result)) echo 'margin-top: 0px;'; ?>">
+    <div class="media" id="comment_<?php echo element('cmt_id', $result); ?>" style="padding-left:<?php echo element('cmt_depth', $result); ?>px;background-color: #fff;<?php if(element('cmt_reply', $result)) echo 'margin-top: -1px;'; ?>">
         <?php if (element('use_comment_profile', element('board', $view))) { ?>
             <div class="media-left">
                 <img class="media-object member-photo" src="<?php echo element('member_photo_url', $result); ?>" width="64" height="64" alt="<?php echo html_escape(element('cmt_nickname', $result)); ?>" title="<?php echo html_escape(element('cmt_nickname', $result)); ?>" />

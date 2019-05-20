@@ -82,7 +82,7 @@
         </div>
         
         <?php if (element('can_post_notice', element('post', $view)) OR element('can_post_secret', element('post', $view)) OR element('can_post_receive_email', element('post', $view))) { ?>
-            <li>
+            <div>
                 <span>옵션</span>
                 <?php if (element('can_post_notice', element('post', $view))) { ?>
                     <label class="checkbox-inline" for="post_notice_1">
@@ -105,7 +105,7 @@
                         <input type="checkbox" name="post_receive_email" id="post_receive_email" value="1" <?php echo set_checkbox('post_receive_email', '1', (element('post_receive_email', element('post', $view)) ? true : false)); ?> /> 답변메일받기
                     </label>
                 <?php } ?>
-            </li>
+            </div>
         <?php } ?>
         <!-- <li>
             <span>슬롯 정렬</span>
@@ -120,7 +120,7 @@
             foreach (element('extra_content', $view) as $key => $value) {
 
         ?>
-            <li>
+            <div>
                 <span><?php echo element('display_name', $value); ?></span>
                 <div class="group">
                 <?php if(element('field_name', $value)=="google_map") {?>
@@ -128,7 +128,7 @@
                 <?php } ?>
                 <?php echo element('input', $value); ?>
                 </div>
-            </li>
+            </div>
         <?php
             }
         }

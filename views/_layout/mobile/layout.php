@@ -229,7 +229,7 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
 
 <div class="menu " id="side_menu">
     <div class="side_wr add_side_wr">
-        <div id="isroll_wrap" class="side_inner_rel black">
+        <div id="isroll_wrap" class="side_inner_rel">
             <section class="side_inner_abs gnb_side">
                 <h2 class="hidden">네비게이션</h2>
                 
@@ -242,14 +242,14 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
                     <button type="button" class="btn_close" ><img src="<?php echo base_url('assets/images/icon_close.svg') ?>" alt="메뉴닫기"></button>
                 </div>
                 <?php if ($this->member->is_member()) { ?>
-                    <div class="">
-                        <ul class="">
-                        <li ><a href="<?php echo site_url('notification'); ?>" title="나의 알림"><span class="fa fa-bell-o"></span>알림 : <?php echo number_format((int) element('notification_num', $layout)); ?> 개</a></li>
+                    <div class="my_box01">
+                        <ul class="list">
+                        <li class="list_li"><a href="<?php echo site_url('notification'); ?>" title="나의 알림"><img src="/assets/images/menu_icon_bell.svg" alt="알림" class="icon"><br>알 림<span class="lab_notification badge notification_num"><?php echo number_format((int) element('notification_num', $layout)); ?> </span></a></li>
                         <?php if ($this->cbconfig->item('use_note') && $this->member->item('mem_use_note')) { ?>
-                            <li ><a href="javascript:;" onClick="note_list();" title="나의 쪽지"><span class="fa fa-envelope"></span> 쪽지 : <?php echo number_format((int) $this->member->item('meta_unread_note_num')); ?> 개</a></li>
+                            <li class="list_li"><a href="javascript:;" onClick="note_list();" title="나의 쪽지"><img src="/assets/images/menu_icon_mail.svg" alt="쪽지" class="icon"><br>쪽 지<span class="lab_notification"><?php echo number_format((int) $this->member->item('meta_unread_note_num')); ?></span></a></li>
                         <?php } ?>
                         <?php if ($this->cbconfig->item('use_point')) { ?>
-                            <li><a href="<?php echo site_url('mypage/point'); ?>" title="나의 포인트"><span class="fa fa-gift"></span> 포인트 : <?php echo number_format((int) $this->member->item('mem_point')); ?> 점</a></li>
+                            <li class="list_li"><a href="<?php echo site_url('mypage/point'); ?>" title="나의 포인트"><img src="/assets/images/menu_icon_point.svg" alt="포인트" class="icon"><br><span class="point"> <?php echo number_format((int) $this->member->item('mem_point')); ?></span> 점</a></li>
                         <?php } ?>
                         </ul>
                     </div>
@@ -267,7 +267,7 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
                                 if (element('men_target', $mval)) {
                                     $menuhtml .= ' target="' . element('men_target', $mval) . '"';
                                 }
-                                $menuhtml .= ' title="' . html_escape(element('men_name', $mval)) . '">' . html_escape(element('men_name', $mval)) . '</a><a href="#" style="width:25px;float:right;" class="subopen" data-menu-order="' . $mkey . '"><i class="fa fa-chevron-down"></i></a></h3>
+                                $menuhtml .= ' title="' . html_escape(element('men_name', $mval)) . '">' . html_escape(element('men_name', $mval)) . '</a><a href="#" style="float:right;" class="subopen" data-menu-order="' . $mkey . '"><i class="fa fa-angle-down"></i></a></h3>
                                 <ul class="list  drop-downorder-' . $mkey . '">';
 
                                 foreach (element(element('men_id', $mval), $menu) as $skey => $sval) {
@@ -282,7 +282,7 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
 
                             } else {
                                 $mlink = element('men_link', $mval) ? element('men_link', $mval) : 'javascript:;';
-                                $menuhtml .= '<div class="cate_box02"><h3 class="tit"><a href="' . $mlink . '" ' . element('men_custom', $mval);
+                                $menuhtml .= '<div class="cate_box02"><h3 class="list_li"><a href="' . $mlink . '" ' . element('men_custom', $mval);
                                 if (element('men_target', $mval)) {
                                     $menuhtml .= ' target="' . element('men_target', $mval) . '"';
                                 }
@@ -294,7 +294,7 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
                 echo $menuhtml;
                 ?>
                 <div class="cate_box02">
-                    <h3 class="tit"><a href="<?php echo board_url('vtn_other') ?>">제휴문의</a></h3>
+                    <h3 class="list_li"><a href="<?php echo board_url('vtn_other') ?>">제휴문의</a></h3>
                 </div>
                 <ul class="login_box">
     

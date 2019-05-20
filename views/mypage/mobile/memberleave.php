@@ -1,6 +1,6 @@
 <?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
 
-<div class="wrap05 mypage">
+<div class="mt20 mypage">
 
     <section class="title02">
         <h2>회원 탈퇴</h2>
@@ -38,7 +38,7 @@
         </figure>
 
         <button>
-            <a href="<?php echo site_url(); ?>" class="btn btn-danger" title="<?php echo html_escape($this->cbconfig->item('site_title'));?>" >홈페이지로 이동</a>
+            <a href="<?php echo site_url(); ?>" class="btn" title="<?php echo html_escape($this->cbconfig->item('site_title'));?>" >홈페이지로 이동</a>
         </button> 
     </section>
 

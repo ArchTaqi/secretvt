@@ -1,6 +1,6 @@
 <?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
 
-<div class="wrap05 mypage">
+<div class="mt20 mypage">
     <section class="title02">
         <h2>
             정보수정 완료

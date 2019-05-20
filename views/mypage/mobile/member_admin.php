@@ -1,6 +1,11 @@
 <?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
 
-<div class="wrap05 mypage">
+<div class="mt20 mypage">
+
+    <section class="title02">
+        <h2>관리자 회원</h2>
+    </section>
+	
     <section class="info_table">
         <table>
             <tr>
@@ -20,14 +25,9 @@
         </table>
     </section>
     
-    
-    <section class="title02">
-        <h2>관리자 회원</h2>
-    </section>
-    
      <section class="logout">
             <h2>
-            <img src="<?php echo base_url('/assets/images/temp/stop.png') ?>" alt="stop">
+            <img src="<?php echo base_url('/assets/images/temp/info_img/info_stop.png') ?>" alt="stop">
             </h2>
             <div class="alert alert-dismissible alert-info infoalert">
         <span id="return_message">관리자회원정보는 관리자페이지에서만 수정이 가능합니다.</span>

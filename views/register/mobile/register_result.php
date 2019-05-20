@@ -1,6 +1,6 @@
 <?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
 
-<div class="wrap02 final">
+<div class="mt20 final">
 
     <div class="table-box">
 

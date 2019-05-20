@@ -44,7 +44,7 @@
             </table>
         </section>
 
-        <section class="table_02">
+        
         <?php echo show_alert_message($this->session->flashdata('message'), '<div class="alert alert-auto-close alert-dismissible alert-info">', '</div>'); ?>
 
         <div class="mypg_sub_cate">

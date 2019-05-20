@@ -7,7 +7,7 @@
             <?php
             echo validation_errors('<div class="alert alert-warning" role="alert">', '</div>');
             echo show_alert_message(element('message', $view), '<div class="alert alert-auto-close alert-dismissible alert-info"><button type="button" class="close alertclose" >&times;</button>', '</div>');
-            $attributes = array('class' => 'mt20', 'name' => 'fnote', 'id' => 'fnote');
+            $attributes = array('name' => 'fnote', 'id' => 'fnote');
             echo form_open(current_full_url(), $attributes);
             ?>
             <input type="hidden" name="userid" id="userid" value="<?php echo set_value('userid', element('userid', $view)); ?>"  />
@@ -17,7 +17,7 @@
                         <input type="text" name="usernick" id="usernick" value="<?php echo set_value('userid', element('userid', $view)); ?>" disabled>
                     </div>
                 </div>
-                <div class="write_top mt10">
+                <div class="write_top">
                     <div class="write_nick">
                         <label for="title">제 &nbsp;&nbsp;목</label>
                         <input type="text" name="title" id="title" value="<?php echo set_value('title', element('title', $view)); ?>" >

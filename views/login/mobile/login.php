@@ -1,6 +1,6 @@
 <?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
 
-<div class="wrap02">
+<div class="wrap09">
     <?php
         echo validation_errors('<div class="alert alert-warning" role="alert">', '</div>');
         echo show_alert_message(element('message', $view), '<div class="alert alert-auto-close alert-dismissible alert-info">', '</div>');

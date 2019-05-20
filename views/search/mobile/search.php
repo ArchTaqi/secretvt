@@ -11,7 +11,7 @@
                 <option value="post_content" <?php echo $this->input->get('sfield') === 'post_content' ? 'selected="selected"' : ''; ?>>내용</option>
             </select>
         </div>
-        <div class="group">
+        <div class="group inp_txt_box">
             <input type="text" class="input per100" name="skeyword" placeholder="검색어" value="<?php echo html_escape($this->input->get('skeyword')); ?>" />
         </div>
         <div class="group">
@@ -20,7 +20,7 @@
         
     </form>
     <?php if($this->input->get('skeyword')){?>
-    <h3><?php echo '검색결과 : ' . html_escape($this->input->get('skeyword')) ?></h3>
+    <h3 class="search_result"><?php echo '검색결과 : ' . html_escape($this->input->get('skeyword')) ?></h3>
     <?php } ?>
 </div>
 

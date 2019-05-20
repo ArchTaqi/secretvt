@@ -1,4 +1,4 @@
-<div class="wrap05">
+<div class="mt20">
 <!-- 타이틀 -->
     <section class="title02">
         <h2><?php echo html_escape(element('doc_title', element('data', $view))); ?></h2>
