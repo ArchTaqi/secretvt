@@ -24,7 +24,7 @@
     <?php } ?>
 </div>
 
-<div class="media-box mt20" id="searchresult">
+<div class="media-box mt20 searchresult" id="searchresult">
 <?php
 if (element('list', element('data', $view))) {
     foreach (element('list', element('data', $view)) as $result) {

@@ -82,7 +82,7 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
     </section>
 
     <section class="title02" style="border-bottom:0;">
-        <h4>작성일</h4>
+        <h4 class="hidden">작성일</h4>
         <p><?php echo element('display_name', element('post', $view)); ?> | 작성일 : <?php echo element('display_datetime', element('post', $view)); ?> | 조회수 : <?php echo number_format(element('post_hit', element('post', $view))); ?></p>
     </section>
 

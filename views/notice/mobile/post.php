@@ -32,7 +32,7 @@
     </section>
 
     <section class="title03" style="border-bottom:0;">
-        <h4>작성일</h4>
+        <h4 class="hidden">작성일</h4>
         <p>작성일 : <?php echo element('display_datetime', $view); ?></p>
     </section>
 
@@ -85,7 +85,7 @@
     }
     ?>
     <section class="ad" style="margin-bottom:0;">
-        <h4>ad</h4>
+        <h4 class="hidden">ad</h4>
         <?php echo banner("karaoke_post_banner_1") ?>
     </section>
 </div>

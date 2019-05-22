@@ -444,6 +444,7 @@
 	.thum_box img {
 		min-height: 100%;
 		width: 100%;
+		object-fit: cover;
 	}
 	.text_list .thum_box{
 		width: 50px;
@@ -1429,9 +1430,18 @@
 	.txt_list span{
 		float: right;
 		font-size: 12px;
-		font-family: 'Jeju Gothic', sans-serif;
+		/* font-family: 'Jeju Gothic', sans-serif; */
 		padding-top: 2px;
-		color:#333;
+		color:#666;
+		letter-spacing: -0.2px;
+		word-spacing: 0.5px;
+	}
+	.txt_list span .fa {
+		color: #999;
+	}
+	.txt_list span .fa-comment,
+	.txt_list span .fa-comment-o{
+		transform: rotateY(180deg);
 	}
 	/* 자유게시판 게시물에 사진 있을시 썸네일 추가 */
 	.txt_list .thum_box {
@@ -1447,7 +1457,7 @@
 		font-size: 10px;
 		line-height: 10px;
 		background-color: #f00;
-		padding: 3px 2px 1px;
+		padding: 3px 2px 2px;
 		color: #fff;
 		margin-right: 5px;
 		vertical-align: top;
@@ -1658,6 +1668,7 @@
 	.table_02 th{
 		border-bottom:1px solid #ededed;
 		text-align: center;
+		vertical-align: middle;
 	}
 	.table_02 th{
 		padding:9px 0 7px;
@@ -2130,7 +2141,7 @@
 	}
 	.reply_write .media .nick{
 		margin-top: 4px;
-		margin-bottom: 8px;
+		margin-bottom: 10px;
 		font-size: 14px;
 		font-weight: bold;
 		position: relative;
@@ -2144,6 +2155,9 @@
 	}
 	.reply_write .media .btn_nick img{
 		vertical-align: bottom;
+	}
+	.reply_write .media .nick .btn_box {
+		margin-top: -4px;
 	}
 	.reply_write .media .click_nick{
 		top: 22px;

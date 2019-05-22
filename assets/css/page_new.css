@@ -413,6 +413,9 @@
 	top: 0;
 	left: 0;
 }
+.main_gallery_list02 .txt_box {
+	padding-right: 5px;
+}
 .main_gallery_list02 .txt_box .tit {
 	display: block;
 	font-size: 14px;
@@ -656,6 +659,7 @@
 	max-width: 100%;
 	padding: 9px 0;
 }
+.main_tab01 a + .txt_box,
 .main_tab01 .thum+.txt_box{
 	max-width: calc(100% - 80px);
 }
@@ -697,6 +701,9 @@
 }
 .main_tab01 .info_li:last-child{
 	border-right: none;
+}
+.main_tab01 .info_li .fa {
+    color: #999;
 }
 .main_tab01 .tab_empty {
 	height: 150px;
@@ -754,7 +761,7 @@
 	object-fit: cover;
 }
 .gallery_list01 .txt_box {
-	padding: 5% 65px 5% 4%;
+	padding: 5% 68px 5% 4%;
 	position: relative;
 }
 .gallery_list01 .tit {
@@ -795,7 +802,7 @@
 }
 .gallery_list01 .info_list02 {
 	position: absolute;
-	right: 4%;
+	right: 10px;
 	top: 50%;
 	transform: translateY(-50%);
 	min-width: 50px;
@@ -803,6 +810,7 @@
 .gallery_list01 .info_list02 .info_li {
 	padding: 3px 0;
 	font-size: 13px;
+	word-spacing: -1px;
 	color: #858599;
 	font-family: 'Jeju Gothic',sans-serif;
 }
@@ -995,14 +1003,14 @@
     background: #fff url(../images/sel_arrow.svg) no-repeat 96.5% center; 
 	background-size: 8px;
 }
-/**/
+/* 글쓰기 - 편집기영역 */
 .write_post .write_txt {
 	padding: 2% 0 0;
 	margin-bottom: 3%;
 	background-color: #eff2f8;
 	border-bottom: 1px solid #ddd;
 }
-/*삭삭*/
+/* - */
 .write_txt textarea {
 	width: 100%;
 	height: 250px;
@@ -1014,7 +1022,7 @@
 	font-family: sans-serif;
 	font-size: 16px;
 }
-/*삭삭*/
+/* 글쓰기 안내 */
 .write_txt .noti{
 	padding: 8px 0;
 	text-align: center;
@@ -1265,16 +1273,18 @@
 /**/
 .cont_tit .lab_box {
 	font-size: 0;
-	margin-bottom: 8px;
+	/* margin-bottom: 8px; */
+	vertical-align: middle;
 }
 .lab_box.lab {
 	display: inline-block;
 	margin-right: 5px;
-	padding: 3px 8px;
+	padding: 4px 8px 3px;
 	font-size: 12px;
 	border: 1px solid #25a4f4;
 	border-radius: 16px;
 	color: #25a4f4;
+	line-height: 1.1;
 }
 /* 마이페이지 쪽지 */
 .message{
@@ -1357,4 +1367,24 @@
 }
 .mypg_sub_cate .cate_li.active .btn{
 	color: #fff;
+}
+/* 검색 */
+.searchresult {
+	margin: 20px 3%;
+}
+.searchresult .media {
+	font-size: 0;
+}
+.searchresult .media .media-object {
+	font-size: 12px;
+	object-fit: cover;
+}
+.searchresult .media-heading {
+	line-height: 1.2;
+}
+.searchresult .media p {
+	word-break: break-all;
+}
+.searchresult .media .label {
+	font-size: 100%;
 }
