@@ -338,6 +338,7 @@
 		height: 30.7vw;
 		max-height: 129px;
 		min-height: 98px;
+		object-fit: cover;
 	}
 	.cont_list .cont_list_li figcaption{
 		padding:0 8px 14px;
@@ -406,6 +407,9 @@
 		overflow: hidden;
 		vertical-align: bottom;
 		height:1.5em;
+	}
+	.text_list .thum_box+.text_title strong{
+		max-width: calc(90% - 60px);
 	}
 	.text_list .text_title .comment_num{
 		color:#25a4f4;
@@ -1773,6 +1777,7 @@
 		margin-bottom: 6%;
 		border:1px solid #ededed;
 		box-sizing: border-box;
+		font-size:0;
 	}
 	.info_modify ol li{
 		width: 100%;
@@ -1780,6 +1785,7 @@
 		text-align: center;
 		border-bottom:1px solid #ededed;
 		text-align: center;
+		font-size: 14px;
 	}
 	.info_modify ol li:last-child{
 		border-bottom:0;
