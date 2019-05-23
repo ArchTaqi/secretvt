@@ -58,7 +58,11 @@ class Board_write extends CB_Controller
         if (empty($board_id)) {
             show_404();
         }
-        $board = $this->board->item_all($board_id);
+
+        if(empty($this->input->post('brd_id')))
+            $board = $this->board->item_all($board_id);
+        else 
+            $board = $this->board->item_all($this->input->post('brd_id'));
 
         $alertmessage = $this->member->is_member()
             ? '회원님은 글을 작성할 수 있는 권한이 없습니다'
@@ -1255,7 +1259,13 @@ class Board_write extends CB_Controller
         $post['meta'] = $this->Post_meta_model->get_all_meta($post_id);
 
         $view['view']['post'] = $post;
-        $board = $this->board->item_all(element('brd_id', $post));
+
+        if(empty($this->input->post('brd_id')))
+            $board = $this->board->item_all(element('brd_id', $post));
+        else 
+            $board = $this->board->item_all($this->input->post('brd_id'));
+
+        
         if ( ! element('brd_id', $board)) {
             show_404();
         }
@@ -2002,7 +2012,7 @@ class Board_write extends CB_Controller
 
             $post_title = $this->input->post('post_title', null, '');
             $post_content = $this->input->post('post_content', null, '');
-            echo $this->input->post('post_content', null, '');
+            
             if (element('save_external_image', $board)) {
                 $post_content = $this->imagelib->replace_external_image($post_content);
             }
@@ -2040,6 +2050,7 @@ class Board_write extends CB_Controller
 
             $metadata = array();
             $updatedata = array(
+                'brd_id' => element('brd_id', $board),
                 'post_title' => $post_title,
                 'post_content' => $post_content,
                 'post_html' => $content_type,
@@ -2284,7 +2295,7 @@ class Board_write extends CB_Controller
             else 
                 $redirecturl = post_url(element('brd_key', $board), $post_id). '?' . $param->output();
 
-           // redirect($redirecturl);
+            redirect($redirecturl);
         }
     }
 
