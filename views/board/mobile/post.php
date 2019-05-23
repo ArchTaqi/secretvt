@@ -91,6 +91,17 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
     <section class="store">
         <div class="contents-view" style="margin-bottom: 0;">
             
+            <div class="contents-view-img">
+                <?php
+                if (element('file_image', $view)) {
+                    foreach (element('file_image', $view) as $key => $value) {
+                ?>
+                    <img src="<?php echo element('thumb_image_url', $value); ?>" alt="<?php echo html_escape(element('pfi_originname', $value)); ?>" title="<?php echo html_escape(element('pfi_originname', $value)); ?>" class="view_full_image" data-origin-image-url="<?php echo element('origin_image_url', $value); ?>" style="max-width:100%;" />
+                <?php
+                    }
+                }
+                ?>
+            </div>
 
             <!-- 본문 내용 시작 -->
             <div id="post-content"><?php echo element('content', element('post', $view)); ?>

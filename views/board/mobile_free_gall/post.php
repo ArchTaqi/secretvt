@@ -133,7 +133,7 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
                     <?php if (element('modify_url', $view)) { ?>
                     <a href="<?php echo element('modify_url', $view); ?>" class="btn btn-info btn-sm">수정</a>
                 <?php } ?>
-                    <a href="<?php echo element('write_url', $view); ?>" class="btn btn-success btn-sm">글쓰기</a>
+                <!--     <a href="<?php echo element('write_url', $view); ?>" class="btn btn-success btn-sm">글쓰기</a> -->
                 </div>
             <?php } ?>
         </section>

@@ -123,6 +123,9 @@
                             <li class="info_li">
                                 <i class="fa fa-heart-o"></i><span class="hidden">스크랩수</span><?php echo element('scrap_count', $result); ?>
                             </li>
+                            <li class="info_li">
+                                <i class="fa fa-thumbs-o-up"></i><span class="hidden">추천수</span><?php echo element('post_like', $result); ?>
+                            </li>
                         </ul>
                             
                     </div>

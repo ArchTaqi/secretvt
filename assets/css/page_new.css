@@ -735,7 +735,7 @@
 }
 /**/
 .gallery_list01 .list_li {
-	margin-bottom: 4%;
+	/*margin-bottom: 4%;*/
 	position: relative;
 	overflow: hidden;
 	border-radius: 5px;

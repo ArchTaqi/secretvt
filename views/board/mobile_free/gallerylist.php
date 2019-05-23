@@ -155,7 +155,7 @@
                     <div class="content_txt"><p><?php if(empty(element('post_secret', $result))) echo (element('content', $result)); ?></p></div>
             </a>
                 <span>
-                    <?php echo element('display_name', $result); ?> | <?php echo element('display_datetime', $result); ?> | <i class="fa fa-eye"></i> <?php echo hit_format(element('post_hit', $result)); ?> | <i class="fa fa-comments"></i> <?php echo element('post_comment_count', $result); ?>
+                    <?php echo element('display_name', $result); ?> <strong style="color:#dfe1ee">|</strong> <?php echo element('display_datetime', $result); ?> <strong style="color:#dfe1ee">|</strong> <i class="fa fa-eye"></i> <?php echo hit_format(element('post_hit', $result)); ?> <strong style="color:#dfe1ee">|</strong> <i class="fa fa-comments"></i> <?php echo element('post_comment_count', $result); ?>
                 </span>
             
             </li>

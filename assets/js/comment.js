@@ -183,6 +183,8 @@ if (typeof(COMMENT_JS) === 'undefined') {
             } else {
                 el_id = 'edit_' + cmt_id;
             }
+            $('div.media div.media-body').css('border','0px');
+            $('#comment_'+cmt_id+' div.media-body').css('border','2px solid #ddd');
         } else {
             el_id = 'comment_write_box';
         }
