@@ -106,8 +106,9 @@
                         <img src="<?php echo element('thumb_url', $result); ?>" alt="<?php echo html_escape(element('title', $result)); ?>" title="<?php echo html_escape(element('title', $result)); ?>" class=" img-responsive" style="width:100%;" />
                     </div>
                     <div class="txt_box">
-                        <h3 class="tit"><?php echo element('bca_value',element('category', $result)) ? '<span class="lab_box lab">'.html_escape(element('bca_value',element('category', $result))).'</span>':''; ?><?php echo html_escape(element('title', $result)); ?></h3>
-                        <p class="sub_tit"><?php if(element('sub_subject',element('extravars', $result))) echo element('sub_subject',element('extravars', $result)); ?>
+                        <div><?php echo element('bca_value',element('category', $result)) ? '<span class="lab_box lab">'.html_escape(element('bca_value',element('category', $result))).'</span>':''; ?></div>
+                        <h3 class="tit"><?php echo html_escape(element('title', $result)); ?></h3>
+                        
                         </p>
                         <ul class="info_list01">
 

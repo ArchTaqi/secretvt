@@ -14,7 +14,7 @@
                 <div class="write_top">
                     <div class="write_nick">
                         <label for="usernick">받는이</label>
-                        <input type="text" name="usernick" id="usernick" value="<?php echo set_value('userid', element('userid', $view)); ?>" disabled>
+                        <input type="text" name="usernick" id="usernick" value="<?php echo set_value('mem_nickname', element('mem_nickname', $view)); ?>" disabled>
                     </div>
                 </div>
                 <div class="write_top">

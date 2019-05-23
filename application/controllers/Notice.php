@@ -245,7 +245,7 @@ class Notice extends CB_Controller
 
             $view['view']['list_url'] = base_url('/notice/lists');
             $view['view']['display_datetime'] = display_datetime(
-                    element('noti_datetime', $getdata)
+                    element('noti_datetime', $getdata),'full'
                 );
 
 

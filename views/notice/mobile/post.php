@@ -32,7 +32,6 @@
     </section>
 
     <section class="title03" style="border-bottom:0;">
-        <h4 class="hidden">작성일</h4>
         <p>작성일 : <?php echo element('display_datetime', $view); ?></p>
     </section>
 

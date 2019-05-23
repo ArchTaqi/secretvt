@@ -1624,11 +1624,11 @@ class Board extends CI_Controller
         $this->CI->load->model( array('Board_category_model', 'Post_file_model'));
 
         $skin = element('skin', $config);
-        $post_id = element('post_id', $config);
+        $post_id = element('post_id', $config) ? element('post_id', $config) : array(0);
         $brd_key = element('brd_key', $config);
         $exclude_brd_id = element('exclude_brd_id', $config);
         $exclude_brd_key = element('exclude_brd_key', $config);
-        $findex = element('findex', $config) ? element('findex', $config) : 'post_id';
+        $findex = 'field(post_id,'.implode(",",$post_id).')';
         $forder = element('forder', $config) ? element('forder', $config) : 'DESC';
         $limit = element('limit', $config);
         $length = element('length', $config);
@@ -1685,17 +1685,17 @@ class Board extends CI_Controller
         $this->CI->db->from('post');
         $this->CI->db->where($where);
 
-        if ($post_id) {
-            if (is_array($post_id)) {
-                $this->CI->db->group_start();
-                foreach ($post_id as $v) {
-                    $this->CI->db->or_where('post_id', $v);
-                }
-                $this->CI->db->group_end();
-            } else {
-                $this->CI->db->where('post_id', $post_id);
+        
+        if (is_array($post_id)) {
+            $this->CI->db->group_start();
+            foreach ($post_id as $v) {
+                $this->CI->db->or_where('post_id', $v);
             }
-        } else $this->CI->db->where('post_id', 0);
+            $this->CI->db->group_end();
+        } else {
+            $this->CI->db->where('post_id', $post_id);
+        }
+        
 
         if ($exclude_brd_id) {
             if (is_array($exclude_brd_id)) {
@@ -1714,7 +1714,7 @@ class Board extends CI_Controller
 
         if ($findex && $forder) {
             $forder = (strtoupper($forder) === 'ASC') ? 'ASC' : 'DESC';
-            $this->CI->db->order_by($findex, $forder);
+            $this->CI->db->order_by($findex, '',false);
         }
         if (is_numeric($limit)) {
             $this->CI->db->limit($limit);

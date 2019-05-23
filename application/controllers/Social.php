@@ -494,7 +494,7 @@ class Social extends CB_Controller
         }
 
         if ($this->session->userdata('kakao_access_token')) {
-            $url = 'https://kapi.kakao.com/v1/user/me';
+            $url = 'https://kapi.kakao.com/v2/user/me';
 
             $ch = curl_init();
             curl_setopt ($ch, CURLOPT_URL, $url);
@@ -1095,12 +1095,13 @@ class Social extends CB_Controller
                 Events::trigger('common_login_after', $eventname);
 
                 echo '<meta http-equiv="content-type" content="text/html; charset=' . config_item('charset') . '">';
-                echo '<script type="text/javascript"> window.close();';
+                
                 if ($url_after_login) {
                     echo 'window.opener.document.location.href = "' . $url_after_login . '";';
                 } else {
                     echo 'window.opener.location.reload();';
                 }
+                echo '<script type="text/javascript"> window.close();';
                 echo '</script>';
                 exit;
             }

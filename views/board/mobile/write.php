@@ -163,6 +163,8 @@
             </div>
             <p class="noti">
                 [이미지 업로드] 최대 <?php echo element('upload_file_count', element('board', $view)) ?>개까지 가능합니다<br>
+                [이미지 SIZE] 파일당 최대 <?php echo element('upload_file_max_size', element('board', $view)) ?>MB 까지 가능합니다<br>
+                <?php echo element('headercontent', element('board', $view)); ?>
                 통신환경에 따라 고용량 업로드는 실패할 수 있습니다.
             </p>
         </div>
@@ -201,7 +203,7 @@
                     
                 </div>
                 <?php if ($download_link) { ?>
-                    <div style="margin-left:100px;">
+                    <div style="margin-left:10px;">
                         <a href="<?php echo $download_link; ?>"><?php echo html_escape(element('pfi_originname', element($i, element('file', $view)))); ?></a>
                         <label for="<?php echo $del_column; ?>">
                             <input type="checkbox" name="<?php echo $del_column; ?>" id="<?php echo $del_column; ?>" value="1" <?php echo set_checkbox($del_column, '1'); ?> /> 삭제

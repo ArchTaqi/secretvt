@@ -24,6 +24,9 @@ if (element('best_list', $view)) {
                     <li class=""><a href="">쪽지보내기</a></li>
                     <li class=""><a href="" onclick="addfriends('뱅뱅');">친구등록</a></li>
                 </ul>  -->
+                <div class="btn_box pull-right">
+                    <span class="date"><?php echo element('display_datetime', $result); ?></span>
+                </div>
             </div>
             <div class="comment-content">
             
@@ -31,14 +34,14 @@ if (element('best_list', $view)) {
              
             </div>
             <div class="media_bottom">
-                <span class="date"><?php echo element('display_datetime', $result); ?></span>
-                <div class="btn_box pull-right">
-                    <?php if (element('use_comment_like', element('board', $view))) { ?>
+                <?php if (element('use_comment_like', element('board', $view))) { ?>
                         <a class="btn btn-default btn-xs good" href="javascript:;" id="btn-comment-like-<?php echo element('cmt_id', $result); ?>" onClick="comment_like('<?php echo element('cmt_id', $result); ?>', '1', 'comment-like-<?php echo element('cmt_id', $result); ?>');" title="추천하기"><i class="fa fa-thumbs-o-up fa-xs"></i> <span class="comment-like-<?php echo element('cmt_id', $result); ?>"><?php echo number_format(element('cmt_like', $result)); ?></span></a>
                     <?php } ?>
                     <?php if (element('use_comment_dislike', element('board', $view))) { ?>
                         <a class="btn btn-default btn-xs bad" href="javascript:;" id="btn-comment-dislike-<?php echo element('cmt_id', $result); ?>" onClick="comment_like('<?php echo element('cmt_id', $result); ?>', '2', 'comment-dislike-<?php echo element('cmt_id', $result); ?>');" title="비추하기"><i class="fa fa-thumbs-o-down fa-xs"></i>  <span class="comment-dislike-<?php echo element('cmt_id', $result); ?>"><?php echo number_format(element('cmt_dislike', $result)); ?></span></a>
                     <?php } ?>
+                <div class="btn_box pull-right">
+                    
                     <?php if (element('use_comment_blame', element('board', $view)) && ( ! element('comment_blame_blind_count', element('board', $view)) OR element('cmt_blame', $result) < element('comment_blame_blind_count', element('board', $view)))) { ?>
                         <a href="javascript:;" id="btn-blame" onClick="comment_blame('<?php echo element('cmt_id', $result); ?>', 'comment-blame-<?php echo element('cmt_id', $result); ?>');" title="신고하기"><i class="fa fa-bell fa-xs"></i><span class="comment-blame-<?php echo element('cmt_id', $result); ?>"><?php echo element('cmt_blame', $result) ? '+' . number_format(element('cmt_blame', $result)) : ''; ?></span></a>
                     <?php } ?>
@@ -98,6 +101,9 @@ if (element('list', element('data', $view))) {
                     <li class=""><a href="">쪽지보내기</a></li>
                     <li class=""><a href="" onclick="addfriends('뱅뱅');">친구등록</a></li>
                 </ul>  -->
+                <div class="btn_box pull-right">
+                    <span class="date"><?php echo element('display_datetime', $result); ?></span>
+                </div>
             </div>
             <div class="comment-content">
             
@@ -105,14 +111,14 @@ if (element('list', element('data', $view))) {
             
             </div>
             <div class="media_bottom">
-                <span class="date"><?php echo element('display_datetime', $result); ?></span>
+                <?php if (element('use_comment_like', element('board', $view))) { ?>
+                    <a class="btn btn-default btn-xs good" href="javascript:;" id="btn-comment-like-<?php echo element('cmt_id', $result); ?>" onClick="comment_like('<?php echo element('cmt_id', $result); ?>', '1', 'comment-like-<?php echo element('cmt_id', $result); ?>');" title="추천하기"><i class="fa fa-thumbs-o-up fa-xs"></i>  <span class="comment-like-<?php echo element('cmt_id', $result); ?>"><?php echo number_format(element('cmt_like', $result)); ?></span></a>
+                <?php } ?>
+                <?php if (element('use_comment_dislike', element('board', $view))) { ?>
+                    <a class="btn btn-default btn-xs bad" href="javascript:;" id="btn-comment-dislike-<?php echo element('cmt_id', $result); ?>" onClick="comment_like('<?php echo element('cmt_id', $result); ?>', '2', 'comment-dislike-<?php echo element('cmt_id', $result); ?>');" title="비추하기"><i class="fa fa-thumbs-o-down fa-xs"></i>  <span class="comment-dislike-<?php echo element('cmt_id', $result); ?>"><?php echo number_format(element('cmt_dislike', $result)); ?></span></a>
+                <?php } ?>
                 <div class="btn_box pull-right">
-                    <?php if (element('use_comment_like', element('board', $view))) { ?>
-                        <a class="btn btn-default btn-xs good" href="javascript:;" id="btn-comment-like-<?php echo element('cmt_id', $result); ?>" onClick="comment_like('<?php echo element('cmt_id', $result); ?>', '1', 'comment-like-<?php echo element('cmt_id', $result); ?>');" title="추천하기"><i class="fa fa-thumbs-o-up fa-xs"></i>  <span class="comment-like-<?php echo element('cmt_id', $result); ?>"><?php echo number_format(element('cmt_like', $result)); ?></span></a>
-                    <?php } ?>
-                    <?php if (element('use_comment_dislike', element('board', $view))) { ?>
-                        <a class="btn btn-default btn-xs bad" href="javascript:;" id="btn-comment-dislike-<?php echo element('cmt_id', $result); ?>" onClick="comment_like('<?php echo element('cmt_id', $result); ?>', '2', 'comment-dislike-<?php echo element('cmt_id', $result); ?>');" title="비추하기"><i class="fa fa-thumbs-o-down fa-xs"></i>  <span class="comment-dislike-<?php echo element('cmt_id', $result); ?>"><?php echo number_format(element('cmt_dislike', $result)); ?></span></a>
-                    <?php } ?>
+                    
                     <?php if (element('use_comment_blame', element('board', $view)) && ( ! element('comment_blame_blind_count', element('board', $view)) OR element('cmt_blame', $result) < element('comment_blame_blind_count', element('board', $view)))) { ?>
                         <a href="javascript:;" id="btn-blame" onClick="comment_blame('<?php echo element('cmt_id', $result); ?>', 'comment-blame-<?php echo element('cmt_id', $result); ?>');" title="신고하기"><i class="fa fa-bell fa-xs"></i><span class="comment-blame-<?php echo element('cmt_id', $result); ?>"><?php echo element('cmt_blame', $result) ? '+' . number_format(element('cmt_blame', $result)) : ''; ?></span></a>
                     <?php } ?>

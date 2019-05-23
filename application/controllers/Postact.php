@@ -200,7 +200,7 @@ class Postact extends CB_Controller
         Events::trigger('after', $eventname);
         $param =& $this->querystring;
 
-        if (element('bgr_id', $board)==='11'){
+        if (element('brd_id', $board)==='70'){
 
             
             $this->session->set_flashdata(
@@ -3648,4 +3648,22 @@ class Postact extends CB_Controller
         $result = array('success' => 1,"message" => '오류입니다 다시 시도해 주세요');
             exit(json_encode($result));   
     }
+
+
+    public function kakao_script_login(){
+        if ($this->input->post('access_token')) {
+            $this->session->set_userdata(
+                'kakao_access_token',
+                $this->input->post('access_token')
+            );
+
+            $result = array('success' => 1);
+            exit(json_encode($result));   
+            
+        } else {
+            alert_close('로그인에 실패하였습니다');
+        }
+    }
 }
+
+

@@ -30,7 +30,7 @@
         echo $this->board->latest_free($config);
         ?>
         <section class="ad mb2per">
-          <a href=""><img src="http://placehold.it/500x150" alt="광고"></a>
+          <?php echo banner("board_default_banner_1") ?>
         </section>
         <!-- NEW 새로운 컨텐츠 -->
         <?php 
@@ -77,9 +77,9 @@
         echo $this->board->latest_ltn($config);
         ?>
         <section class="ad mb2per">
-          <a href=""><img src="http://placehold.it/500x240" alt="광고"></a>
+          <?php echo banner("board_default_banner_1") ?>
         </section>
-
+        
         <?php 
         $config = array(
             'skin' => 'mobile',
@@ -91,6 +91,12 @@
             'is_gallery' => 1,
           );
         echo $this->board->latest_lately($config);
+
+
+
+        
+  
+
         ?>
         
 

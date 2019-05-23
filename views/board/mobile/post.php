@@ -41,7 +41,7 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
     }
     ?>
     <div class="de_title">
-        <div class="swiper-container swiper-container-sub">
+        <!-- <div class="swiper-container swiper-container-sub">
             <div class="swiper-wrapper">
             
             <?php
@@ -56,10 +56,10 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
                 
             </div>
             <div class="swiper-pagination  swiper-pagination-sub"></div>
-            <!-- Add Arrows -->
+            
             <div class="swiper-button-next swiper-button-white"></div>
             <div class="swiper-button-prev swiper-button-white"></div>
-        </div>
+        </div> -->
 
         <div class="cont_tit">
             
@@ -93,7 +93,11 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
             
 
             <!-- 본문 내용 시작 -->
-            <div id="post-content"><?php echo element('content', element('post', $view)); ?></div>
+            <div id="post-content"><?php echo element('content', element('post', $view)); ?>
+                
+
+                
+            </div>
             <!-- 본문 내용 끝 -->
         </div>
     </section>

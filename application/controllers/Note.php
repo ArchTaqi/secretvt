@@ -365,7 +365,10 @@ class Note extends CB_Controller
         // 이벤트가 존재하면 실행합니다
         $view['view']['event']['before'] = Events::trigger('before', $eventname);
 
+        $mem_nickname = $this->Member_model->get_by_userid($userid, 'mem_nickname');
+
         $view['view']['userid'] = $userid;
+        $view['view']['mem_nickname'] = element('mem_nickname',$mem_nickname);
         $view['view']['use_dhtml'] = false;
         if ($this->cbconfig->get_device_view_type() !== 'mobile'
             && $this->cbconfig->item('use_note_dhtml')) {

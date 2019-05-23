@@ -103,7 +103,7 @@ class Event extends CB_Controller
                 $result['list'][$key]['post_url'] = document_post_url('event', element('eve_id', $val));
 
                 $result['list'][$key]['display_datetime'] = display_datetime(
-                    element('eve_datetime', $val)
+                    element('eve_datetime', $val),'full'
                 );
 
                 $result['list'][$key]['thumb_url'] = '';
@@ -135,10 +135,14 @@ class Event extends CB_Controller
                 }
 
                 if (empty($val['eve_start_date']) OR $val['eve_start_date'] === '0000-00-00') {
-                    $result['list'][$key]['eve_start_date'] = '미지정';
+                    $result['list'][$key]['eve_start_date'] = display_datetime(
+                                        element('eve_datetime', $val),'full'
+                                        );
+
+
                 }
                 if (empty($val['eve_end_date']) OR $val['eve_end_date'] === '0000-00-00') {
-                    $result['list'][$key]['eve_end_date'] = '미지정';
+                    $result['list'][$key]['eve_end_date'] = '지속';
                 }
                 $result['list'][$key]['num'] = $list_num--;
             }
@@ -250,17 +254,19 @@ class Event extends CB_Controller
          * 유효성 검사를 하지 않는 경우, 또는 유효성 검사에 실패한 경우입니다.
          * 즉 글쓰기나 수정 페이지를 보고 있는 경우입니다
          */
-        
+    
 
             // 이벤트가 존재하면 실행합니다
             $view['view']['event']['formrunfalse'] = Events::trigger('formrunfalse', $eventname);
 
             if ($pid) {
                 if (empty($getdata['eve_start_date']) OR $getdata['eve_start_date'] === '0000-00-00') {
-                    $getdata['eve_start_date'] = '';
+                    $getdata['eve_start_date'] = display_datetime(
+                    element('eve_datetime', $getdata),'full'
+                    );
                 }
                 if (empty($getdata['eve_end_date']) OR $getdata['eve_end_date'] === '0000-00-00') {
-                    $getdata['eve_end_date'] = '';
+                    $getdata['eve_end_date'] = '지속';
                 }
                 $view['view']['data'] = $getdata;
             }
@@ -275,7 +281,7 @@ class Event extends CB_Controller
 
             $view['view']['list_url'] = base_url('/event/lists');
             $view['view']['display_datetime'] = display_datetime(
-                    element('eve_datetime', $getdata)
+                    element('eve_datetime', $getdata),'full'
                 );
 
 

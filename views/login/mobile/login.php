@@ -16,6 +16,7 @@
             <span>해당기능을 이용하시려면 로그인이 필요합니다.</span> 
         </h2>
 
+
         <ul class="id_pw">
             <li>
                <h3><?php echo element('userid_label_text', $view);?></h3> 
@@ -146,3 +147,4 @@ $(document).on('change', "input:checkbox[name='autologin']", function() {
 });
 //]]>
 </script>
+  

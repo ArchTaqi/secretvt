@@ -40,7 +40,7 @@
                         <h3>
                             <?php echo html_escape(element('eve_title', $result)); ?>
                             <span>
-                            <?php echo element('eve_start_date', $result); ?>~<?php echo element('eve_start_date', $result); ?>
+                            <?php echo element('eve_start_date', $result); ?>~<?php echo element('eve_end_date', $result); ?>
                             </span>
                         </h3>
                     </figcaption>

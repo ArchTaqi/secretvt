@@ -905,25 +905,20 @@ class Board_post extends CB_Controller
                 'lately',
                 array($post_id)
                 );  
-            } elseif(count($this->session->userdata('lately')) <5){
-                $lately = $this->session->userdata('lately');
-                if(!in_array($post_id,$lately)){
-                    array_unshift($lately, $post_id);
-                    $this->session->set_userdata(
-                    'lately',
-                    $lately
-                    );  
-                }
             } else {
                 $lately = $this->session->userdata('lately');
-                if(!in_array($post_id,$lately)){
-                    array_unshift($lately, $post_id);
+                
+                array_unshift($lately, $post_id);
+                $lately = array_unique($lately);
+
+                if(count($lately) > 5)
                     array_pop($lately);
-                    $this->session->set_userdata(
-                    'lately',
-                    $lately
-                    );  
-                }
+
+                $this->session->set_userdata(
+                'lately',
+                $lately
+                );  
+                
             }
             
 

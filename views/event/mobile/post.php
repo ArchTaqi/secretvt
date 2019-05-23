@@ -27,8 +27,7 @@
     </section>
 
     <section class="title03" style="border-bottom:0;">
-        <h4 class="hidden">작성일</h4>
-        <p>작성일 : <?php echo element('display_datetime', $view); ?></p>
+        <p>이벤트기간 : <?php echo element('eve_start_date', element('data',$view)); ?> ~ <?php echo element('eve_end_date', element('data',$view)); ?></p>
     </section>
 
     <section class="content">

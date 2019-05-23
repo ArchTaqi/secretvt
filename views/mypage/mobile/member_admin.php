@@ -7,6 +7,7 @@
     </section>
 	
     <section class="info_table">
+
         <table>
             <tr>
                 <td class="active">
@@ -18,11 +19,21 @@
                 <td>
                     <a href="<?php echo site_url('notification'); ?>">알&nbsp;&nbsp;림<span class="lab_notification badge notification_num"><?php echo number_format(element('notification_num', $layout) + 0); ?></span></a>
                 </td> 
+            </tr>
+            <tr>
                 <td>
-                    <a href="<?php echo site_url('mypage/scrap'); ?>" title="나의 스크랩">스크랩</a>
+                    <a href="<?php echo site_url('mypage/scrap'); ?>" title="스크랩">스크랩</a>
+                </td>
+                <td>
+                    <a href="<?php echo site_url('note/lists/recv'); ?>" title="쪽지함">쪽지함<span class="lab_notification"><?php echo number_format((int) $this->member->item('meta_unread_note_num')); ?></span></a>
+                </td>
+                <td>
+                    <a href="<?php echo site_url('mypage/followinglist'); ?>" title="팔로우">팔로우</a>
                 </td>
             </tr>
         </table>
+
+      
     </section>
     
      <section class="logout">

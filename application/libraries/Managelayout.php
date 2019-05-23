@@ -389,17 +389,33 @@ class Managelayout extends CI_Controller
      * footer 리턴합니다
      */
     function display_footer()
-    {
-        $return = '
-        <section class="footer_02">
-            <h2 class="hidden">푸터</h2>
-            <ul class="btn_box">
+    {   
+
+        $CI = & get_instance();
+        $btn_box_html='';
+
+        if($CI->member->is_member()){
+            $btn_box_html=
+                '<li class="f_btn">
+                    <a href="'.site_url('login/logout?url=' . urlencode(current_full_url())).'"  title="로그아웃"><i class="fa fa-sign-out"></i> 로그아웃</a>
+                </li>
                 <li class="f_btn">
+                    <a href="'.site_url('mypage').'"  title="마이페이지"><i class="fa fa-user"></i> 마이페이지</a>
+                </li>';
+        } else {
+            $btn_box_html=
+                '<li class="f_btn">
                     <a href="'.site_url('login?url=' . urlencode(current_full_url())).'"  title="로그인"><i class="fa fa-sign-in"></i> 로그인</a>
                 </li>
                 <li class="f_btn">
                     <a href="'.site_url('register').'"  title="회원가입"><i class="fa fa-user"></i> 회원가입</a>
-                </li>
+                </li>';
+        }
+        $return = '
+        <section class="footer_02">
+            <h2 class="hidden">푸터</h2>
+            <ul class="btn_box">
+                '.$btn_box_html.'
                        
                        
 

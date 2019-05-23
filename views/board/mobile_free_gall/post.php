@@ -1,5 +1,5 @@
 <?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
 <?php    $this->managelayout->add_js(base_url('plugin/zeroclipboard/ZeroClipboard.js')); ?>
 
 <?php
@@ -54,13 +54,13 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
         </h2>
     </section> -->
     <!-- secretvt 자유게시판란광고 -->
-<ins class="adsbygoogle"
+<!-- <ins class="adsbygoogle mt10"
      style="display:inline-block;width:100%;height:60px"
      data-ad-client="ca-pub-7419726859237673"
      data-ad-slot="3682862126"></ins>
 <script>
 (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+</script> -->
     <section class="notice_title mt20">
         <div>
         <?php echo element('post_title', element('post',$view)) ;
@@ -82,8 +82,8 @@ if (element('syntax_highlighter', element('board', $view)) OR element('comment_s
     </section>
 
     <section class="title02" style="border-bottom:0;">
-        <h4 class="hidden">작성일</h4>
-        <p><?php echo element('display_name', element('post', $view)); ?> | 작성일 : <?php echo element('display_datetime', element('post', $view)); ?> | 조회수 : <?php echo number_format(element('post_hit', element('post', $view))); ?></p>
+        <p><?php echo element('display_name', element('post', $view)); ?> | <?php echo element('display_datetime', element('post', $view)); ?> | 조회수 : <?php echo number_format(element('post_hit', element('post', $view))); ?></p>
+
     </section>
 
     <section class="content">

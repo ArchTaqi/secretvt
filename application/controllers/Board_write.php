@@ -2002,6 +2002,7 @@ class Board_write extends CB_Controller
 
             $post_title = $this->input->post('post_title', null, '');
             $post_content = $this->input->post('post_content', null, '');
+            echo $this->input->post('post_content', null, '');
             if (element('save_external_image', $board)) {
                 $post_content = $this->imagelib->replace_external_image($post_content);
             }
@@ -2283,7 +2284,7 @@ class Board_write extends CB_Controller
             else 
                 $redirecturl = post_url(element('brd_key', $board), $post_id). '?' . $param->output();
 
-           redirect($redirecturl);
+           // redirect($redirecturl);
         }
     }
 
@@ -2725,7 +2726,7 @@ class Board_write extends CB_Controller
                 if (element('mem_id', $val) >= 0) {
                     $result['list'][$key]['display_name'] = display_username(
                         element('post_userid', $val),
-                        element('post_nickname', $val),
+                        (element('post_nickname', $val) ? element('post_nickname', $val) : element('post_username', $val)), 
                         ($use_sideview_icon ? element('mem_icon', $val) : ''),
                         ($use_sideview ? 'Y' : 'N')
                     );
