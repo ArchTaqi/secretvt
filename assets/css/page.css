@@ -1347,7 +1347,7 @@
 	}
 
 	.join_info td:first-child span{
-		color:#c00e57;
+		color:#25a4f4;
 	}
 
 	.join_info td input{
@@ -1949,7 +1949,7 @@
 	}
 /*업소후기,글쓰기 클릭시 후기갯수 표시 영역*/
 	.title03 p{
-		font-size: 12px;
+		font-size: 13px;
 		display: inline-block;
 		float: right;
 		font-family: 'Jeju Gothic', sans-serif;
@@ -2183,6 +2183,7 @@
 	.reply_write .media .date{
 		font-size: 12px;
 		line-height: 22px;
+		font-weight: normal;
 		color: #999;
 	}
 	.reply_write input[type="checkbox"]{

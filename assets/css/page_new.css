@@ -830,7 +830,9 @@
 	font-size: 20px;
 	box-shadow: 0 0 3px rgba(0,0,0,0.2);
 }
-
+.gallery_list01 .lab_box.lab {
+    margin-bottom: 8px;
+}
 /* 2개씩 */
 .gallery_list02 .list_li {
 	position: relative;
@@ -948,8 +950,11 @@
 	-webkit-appearance: none;  
     -moz-appearance: none;
     appearance: none;
-    background: #fff url(../images/sel_arrow.svg) no-repeat 95% center; 
+    background: #fff url(/assets/images/sel_arrow.svg) no-repeat 95% center; 
 	background-size: 8px;
+}
+.post_list .select_area_box select::-ms-expand { 
+	display: none; 
 }
 .select_area_box h3{
 	padding: 8px 0;
@@ -1000,8 +1005,15 @@
 	 -webkit-appearance: none; 
     -moz-appearance: none;
     appearance: none;
-    background: #fff url(../images/sel_arrow.svg) no-repeat 96.5% center; 
+    background: #fff url(/assets/images/sel_arrow.svg) no-repeat 96.5% center; 
 	background-size: 8px;
+}
+.write_top .select_cate::-ms-expand, 
+.write_top .select_area::-ms-expand { 
+	display: none; 
+}
+.write_post .alert {
+	margin-bottom: 0;
 }
 /* 글쓰기 - 편집기영역 */
 .write_post .write_txt {
@@ -1111,8 +1123,11 @@
 	-webkit-appearance: none;  
     -moz-appearance: none;
     appearance: none;
-    background: #fff url(../images/sel_arrow.svg) no-repeat 95% center; 
+    background: #fff url(/assets/images/sel_arrow.svg) no-repeat 95% center; 
 	background-size: 8px;
+}
+.notification .table-top li select::-ms-expand { 
+	display: none; 
 }
 /**/
 /* 닉네임 클릭시 쪽지보내기 열림 */

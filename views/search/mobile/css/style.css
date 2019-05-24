@@ -40,3 +40,13 @@
 	box-sizing: border-box;
 	padding: 0 8px;
 }
+.search_box select {
+	width: 80px;
+	padding: 0 3px;
+	-webkit-appearance: none;  
+    -moz-appearance: none;
+    appearance: none;
+    background: #fff url(/assets/images/sel_arrow.svg) no-repeat 95% center; 
+	background-size: 8px;
+}
+.search_box select::-ms-expand { display: none; }

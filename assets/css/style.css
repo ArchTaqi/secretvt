@@ -50,6 +50,7 @@
 #post-content td, .ck-content td{border: 1px solid #d9d9d9;padding: 6px;font-family:'Nanum Gothic',sans-serif;}
 #post-content th, .ck-content th{font-weight:bold; background-color: #fafafa;}
 #post-content figure, .ck-content figure{
+    display: table;
 	margin: 12px auto;
 }
 #post-content figure img, .ck-content .image img{margin-bottom: 0;}
