@@ -752,6 +752,9 @@
 	.store td.border{
 		background-color: #ecf4f9;
 	}
+	.store .contents-view-img{
+		text-align: center;
+	}
 /*상세의 위치확인 클릭시(대중교통,지도) 영역*/
 	.method table{
 		width:100%;

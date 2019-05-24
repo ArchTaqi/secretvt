@@ -64,7 +64,8 @@
 		width:100%;
 		max-width: 420px;
 		min-width: 320px;
-		position: fixed;
+		/* position: fixed; */
+		position: relative;
 		background-color: #25a4f4;
 		box-sizing: border-box;
 		z-index: 90;
