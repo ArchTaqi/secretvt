@@ -68,7 +68,7 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
 <?php
 
 
-    $menuhtml = '<nav id="" class="gnb_main wrap09">
+    $menuhtml = '<nav id="" class="gnb_main">
                     <ul class="gnb_list">';
     $menuhtml_sub ='';
     if (element('menu', $layout)) {
@@ -213,9 +213,9 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
         <ul class="btn_box">
             <li class="btn btn_top" style="display:none;"><img src="<?php echo base_url('/assets/images/icon_top.svg');?>" alt="맨위로"></li>
             <?php if (element('write_url', element('list', $view))) { ?>
-            <li class="btn btn_write"><a href="<?php echo element('write_url', element('list', $view)) ?>" class=""><img src="<?php echo base_url('/assets/images/icon_write.svg');?>" alt="글쓰기"></a></li>
+            <li class=""><a href="<?php echo element('write_url', element('list', $view)) ?>" class="btn btn_write"><img src="<?php echo base_url('/assets/images/icon_write.svg');?>" alt="글쓰기"></a></li>
             <?php }elseif (element('write_url', $view)) { ?>
-            <li class="btn btn_write"><a href="<?php echo element('write_url', $view) ?>" class=""><img src="<?php echo base_url('/assets/images/icon_write.svg');?>" alt="글쓰기"></a></li>
+            <li class=""><a href="<?php echo element('write_url', $view) ?>" class="btn btn_write"><img src="<?php echo base_url('/assets/images/icon_write.svg');?>" alt="글쓰기"></a></li>
             <?php } ?>
         </ul>
     </aside>
