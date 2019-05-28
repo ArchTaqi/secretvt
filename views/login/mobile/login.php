@@ -35,7 +35,7 @@
 
         <div class="login_re">
             <input type="checkbox" name="autologin" id="autologin" value="1" />
-            <label for="autologin">
+            <label for="autologin" class="pt10 pb10">
                  자동로그인
             </label>
         </div>

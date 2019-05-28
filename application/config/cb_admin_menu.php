@@ -50,6 +50,7 @@ $config['admin_page_menu'] = array(
 			'members'                      => array('회원관리', ''),
 			'membergroup'             => array('회원그룹관리', ''),
 			'points'                           => array('포인트관리', ''),
+			'notes'                           => array('쪽지관리', ''),
 			'memberfollow'            => array('팔로우현황', ''),
 			'nickname'                     => array('닉네임변경이력', ''),
 			'memberlevelhistory'    => array('레벨히스토리', ''),

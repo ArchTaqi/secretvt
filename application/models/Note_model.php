@@ -66,4 +66,25 @@ class Note_model extends CB_Model
 
         return $result;
     }
+
+    public function get_admin_list($limit = '', $offset = '', $where = '', $like = '', $findex = '', $forder = '', $sfield = '', $skeyword = '', $sop = 'OR')
+    {
+        $result = $this->_get_list_common($select = '', $join = '', $limit, $offset, $where, $like, $findex, $forder, $sfield, $skeyword, $sop);
+        return $result;
+    }
+
+    public function get_admin_note($where = '')
+    {
+        if (empty($where)) {
+            return;
+        }
+        $select = 'note.*';
+        $this->db->select($select);
+        $this->db->from($this->_table);
+        
+        $this->db->where($where);
+        $result = $this->db->get();
+
+        return $result->row_array();
+    }
 }
