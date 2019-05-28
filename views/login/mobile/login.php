@@ -30,14 +30,13 @@
         </ul>
 
         <p class="alert-dismissible alert-info autologinalert" style="display:none;">
-            자동로그인 기능사용시  다음번 접속시 부터는 별도의 입력 없이 로그인 됩니다.
-            단, 공공장소에서 이용 시 개인정보가 유출될 수 있으니 꼭 로그아웃을 해주세요.
+            자동로그인 기능을 사용하시면, 브라우저를 닫더라도 로그인이 계속 유지될 수 있습니다. 자동로그이 기능을 사용할 경우 다음 접속부터는 로그인할 필요가 없습니다. 단, 공공장소에서 이용 시 개인정보가 유출될 수 있으니 꼭 로그아웃을 해주세요.
         </p>
 
         <div class="login_re">
             <input type="checkbox" name="autologin" id="autologin" value="1" />
             <label for="autologin">
-                 아이디 / 패스워드 기억하기
+                 자동로그인
             </label>
         </div>
 
