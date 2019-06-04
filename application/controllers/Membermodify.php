@@ -2115,6 +2115,10 @@ class Membermodify extends CB_Controller
             $this->load->helper('password');
         }
 
+        if (!$this->member->item('mem_password')) {            
+            return true;
+        }
+
         if ( ! $this->member->item('mem_id') OR ! $this->member->item('mem_password')) {
             $this->form_validation->set_message(
                 '_cur_password_check',

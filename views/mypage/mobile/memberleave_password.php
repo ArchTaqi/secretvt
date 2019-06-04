@@ -33,7 +33,8 @@
             </tr>
         </table>
     </section>
-
+    
+    
     <div class="form-horizontal mt3per">
         <?php
         $attributes = array('class' => 'form-horizontal', 'name' => 'fconfirmpassword', 'id' => 'fconfirmpassword', 'onsubmit' => 'return confirmleave()');
@@ -42,6 +43,7 @@
     <section class="info_logout">
         <figure>
            <img src="<?php echo base_url('/assets/images/temp/info_img/info_stop.png') ?>" alt="stop">
+           
            <figcaption>
                <h2>정말 탈퇴 하시겠습니까?</h2>
                <p>
@@ -61,13 +63,30 @@
         echo validation_errors('<div class="alert alert-warning" role="alert">', '</div>');
         echo show_alert_message(element('message', $view), '<div class="alert alert-auto-close alert-dismissible alert-warning"><button type="button" class="close alertclose" >&times;</button>', '</div>');
         ?>
+        <?php if($this->member->item('mem_password')){ ?>
         <div class="logout_pw">
             <label>비밀번호</label>
             <input type="password" id="mem_password" name="mem_password"/>
             <button type="submit">확 인</button>
         </div>
+        
+        <?php }else{?>
+        <input type="hidden" id="mem_password" name="mem_password" value="<?php echo random_string('alnum', 10) ?>">
+        <div class="logout_pw">
+            
+            <div class="alert alert-dismissible alert-info">
+                    회원님은 소셜 계정을 통하여 로그인하셨습니다. <br />
+                    소셜 계정은 별도의 비밀번호 입력 없이 바로 탈퇴가 가능합니다.
+                </div>
+            <button type="submit">확 인</button>
+        </div>
+
+        <?php } ?>
         <?php echo form_close(); ?>
-  </section>  
+    </section>  
+    
+
+    
   <section class="ad" style="margin-bottom:0;">
         <h4>ad</h4>
         <?php echo banner("mypage_banner_1") ?>

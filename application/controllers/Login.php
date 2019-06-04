@@ -170,7 +170,7 @@ class Login extends CB_Controller
                 element('mem_id', $userinfo)
             );
 
-            if ($this->input->post('autologin')) {
+            // if ($this->input->post('autologin')) {
                 $vericode = array('$', '/', '.');
                 $hash = str_replace(
                     $vericode,
@@ -190,7 +190,7 @@ class Login extends CB_Controller
                 $cookie_value = $hash;
                 $cookie_expire = 2592000; // 30일간 저장
                 set_cookie($cookie_name, $cookie_value, $cookie_expire);
-            }
+            // }
 
             $change_password_date = $this->cbconfig->item('change_password_date');
             $site_title = $this->cbconfig->item('site_title');
