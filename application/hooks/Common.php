@@ -84,7 +84,7 @@ class _Common
         $device_type = $detect->isMobile() ? 'mobile' : 'desktop';
         $CI->cbconfig->set_device_type($device_type);
 
-        if (get_cookie('autologin') && ! $CI->session->userdata('mem_id')) {
+        if (get_cookie('autologin') ) {
             $CI->load->model('Autologin_model');
             $where = array(
                 'aul_key' => get_cookie('autologin'),
@@ -111,6 +111,10 @@ class _Common
                     $CI->Autologin_model->delete(element('aul_id', $autodata));
                     delete_cookie('autologin');
                 } else {
+                    $updateautologin = array(
+                        'aul_datetime' => cdate('Y-m-d H:i:s'),
+                    );                    
+                    $CI->Autologin_model->update(element('aul_id', $autodata),$updateautologin);
                     $CI->session->set_userdata('mem_id', element('mem_id', $autodata));
                 }
             }
