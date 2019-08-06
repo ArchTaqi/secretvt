@@ -80,16 +80,18 @@
                 <div class="table-box">
                     <h3 <?php echo element('brd_key',element('board', $view))==='vtn_discount' ? 'style=width:100%;':''; ?>><?php echo html_escape(element('post_title', $result)); ?></h3>
                         <div class="question " style = "width:100%;" id="answer_<?php echo $key; ?>">
-                            <?php if (element('brd_key',element('board', $view)) ==='vtn_discount' || element('is_admin', $view) || element('modify_url', $result)) { ?>
-                                <div class="question-content"><?php echo display_html_content(
+                            
+                                <div class="question-content" id="posting_<?php echo element('post_id', $result) ?>"><?php if (element('brd_key',element('board', $view)) ==='vtn_discount' || element('is_admin', $view) || ( element('modify_url', $result) && element('mem_id',$result) )) { ?>
+                                    <?php echo display_html_content(
                         element('post_content', $result),
-                        element('post_html', $result));  ?></div>
-                            <?php } ?>
+                        element('post_html', $result));  ?><?php } ?></div>
+                            
                             <?php if (element(abs(element('post_num', $result)),element('reply_content', element('reply_data', element('list', $view))))) { ?>
 
                                 <ul>
-                                    <li><p><i class="fa fa-reply fa-rotate-180" aria-hidden="true" style="font-size: 1.5em;"></i> <?php echo display_html_content(element(abs(element('post_num', $result)),element('reply_content', element('reply_data', element('list', $view)))),
-                        element('post_html', $result)) ?>
+                                    <li><p><i class="fa fa-reply fa-rotate-180" aria-hidden="true" style="font-size: 1.5em;" ></i><div id="replying_<?php echo element('post_id', $result) ?>"> 
+                                        <?php if(element('is_admin', $view) || ( element('modify_url', $result) && element('mem_id',$result) )) echo display_html_content(element(abs(element('post_num', $result)),element('reply_content', element('reply_data', element('list', $view)))),
+                        element('post_html', $result)) ?></div>
                                     </p>
 
                                 <div class='button' >
@@ -314,7 +316,8 @@ function faq_open_confirm(){
 
                 var $heading_ = $("#heading_"+guest_post_id).find('div.table-box div.question');
 
-  
+                    $("#posting_"+guest_post_id).html(data.posting);
+                    $("#replying_"+guest_post_id).html(data.replying);  
                     $('.table-answer.answer:visible').css('display', 'none');
                     $heading_.slideDown();
   

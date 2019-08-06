@@ -3346,7 +3346,13 @@ class Postact extends CB_Controller
         }
         if ( password_verify($modify_password, element('post_password', $post))) {
             
-            $result = array('success' => 1,"message" => '성공');
+            $reply = $this->Post_model->get_one('','',array('post_num' => element('post_num',$post),'post_reply' => 'A'));
+
+            $result = array('success' => 1,"message" => '성공',"posting" => display_html_content(
+                        element('post_content', $post),
+                        element('post_html', $post)),"replying" => display_html_content(
+                        element('post_content', $reply),
+                        element('post_html', $reply)));
             exit(json_encode($result));
         } else {
             $result = array('error' => 1,"message" => '패스워드가 맞지 앖습니다.');
