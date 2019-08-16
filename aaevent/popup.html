@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/common.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="wrap">
+        <div style="padding: 3%;">
+            <p style="font-size: 15px; line-height: 1.4; margin-bottom: 5px;">당첨안내 메세지01</p>
+            <button onclick="openpopup('#pop01')">팝업창 열기</button>
+            <p style="font-size: 15px; line-height: 1.4; margin-top: 20px; margin-bottom: 5px;">당첨안내 메세지02</p>
+            <button onclick="openpopup('#pop01a')">팝업창 열기</button>
+            <p style="font-size: 15px; line-height: 1.4; margin-top: 20px; margin-bottom: 5px;">배너클릭 후 랜딩페이지01 - 중고나라 ID를 입력하고 이벤트에 참여해주세요</p>
+            <button onclick="openpopup('#pop02')">팝업창 열기</button>
+            <p style="font-size: 15px; line-height: 1.4; margin-top: 20px; margin-bottom: 5px;">배너클릭 후 랜딩페이지02 - 입력이 완료되었습니다. 본인인증을 진행해주세요.</p>
+            <button onclick="openpopup('#pop03')">팝업창 열기</button>
+            <p style="font-size: 15px; line-height: 1.4; margin-top: 20px; margin-bottom: 5px;">이벤트 참여대상자가 아닌 경우</p>
+            <button onclick="openpopup('#pop04')">팝업창 열기</button>
+            <p style="font-size: 15px; line-height: 1.4; margin-top: 20px; margin-bottom: 5px;">이벤트 종료 후 참여자</p>
+            <button onclick="openpopup('#pop05')">팝업창 열기</button>
+            <p style="font-size: 15px; line-height: 1.4; margin-top: 20px; margin-bottom: 5px;">재참여 회원 안내창</p>
+            <button onclick="openpopup('#pop06')">팝업창 열기</button>
+        </div>
+        <!-- ==== 팝업창 ==== -->
+        <div class="popup_back">
+            <!-- 당첨안내 메세지01 -->
+            <div class="popup_box popup_box01" id="pop01">
+                <div class="popup_img_box"><img src="images/img_celebration.png" alt="당첨되셨습니다"></div>
+                <div class="popup_txt_box">
+                    <p class="popup_grade01">1등</p>
+                    <p class="popup_gift01">10만원 상품권</p>
+                </div>
+                <div class="popup_agree">
+                    <h2 class="agree_tit">개인정보 수집 &middot; 이용 및 위탁 동의</h2>
+                    <div class="agree_form">
+                        <div class="inp_box">
+                            <a href="" class="agree_link">개인정보 수집 및 이용 목적 <b class="popup_b">(필수)</b></a>
+                        </div>
+                        <div class="inp_box">
+                            <a href="" class="agree_link">개인정보 제 3자 제공에 대한 동의 <b class="popup_b">(필수)</b></a>
+                        </div>
+                    </div>
+                    <div class="popup_notice">※ 개인정보 제공에 대한 동의에 미 동의 시 이벤트에 참여 하실 수 없습니다.</div>
+                    <div class="inp_box inp_box_check_all">
+                        <input type="checkbox" name="" id="" class="inp_check inp_check_all">
+                        <label for="" class="label_all">전체동의</label>
+                    </div>
+                </div>
+                <div class="btn_box">
+                    <button class="popup_btn" onclick="closepopup('#pop01')">응모하기</button>
+                </div>
+                <div class="pop_img">
+                    <span class="pop pop01"></span>
+                    <span class="pop pop02"></span>
+                </div>
+            </div>
+            <!-- 당첨안내 메세지02 -->
+            <div class="popup_box popup_box01" id="pop01a">
+                <div class="popup_img_box"><img src="images/grade01.png" alt="1등 축하합니다"></div>
+                <div class="popup_txt_box">
+                    <p class="popup_gift02">10만원 상품권 <span class="blind">에 당첨되셨습니다.</span></p>
+                </div>
+                <div class="popup_agree">
+                    <h2 class="agree_tit">개인정보 수집 &middot; 이용 및 위탁 동의</h2>
+                    <div class="agree_form">
+                        <div class="inp_box">
+                            <a href="" class="agree_link">개인정보 수집 및 이용 목적 <b class="popup_b">(필수)</b></a>
+                        </div>
+                        <div class="inp_box">
+                            <a href="" class="agree_link">개인정보 제 3자 제공에 대한 동의 <b class="popup_b">(필수)</b></a>
+                        </div>
+                    </div>
+                    <div class="popup_notice">※ 개인정보 제공에 대한 동의에 미 동의 시 이벤트에 참여 하실 수 없습니다.</div>
+                    <div class="inp_box inp_box_check_all">
+                        <input type="checkbox" name="" id="" class="inp_check inp_check_all">
+                        <label for="" class="label_all">전체동의</label>
+                    </div>
+                </div>
+                <div class="btn_box">
+                    <button class="popup_btn" onclick="closepopup('#pop01a')">응모하기</button>
+                </div>
+                <div class="pop_img">
+                    <span class="pop pop01"></span>
+                    <span class="pop pop02"></span>
+                </div>
+            </div>
+            <!-- 배너클릭 후 랜딩페이지01 - 중고나라 ID를 입력하고 이벤트에 참여해주세요 -->
+            <div class="popup_box popup_box02" id="pop02">
+                <div class="popup_txt_box">
+                    <p class="popup_p">중고나라 ID를 입력하고 이벤트에 참여해주세요.</p>
+                </div>
+                <div class="btn_box">
+                    <button class="popup_btn" onclick="closepopup('#pop02')">확 인</button>
+                </div>
+            </div>
+            <!-- 배너클릭 후 랜딩페이지02 - 입력이 완료되었습니다. 본인인증을 진행해주세요. -->
+            <div class="popup_box popup_box02" id="pop03">
+                <div class="popup_txt_box">
+                    <p class="popup_p">입력이 완료되었습니다. 본인인증을 진행해주세요.</p>
+                </div>
+                <div class="btn_box">
+                    <button class="popup_btn" onclick="closepopup('#pop03')">확 인</button>
+                </div>
+            </div>
+            <!-- 이벤트 참여대상자가 아닌 경우 -->
+            <div class="popup_box popup_box02" id="pop04">
+                <div class="popup_txt_box">
+                    <p class="popup_tit">죄송합니다</p>
+                    <p class="popup_p">본 이벤트는 하이마트 앱 신규 설치 회원을 대상으로 진행되는 이벤트입니다.</p>
+                </div>
+                <div class="btn_box">
+                    <button class="popup_btn" onclick="closepopup('#pop04')">확 인</button>
+                </div>
+            </div>
+            <!-- 이벤트 종료 후 참여자 -->
+            <div class="popup_box popup_box02" id="pop05">
+                <div class="popup_txt_box">
+                    <p class="popup_p">
+                        룰렛 이벤트가 종료되었습니다.<br>
+                        <b class="popup_b_underline">경품은 0월 00일</b>에 일괄 지급될 예정입니다.
+                    </p>
+                    <p class="popup_p">이벤트에 참여해주셔서 감사합니다.</p>
+                </div>
+                <div class="btn_box">
+                    <button class="popup_btn" onclick="closepopup('#pop05')">확 인</button>
+                </div>
+            </div>
+            <!-- 재참여 회원 안내창 -->
+            <div class="popup_box popup_box02" id="pop06">
+                <div class="popup_txt_box">
+                    <p class="popup_p">
+                        이미 참여하셨습니다<br>
+                        <b class="popup_b">[스타벅스 아메리카노]</b>에 당첨되었습니다.
+                    </p>
+                </div>
+                <div class="btn_box">
+                    <button class="popup_btn" onclick="closepopup('#pop06')">확 인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ==== 팝업창 ==== -->
+    <script>
+        // 시안 확인을 위해 임시로 작성한 내용입니다. 
+        function openpopup(boxId){
+            $('.popup_back').show();
+            $(boxId).show();
+        }
+        function closepopup(boxId){
+            $('.popup_back').hide();
+            $(boxId).hide();
+        }
+    </script>
+</body>
+</html>
