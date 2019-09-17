@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+    <div class="wrap">
+        <div class="title01">
+            <h2 class="tit">문의 게시판</h2>
+        </div>
+        <section class="write_area">
+            <h2 class="blind">문의글 작성영역</h2>
+            <form action="">
+                <div>
+                    <div class="inp_row clearfix">
+                        <div class="inp_box">
+                            <label for="" class="write_label">닉네임</label>
+                            <input type="text" name="" id="" class="inp write_inp" value="" placeholder="닉네임을 입력해주세요.">
+                        </div>
+                        <div class="inp_box">
+                            <label for="" class="write_label">비밀번호</label>
+                            <input type="tel" class="inp write_inp inp_num_password" placeholder="숫자로만 4개 입력" maxlength="4">
+                        </div>
+                    </div>
+                    <div class="inp_box">
+                        <label for="" class="write_label">제목</label>
+                        <input type="text" name="" id="" class="inp write_inp" value="문의글" disabled>
+                    </div>
+                    <div class="inp_box">
+                        <textarea id="" name="" class="inp write_textarea" placeholder="문의글을 작성해 주세요"></textarea>
+                    </div>
+                    <div class="btn_box">
+                        <button type="submit" class="write_btn">작 성 하 기</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+        <section class="board_wrap">
+            <h2 class="blind">문의글 목록</h2>
+            <div class="clearfix">
+                <h3 class="blind">게시글 검색영역</h3>
+                <div class="search_box">
+                    <input type="text" class="inp inp_search" placeholder="닉네임으로 검색" name="" value="">
+                    <button class="btn_search" type="submit"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+            <ul class="board_list">
+                <li class="post">
+                    <div class="post_inner">
+                        <h4 class="post_title"><i class="fa fa-lock"></i>문의글</h4>
+                        <div class="post_question_box">
+                            <div class="post_question"></div>
+                        </div>
+                        <span class="post_status">답변대기</span>
+                        <div class="clearfix post_bottom">
+                            <div class="btn_box">
+                                <button type="button" class="btn btn-default">수 정</button>
+                                <button type="button" class="btn btn-silver">삭 제</button>
+                            </div>     
+                            <p class="post_info">닉네임 | 작성일 : 2019-08-06</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="post">
+                    <div class="post_inner">
+                        <h4 class="post_title"><i class="fa fa-lock"></i>문의글</h4>
+                        <div class="post_question_box">
+                            <div class="post_question"></div>
+                        </div>
+                        <span class="post_status">답변대기</span>
+                        <div class="clearfix post_bottom">
+                            <div class="btn_box">
+                                <button type="button" class="btn btn-default">수 정</button>
+                                <button type="button" class="btn btn-silver">삭 제</button>
+                            </div>     
+                            <p class="post_info">닉네임 | 작성일 : 2019-08-06</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="post">
+                    <div class="post_inner">
+                        <h4 class="post_title"><i class="fa fa-lock"></i>문의글</h4>
+                        <div class="post_question_box">
+                            <div class="post_question"></div>
+                        </div>
+                        <span class="post_status">답변대기</span>
+                        <div class="clearfix post_bottom">
+                            <div class="btn_box">
+                                <button type="button" class="btn btn-default">수 정</button>
+                                <button type="button" class="btn btn-silver">삭 제</button>
+                            </div>     
+                            <p class="post_info">닉네임 | 작성일 : 2019-08-06</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="post">
+                    <div class="post_inner">
+                        <h4 class="post_title"><i class="fa fa-lock"></i>문의글</h4>
+                        <div class="post_question_box">
+                            <div class="post_question"></div>
+                        </div>
+                        <span class="post_status">답변대기</span>
+                        <div class="clearfix post_bottom">
+                            <div class="btn_box">
+                                <!-- <button type="button" class="btn btn-success">답 변</button> -->
+                                <button type="button" class="btn btn-default">수 정</button>
+                                <button type="button" class="btn btn-silver">삭 제</button>
+                            </div>     
+                            <p class="post_info">닉네임 | 작성일 : 2019-08-06</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="post">
+                    <div class="post_inner">
+                        <h4 class="post_title"><i class="fa fa-lock"></i>문의글</h4>
+                        <div class="post_question_box" style="display: block;">
+                            <div class="post_question">따뜻한 몸이 얼마나 생명을 영락과 그들의 있으며, 원대하고, 봄날의 뿐이다. </div>
+                        </div>
+                        <span class="post_status">답변대기</span>
+                        <div class="clearfix post_bottom">
+                            <div class="btn_box">
+                                <!-- <button type="button" class="btn btn-success">답 변</button> -->
+                                <button type="button" class="btn btn-default">수 정</button>
+                                <button type="button" class="btn btn-silver">삭 제</button>
+                            </div>     
+                            <p class="post_info">닉네임 | 작성일 : 2019-08-04</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="post">
+                    <div class="post_inner">
+                        <h4 class="post_title"><i class="fa fa-lock"></i>문의글</h4>
+                        <div class="post_question_box" style="display: block;">
+                            <div class="post_question">우리의 황금시대의 더운지라 온갖 청춘의 많이 따뜻한 길지 끓는다.</div>
+                            <div class="post_answer_box clearfix">
+                                <div class="post_answer">
+                                    <div class="table_box">
+                                        <div class="answer_arrow">
+                                            <i class="fa fa-reply fa-rotate-180"></i>
+                                        </div>
+                                        <div class="answer_text"> 
+                                             그들은 같으며, 밥을 없는 때문이다.
+                                        </div>
+                                    </div>
+                                    <div class="btn_box">
+                                        <!-- <button type="button" class="btn btn-default">수 정</button>
+                                        <button type="button" class="btn btn-silver">삭 제</button> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="post_status complete">답변완료</span>
+                        <div class="clearfix post_bottom">
+                            <div class="btn_box">
+                                <button type="button" class="btn btn-default">수 정</button>
+                                <button type="button" class="btn btn-silver">삭 제</button>
+                            </div>     
+                            <p class="post_info">닉네임 | 작성일 : 2019-08-02</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="post">
+                    <div class="post_inner">
+                        <h4 class="post_title"><i class="fa fa-lock"></i>문의글</h4>
+                        <div class="post_question_box" style="display: block;">
+                            <div class="post_question">우리의 황금시대의 더운지라 온갖 청춘의 많이 따뜻한 길지 끓는다.</div>
+                            <div class="post_answer_box clearfix">
+                                <div class="post_answer">
+                                    <div class="table_box">
+                                        <div class="answer_arrow">
+                                            <i class="fa fa-reply fa-rotate-180"></i>
+                                        </div>
+                                        <div class="answer_text"> 
+                                             그들은 같으며, 밥을 없는 때문이다.
+                                        </div>
+                                    </div>
+                                    <div class="btn_box">
+                                        <button type="button" class="btn btn-default">수 정</button>
+                                        <button type="button" class="btn btn-silver">삭 제</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="post_status complete">답변완료</span>
+                        <div class="clearfix post_bottom">
+                            <div class="btn_box">
+                                <button type="button" class="btn btn-default">수 정</button>
+                                <button type="button" class="btn btn-silver">삭 제</button>
+                            </div>     
+                            <p class="post_info">닉네임 | 작성일 : 2019-08-02</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="post">
+                    <div class="post_inner">
+                        <h4 class="post_title"><i class="fa fa-lock"></i>문의글</h4>
+                        <div class="post_question_box">
+                            <div class="post_question"></div>
+                        </div>
+                        <span class="post_status complete">답변완료</span>
+                        <div class="clearfix post_bottom">
+                            <div class="btn_box">
+                                <button type="button" class="btn btn-default">수 정</button>
+                                <button type="button" class="btn btn-silver">삭 제</button>
+                            </div>     
+                            <p class="post_info">닉네임 | 작성일 : 2019-08-02</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="post">
+                    <div class="post_inner">
+                        <h4 class="post_title"><i class="fa fa-lock"></i>문의글</h4>
+                        <div class="post_question_box">
+                            <div class="post_question"></div>
+                        </div>
+                        <span class="post_status complete">답변완료</span>
+                        <div class="clearfix post_bottom">
+                            <div class="btn_box">
+                                <button type="button" class="btn btn-default">수 정</button>
+                                <button type="button" class="btn btn-silver">삭 제</button>
+                            </div>     
+                            <p class="post_info">닉네임 | 작성일 : 2019-08-02</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="post">
+                    <div class="post_inner">
+                        <h4 class="post_title"><i class="fa fa-lock"></i>문의글</h4>
+                        <div class="post_question_box">
+                            <div class="post_question"></div>
+                        </div>
+                        <span class="post_status complete">답변완료</span>
+                        <div class="clearfix post_bottom">
+                            <div class="btn_box">
+                                <button type="button" class="btn btn-default">수 정</button>
+                                <button type="button" class="btn btn-silver">삭 제</button>
+                            </div>     
+                            <p class="post_info">닉네임 | 작성일 : 2019-08-01</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="pagination_wrap">
+                <ul class="pagination">
+                    <li class="active pagination_num"><a class="pagination_link">1</a></li>
+                    <li class="pagination_num"><a href="" class="pagination_link">2</a></li>
+                    <li class="pagination_num"><a href="" class="pagination_link">3</a></li>
+                    <li class="pagination_num"><a href="" class="pagination_link">4</a></li>
+                    <li class="pagination_num"><a href="" class="pagination_link">&gt;</a></li>
+                </ul>
+            </div>
+        </section>
+        <section class="caution clearfix">
+            <h2 class="tit">게시판 주의사항</h2>
+            <ul class="caution_list"> 
+                <li class="caution_item"><strong class="num">01.</strong> <span class="caution_txt">욕설이나 미풍양속에 어긋나는 메시지는 삭제되며, 
+                그러한 경우 법적으로 불이익을 받을 수 있습니다.</span></li>
+                <li class="caution_item"><strong class="num">02.</strong> <span class="caution_txt">본인이 작성한 글의 내용과 그에 대한 답변만 볼 수 있습니다.</span></li>
+                <li class="caution_item"><strong class="num">03.</strong> <span class="caution_txt">작성한 모든 내용은 OOOO에 저장 됩니다.</span></li>
+                <li class="caution_item"><strong class="num">04.</strong> <span class="caution_txt">기타 자세한 내용은 OOOO 이용약관을 참조해 주세요.</span></li>
+            </ul>
+        </section>
+    </ul>
+</body>
+</html>
