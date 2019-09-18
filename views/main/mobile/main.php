@@ -9,7 +9,7 @@
             'is_gallery' => 1,
             'image_height' => 200,
             'image_width' => 200,
-            'cache_minute' => 1,
+            'cache_minute' => 0,
             'limit' => 5,
             'findex' => 'post_like',
             'forder' => 'desc',
@@ -24,7 +24,7 @@
             'latest_title' => '시크릿 자유게시판',
             'latest_class' => 'main_txt_list01',
             'brd_key' => 'vtn_free',
-            'cache_minute' => 1,
+            'cache_minute' => 0,
             'limit' => 5,
           );
         echo $this->board->latest_free($config);
@@ -42,7 +42,7 @@
             'is_gallery' => 1,
             'image_height' => 200,
             'image_width' => 200,
-            'cache_minute' => 1,
+            'cache_minute' => 0,
             'limit' => 500,
             
           );
@@ -59,7 +59,7 @@
             'is_gallery' => 1,
             'image_height' => 200,
             'image_width' => 200,
-            'cache_minute' => 1,
+            'cache_minute' => 0,
             'limit' => 4,
           );
         echo $this->board->latest_gallery($config);
@@ -71,7 +71,7 @@
             'latest_title' => '번개/동행',
             'latest_class' => 'main_txt_list02',
             'brd_key' => 'vtn_ltn',
-            'cache_minute' => 1,
+            'cache_minute' => 0,
             'limit' => 5,
           );
         echo $this->board->latest_ltn($config);
@@ -86,7 +86,7 @@
             'latest_title' => '최근 본 게시물',
             'latest_class' => 'main_tab01',
             'post_id' => $this->session->userdata('lately'),
-            'cache_minute' => 1,
+            'cache_minute' => 0,
             'limit' => 5,
             'is_gallery' => 1,
           );
